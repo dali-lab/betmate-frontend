@@ -1,0 +1,17 @@
+{
+  "name": "starterpack-tmonfre",
+  "version": "1.0.0",
+  "description": "dartmouth cs52 19s sa3",
+  "main": "src/index.js",
+  "repository": "https://github.com/dartmouth-cs52-19S/starterpack-tmonfre",
+  "author": "Thomas Monfre <tmonfre@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "devDependencies": {
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.3.1"
+  }
+}
