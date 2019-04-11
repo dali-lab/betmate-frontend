@@ -1,17 +1,7 @@
-// change require to es6 import style
-import $ from 'jquery';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import './style.scss';
 
-// recursive function to display a count on the screen for seconds spent on site
-function displayCount(num) {
-	// eslint-disable-next-line no-tabs
-	setTimeout(() => {
-		// display text on screen and increment count
-		$('#main').text(`You've been on this page for ${num} seconds.`);
+const App = () => <div className="test">All the REACT belong to us!</div>;
 
-		// make recursive call
-		displayCount(num + 1);
-	}, 1000);
-}
-
-displayCount(1);
+ReactDOM.render(<App />, document.getElementById('main'));
