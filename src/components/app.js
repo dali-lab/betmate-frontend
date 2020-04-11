@@ -6,13 +6,29 @@ import {
 const Nav = (props) => {
   return (
     <nav>
-      <NavLink to="/admin">Sign In</NavLink>
+      <NavLink to="/signin">Sign In</NavLink>
     </nav>
   );
 };
 
-const About = (props) => {
-  return <div> All there is to know about me </div>;
+const SignIn = (props) => {
+  return (
+    <div>
+      <input type="text" placeholder="Username" />
+      <input type="text" placeholder="Password" />
+      <nav>
+        <NavLink to="/admin" onClick={() => localStorage.setItem('authToken', 'Token Value')}>Sign In</NavLink>
+      </nav>
+    </div>
+  );
+};
+
+const AdminPanel = (props) => {
+  return (
+    <div>
+      Welcome to the admin panel!
+    </div>
+  );
 };
 
 const Welcome = (props) => {
@@ -38,7 +54,8 @@ const App = (props) => {
       <div>
         <Switch>
           <Route exact path="/" component={Welcome} />
-          <Route path="/admin" component={About} />
+          <Route exact path="/signin" component={SignIn} />
+          <Route path="/admin" component={AdminPanel} />
           <Route component={FallBack} />
         </Switch>
       </div>
