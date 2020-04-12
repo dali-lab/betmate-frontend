@@ -3,6 +3,8 @@ import {
   BrowserRouter as Router, Route, NavLink, Switch,
 } from 'react-router-dom';
 
+import AdminPanel from '../containers/adminPanel';
+
 const Nav = (props) => {
   return (
     <nav>
@@ -19,14 +21,6 @@ const SignIn = (props) => {
       <nav>
         <NavLink to="/admin" onClick={() => localStorage.setItem('authToken', 'Token Value')}>Sign In</NavLink>
       </nav>
-    </div>
-  );
-};
-
-const AdminPanel = (props) => {
-  return (
-    <div>
-      Welcome to the admin panel!
     </div>
   );
 };
