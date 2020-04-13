@@ -8,10 +8,19 @@ class SearchBar extends React.Component {
     super(props);
     this.state = {
       query: '',
+      // filters: [], // UNIMPLEMENTED
+      sort: 'a',
+      page: 1, // TODO: Get max pages from server
+      numPerPage: 100,
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleQueryUpdate = this.handleQueryUpdate.bind(this);
+    // this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
+    this.handleSortUpdate = this.handleSortUpdate.bind(this);
+    this.handlePageUpdate = this.handlePageUpdate.bind(this);
+    this.handleNumPerPageUpdate = this.handleNumPerPageUpdate.bind(this);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -24,10 +33,26 @@ class SearchBar extends React.Component {
     this.setState({ query: e.target.value });
   }
 
+  // handleFilterUpdate(e) {
+  //   this.setState({ filters: e.target.value });
+  // }
+
+  handleSortUpdate(e) {
+    this.setState({ sort: e.target.value });
+  }
+
+  handlePageUpdate(e) {
+    this.setState({ page: e.target.value });
+  }
+
+  handleNumPerPageUpdate(e) {
+    this.setState({ numPerPage: e.target.value });
+  }
+
   // eslint-disable-next-line class-methods-use-this
   handleSubmit(e) {
     console.log(`Search '${this.state.query}' submitted!`);
-    this.props.search(this.state.query).then().catch((error) => {
+    this.props.search(this.state.query, this.state.filters, this.state.sort, this.state.page, this.state.numPerPage).then().catch((error) => {
       // Handle error
     });
     e.preventDefault(); // Pres reloading on form submit
@@ -37,13 +62,36 @@ class SearchBar extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
+          {/* Search Bar */}
           <input type="search" placeholder="Enter search here!" value={this.state.query} onChange={this.handleQueryUpdate} />
-          <select>
-            <option value="one">Filter Option One</option>
-            <option value="two">Filter Option Two</option>
-            <option value="three">Filter Option Three</option>
-            <option value="four">Filter Option Four</option>
+
+          {/* TODO: Filtering Options */}
+          {/* <label htmlFor="idRange">Max User ID</label>
+          <input type="range" id="idRange" placeholder="User ID Range" min={0} max={10} /> */}
+
+          {/* Sorting Options */}
+          <select value={this.state.sort} onChange={this.handleSortUpdate}>
+            <option value="a">Ascending</option>
+            <option value="d">Descending</option>
           </select>
+
+          {/* Pagination Controls */}
+          <select value={this.state.page} onChange={this.handlePageUpdate}>
+            <option value="1">Page 1</option>
+            <option value="2">Page 2</option>
+            <option value="3">Page 3</option>
+            <option value="4">Page 4</option>
+          </select>
+
+          {/* Number Per Page Options */}
+          <select value={this.state.numPerPage} onChange={this.handleNumPerPageUpdate}>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+
+          {/* Submit Button */}
           <input type="submit" value="Search" />
         </form>
       </div>
