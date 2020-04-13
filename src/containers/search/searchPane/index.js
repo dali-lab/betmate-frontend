@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchSearchData } from '../../actions';
-import SearchItem from '../../components/SearchItem';
+import SearchItem from '../../../components/SearchItem';
+import SearchBar from '../searchBar';
 
 class SearchPane extends React.Component {
   constructor(props) {
@@ -13,12 +13,15 @@ class SearchPane extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchSearchData();
+    // Called from searchBar
+    // this.props.fetchSearchData();
   }
 
   render() {
     return (
       <div>
+        <SearchBar />
+
         {/* Go through passed data array and break into SearchItem elements */}
         {this.props.testData.length ? this.props.testData.map((element) => {
           return <SearchItem key={element.id || element._id} displayObject={element} />;
@@ -32,4 +35,4 @@ const mapStateToProps = state => ({
   testData: state.data.data,
 });
 
-export default connect(mapStateToProps, { fetchSearchData })(SearchPane);
+export default connect(mapStateToProps, {})(SearchPane);

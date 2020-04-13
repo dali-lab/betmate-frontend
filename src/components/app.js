@@ -7,7 +7,7 @@ import {
 import { signInUser, signOutUser } from '../actions';
 
 import AdminPanel from '../containers/adminPanel';
-import SearchPane from '../containers/searchPane';
+import SearchPane from '../containers/search/searchPane';
 import SignInPanel from '../containers/authentication/signInPanel';
 import SignOutPanel from '../containers/authentication/signOutPanel';
 
