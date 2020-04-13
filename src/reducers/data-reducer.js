@@ -6,7 +6,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.FETCH_SEARCH_DATA:
+    case ActionTypes.SEARCH:
       return Object.assign({}, state, { data: action.payload });
     default:
       return state;

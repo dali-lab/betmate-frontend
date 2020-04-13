@@ -4,7 +4,7 @@ import axios from 'axios';
 export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
   DEAUTH_USER: 'DEAUTH_USER',
-  FETCH_SEARCH_DATA: 'FETCH_SEARCH_DATA',
+  SEARCH: 'SEARCH',
 };
 
 /**
@@ -50,10 +50,12 @@ export function signOutUser() {
  * Test URL: "https://jsonplaceholder.typicode.com/posts"
  * @param {*} filters
  */
-export function fetchSearchData(filters) {
+export function search(query, filters) {
+  console.log(`Searching with style 'https://www.google.com/search?q=${query.split(' ').length > 0 ? query.split(' ').join('+') : query}'`);
   return dispatch => new Promise((resolve, reject) => {
+    // axios.get(`https://www.google.com/search?q=${query.split(' ').join('+')}`).then((response) => {
     axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
-      dispatch({ type: ActionTypes.FETCH_SEARCH_DATA, payload: response.data });
+      dispatch({ type: ActionTypes.SEARCH, payload: response.data });
       resolve();
     }).catch((error) => {
       reject(error);

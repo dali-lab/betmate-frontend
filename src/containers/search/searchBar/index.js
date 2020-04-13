@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchSearchData } from '../../../actions';
+import { search } from '../../../actions';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class SearchBar extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchSearchData().then().catch((error) => {
+    this.props.search(this.state.query).then().catch((error) => {
       // Handle error
     });
   }
@@ -27,6 +27,9 @@ class SearchBar extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   handleSubmit(e) {
     console.log(`Search '${this.state.query}' submitted!`);
+    this.props.search(this.state.query).then().catch((error) => {
+      // Handle error
+    });
     e.preventDefault(); // Pres reloading on form submit
   }
 
@@ -48,4 +51,4 @@ class SearchBar extends React.Component {
   }
 }
 
-export default connect(null, { fetchSearchData })(SearchBar);
+export default connect(null, { search })(SearchBar);
