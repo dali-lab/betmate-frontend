@@ -8,31 +8,13 @@ import { signInUser, signOutUser } from '../actions';
 
 import AdminPanel from '../containers/adminPanel';
 import SearchPane from '../containers/searchPane';
-
-const Nav = (props) => {
-  return (
-    <nav>
-      <NavLink to="/signin">Sign In</NavLink>
-    </nav>
-  );
-};
-
-const SignIn = (props) => {
-  return (
-    <div>
-      <input type="text" placeholder="Username" />
-      <input type="text" placeholder="Password" />
-      <nav>
-        <NavLink to="/admin" onClick={() => props.signInUser()}>Sign In</NavLink>
-      </nav>
-    </div>
-  );
-};
+import SignInPanel from '../containers/authentication/signInPanel';
+import SignOutPanel from '../containers/authentication/signOutPanel';
 
 const Welcome = (props) => {
   return (
     <div>
-      <Nav />
+      <NavLink to="/signin">Sign In</NavLink>
       <SearchPane />
     </div>
   );
@@ -48,7 +30,8 @@ const App = (props) => {
       <div>
         <Switch>
           <Route exact path="/" component={Welcome} />
-          <Route exact path="/signin" component={SignIn} />
+          <Route exact path="/signin" component={SignInPanel} />
+          <Route exact path="/signout" component={SignOutPanel} />
           <Route path="/admin" component={AdminPanel} />
           <Route component={FallBack} />
         </Switch>

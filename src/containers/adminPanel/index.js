@@ -13,9 +13,7 @@ class AdminPanel extends React.Component {
     return (
       <div>
         <div>Welcome to the admin panel!</div>
-        <nav>
-          <NavLink to="/" onClick={() => localStorage.removeItem('authToken')}>Sign Out</NavLink>
-        </nav>
+        <NavLink to="/signout">Sign Out</NavLink>
       </div>
     );
   }

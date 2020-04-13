@@ -19,8 +19,9 @@ class SearchPane extends React.Component {
   render() {
     return (
       <div>
+        {/* Go through passed data array and break into SearchItem elements */}
         {this.props.testData.length ? this.props.testData.map((element) => {
-          return <SearchItem displayObject={element} />;
+          return <SearchItem key={element.id || element._id} displayObject={element} />;
         }) : null}
       </div>
     );

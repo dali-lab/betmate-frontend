@@ -1,28 +1,40 @@
 import axios from 'axios';
-import { ROOT_URL } from '../constants';
+// import { ROOT_URL } from '../constants';
 
-// keys for actiontypes
 export const ActionTypes = {
-  // INCREMENT: 'INCREMENT',
-  // DECREMENT: 'DECREMENT',
   AUTH_USER: 'AUTH_USER',
   DEAUTH_USER: 'DEAUTH_USER',
   FETCH_SEARCH_DATA: 'FETCH_SEARCH_DATA',
 };
 
-export function signInUser({ username, password }) {
+/**
+ * A function that takes a username and a password and sends them to the backend server for authentication
+ * If authentication succeeds, the provided token will be placed locally and the user's authentication status will be updated
+ * @param {*} username
+ * @param {*} password
+ */
+export function signInUser(username, password) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.post(`${ROOT_URL}/`, { username, password }).then((response) => {
-      console.log('Sign in response:', response);
-      localStorage.setItem('authToken', 'Token Value');
-      dispatch({ type: ActionTypes.AUTH_USER });
-      resolve();
-    }).catch((error) => {
-      reject(error);
-    });
+    localStorage.setItem('authToken', 'Token Value');
+    dispatch({ type: ActionTypes.AUTH_USER });
+
+    // TODO: Connect to server
+
+    // axios.post(`${ROOT_URL}/`, { username, password }).then((response) => {
+    //   console.log('Sign in response:', response);
+    //   localStorage.setItem('authToken', 'Token Value');
+    //   dispatch({ type: ActionTypes.AUTH_USER });
+    //   resolve();
+    // }).catch((error) => {
+    //   console.error(error);
+    //   reject();
+    // });
   });
 }
 
+/**
+ * A function that clears a user's authentication status
+ */
 export function signOutUser() {
   return (dispatch) => {
     localStorage.clear();
@@ -33,12 +45,12 @@ export function signOutUser() {
 /**
  * A function that fetches data from server and stores it in redux
  * TODO: Add filtering functionality
+ * Test URL: "https://jsonplaceholder.typicode.com/posts"
  * @param {*} filters
  */
 export function fetchSearchData(filters) {
   return dispatch => new Promise((resolve, reject) => {
     axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
-      console.log('Fetch response:', response);
       dispatch({ type: ActionTypes.FETCH_SEARCH_DATA, payload: response.data });
       resolve();
     }).catch((error) => {
@@ -46,17 +58,3 @@ export function fetchSearchData(filters) {
     });
   });
 }
-
-// export function increment() {
-//   return {
-//     type: ActionTypes.INCREMENT,
-//     payload: null,
-//   };
-// }
-
-// export function decrement() {
-//   return {
-//     type: ActionTypes.DECREMENT,
-//     payload: null,
-//   };
-// }
