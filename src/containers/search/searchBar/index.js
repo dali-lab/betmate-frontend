@@ -15,7 +15,9 @@ class SearchBar extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchSearchData();
+    this.props.fetchSearchData().then().catch((error) => {
+      // Handle error
+    });
   }
 
   handleQueryUpdate(e) {

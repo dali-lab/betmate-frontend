@@ -14,9 +14,11 @@ export const ActionTypes = {
  * @param {*} password
  */
 export function signInUser(username, password) {
+  console.log(`Signing in user '${username}' with password '${password}'`);
   return dispatch => new Promise((resolve, reject) => {
     localStorage.setItem('authToken', 'Token Value');
     dispatch({ type: ActionTypes.AUTH_USER });
+    resolve();
 
     // TODO: Connect to server
 
@@ -27,7 +29,7 @@ export function signInUser(username, password) {
     //   resolve();
     // }).catch((error) => {
     //   console.error(error);
-    //   reject();
+    //   reject(error);
     // });
   });
 }

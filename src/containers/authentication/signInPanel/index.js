@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 
 import { signInUser } from '../../../actions';
 
@@ -9,16 +8,39 @@ class SearchPane extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      username: '',
+      password: '',
     };
+
+    this.handleUsernameUpdate = this.handleUsernameUpdate.bind(this);
+    this.handlePasswordUpdate = this.handlePasswordUpdate.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleUsernameUpdate(e) {
+    this.setState({ username: e.target.value });
+  }
+
+  handlePasswordUpdate(e) {
+    this.setState({ password: e.target.value });
+  }
+
+  handleSubmit(e) {
+    this.props.signInUser(this.state.username, this.state.password).then((response) => {
+      this.props.history.push('/admin');
+    }).catch((error) => {
+      // Error handling UI
+    });
   }
 
   render() {
     return (
       <div>
-        <input type="text" placeholder="Username" />
-        <input type="text" placeholder="Password" />
-        <NavLink to="/admin" onClick={() => this.props.signInUser()}>Sign In</NavLink>
+        <form onSubmit={this.handleSubmit}>
+          <input type="text" placeholder="Username" value={this.state.username} onChange={this.handleUsernameUpdate} />
+          <input type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordUpdate} />
+          <input type="submit" value="Sign In" />
+        </form>
       </div>
     );
   }
