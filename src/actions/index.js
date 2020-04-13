@@ -48,7 +48,11 @@ export function signOutUser() {
  * A function that fetches data from server and stores it in redux
  * TODO: Add filtering functionality
  * Test URL: "https://jsonplaceholder.typicode.com/posts"
- * @param {*} filters
+ * @param {*} query - Search string
+ * @param {*} filters - Filters applied - UNIMPLEMENTED
+ * @param {*} sort - 'a' -> ascending, 'd' -> descending
+ * @param {*} page - Which page of results (calculated in backend) to display?
+ * @param {*} numPerPage - How many results should the backend return per query?
  */
 export function search(query, filters, sort, page, numPerPage) {
   // eslint-disable-next-line max-len
