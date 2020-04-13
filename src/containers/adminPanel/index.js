@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  // eslint-disable-next-line no-unused-vars
-  BrowserRouter as Router, Route, NavLink, Switch,
-} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 class AdminPanel extends React.Component {
   constructor(props) {

@@ -1,9 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   BrowserRouter as Router, Route, NavLink, Switch,
 } from 'react-router-dom';
 
+import { signInUser, signOutUser } from '../actions';
+
 import AdminPanel from '../containers/adminPanel';
+import SearchPane from '../containers/searchPane';
 
 const Nav = (props) => {
   return (
@@ -19,7 +23,7 @@ const SignIn = (props) => {
       <input type="text" placeholder="Username" />
       <input type="text" placeholder="Password" />
       <nav>
-        <NavLink to="/admin" onClick={() => localStorage.setItem('authToken', 'Token Value')}>Sign In</NavLink>
+        <NavLink to="/admin" onClick={() => props.signInUser()}>Sign In</NavLink>
       </nav>
     </div>
   );
@@ -29,17 +33,13 @@ const Welcome = (props) => {
   return (
     <div>
       <Nav />
-      <p>Welcome</p>
+      <SearchPane />
     </div>
   );
 };
 
-// const Test = (props) => {
-//   return <div> ID: {props.match.params.id} </div>;
-// };
-
 const FallBack = (props) => {
-  return <div>URL Not Found</div>;
+  return <div>Uh oh... URL Not Found! Please contact the system administrator.</div>;
 };
 
 const App = (props) => {
@@ -57,4 +57,4 @@ const App = (props) => {
   );
 };
 
-export default App;
+export default connect(null, { signInUser, signOutUser })(App);
