@@ -59,7 +59,10 @@ export function search(query, filters, sort, page, numPerPage) {
   console.log(`Searching with style 'https://www.google.com/search?q=${query.split(' ').length > 0 ? query.split(' ').join('+') : query || ''}&filters=${filters || ''}&sort=${sort || 'a'}&page=${page || 1}&numperpage=${numPerPage || 100}'`);
   return dispatch => new Promise((resolve, reject) => {
     // TODO: Connect this to backend
-    axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
+    // axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
+
+    // eslint-disable-next-line max-len
+    axios.get(`http://localhost:9090/search?query=${query.split(' ').length > 0 ? query.split(' ').join('+') : query || ''}&filters=${filters || ''}&sort=${sort || 'a'}&page=${page || 1}&numperpage=${numPerPage || 100}'`).then((response) => {
       dispatch({ type: ActionTypes.SEARCH, payload: response.data });
       resolve();
     }).catch((error) => {
