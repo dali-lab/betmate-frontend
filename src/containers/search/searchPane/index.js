@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import SearchItem from '../../../components/SearchItem';
+import SearchItem from '../../../components/searchItem';
 import SearchBar from '../searchBar';
 
 class SearchPane extends React.Component {
@@ -22,8 +22,11 @@ class SearchPane extends React.Component {
       <div>
         <SearchBar />
 
+        {/* Number of results available for given query and filter options */}
+        {this.props.numResults ? <p>{this.props.numResults} results</p> : null}
+
         {/* Go through passed data array and break into SearchItem elements */}
-        {this.props.testData.length ? this.props.testData.map((element) => {
+        {this.props.results.length ? this.props.results.map((element) => {
           return <SearchItem key={element.id || element._id} displayObject={element} />;
         }) : null}
       </div>
@@ -32,7 +35,8 @@ class SearchPane extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  testData: state.data.data,
+  results: state.data.data,
+  numResults: state.data.numResults,
 });
 
 export default connect(mapStateToProps, {})(SearchPane);
