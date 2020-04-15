@@ -18,8 +18,8 @@ const Welcome = (props) => {
   return (
     <div>
       <NavLink to="/signin">Sign In</NavLink>
-      <SearchPaneTest />
-      {/* <SearchPane /> */}
+      {/* <SearchPaneTest /> */}
+      <SearchPane />
     </div>
   );
 };
