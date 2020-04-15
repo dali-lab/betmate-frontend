@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import SearchItem from '../../../components/searchItem';
@@ -15,6 +16,10 @@ class SearchPane extends React.Component {
   componentDidMount() {
     // Called from searchBar
     // this.props.fetchSearchData();
+  }
+
+  componentDidUpdate() {
+    console.log('SearchPane props', this.props);
   }
 
   render() {
