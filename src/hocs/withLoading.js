@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import LoadingIcon from '../components/loadingIcon';
+import WithLoadingLoader from './withLoadingLoader';
 
 // Reference: https://levelup.gitconnected.com/how-to-connect-hoc-with-react-and-redux-2b3bce6a7dbf
 
@@ -21,9 +21,9 @@ export default (WrappedComponent, actions) => {
     }, []);
 
     return (
-      <LoadingIcon loading={loading}>
+      <WithLoadingLoader loading={loading}>
         <WrappedComponent {...props} />
-      </LoadingIcon>
+      </WithLoadingLoader>
     );
   };
 
