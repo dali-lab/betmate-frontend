@@ -23,12 +23,6 @@ class SearchBar extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    this.props.search(this.state.query).then().catch((error) => {
-      // Handle error
-    });
-  }
-
   handleQueryUpdate(e) {
     this.setState({ query: e.target.value });
   }
