@@ -1,9 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function loadingIcon() {
+// Functional loading component for displaying arbitrary loading component when prop loading is true
+const LoadingIcon = ({ loading, children }) => {
   return (
-    <div>Loading content...</div>
+    <React.Fragment>
+      {loading ? (
+        <div>Loading content...</div>
+      ) : (
+        { ...children }
+      )}
+    </React.Fragment>
   );
-}
+};
 
-export default loadingIcon;
+LoadingIcon.propTypes = {
+  loading: PropTypes.bool.isRequired,
+};
+
+export default LoadingIcon;
