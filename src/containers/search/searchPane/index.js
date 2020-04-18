@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // import withLoading from '../../../hocs/withLoading';
@@ -24,10 +23,6 @@ class SearchPane extends React.Component {
     // this.props.fetchSearchData();
   }
 
-  componentDidUpdate() {
-    console.log('SearchPane props', this.props);
-  }
-
   render() {
     return (
       <div>
@@ -50,6 +45,7 @@ const mapStateToProps = state => ({
   numResults: state.data.numResults,
 });
 
+// Calls fetchResources and waits until complete to load SearchPane
 const LoadingSearchPane = withLoading(SearchPane, [
   fetchResources,
 ]);

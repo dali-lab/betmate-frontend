@@ -7,13 +7,8 @@ import LoadingIcon from '../components/loadingIcon';
 // Reference: https://levelup.gitconnected.com/how-to-connect-hoc-with-react-and-redux-2b3bce6a7dbf
 
 export default (WrappedComponent, actions) => {
-  console.log('withLoading()', WrappedComponent, actions);
-
   const fetchActions = actions.reduce((o, fn) => ({ ...o, [fn.name]: fn }), {});
   const propTypes = actions.reduce((o, fn) => ({ ...o, [fn.name]: PropTypes.func.isRequired }), {});
-
-  console.log('fetchActions', fetchActions);
-  console.log('propTypes', propTypes);
 
   const LoadingDataHOC = (props) => {
     const [loading, setLoading] = useState(true);
