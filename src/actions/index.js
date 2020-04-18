@@ -5,6 +5,7 @@ export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
   DEAUTH_USER: 'DEAUTH_USER',
   SEARCH: 'SEARCH',
+  FETCH_RESORUCES: 'FETCH_RESOURCES',
 };
 
 /**
@@ -64,6 +65,20 @@ export function search(query, filters, sort, page, numPerPage) {
     // eslint-disable-next-line max-len
     axios.get(`http://localhost:9090/search?query=${query.split(' ').length > 0 ? query.split(' ').join('+') : query || ''}&filters=${filters || ''}&sort=${sort || 'a'}&page=${page || 1}&numperpage=${numPerPage || 100}`).then((response) => {
       dispatch({ type: ActionTypes.SEARCH, payload: response.data });
+      resolve();
+    }).catch((error) => {
+      reject(error);
+    });
+  });
+}
+
+/**
+ * A function for fetching all resources loaded into backend (or a given number based on backend parameters)
+ */
+export function fetchResources() {
+  return dispatch => new Promise((resolve, reject) => {
+    axios.get('http://localhost:9090/resources').then((response) => {
+      dispatch({ type: ActionTypes.FETCH_RESORUCES, payload: response.data });
       resolve();
     }).catch((error) => {
       reject(error);
