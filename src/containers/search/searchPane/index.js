@@ -1,11 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import withLoading from '../../../hocs/withLoading';
+// import withLoading from '../../../hocs/withLoading';
+
+import { fetchResources } from '../../../actions';
 
 import SearchItem from '../../../components/searchItem';
 import SearchBar from '../searchBar';
+
+import withLoading from '../../../hocs/withLoading';
 
 class SearchPane extends React.Component {
   constructor(props) {
@@ -20,10 +23,6 @@ class SearchPane extends React.Component {
     // this.props.fetchSearchData();
   }
 
-  componentDidUpdate() {
-    console.log('SearchPane props', this.props);
-  }
-
   render() {
     return (
       <div>
@@ -33,7 +32,7 @@ class SearchPane extends React.Component {
         {this.props.numResults ? <p>{this.props.numResults} results</p> : null}
 
         {/* Go through passed data array and break into SearchItem elements */}
-        {this.props.results.length ? this.props.results.map((element) => {
+        {this.props.results && this.props.results.length ? this.props.results.map((element) => {
           return <SearchItem key={element.id || element._id} displayObject={element} />;
         }) : null}
       </div>
@@ -46,4 +45,9 @@ const mapStateToProps = state => ({
   numResults: state.data.numResults,
 });
 
-export default connect(mapStateToProps, {})(SearchPane);
+// Calls fetchResources and waits until complete to load SearchPane
+const LoadingSearchPane = withLoading(SearchPane, [
+  fetchResources,
+]);
+
+export default connect(mapStateToProps, {})(LoadingSearchPane);

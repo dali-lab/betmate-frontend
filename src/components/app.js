@@ -5,20 +5,16 @@ import {
 } from 'react-router-dom';
 
 import { signInUser, signOutUser } from '../actions';
-import withLoading from '../hocs/withLoading';
 
 import AdminPanel from '../containers/adminPanel';
 import SearchPane from '../containers/search/searchPane';
 import SignInPanel from '../containers/authentication/signInPanel';
 import SignOutPanel from '../containers/authentication/signOutPanel';
 
-const SearchPaneTest = withLoading(SearchPane, 'results');
-
 const Welcome = (props) => {
   return (
     <div>
       <NavLink to="/signin">Sign In</NavLink>
-      {/* <SearchPaneTest /> */}
       <SearchPane />
     </div>
   );

@@ -1,9 +1,10 @@
 import React from 'react';
 
-function loadingIcon() {
+// Generic loading component
+const LoadingIcon = (props) => {
   return (
     <div>Loading content...</div>
   );
-}
+};
 
-export default loadingIcon;
+export default LoadingIcon;

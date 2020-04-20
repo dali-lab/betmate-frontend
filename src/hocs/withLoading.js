@@ -1,42 +1,34 @@
-import React from 'react';
-import LoadingIcon from '../components/loadingIcon';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const isEmpty = prop => (
-  prop === null
-  || prop === undefined
-  || (prop.length && prop.length === 0)
-  || (prop.constructor === Object && Object.keys(prop).length === 0)
-);
+import WithLoadingLoader from './withLoadingLoader';
 
-function withLoading(WrappedComponent, loadingProp) {
-  // https://reactjs.org/docs/higher-order-components.html
-  return class extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
+// Reference: https://levelup.gitconnected.com/how-to-connect-hoc-with-react-and-redux-2b3bce6a7dbf
 
-      };
-    }
+export default (WrappedComponent, actions) => {
+  const fetchActions = actions.reduce((o, fn) => ({ ...o, [fn.name]: fn }), {});
+  const propTypes = actions.reduce((o, fn) => ({ ...o, [fn.name]: PropTypes.func.isRequired }), {});
 
-    isLoading() {
-      const testProp = this.props[loadingProp];
-      console.log('testProp', loadingProp, testProp, testProp === undefined);
+  const LoadingDataHOC = (props) => {
+    const [loading, setLoading] = useState(true);
 
-      // if (Array.isArray(testProp)) {
-      //   console.log('array', testProp.length <= 0);
-      //   return testProp.length <= 0;
-      // } else {
-      //   console.log('not array', testProp === undefined);
-      //   return testProp === undefined;
-      // }
-      return testProp === undefined;
-    }
+    // Reference: https://reactjs.org/docs/hooks-effect.html
+    useEffect(() => {
+      // Mke a list of actions that need to complete and wait for them to complete before ending loading state
+      const actionPromises = actions.map(action => props[action.name]());
+      Promise.all(actionPromises).then(() => setLoading(false));
+    }, []);
 
-    render() {
-      // return this.isLoading() ? <LoadingIcon /> : <WrappedComponent {...this.props} />;
-      return <div style={this.isLoading() ? { visibility: 'hidden' } : {}}><WrappedComponent {...this.props} /></div>;
-    }
+    return (
+      <WithLoadingLoader loading={loading}>
+        <WrappedComponent {...props} />
+      </WithLoadingLoader>
+    );
   };
-}
 
-export default withLoading;
+  LoadingDataHOC.propTypes = propTypes;
+
+  // Reference: https://react-redux.js.org/api/connect
+  return connect(null, fetchActions)(LoadingDataHOC);
+};
