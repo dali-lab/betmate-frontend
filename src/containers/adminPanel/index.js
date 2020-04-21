@@ -1,76 +1,82 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { fetchResources } from '../../actions';
+
+function getResourceById(id) {
+  // gets resource by id
+  console.log(id);
+}
+
+function getUserById(id) {
+  // gets user by id
+  console.log(id);
+}
 
 class AdminPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: 'no users',
-      resources: 'no resources',
-      current_user: 'no current_user',
-      current_resource: 'no current resource',
+      user_id_get: '',
+      resource_id_get: '',
+      // users: 'no users',
+      // resources: 'no resources',
+      // current_user: 'no current_user',
+      // current_resource: 'no current resource',
 
     };
 
-    this.getAllUsers = this.getAllUsers.bind(this);
+    // this.getAllUsers = this.getAllUsers.bind(this);
     this.getAllResources = this.getAllResources.bind(this);
-    this.getUserById = this.getUserById.bind(this);
-    this.getResourceById = this.getResourceById.bind(this);
-    this.deleteUser = this.deleteUser.bind(this);
-    this.deleteResource = this.deleteResource.bind(this);
+    // this.getResourceById = this.getResourceById.bind(this);
+    // this.deleteUser = this.deleteUser.bind(this);
+    // this.deleteResource = this.deleteResource.bind(this);
   }
 
-  getAllUsers() {
-    // gets all users from server
-    this.setState({ users: 'users should be displayed' });
-    return (
-      <div>{this.state.users} </div>
-    );
-  }
+  // getAllUsers() {
+  //   // gets all users from server
+  //   console.log('get all users');
+  //   // this.setState({ users: 'users should be displayed' });
+  //   // return (
+  //   //   <div>{this.state.users} </div>
+  //   // );
+  // }
 
   getAllResources() {
     // gets all resources from server
-    this.setState({ resources: 'resources should be displayed' });
-    return (
-      <div>{this.state.resources} </div>
-    );
+    this.props.fetchResources();
   }
 
-  getUserById(id) {
-    // gets user by id
-    this.setState({ current_user: 'user found' });
-    return (
-      <div>{this.state.current_user} </div>
-    );
-  }
+  // deleteUser(id) {
+  //   // deletes user
+  // }
+  //
+  // deleteResource(id) {
+  //   // deletes resource
+  // }
 
-  getResourceById(id) {
-    // gets resource by id
-    this.setState({ current_user: 'resource found' });
-    return (
-      <div>{this.state.current_resource} </div>
-    );
-  }
-
-  deleteUser(id) {
-    // deletes user
-  }
-
-  deleteResource(id) {
-    // deletes resource
-  }
 
   render() {
     return (
       <div>
         <div>Welcome to the admin panel!</div>
+
         <button type="button" onClick={this.getAllUsers}>Get all users</button>
-        <button type="button" onClick={this.getUserById}>Get user by ID</button>
+
+        <input type="text" value={this.state.user_id_get} onChange={e => this.setState({ user_id_get: e.target.value })} />
+        <button type="button" onClick={e => getUserById(this.state.user_id_get)}> Submit </button>
         <button type="button" onClick={this.deleteUser}>Delete user</button>
+        <br />
 
         <button type="button" onClick={this.getAllResources}>Get all resources</button>
-        <button type="button" onClick={this.getResourceById}>Get resource by ID</button>
+
+        <input type="text" value={this.state.resource_id_get} onChange={e => this.setState({ resource_id_get: e.target.value })} />
+        <button type="button" onClick={e => getResourceById(this.state.resource_id_get)}> Submit </button>
         <button type="button" onClick={this.deleteResource}>Delete resource</button>
+        <br />
+
+
+        <div>{this.props.fetch || ''}</div>
 
         <NavLink to="/signout">Sign Out</NavLink>
       </div>
@@ -78,4 +84,8 @@ class AdminPanel extends React.Component {
   }
 }
 
-export default AdminPanel;
+const mapStateToProps = state => ({
+  fetch: state.data.data,
+});
+
+export default connect(mapStateToProps, { fetchResources })(AdminPanel);
