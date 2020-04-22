@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { fetchResources } from '../../actions';
+import SearchItem from '../../components/SearchItem';
 
 function getResourceById(id) {
   // gets resource by id
@@ -76,7 +77,10 @@ class AdminPanel extends React.Component {
         <br />
 
 
-        <div>{this.props.fetch || ''}</div>
+        <div> {this.props.results && this.props.results.length ? this.props.results.map((element) => {
+          return <SearchItem key={element.id || element._id} displayObject={element} />;
+        }) : null}
+        </div>
 
         <NavLink to="/signout">Sign Out</NavLink>
       </div>
@@ -85,7 +89,7 @@ class AdminPanel extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  fetch: state.data.data,
+  results: state.data.data,
 });
 
 export default connect(mapStateToProps, { fetchResources })(AdminPanel);
