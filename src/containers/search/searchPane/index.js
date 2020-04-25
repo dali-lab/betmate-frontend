@@ -1,14 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-// import withLoading from '../../../hocs/withLoading';
-
-import { fetchResources } from '../../../actions';
+import { fetchResources } from '../../../actions/resourceActions';
+import withLoading from '../../../hocs/withLoading';
 
 import SearchItem from '../../../components/searchItem';
 import SearchBar from '../searchBar';
-
-import withLoading from '../../../hocs/withLoading';
 
 class SearchPane extends React.Component {
   constructor(props) {
@@ -41,7 +38,7 @@ class SearchPane extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  results: state.data.data,
+  results: state.data.resources,
   numResults: state.data.numResults,
 });
 

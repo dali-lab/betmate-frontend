@@ -4,8 +4,9 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 
-import { ActionTypes } from './actions';
+import ActionTypes from './actions';
 import reducers from './reducers';
+import { authTokenName } from './constants';
 
 import App from './components/app';
 import './style.scss';
@@ -21,7 +22,7 @@ const store = createStore(reducers, {}, compose(
 let localStorageEnabled = true;
 const getTokenFromLocalStorage = () => {
   return new Promise((resolve) => {
-    resolve(localStorage.getItem('authToken'));
+    resolve(localStorage.getItem(authTokenName));
   });
 };
 

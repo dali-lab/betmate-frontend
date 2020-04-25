@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router, Route, NavLink, Switch,
 } from 'react-router-dom';
 
-import { signInUser, signOutUser } from '../actions';
+import { signInUser, signOutUser } from '../actions/authActions';
 
 import AdminPanel from '../containers/adminPanel';
 import SearchPane from '../containers/search/searchPane';

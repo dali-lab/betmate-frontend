@@ -15,7 +15,7 @@ export default (WrappedComponent, actions) => {
 
     // Reference: https://reactjs.org/docs/hooks-effect.html
     useEffect(() => {
-      // Mke a list of actions that need to complete and wait for them to complete before ending loading state
+      // Make a list of actions that need to complete and wait for them to complete before ending loading state
       const actionPromises = actions.map(action => props[action.name]());
       Promise.all(actionPromises).then(() => setLoading(false));
     }, []);
