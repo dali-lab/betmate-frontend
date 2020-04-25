@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 
-import { ActionTypes } from './actions';
+import ActionTypes from './actions';
 import reducers from './reducers';
 
 import App from './components/app';

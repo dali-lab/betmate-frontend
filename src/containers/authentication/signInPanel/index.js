@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { signInUser } from '../../../actions';
+import { signInUser } from '../../../actions/authActions';
 
 
 class SearchPane extends React.Component {
