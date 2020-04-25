@@ -38,7 +38,7 @@ class SearchPane extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  results: state.data.data,
+  results: state.data.resources,
   numResults: state.data.numResults,
 });
 

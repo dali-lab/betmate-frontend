@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { ROOT_URL } from '../constants';
-import ActionTypes from './index';
+// import axios from 'axios';
+// import { ROOT_URL } from '../constants';
+import ActionTypes, { setBearerToken } from './index';
 
 // TODO: Sign up
 
@@ -14,7 +14,7 @@ export function signInUser(username, password) {
   console.log(`Signing in user '${username}' with password '${password}'`);
   // TODO: Connect this to the backend
   return dispatch => new Promise((resolve, reject) => {
-    localStorage.setItem('authToken', 'Token Value');
+    setBearerToken('DUMMY TOKEN');
     dispatch({ type: ActionTypes.AUTH_USER });
     resolve();
 
