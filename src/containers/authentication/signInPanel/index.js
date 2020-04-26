@@ -10,6 +10,7 @@ class SearchPane extends React.Component {
     this.state = {
       username: '',
       password: '',
+      errorMessage: '',
     };
 
     this.handleUsernameUpdate = this.handleUsernameUpdate.bind(this);
@@ -17,19 +18,30 @@ class SearchPane extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // If the user is already authenticated, auto-redirect
+  componentDidMount() {
+    if (this.props.authenticated) {
+      this.props.history.push('/admin');
+    }
+  }
+
   handleUsernameUpdate(e) {
-    this.setState({ username: e.target.value });
+    this.setState({ username: e.target.value, errorMessage: '' });
   }
 
   handlePasswordUpdate(e) {
-    this.setState({ password: e.target.value });
+    this.setState({ password: e.target.value, errorMessage: '' });
   }
 
   handleSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
     this.props.signInUser(this.state.username, this.state.password).then((response) => {
       this.props.history.push('/admin');
     }).catch((error) => {
-      // Error handling UI
+      // Add error-handling logic here
+      this.setState({ errorMessage: error.message });
     });
   }
 
@@ -41,9 +53,14 @@ class SearchPane extends React.Component {
           <input type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordUpdate} />
           <input type="submit" value="Sign In" />
         </form>
+        {this.state.errorMessage}
       </div>
     );
   }
 }
 
-export default connect(null, { signInUser })(SearchPane);
+const mapStateToProps = state => ({
+  authenticated: state.auth.authenticated,
+});
+
+export default connect(mapStateToProps, { signInUser })(SearchPane);

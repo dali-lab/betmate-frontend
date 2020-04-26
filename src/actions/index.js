@@ -4,6 +4,10 @@ const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
   DEAUTH_USER: 'DEAUTH_USER',
 
+  // UNUSED, replaced with blanket AUTH_USER
+  // SIGNUP_USER: 'SIGNUP_USER',
+  // SIGNIN_USER: 'SIGNIN_USER',
+
   SEARCH: 'SEARCH',
 
   FETCH_RESOURCE: 'FETCH_RESOURCE',
