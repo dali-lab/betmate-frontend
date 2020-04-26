@@ -8,13 +8,15 @@ import { signInUser, signOutUser } from '../actions/authActions';
 
 import AdminPanel from '../containers/adminPanel';
 import SearchPane from '../containers/search/searchPane';
+import SignUpPanel from '../containers/authentication/signUpPanel';
 import SignInPanel from '../containers/authentication/signInPanel';
 import SignOutPanel from '../containers/authentication/signOutPanel';
 
 const Welcome = (props) => {
   return (
     <div>
-      <NavLink to="/signin">Sign In</NavLink>
+      <NavLink to="/signin">Sign In</NavLink><br />
+      <NavLink to="/signup">Sign Up</NavLink><br />
       <SearchPane />
     </div>
   );
@@ -31,6 +33,7 @@ const App = (props) => {
         <Switch>
           <Route exact path="/" component={Welcome} />
           <Route exact path="/signin" component={SignInPanel} />
+          <Route exact path="/signup" component={SignUpPanel} />
           <Route exact path="/signout" component={SignOutPanel} />
           <Route path="/admin" component={AdminPanel} />
           <Route component={FallBack} />
