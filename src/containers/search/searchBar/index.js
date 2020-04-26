@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { search } from '../../../actions';
+import { search } from '../../../actions/searchActions';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class SearchBar extends React.Component {
     this.state = {
       query: '',
       // filters: [], // UNIMPLEMENTED
-      sort: 'a',
+      sort: 'd',
       page: 1, // TODO: Get max pages from server
       numPerPage: 100,
     };
@@ -65,8 +65,8 @@ class SearchBar extends React.Component {
 
           {/* Sorting Options */}
           <select value={this.state.sort} onChange={this.handleSortUpdate}>
-            <option value="a">Ascending</option>
-            <option value="d">Descending</option>
+            <option value="d">Alphabetical</option>
+            <option value="a">Inverse Alphabetical</option>
           </select>
 
           {/* Pagination Controls */}
