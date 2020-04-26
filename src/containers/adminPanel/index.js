@@ -1,13 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { fetchResources } from '../../actions';
+import { fetchResources, fetchResourceByID, deleteResourceByID } from '../../actions/resourceActions';
 import SearchItem from '../../components/SearchItem';
 
-function getResourceById(id) {
-  // gets resource by id
-  console.log(id);
-}
 
 function getUserById(id) {
   // gets user by id
@@ -29,9 +25,9 @@ class AdminPanel extends React.Component {
 
     // this.getAllUsers = this.getAllUsers.bind(this);
     this.getAllResources = this.getAllResources.bind(this);
-    // this.getResourceById = this.getResourceById.bind(this);
+    this.getResourceById = this.getResourceById.bind(this);
     // this.deleteUser = this.deleteUser.bind(this);
-    // this.deleteResource = this.deleteResource.bind(this);
+    this.deleteResource = this.deleteResource.bind(this);
   }
 
   // getAllUsers() {
@@ -48,13 +44,21 @@ class AdminPanel extends React.Component {
     this.props.fetchResources();
   }
 
+  getResourceById(id) {
+    // gets resource by id
+    this.props.fetchResourceByID(id);
+    console.log(id);
+  }
+
   // deleteUser(id) {
   //   // deletes user
   // }
   //
-  // deleteResource(id) {
-  //   // deletes resource
-  // }
+  deleteResource(id) {
+    // deletes resource
+    this.props.deleteResourceByID(id);
+    console.log(id);
+  }
 
 
   render() {
@@ -72,14 +76,18 @@ class AdminPanel extends React.Component {
         <button type="button" onClick={this.getAllResources}>Get all resources</button>
 
         <input type="text" value={this.state.resource_id_get} onChange={e => this.setState({ resource_id_get: e.target.value })} />
-        <button type="button" onClick={e => getResourceById(this.state.resource_id_get)}> Submit </button>
-        <button type="button" onClick={this.deleteResource}>Delete resource</button>
+        <button type="button" onClick={e => this.getResourceById(this.state.resource_id_get)}> Submit </button>
+        <button type="button" onClick={e => this.deleteResource(this.state.resource_id_get)}>Delete resource</button>
         <br />
 
 
         <div> {this.props.results && this.props.results.length ? this.props.results.map((element) => {
           return <SearchItem key={element.id || element._id} displayObject={element} />;
         }) : null}
+        </div>
+
+        <div> {this.props.resource ? <SearchItem key={this.props.resource.id || this.props.resource._id} displayObject={this.props.resource} />
+          : null}
         </div>
 
         <NavLink to="/signout">Sign Out</NavLink>
@@ -89,7 +97,8 @@ class AdminPanel extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  results: state.data.data,
+  results: state.data.resources,
+  resource: state.data.resource,
 });
 
-export default connect(mapStateToProps, { fetchResources })(AdminPanel);
+export default connect(mapStateToProps, { fetchResources, fetchResourceByID, deleteResourceByID })(AdminPanel);
