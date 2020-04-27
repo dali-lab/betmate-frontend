@@ -65,7 +65,7 @@ class SignUpPanel extends React.Component {
           <input type="text" placeholder="Last Name" value={this.state.lastName} onChange={this.handleLastNameUpdate} />
           <input type="text" placeholder="Email" value={this.state.email} onChange={this.handleEmailUpdate} />
           <input type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordUpdate} />
-          <input type="submit" value="Sign In" />
+          <input type="submit" value="Sign Up" />
         </form>
         {this.state.errorMessage}
       </div>

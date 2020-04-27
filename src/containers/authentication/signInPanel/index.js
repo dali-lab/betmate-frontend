@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import { signInUser } from '../../../actions/authActions';
 
-
 class SignInPanel extends React.Component {
   constructor(props) {
     super(props);
