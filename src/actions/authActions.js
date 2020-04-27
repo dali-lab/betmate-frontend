@@ -1,8 +1,28 @@
-// import axios from 'axios';
-// import { ROOT_URL } from '../constants';
+import axios from 'axios';
+import { ROOT_URL } from '../constants';
 import ActionTypes, { setBearerToken } from './index';
 
-// TODO: Sign up
+/**
+ * Sign up a user and return a user object and a bearer token
+ * @param {*} email
+ * @param {*} password
+ * @param {*} firstName
+ * @param {*} lastName
+ */
+export function signUpUser(email, password, firstName, lastName) {
+  return dispatch => new Promise((resolve, reject) => {
+    axios.post(`${ROOT_URL}/auth/signup`, {
+      email, password, firstName, lastName,
+    }).then((response) => {
+      if (response.data.token) setBearerToken(response.data.token);
+      dispatch({ type: ActionTypes.AUTH_USER, payload: response.data.user });
+      resolve();
+    }).catch((error) => {
+      console.error(error);
+      reject(error);
+    });
+  });
+}
 
 /**
  * A function that takes a username and a password and sends them to the backend server for authentication
@@ -10,25 +30,16 @@ import ActionTypes, { setBearerToken } from './index';
  * @param {*} username
  * @param {*} password
  */
-export function signInUser(username, password) {
-  console.log(`Signing in user '${username}' with password '${password}'`);
-  // TODO: Connect this to the backend
+export function signInUser(email, password) {
   return dispatch => new Promise((resolve, reject) => {
-    setBearerToken('DUMMY TOKEN');
-    dispatch({ type: ActionTypes.AUTH_USER });
-    resolve();
-
-    // TODO: Connect to server
-
-    // axios.post(`${ROOT_URL}/`, { username, password }).then((response) => {
-    //   console.log('Sign in response:', response);
-    //   localStorage.setItem('authToken', 'Token Value');
-    //   dispatch({ type: ActionTypes.AUTH_USER });
-    //   resolve();
-    // }).catch((error) => {
-    //   console.error(error);
-    //   reject(error);
-    // });
+    axios.post(`${ROOT_URL}/auth/signin`, { email, password }).then((response) => {
+      if (response.data.token) setBearerToken(response.data.token);
+      dispatch({ type: ActionTypes.AUTH_USER, payload: response.data.user });
+      resolve();
+    }).catch((error) => {
+      console.error(error);
+      reject(error);
+    });
   });
 }
 
