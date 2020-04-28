@@ -18,7 +18,6 @@ export function signUpUser(email, password, firstName, lastName) {
       dispatch({ type: ActionTypes.AUTH_USER, payload: response.data.user });
       resolve();
     }).catch((error) => {
-      console.error(error);
       reject(error);
     });
   });
@@ -37,7 +36,6 @@ export function signInUser(email, password) {
       dispatch({ type: ActionTypes.AUTH_USER, payload: response.data.user });
       resolve();
     }).catch((error) => {
-      console.error(error);
       reject(error);
     });
   });
