@@ -18,7 +18,7 @@ const ActionTypes = {
 };
 
 // Gets token from localStorage
-export function getBearerToken() {
+export function getBearerTokenHeader() {
   return ({ Authorization: `Bearer ${localStorage.getItem(authTokenName)}` });
 }
 
