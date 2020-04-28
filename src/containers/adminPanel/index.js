@@ -1,8 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { fetchResources, fetchResourceByID, deleteResourceByID } from '../../actions/resourceActions';
-import { fetchUsers, fetchUserByID, deleteUserByID } from '../../actions/userActions';
+import {
+  fetchResources, createResource, fetchResourceByID, deleteResourceByID,
+} from '../../actions/resourceActions';
+import {
+  fetchUsers, createUser, fetchUserByID, deleteUserByID,
+} from '../../actions/userActions';
 import SearchItem from '../../components/SearchItem';
 
 
@@ -44,13 +48,13 @@ class AdminPanel extends React.Component {
   }
 
   deleteUser(id) {
-    this.props.deleteUserByID(id, {});
+    this.props.deleteUserByID(id);
     console.log(id);
   }
 
   deleteResource(id) {
     // deletes resource
-    this.props.deleteResourceByID(id, {});
+    this.props.deleteResourceByID(id);
     console.log(id);
   }
 
@@ -74,38 +78,43 @@ class AdminPanel extends React.Component {
         <button type="button" onClick={e => this.deleteResource(this.state.resource_id_get)}>Delete resource</button>
         <br />
 
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div>
+            <p> Resources: </p>
+            <br />
 
-        <p> Resources: </p>
-        <br />
+            <div> {this.props.results && this.props.results.length ? this.props.results.map((element) => {
+              return <SearchItem key={element.id || element._id} displayObject={element} />;
+            }) : null}
+            </div>
 
-        <div> {this.props.results && this.props.results.length ? this.props.results.map((element) => {
-          return <SearchItem key={element.id || element._id} displayObject={element} />;
-        }) : null}
+            <p> <b>Selected resource: </b></p>
+            <br />
+
+            <div> {this.props.resource ? <SearchItem key={this.props.resource.id || this.props.resource._id} displayObject={this.props.resource} />
+              : null}
+            </div>
+            <br />
+          </div>
+          <div style={{ width: '600px' }} />
+          <div>
+            <p> <b> Users: </b> </p>
+            <br />
+
+            <div> {this.props.users && this.props.users.length ? this.props.users.map((element) => {
+              return <SearchItem key={element.id || element._id} displayObject={element} />;
+            }) : null}
+            </div>
+
+            <p> <b> Selected user: </b></p>
+            <br />
+
+            <div> {this.props.user ? <SearchItem key={this.props.user.id || this.props.user._id} displayObject={this.props.user} />
+              : null}
+            </div>
+
+          </div>
         </div>
-
-        <p> Selected resource: </p>
-        <br />
-
-        <div> {this.props.resource ? <SearchItem key={this.props.resource.id || this.props.resource._id} displayObject={this.props.resource} />
-          : null}
-        </div>
-        <br />
-
-        <p> Users: </p>
-        <br />
-
-        <div> {this.props.users && this.props.users.length ? this.props.users.map((element) => {
-          return <SearchItem key={element.id || element._id} displayObject={element} />;
-        }) : null}
-        </div>
-
-        <p> Selected user: </p>
-        <br />
-
-        <div> {this.props.user ? <SearchItem key={this.props.user.id || this.props.user._id} displayObject={this.props.user} />
-          : null}
-        </div>
-
         <NavLink to="/signout">Sign Out</NavLink>
       </div>
     );
@@ -120,5 +129,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  fetchResources, fetchResourceByID, deleteResourceByID, fetchUsers, fetchUserByID, deleteUserByID,
+  fetchResources, createResource, fetchResourceByID, deleteResourceByID, fetchUsers, createUser, fetchUserByID, deleteUserByID,
 })(AdminPanel);

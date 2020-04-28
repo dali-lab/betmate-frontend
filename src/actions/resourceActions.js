@@ -71,8 +71,7 @@ export function updateResourceByID(id, update) {
 // Delete (AUTH)
 export function deleteResourceByID(id) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.delete(`${ROOT_URL}/resources/${id}`, {}, { headers: getBearerTokenHeader() }).then((response) => {
-      console.log(response.data); // TODO: Remove testing console log
+    axios.delete(`${ROOT_URL}/resources/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
       // dispatch({ type: ActionTypes.FETCH_RESORUCES, payload: response.data });
       resolve();
     }).catch((error) => {
