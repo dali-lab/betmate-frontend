@@ -115,8 +115,8 @@ class AdminPanel extends React.Component {
 const mapStateToProps = state => ({
   results: state.data.resources,
   resource: state.data.resource,
-  users: state.data.users,
-  user: state.data.user,
+  users: state.auth.users,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, {
