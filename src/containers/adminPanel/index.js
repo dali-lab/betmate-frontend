@@ -16,13 +16,21 @@ class AdminPanel extends React.Component {
     this.state = {
       user_id_get: '',
       resource_id_get: '',
+      user_title_create: '',
+      user_description_create: '',
+      user_value_create: '',
+      resource_title_create: '',
+      resource_description_create: '',
+      resource_value_create: '',
 
     };
 
     this.getAllUsers = this.getAllUsers.bind(this);
+    this.createUser = this.createUser.bind(this);
     this.getUserById = this.getUserById.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
     this.getAllResources = this.getAllResources.bind(this);
+    this.createResource = this.createResource.bind(this);
     this.getResourceById = this.getResourceById.bind(this);
     this.deleteResource = this.deleteResource.bind(this);
   }
@@ -30,6 +38,7 @@ class AdminPanel extends React.Component {
   getAllUsers() {
     this.props.fetchUsers();
   }
+
 
   getUserById(id) {
     this.props.fetchUserByID(id);
@@ -45,6 +54,14 @@ class AdminPanel extends React.Component {
     // gets resource by id
     this.props.fetchResourceByID(id);
     console.log(id);
+  }
+
+  createUser(title, description, value) {
+    this.props.createUser(title, description, value);
+  }
+
+  createResource(title, description, value) {
+    this.props.createResource(title, description, value);
   }
 
   deleteUser(id) {
@@ -66,21 +83,38 @@ class AdminPanel extends React.Component {
 
         <button type="button" onClick={this.getAllUsers}>Get all users</button>
 
-        <input type="text" value={this.state.user_id_get} onChange={e => this.setState({ user_id_get: e.target.value })} />
+        <input type="text" placeholder="user id" value={this.state.user_id_get} onChange={e => this.setState({ user_id_get: e.target.value })} />
         <button type="button" onClick={e => this.getUserById(this.state.user_id_get)}> Submit </button>
         <button type="button" onClick={e => this.deleteUser(this.state.user_id_get)}>Delete user</button>
         <br />
 
         <button type="button" onClick={this.getAllResources}>Get all resources</button>
 
-        <input type="text" value={this.state.resource_id_get} onChange={e => this.setState({ resource_id_get: e.target.value })} />
+        <input type="text" placeholder="resource id" value={this.state.resource_id_get} onChange={e => this.setState({ resource_id_get: e.target.value })} />
         <button type="button" onClick={e => this.getResourceById(this.state.resource_id_get)}> Submit </button>
         <button type="button" onClick={e => this.deleteResource(this.state.resource_id_get)}>Delete resource</button>
         <br />
 
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div>
-            <p> Resources: </p>
+            <p><b>Create resource:</b></p>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <p> Title: </p>
+              <input type="text" value={this.state.resource_title_create} onChange={e => this.setState({ resource_title_create: e.target.value })} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <p> Description: </p>
+              <input type="text" value={this.state.resource_description_create} onChange={e => this.setState({ resource_description_create: e.target.value })} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <p> Value: </p>
+              <input type="text" value={this.state.resource_value_create} onChange={e => this.setState({ resource_value_create: e.target.value })} />
+            </div>
+            <br />
+
+            <button type="button" onClick={e => this.createResource(this.state.resource_title_create, this.state.resource_description_create, this.state.resource_value_create)}>create</button>
+
+            <p> <b>Resources: </b></p>
             <br />
 
             <div> {this.props.results && this.props.results.length ? this.props.results.map((element) => {
@@ -98,6 +132,24 @@ class AdminPanel extends React.Component {
           </div>
           <div style={{ width: '600px' }} />
           <div>
+
+            <p><b>Create user:</b></p>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <p> Title: </p>
+              <input type="text" value={this.state.user_title_create} onChange={e => this.setState({ user_title_create: e.target.value })} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <p> Description: </p>
+              <input type="text" value={this.state.user_description_create} onChange={e => this.setState({ user_description_create: e.target.value })} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <p> Value: </p>
+              <input type="text" value={this.state.user_value_create} onChange={e => this.setState({ user_value_create: e.target.value })} />
+            </div>
+            <br />
+
+            <button type="button" onClick={e => this.createUser(this.state.user_title_create, this.state.user_description_create, this.state.user_value_create)}>create</button>
+
             <p> <b> Users: </b> </p>
             <br />
 
