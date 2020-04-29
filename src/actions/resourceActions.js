@@ -7,10 +7,13 @@ import ActionTypes, { getBearerTokenHeader } from './index';
  */
 export function fetchResources() {
   return dispatch => new Promise((resolve, reject) => {
+    dispatch({ type: ActionTypes.FETCH_RESOURCES_REQUEST });
+
     axios.get(`${ROOT_URL}/resources`).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_RESOURCES, payload: response.data });
+      dispatch({ type: ActionTypes.FETCH_RESOURCES_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
+      dispatch({ type: ActionTypes.FETCH_RESOURCES_FAILURE });
       reject(error);
     });
   });
@@ -19,10 +22,13 @@ export function fetchResources() {
 // New resource (AUTH)
 export function createResource(title, description, value) {
   return dispatch => new Promise((resolve, reject) => {
+    dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
+
     axios.post(`${ROOT_URL}/resources`, { title, description, value }, { headers: getBearerTokenHeader() }).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_RESOURCE, payload: response.data });
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE });
       reject(error);
     });
   });
@@ -33,8 +39,6 @@ export function createResource(title, description, value) {
 // export function deleteAllResources() {
 //   return dispatch => new Promise((resolve, reject) => {
 //     axios.delete(`${ROOT_URL}/resources`).then((response) => {
-//       console.log(response.data); // TODO: Remove testing console log
-//       // dispatch({ type: ActionTypes.FETCH_RESORUCES, payload: response.data });
 //       resolve();
 //     }).catch((error) => {
 //       reject(error);
@@ -47,10 +51,13 @@ export function createResource(title, description, value) {
 // Get
 export function fetchResourceByID(id) {
   return dispatch => new Promise((resolve, reject) => {
+    dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
+
     axios.get(`${ROOT_URL}/resources/${id}`).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_RESOURCE, payload: response.data });
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE });
       reject(error);
     });
   });
@@ -59,10 +66,13 @@ export function fetchResourceByID(id) {
 // Update (AUTH)
 export function updateResourceByID(id, update) {
   return dispatch => new Promise((resolve, reject) => {
+    dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
+
     axios.put(`${ROOT_URL}/resources/${id}`, { update }, { headers: getBearerTokenHeader() }).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_RESOURCE, payload: response.data });
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE });
       reject(error);
     });
   });
@@ -72,8 +82,6 @@ export function updateResourceByID(id, update) {
 export function deleteResourceByID(id) {
   return dispatch => new Promise((resolve, reject) => {
     axios.delete(`${ROOT_URL}/resources/${id}`, {}, { headers: getBearerTokenHeader() }).then((response) => {
-      console.log(response.data); // TODO: Remove testing console log
-      // dispatch({ type: ActionTypes.FETCH_RESORUCES, payload: response.data });
       resolve();
     }).catch((error) => {
       reject(error);

@@ -11,13 +11,16 @@ import ActionTypes, { setBearerToken } from './index';
  */
 export function signUpUser(email, password, firstName, lastName) {
   return dispatch => new Promise((resolve, reject) => {
+    dispatch({ type: ActionTypes.AUTH_USER_REQUEST });
+
     axios.post(`${ROOT_URL}/auth/signup`, {
       email, password, firstName, lastName,
     }).then((response) => {
       if (response.data.token) setBearerToken(response.data.token);
-      dispatch({ type: ActionTypes.AUTH_USER, payload: response.data.user });
+      dispatch({ type: ActionTypes.AUTH_USER_SUCCESS, payload: response.data.user });
       resolve();
     }).catch((error) => {
+      dispatch({ type: ActionTypes.AUTH_USER_FAILURE });
       reject(error);
     });
   });
@@ -31,11 +34,14 @@ export function signUpUser(email, password, firstName, lastName) {
  */
 export function signInUser(email, password) {
   return dispatch => new Promise((resolve, reject) => {
+    dispatch({ type: ActionTypes.AUTH_USER_REQUEST });
+
     axios.post(`${ROOT_URL}/auth/signin`, { email, password }).then((response) => {
       if (response.data.token) setBearerToken(response.data.token);
-      dispatch({ type: ActionTypes.AUTH_USER, payload: response.data.user });
+      dispatch({ type: ActionTypes.AUTH_USER_SUCCESS, payload: response.data.user });
       resolve();
     }).catch((error) => {
+      dispatch({ type: ActionTypes.AUTH_USER_FAILURE });
       reject(error);
     });
   });
@@ -47,6 +53,9 @@ export function signInUser(email, password) {
 export function signOutUser() {
   return (dispatch) => {
     localStorage.clear();
-    dispatch({ type: ActionTypes.DEAUTH_USER });
+
+    // Run any additional deauth processes here (dispatch DEAUTH_USER_REQUEST if async)
+
+    dispatch({ type: ActionTypes.DEAUTH_USER_SUCCESS });
   };
 }
