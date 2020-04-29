@@ -16,9 +16,10 @@ class AdminPanel extends React.Component {
     this.state = {
       user_id_get: '',
       resource_id_get: '',
-      user_title_create: '',
-      user_description_create: '',
-      user_value_create: '',
+      user_first_name_create: '',
+      user_last_name_create: '',
+      user_email_create: '',
+      user_password_create: '',
       resource_title_create: '',
       resource_description_create: '',
       resource_value_create: '',
@@ -56,8 +57,8 @@ class AdminPanel extends React.Component {
     console.log(id);
   }
 
-  createUser(title, description, value) {
-    this.props.createUser(title, description, value);
+  createUser(firstName, lastName, email, password) {
+    this.props.createUser(firstName, lastName, email, password);
   }
 
   createResource(title, description, value) {
@@ -135,20 +136,28 @@ class AdminPanel extends React.Component {
 
             <p><b>Create user:</b></p>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <p> Title: </p>
-              <input type="text" value={this.state.user_title_create} onChange={e => this.setState({ user_title_create: e.target.value })} />
+              <p> First name: </p>
+              <input type="text" value={this.state.user_first_name_create} onChange={e => this.setState({ user_first_name_create: e.target.value })} />
             </div>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <p> Description: </p>
-              <input type="text" value={this.state.user_description_create} onChange={e => this.setState({ user_description_create: e.target.value })} />
+              <p> Last name: </p>
+              <input type="text" value={this.state.user_last_name_create} onChange={e => this.setState({ user_last_name_create: e.target.value })} />
             </div>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <p> Value: </p>
-              <input type="text" value={this.state.user_value_create} onChange={e => this.setState({ user_value_create: e.target.value })} />
+              <p> Email: </p>
+              <input type="text" value={this.state.user_email_create} onChange={e => this.setState({ user_email_create: e.target.value })} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <p> Password: </p>
+              <input type="text" value={this.state.user_password_create} onChange={e => this.setState({ user_password_create: e.target.value })} />
             </div>
             <br />
 
-            <button type="button" onClick={e => this.createUser(this.state.user_title_create, this.state.user_description_create, this.state.user_value_create)}>create</button>
+            <button type="button"
+              onClick={e => this.createUser(this.state.user_first_name_create, this.state.user_last_name_create, this.state.user_email_create,
+                this.state.user_password_create)}
+            >create
+            </button>
 
             <p> <b> Users: </b> </p>
             <br />

@@ -15,9 +15,11 @@ export function fetchUsers() {
 }
 
 // New user (AUTH)
-export function createUser(title, description, value) {
+export function createUser(firstName, lastName, email, password) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.post(`${ROOT_URL}/users`, { title, description, value }, { headers: getBearerTokenHeader() }).then((response) => {
+    axios.post(`${ROOT_URL}/users`, {
+      firstName, lastName, email, password,
+    }, { headers: getBearerTokenHeader() }).then((response) => {
       dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       resolve();
     }).catch((error) => {
