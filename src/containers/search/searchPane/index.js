@@ -15,18 +15,14 @@ class SearchPane extends React.Component {
     };
   }
 
-  componentDidMount() {
-    // Called from searchBar
-    // this.props.fetchSearchData();
-  }
-
   render() {
     return (
       <div>
         <SearchBar />
 
         {/* Number of results available for given query and filter options */}
-        {this.props.numResults ? <p>{this.props.numResults} results</p> : null}
+        {/* Check if there have been results loaded or if there is an array of resources in redux */}
+        <p>{this.props.numResults || (this.props.results && this.props.results.length) ? this.props.numResults || this.props.results.length : 0} results</p>
 
         {/* Go through passed data array and break into SearchItem elements */}
         {this.props.results && this.props.results.length ? this.props.results.map((element) => {

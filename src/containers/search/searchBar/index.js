@@ -10,7 +10,7 @@ class SearchBar extends React.Component {
       query: '',
       // filters: [], // UNIMPLEMENTED
       sort: 'd',
-      page: 1, // TODO: Get max pages from server
+      page: 1,
       numPerPage: 100,
     };
 
@@ -59,7 +59,7 @@ class SearchBar extends React.Component {
           {/* Search Bar */}
           <input type="search" placeholder="Enter search here!" value={this.state.query} onChange={this.handleQueryUpdate} />
 
-          {/* TODO: Filtering Options */}
+          {/* UNIMPLEMENTED: Filtering Options */}
           {/* <label htmlFor="idRange">Max User ID</label>
           <input type="range" id="idRange" placeholder="User ID Range" min={0} max={10} /> */}
 
