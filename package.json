@@ -4,7 +4,11 @@
   "description": "DALI Lab CRUD template",
   "main": "src/index.js",
   "repository": "https://github.com/dali-lab/crud-template-frontend",
-  "author": "Adam McQuilkin <adam.j.mcquilkin.22@dartmouth.edu>",
+  "author": "Adam McQuilkin <Adam.J.Mcquilkin.22@Dartmouth.edu>",
+  "contributors": [
+    "Alex Lopez <Alejandro.A.Lopez.Cochachi.23@Dartmouth.edu>",
+    "Thomas Monfre <Thomas.A.Monfre.21@Dartmouth.edu>"
+  ],
   "license": "MIT",
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server",
