@@ -1,10 +1,10 @@
 {
-  "name": "starterpack-tmonfre",
+  "name": "crud-template-frontend",
   "version": "1.0.0",
-  "description": "dartmouth cs52 19s sa3",
+  "description": "DALI Lab CRUD template",
   "main": "src/index.js",
-  "repository": "https://github.com/dartmouth-cs52-19S/starterpack-tmonfre",
-  "author": "Thomas Monfre <tmonfre@users.noreply.github.com>",
+  "repository": "https://github.com/dali-lab/crud-template-frontend",
+  "author": "Adam McQuilkin <adam.j.mcquilkin.22@dartmouth.edu>",
   "license": "MIT",
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server",
