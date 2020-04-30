@@ -77,7 +77,6 @@ export function updateUserByID(id, update) {
 // Delete by id (AUTH)
 export function deleteUserByID(id) {
   return dispatch => new Promise((resolve, reject) => {
-    console.log('user id delete', getBearerTokenHeader());
     axios.delete(`${ROOT_URL}/users/${id}`, {}, { headers: getBearerTokenHeader() }).then((response) => {
       resolve();
     }).catch((error) => {

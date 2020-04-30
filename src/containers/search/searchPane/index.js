@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import withLoading from '../../../hocs/withLoading';
 
 import { fetchResources, updateResourceByID } from '../../../actions/resourceActions';
-import { createLoadingSelector, createErrorMessageSelector } from '../../../actions';
+import { createErrorMessageSelector } from '../../../actions/errorActions';
+import { createLoadingSelector } from '../../../actions/loadingActions';
 
 import SearchItem from '../../../components/searchItem';
 import SearchBar from '../searchBar';
@@ -21,9 +22,6 @@ class SearchPane extends React.Component {
     return (
       <div>
         <SearchBar />
-
-        <button type="button" onClick={() => this.props.updateResourceByID('5ea9eeb8a817286cf8ad1e6f', {})}>Click Me lol</button>
-        {this.props.resource._id}
 
         <div>
           {/* eslint-disable-next-line no-nested-ternary */}
@@ -54,8 +52,6 @@ const loadingSelector = createLoadingSelector(loadActions);
 const errorMessageSelector = createErrorMessageSelector(loadActions);
 
 const mapStateToProps = state => ({
-  resource: state.data.resource,
-
   results: state.data.resources,
   numResults: state.data.numResults,
   isLoading: loadingSelector(state),

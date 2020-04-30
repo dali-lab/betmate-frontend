@@ -18,3 +18,18 @@ export function clearError(action) {
     return dispatch({ type: `${action}_CLEAR_ERR`, payload: { message: '' } });
   };
 }
+
+/**
+ * Returns a function that can be added directly to a mapStateToProps object
+ * that will return the first error message associated with the array of actions (if any)
+ */
+export const createErrorMessageSelector = actions => (state) => {
+  // actions not passed as an array
+  if (!Array.isArray(actions)) { return () => null; }
+
+  // Returns the first found error message
+  let test = actions.map(action => state.error[action] || '');
+
+  test = test.filter(message => message !== '');
+  return test[0] || '';
+};
