@@ -59,4 +59,18 @@ export const createLoadingSelector = actions => (state) => {
   return actions.some(action => state.loading[action] === true);
 };
 
+/**
+ *
+ */
+export const createErrorMessageSelector = actions => (state) => {
+  // actions not passed as an array
+  if (!Array.isArray(actions)) { return () => null; }
+
+  // Returns the first found error message
+  let test = actions.map(action => state.error[action] || '');
+
+  test = test.filter(message => message !== '');
+  return test[0] || '';
+};
+
 export default ActionTypes;

@@ -3,12 +3,12 @@
 
 const reducer = (state = {}, action) => {
   /**
-   * Check if the action name ends in "REQUEST", "SUCCESS", OR "FAILURE"
+   * Check if the action name ends in "REQUEST", "SUCCESS", or "FAILURE"
    */
   const matches = /(.*)_(REQUEST|SUCCESS|FAILURE)/.exec(action.type);
 
   /**
-   * The passed action name does not end in "REQUEST", "SUCCESS", OR "FAILURE"
+   * The passed action name does not end in "REQUEST", "SUCCESS", or "FAILURE"
    */
   if (!matches) {
     return state;

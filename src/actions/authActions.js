@@ -20,7 +20,7 @@ export function signUpUser(email, password, firstName, lastName) {
       dispatch({ type: ActionTypes.AUTH_USER_SUCCESS, payload: response.data.user });
       resolve();
     }).catch((error) => {
-      dispatch({ type: ActionTypes.AUTH_USER_FAILURE });
+      dispatch({ type: ActionTypes.AUTH_USER_FAILURE, payload: error });
       reject(error);
     });
   });
@@ -41,7 +41,7 @@ export function signInUser(email, password) {
       dispatch({ type: ActionTypes.AUTH_USER_SUCCESS, payload: response.data.user });
       resolve();
     }).catch((error) => {
-      dispatch({ type: ActionTypes.AUTH_USER_FAILURE });
+      dispatch({ type: ActionTypes.AUTH_USER_FAILURE, payload: error });
       reject(error);
     });
   });

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { signInUser } from '../../../actions/authActions';
+import { createErrorMessageSelector } from '../../../actions';
 
 class SignInPanel extends React.Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class SignInPanel extends React.Component {
     this.state = {
       email: '',
       password: '',
-      errorMessage: '',
+      // errorMessage: '',
     };
 
     this.handleEmailUpdate = this.handleEmailUpdate.bind(this);
@@ -25,11 +26,11 @@ class SignInPanel extends React.Component {
   }
 
   handleEmailUpdate(e) {
-    this.setState({ email: e.target.value, errorMessage: '' });
+    this.setState({ email: e.target.value });
   }
 
   handlePasswordUpdate(e) {
-    this.setState({ password: e.target.value, errorMessage: '' });
+    this.setState({ password: e.target.value });
   }
 
   handleSubmit(e) {
@@ -40,7 +41,6 @@ class SignInPanel extends React.Component {
       this.props.history.push('/admin');
     }).catch((error) => {
       // Add error-handling logic here
-      this.setState({ errorMessage: error.message });
     });
   }
 
@@ -52,14 +52,18 @@ class SignInPanel extends React.Component {
           <input type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordUpdate} />
           <input type="submit" value="Sign In" />
         </form>
-        {this.state.errorMessage}
+        {this.props.errorMessage}
       </div>
     );
   }
 }
 
+
+const errorMessageSelector = createErrorMessageSelector(['AUTH_USER']);
+
 const mapStateToProps = state => ({
   authenticated: state.auth.authenticated,
+  errorMessage: errorMessageSelector(state),
 });
 
 export default connect(mapStateToProps, { signInUser })(SignInPanel);
