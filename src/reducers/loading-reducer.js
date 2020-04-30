@@ -27,7 +27,7 @@ const reducer = (state = {}, action) => {
    * Will assign true to the value of requestName within the loadingReducer if the request has not completed,
    * and false if the request completes. This allows you to check loading through the loadingReducer automatically   *
    */
-  return Object.assign({}, state, { [requestName]: requestState === 'REQUEST' });
+  return Object.assign({}, state, { [requestName]: requestState === 'REQUEST' && requestState !== 'CLEAR_ERR' });
 };
 
 export default reducer;
