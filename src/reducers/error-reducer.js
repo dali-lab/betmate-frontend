@@ -3,14 +3,14 @@
 
 const reducer = (state = {}, action) => {
   /**
-   * Check if the action name ends in "REQUEST" or "FAILURE"
+   * Check if the action name ends in "REQUEST", "FAILURE", or "CLEAR_ERR"
    */
-  const matches = /(.*)_(REQUEST|FAILURE)/.exec(action.type);
+  const matches = /(.*)_(REQUEST|FAILURE|CLEARERR)/.exec(action.type);
 
   console.log('matches', matches);
 
   /**
-   * The passed action name does not end in "REQUEST" or "FAILURE"
+   * The passed action name does not end in "REQUEST", "FAILURE", or "CLEAR_ERR"
    */
   if (!matches) {
     return state;
@@ -20,7 +20,7 @@ const reducer = (state = {}, action) => {
    * There will only be three values within a valid matches array
    * 1) Full action name
    * 2) Action name
-   * 3) Matched string within action ("REQUEST", "FAILURE")
+   * 3) Matched string within action ("REQUEST", "FAILURE", or "CLEAR_ERR")
    */
   const [, requestName, requestState] = matches;
 

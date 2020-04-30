@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { createLoadingSelector, createErrorMessageSelector } from '../../../actions/index';
 import { signUpUser } from '../../../actions/authActions';
+import { setError, clearError } from '../../../actions/errorActions';
 
 class SignUpPanel extends React.Component {
   constructor(props) {
@@ -48,11 +49,22 @@ class SignUpPanel extends React.Component {
     e.preventDefault();
     e.stopPropagation();
 
-    this.props.signUpUser(this.state.email, this.state.password, this.state.firstName, this.state.lastName).then((response) => {
-      this.props.history.push('/admin');
-    }).catch((error) => {
-      // Add error-handling logic here
-    });
+    if (!this.state.firstName) {
+      this.props.setError(['AUTH_USER'], 'Please enter your first name!');
+    } else if (!this.state.lastName) {
+      this.props.setError(['AUTH_USER'], 'Please enter your last name!');
+    } else if (!this.state.email) {
+      this.props.setError(['AUTH_USER'], 'Please enter an email address!');
+    } else if (!this.state.password) {
+      this.props.setError(['AUTH_USER'], 'Please enter a password!');
+    } else {
+      // Send only if all fields filled in
+      this.props.signUpUser(this.state.email, this.state.password, this.state.firstName, this.state.lastName).then((response) => {
+        this.props.history.push('/admin');
+      }).catch((error) => {
+        // Add error-handling logic here
+      });
+    }
   }
 
   render() {
@@ -82,4 +94,4 @@ const mapStateToProps = state => ({
   errorMessage: errorMessageSelector(state),
 });
 
-export default connect(mapStateToProps, { signUpUser })(SignUpPanel);
+export default connect(mapStateToProps, { signUpUser, setError, clearError })(SignUpPanel);

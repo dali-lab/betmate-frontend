@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { createLoadingSelector, createErrorMessageSelector } from '../../../actions';
 import { signInUser } from '../../../actions/authActions';
+import { setError, clearError } from '../../../actions/errorActions';
 
 class SignInPanel extends React.Component {
   constructor(props) {
@@ -37,11 +38,19 @@ class SignInPanel extends React.Component {
     e.preventDefault();
     e.stopPropagation();
 
-    this.props.signInUser(this.state.email, this.state.password).then((response) => {
-      this.props.history.push('/admin');
-    }).catch((error) => {
-      // Add error-handling logic here
-    });
+    if (!this.state.email) {
+      this.props.setError(['AUTH_USER'], 'Please enter an email address!');
+    } else if (!this.state.password) {
+      this.props.setError(['AUTH_USER'], 'Please enter a password!');
+    } else {
+      // Send only if all fields filled in
+      this.props.signInUser(this.state.email, this.state.password).then((response) => {
+        this.props.history.push('/admin');
+        this.props.clearError(['AUTH_USER']);
+      }).catch((error) => {
+        // Add error-handling logic here
+      });
+    }
   }
 
   render() {
@@ -69,4 +78,4 @@ const mapStateToProps = state => ({
   errorMessage: errorMessageSelector(state),
 });
 
-export default connect(mapStateToProps, { signInUser })(SignInPanel);
+export default connect(mapStateToProps, { signInUser, setError, clearError })(SignInPanel);
