@@ -6,6 +6,7 @@ import withLoading from '../../../hocs/withLoading';
 
 import SearchItem from '../../../components/searchItem';
 import SearchBar from '../searchBar';
+import { createLoadingSelector } from '../../../actions';
 
 class SearchPane extends React.Component {
   constructor(props) {
@@ -20,22 +21,34 @@ class SearchPane extends React.Component {
       <div>
         <SearchBar />
 
-        {/* Number of results available for given query and filter options */}
-        {/* Check if there have been results loaded or if there is an array of resources in redux */}
-        <p>{this.props.numResults || (this.props.results && this.props.results.length) ? this.props.numResults || this.props.results.length : 0} results</p>
+        <div>
+          { this.props.isFetching === false
+            ? (
+              <>
+                {/* Number of results available for given query and filter options */}
+                {/* Check if there have been results loaded or if there is an array of resources in redux */}
+                <p>{this.props.numResults || (this.props.results && this.props.results.length) ? this.props.numResults || this.props.results.length : 0} results</p>
 
-        {/* Go through passed data array and break into SearchItem elements */}
-        {this.props.results && this.props.results.length ? this.props.results.map((element) => {
-          return <SearchItem key={element.id || element._id} displayObject={element} />;
-        }) : null}
+                {/* Go through passed data array and break into SearchItem elements */}
+                {this.props.results && this.props.results.length ? this.props.results.map((element) => {
+                  return <SearchItem key={element.id || element._id} displayObject={element} />;
+                }) : null}
+              </>
+            )
+            : <div>Searching...</div>
+          }
+        </div>
       </div>
     );
   }
 }
 
+const loadingSelector = createLoadingSelector(['SEARCH', 'FETCH_RESOURCES']);
+
 const mapStateToProps = state => ({
   results: state.data.resources,
   numResults: state.data.numResults,
+  isFetching: loadingSelector(state),
 });
 
 // Calls fetchResources and waits until complete to load SearchPane
