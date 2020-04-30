@@ -5,7 +5,7 @@ const reducer = (state = {}, action) => {
   /**
    * Check if the action name ends in "REQUEST", "FAILURE", or "CLEAR_ERR"
    */
-  const matches = /(.*)_(REQUEST|FAILURE|CLEARERR)/.exec(action.type);
+  const matches = /(.*)_(REQUEST|FAILURE|CLEAR_ERR)/.exec(action.type);
 
   /**
    * The passed action name does not end in "REQUEST", "FAILURE", or "CLEAR_ERR"
