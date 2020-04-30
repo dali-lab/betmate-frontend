@@ -23,7 +23,7 @@ export function clearError(action) {
  * Returns a function that can be added directly to a mapStateToProps object
  * that will return the first error message associated with the array of actions (if any)
  */
-export const createErrorMessageSelector = actions => (state) => {
+export const createErrorSelector = actions => (state) => {
   // actions not passed as an array
   if (!Array.isArray(actions)) { return () => null; }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { signUpUser } from '../../../actions/authActions';
-import { createErrorMessageSelector, setError, clearError } from '../../../actions/errorActions';
+import { createErrorSelector, setError, clearError } from '../../../actions/errorActions';
 import { createLoadingSelector } from '../../../actions/loadingActions';
 
 class SignUpPanel extends React.Component {
@@ -86,12 +86,12 @@ class SignUpPanel extends React.Component {
 // Import loading state and error messages of specified actions from redux state
 const loadActions = ['AUTH_USER'];
 const loadingSelector = createLoadingSelector(loadActions);
-const errorMessageSelector = createErrorMessageSelector(loadActions);
+const errorSelector = createErrorSelector(loadActions);
 
 const mapStateToProps = state => ({
   authenticated: state.auth.authenticated,
   isLoading: loadingSelector(state),
-  errorMessage: errorMessageSelector(state),
+  errorMessage: errorSelector(state),
 });
 
 export default connect(mapStateToProps, { signUpUser, setError, clearError })(SignUpPanel);

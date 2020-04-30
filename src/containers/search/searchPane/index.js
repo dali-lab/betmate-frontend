@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import withLoading from '../../../hocs/withLoading';
 
 import { fetchResources, updateResourceByID } from '../../../actions/resourceActions';
-import { createErrorMessageSelector } from '../../../actions/errorActions';
+import { createErrorSelector } from '../../../actions/errorActions';
 import { createLoadingSelector } from '../../../actions/loadingActions';
 
 import SearchItem from '../../../components/searchItem';
@@ -49,13 +49,13 @@ class SearchPane extends React.Component {
 // Import loading state and error messages of specified actions from redux state
 const loadActions = ['SEARCH', 'FETCH_RESOURCES'];
 const loadingSelector = createLoadingSelector(loadActions);
-const errorMessageSelector = createErrorMessageSelector(loadActions);
+const errorSelector = createErrorSelector(loadActions);
 
 const mapStateToProps = state => ({
   results: state.data.resources,
   numResults: state.data.numResults,
   isLoading: loadingSelector(state),
-  errorMessage: errorMessageSelector(state),
+  errorMessage: errorSelector(state),
 });
 
 // Calls fetchResources and waits until complete to load SearchPane
