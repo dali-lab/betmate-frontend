@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { createLoadingSelector, createErrorMessageSelector } from '../../../actions';
 import { signInUser } from '../../../actions/authActions';
-import { createErrorMessageSelector } from '../../../actions';
 
 class SignInPanel extends React.Component {
   constructor(props) {
@@ -52,16 +52,20 @@ class SignInPanel extends React.Component {
           <input type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordUpdate} />
           <input type="submit" value="Sign In" />
         </form>
-        {this.props.errorMessage}
+        {this.props.isLoading ? <div>Authenticating...</div> : this.props.errorMessage}
       </div>
     );
   }
 }
 
-const errorMessageSelector = createErrorMessageSelector(['AUTH_USER']);
+// Import loading state and error messages of specified actions from redux state
+const loadActions = ['AUTH_USER'];
+const loadingSelector = createLoadingSelector(loadActions);
+const errorMessageSelector = createErrorMessageSelector(loadActions);
 
 const mapStateToProps = state => ({
   authenticated: state.auth.authenticated,
+  isLoading: loadingSelector(state),
   errorMessage: errorMessageSelector(state),
 });
 

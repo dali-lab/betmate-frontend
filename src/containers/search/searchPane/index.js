@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchResources } from '../../../actions/resourceActions';
 import withLoading from '../../../hocs/withLoading';
+
+import { fetchResources, updateResourceByID } from '../../../actions/resourceActions';
+import { createLoadingSelector, createErrorMessageSelector } from '../../../actions';
 
 import SearchItem from '../../../components/searchItem';
 import SearchBar from '../searchBar';
-import { createLoadingSelector } from '../../../actions';
 
 class SearchPane extends React.Component {
   constructor(props) {
@@ -21,8 +22,12 @@ class SearchPane extends React.Component {
       <div>
         <SearchBar />
 
+        <button type="button" onClick={() => this.props.updateResourceByID('5ea9eeb8a817286cf8ad1e6f', {})}>Click Me lol</button>
+        {this.props.resource._id}
+
         <div>
-          { this.props.isFetching === false
+          {/* eslint-disable-next-line no-nested-ternary */}
+          { this.props.isLoading === false
             ? (
               <>
                 {/* Number of results available for given query and filter options */}
@@ -35,7 +40,7 @@ class SearchPane extends React.Component {
                 }) : null}
               </>
             )
-            : <div>Searching...</div>
+            : this.props.isLoading ? <div>Searching...</div> : this.props.errorMessage
           }
         </div>
       </div>
@@ -43,12 +48,18 @@ class SearchPane extends React.Component {
   }
 }
 
-const loadingSelector = createLoadingSelector(['SEARCH', 'FETCH_RESOURCES']);
+// Import loading state and error messages of specified actions from redux state
+const loadActions = ['SEARCH', 'FETCH_RESOURCES'];
+const loadingSelector = createLoadingSelector(loadActions);
+const errorMessageSelector = createErrorMessageSelector(loadActions);
 
 const mapStateToProps = state => ({
+  resource: state.data.resource,
+
   results: state.data.resources,
   numResults: state.data.numResults,
-  isFetching: loadingSelector(state),
+  isLoading: loadingSelector(state),
+  errorMessage: errorMessageSelector(state),
 });
 
 // Calls fetchResources and waits until complete to load SearchPane
@@ -56,4 +67,4 @@ const LoadingSearchPane = withLoading(SearchPane, [
   fetchResources,
 ]);
 
-export default connect(mapStateToProps, {})(LoadingSearchPane);
+export default connect(mapStateToProps, { updateResourceByID })(LoadingSearchPane);
