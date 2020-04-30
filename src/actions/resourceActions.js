@@ -13,7 +13,7 @@ export function fetchResources() {
       dispatch({ type: ActionTypes.FETCH_RESOURCES_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
-      dispatch({ type: ActionTypes.FETCH_RESOURCES_FAILURE });
+      dispatch({ type: ActionTypes.FETCH_RESOURCES_FAILURE, payload: error.response.data });
       reject(error);
     });
   });
@@ -28,7 +28,7 @@ export function createResource(title, description, value) {
       dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
-      dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE });
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE, payload: error.response.data });
       reject(error);
     });
   });
@@ -57,7 +57,7 @@ export function fetchResourceByID(id) {
       dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
-      dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE });
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE, payload: error.response.data });
       reject(error);
     });
   });
@@ -72,7 +72,7 @@ export function updateResourceByID(id, update) {
       dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
-      dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE });
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE, payload: error.response.data });
       reject(error);
     });
   });

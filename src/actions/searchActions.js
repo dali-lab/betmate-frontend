@@ -20,7 +20,7 @@ export function search(query, filters, sort, page, numPerPage) {
       dispatch({ type: ActionTypes.SEARCH_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
-      dispatch({ type: ActionTypes.SEARCH_FAILURE });
+      dispatch({ type: ActionTypes.SEARCH_FAILURE, payload: error.response.data });
       reject(error);
     });
   });

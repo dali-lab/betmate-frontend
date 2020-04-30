@@ -11,7 +11,7 @@ export function fetchUsers() {
       dispatch({ type: ActionTypes.FETCH_USERS_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
-      dispatch({ type: ActionTypes.FETCH_USERS_FAILURE });
+      dispatch({ type: ActionTypes.FETCH_USERS_FAILURE, payload: error.response.data });
       reject(error);
     });
   });
@@ -26,7 +26,7 @@ export function createUser(title, description, value) {
       dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
-      dispatch({ type: ActionTypes.FETCH_USER_FAILURE });
+      dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
       reject(error);
     });
   });
@@ -53,7 +53,7 @@ export function fetchUserByID(id) {
       dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
-      dispatch({ type: ActionTypes.FETCH_USER_FAILURE });
+      dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
       reject(error);
     });
   });
@@ -68,7 +68,7 @@ export function updateUserByID(id, update) {
       dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
-      dispatch({ type: ActionTypes.FETCH_USER_FAILURE });
+      dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
       reject(error);
     });
   });
