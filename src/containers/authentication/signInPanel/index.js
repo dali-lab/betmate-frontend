@@ -58,7 +58,6 @@ class SignInPanel extends React.Component {
   }
 }
 
-
 const errorMessageSelector = createErrorMessageSelector(['AUTH_USER']);
 
 const mapStateToProps = state => ({

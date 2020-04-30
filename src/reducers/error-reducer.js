@@ -7,6 +7,8 @@ const reducer = (state = {}, action) => {
    */
   const matches = /(.*)_(REQUEST|FAILURE)/.exec(action.type);
 
+  console.log('matches', matches);
+
   /**
    * The passed action name does not end in "REQUEST" or "FAILURE"
    */
@@ -25,8 +27,9 @@ const reducer = (state = {}, action) => {
   /**
    * Keeps track of whether or not the requestName is associated with a request or a failed response
    * Will load the passed error message into the error-reducer from action payload
+   * Checks both for a message passed as a part of an object and as plain text
    */
-  return Object.assign({}, state, { [requestName]: requestState === 'FAILURE' ? action.payload['message' || 'mess'] : '' });
+  return Object.assign({}, state, { [requestName]: requestState === 'FAILURE' ? action.payload.message : '' });
 };
 
 export default reducer;

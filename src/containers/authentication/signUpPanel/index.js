@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { signUpUser } from '../../../actions/authActions';
-
+import { createErrorMessageSelector } from '../../../actions/index';
 
 class SignUpPanel extends React.Component {
   constructor(props) {
@@ -12,7 +12,6 @@ class SignUpPanel extends React.Component {
       lastName: '',
       email: '',
       password: '',
-      errorMessage: '',
     };
 
     this.handleFirstNameUpdate = this.handleFirstNameUpdate.bind(this);
@@ -30,19 +29,19 @@ class SignUpPanel extends React.Component {
   }
 
   handleFirstNameUpdate(e) {
-    this.setState({ firstName: e.target.value, errorMessage: '' });
+    this.setState({ firstName: e.target.value });
   }
 
   handleLastNameUpdate(e) {
-    this.setState({ lastName: e.target.value, errorMessage: '' });
+    this.setState({ lastName: e.target.value });
   }
 
   handleEmailUpdate(e) {
-    this.setState({ email: e.target.value, errorMessage: '' });
+    this.setState({ email: e.target.value });
   }
 
   handlePasswordUpdate(e) {
-    this.setState({ password: e.target.value, errorMessage: '' });
+    this.setState({ password: e.target.value });
   }
 
   handleSubmit(e) {
@@ -53,7 +52,6 @@ class SignUpPanel extends React.Component {
       this.props.history.push('/admin');
     }).catch((error) => {
       // Add error-handling logic here
-      this.setState({ errorMessage: error.message });
     });
   }
 
@@ -67,14 +65,17 @@ class SignUpPanel extends React.Component {
           <input type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordUpdate} />
           <input type="submit" value="Sign Up" />
         </form>
-        {this.state.errorMessage}
+        {this.props.errorMessage}
       </div>
     );
   }
 }
 
+const errorMessageSelector = createErrorMessageSelector(['AUTH_USER']);
+
 const mapStateToProps = state => ({
   authenticated: state.auth.authenticated,
+  errorMessage: errorMessageSelector(state),
 });
 
 export default connect(mapStateToProps, { signUpUser })(SignUpPanel);
