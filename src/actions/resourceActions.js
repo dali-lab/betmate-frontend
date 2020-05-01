@@ -59,7 +59,7 @@ export function fetchResourceByID(id) {
 // Update (AUTH)
 export function updateResourceByID(id, update) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.put(`${ROOT_URL}/resources/${id}`, { update }, { headers: getBearerTokenHeader() }).then((response) => {
+    axios.put(`${ROOT_URL}/resources/${id}`, update, { headers: getBearerTokenHeader() }).then((response) => {
       dispatch({ type: ActionTypes.FETCH_RESOURCE, payload: response.data });
       resolve();
     }).catch((error) => {

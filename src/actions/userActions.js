@@ -57,7 +57,7 @@ export function fetchUserByID(id) {
 // Update by id (AUTH)
 export function updateUserByID(id, update) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.put(`${ROOT_URL}/users/${id}`, { update }, { headers: getBearerTokenHeader() }).then((response) => {
+    axios.put(`${ROOT_URL}/users/${id}`, update, { headers: getBearerTokenHeader() }).then((response) => {
       dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       resolve();
     }).catch((error) => {
