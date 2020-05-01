@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import {
-  fetchResources, createResource, fetchResourceByID, deleteResourceByID,
+  fetchResources, createResource, fetchResourceByID, updateResourceByID, deleteResourceByID,
 } from '../../actions/resourceActions';
 import {
-  fetchUsers, createUser, fetchUserByID, deleteUserByID,
+  fetchUsers, createUser, fetchUserByID, updateUserByID, deleteUserByID,
 } from '../../actions/userActions';
 import SearchItem from '../../components/SearchItem';
 
@@ -16,21 +16,37 @@ class AdminPanel extends React.Component {
     this.state = {
       user_id_get: '',
       resource_id_get: '',
+
       user_first_name_create: '',
       user_last_name_create: '',
       user_email_create: '',
       user_password_create: '',
+
+      user_id_create: '',
+      user_first_name_update: '',
+      user_last_name_update: '',
+      user_email_update: '',
+      user_password_update: '',
+
       resource_title_create: '',
       resource_description_create: '',
       resource_value_create: '',
+
+      resource_id_update: '',
+      resource_title_update: '',
+      resource_description_update: '',
+      resource_value_update: '',
 
     };
 
     this.getAllUsers = this.getAllUsers.bind(this);
     this.createUser = this.createUser.bind(this);
     this.getUserById = this.getUserById.bind(this);
+    this.updateUser = this.updateUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
+
     this.getAllResources = this.getAllResources.bind(this);
+    this.updateResource = this.updateResource.bind(this);
     this.createResource = this.createResource.bind(this);
     this.getResourceById = this.getResourceById.bind(this);
     this.deleteResource = this.deleteResource.bind(this);
@@ -47,14 +63,21 @@ class AdminPanel extends React.Component {
   }
 
   getAllResources() {
-    // gets all resources from server
     this.props.fetchResources();
   }
 
   getResourceById(id) {
-    // gets resource by id
     this.props.fetchResourceByID(id);
     console.log(id);
+  }
+
+  updateUser(id, update) {
+    this.props.updateUserByID(id, update);
+  }
+
+  updateResource(id, update) {
+    console.log('resource updated');
+    this.props.updateResourceByID(id, update);
   }
 
   createUser(firstName, lastName, email, password) {
@@ -71,7 +94,6 @@ class AdminPanel extends React.Component {
   }
 
   deleteResource(id) {
-    // deletes resource
     this.props.deleteResourceByID(id);
     console.log(id);
   }
@@ -114,6 +136,7 @@ class AdminPanel extends React.Component {
             <br />
 
             <button type="button" onClick={e => this.createResource(this.state.resource_title_create, this.state.resource_description_create, this.state.resource_value_create)}>create</button>
+            <br />
 
             <p> <b>Resources: </b></p>
             <br />
@@ -130,6 +153,34 @@ class AdminPanel extends React.Component {
               : null}
             </div>
             <br />
+
+            <div>
+              <p> <b> Update resource </b> </p>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <p> Id: </p>
+                <input type="text" value={this.state.resource_id_update} onChange={e => this.setState({ resource_id_update: e.target.value })} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <p> Title: </p>
+                <input type="text" value={this.state.resource_title_update} onChange={e => this.setState({ resource_title_update: e.target.value })} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <p> Description: </p>
+                <input type="text" value={this.state.resource_description_update} onChange={e => this.setState({ resource_description_update: e.target.value })} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <p> Value: </p>
+                <input type="text" value={this.state.resource_value_update} onChange={e => this.setState({ resource_value_update: e.target.value })} />
+              </div>
+              <br />
+
+              <button type="button"
+                onClick={e => this.updateResource(this.state.resource_id_update,
+                  { title: this.state.resource_title_update, description: this.state.resource_description_update, value: this.state.resource_value_update })}
+              >update
+              </button>
+
+            </div>
           </div>
           <div style={{ width: '600px' }} />
           <div>
@@ -174,6 +225,40 @@ class AdminPanel extends React.Component {
               : null}
             </div>
 
+            <div>
+              <p> <b> Update user </b> </p>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <p> Id: </p>
+                <input type="text" value={this.state.user_id_create} onChange={e => this.setState({ user_id_create: e.target.value })} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <p> First name: </p>
+                <input type="text" value={this.state.user_first_name_update} onChange={e => this.setState({ user_first_name_update: e.target.value })} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <p> Last name: </p>
+                <input type="text" value={this.state.user_last_name_update} onChange={e => this.setState({ user_last_name_update: e.target.value })} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <p> Email: </p>
+                <input type="text" value={this.state.user_email_update} onChange={e => this.setState({ user_email_update: e.target.value })} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <p> Password: </p>
+                <input type="text" value={this.state.user_password_update} onChange={e => this.setState({ user_password_update: e.target.value })} />
+              </div>
+              <br />
+
+              <button type="button"
+                onClick={e => this.updateUser(this.state.user_id_create,
+                  {
+                    first_name: this.state.user_first_name_update, last_name: this.state.user_last_name_update, email: this.state.user_email_update, password: this.state.user_password_update,
+                  })}
+              >update
+              </button>
+
+            </div>
+
           </div>
         </div>
         <NavLink to="/signout">Sign Out</NavLink>
@@ -190,5 +275,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  fetchResources, createResource, fetchResourceByID, deleteResourceByID, fetchUsers, createUser, fetchUserByID, deleteUserByID,
+  fetchResources, createResource, fetchResourceByID, updateResourceByID, deleteResourceByID, fetchUsers, createUser, fetchUserByID, updateUserByID, deleteUserByID,
 })(AdminPanel);
