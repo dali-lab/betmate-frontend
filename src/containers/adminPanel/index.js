@@ -171,9 +171,9 @@ class AdminPanel extends React.Component {
             <form onSubmit={e => this.updateResource(
               e, this.state.resource_id_update,
               {
-                title: this.state.resource_title_update,
-                description: this.state.resource_description_update,
-                value: this.state.resource_value_update,
+                title: this.state.resource_title_update || undefined,
+                description: this.state.resource_description_update || undefined,
+                value: this.state.resource_value_update || undefined,
               },
             )}
             >
@@ -239,10 +239,10 @@ class AdminPanel extends React.Component {
             <form onSubmit={e => this.updateUser(
               e, this.state.user_id_create,
               {
-                first_name: this.state.user_first_name_update,
-                last_name: this.state.user_last_name_update,
-                email: this.state.user_email_update,
-                password: this.state.user_password_update,
+                first_name: this.state.user_first_name_update || undefined,
+                last_name: this.state.user_last_name_update || undefined,
+                email: this.state.user_email_update || undefined,
+                password: this.state.user_password_update || undefined,
               },
             )}
             >
