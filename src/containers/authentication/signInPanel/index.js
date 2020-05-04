@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { signInUser } from '../../../actions/authActions';
+import { createErrorSelector, setError, clearError } from '../../../actions/errorActions';
+import { createLoadingSelector } from '../../../actions/loadingActions';
 
 class SignInPanel extends React.Component {
   constructor(props) {
@@ -9,7 +11,7 @@ class SignInPanel extends React.Component {
     this.state = {
       email: '',
       password: '',
-      errorMessage: '',
+      // errorMessage: '',
     };
 
     this.handleEmailUpdate = this.handleEmailUpdate.bind(this);
@@ -25,23 +27,30 @@ class SignInPanel extends React.Component {
   }
 
   handleEmailUpdate(e) {
-    this.setState({ email: e.target.value, errorMessage: '' });
+    this.setState({ email: e.target.value });
   }
 
   handlePasswordUpdate(e) {
-    this.setState({ password: e.target.value, errorMessage: '' });
+    this.setState({ password: e.target.value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    this.props.signInUser(this.state.email, this.state.password).then((response) => {
-      this.props.history.push('/admin');
-    }).catch((error) => {
-      // Add error-handling logic here
-      this.setState({ errorMessage: error.message });
-    });
+    if (!this.state.email) {
+      this.props.setError(['AUTH_USER'], 'Please enter an email address!');
+    } else if (!this.state.password) {
+      this.props.setError(['AUTH_USER'], 'Please enter a password!');
+    } else {
+      // Send only if all fields filled in
+      this.props.signInUser(this.state.email, this.state.password).then((response) => {
+        this.props.history.push('/admin');
+        this.props.clearError(['AUTH_USER']);
+      }).catch((error) => {
+        // Add error-handling logic here
+      });
+    }
   }
 
   render() {
@@ -52,14 +61,21 @@ class SignInPanel extends React.Component {
           <input type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordUpdate} />
           <input type="submit" value="Sign In" />
         </form>
-        {this.state.errorMessage}
+        {this.props.isLoading ? <div>Authenticating...</div> : this.props.errorMessage}
       </div>
     );
   }
 }
 
+// Import loading state and error messages of specified actions from redux state
+const loadActions = ['AUTH_USER'];
+const loadingSelector = createLoadingSelector(loadActions);
+const errorSelector = createErrorSelector(loadActions);
+
 const mapStateToProps = state => ({
   authenticated: state.auth.authenticated,
+  isLoading: loadingSelector(state),
+  errorMessage: errorSelector(state),
 });
 
-export default connect(mapStateToProps, { signInUser })(SignInPanel);
+export default connect(mapStateToProps, { signInUser, setError, clearError })(SignInPanel);

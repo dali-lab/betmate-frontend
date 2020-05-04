@@ -29,12 +29,13 @@ const getTokenFromLocalStorage = () => {
 getTokenFromLocalStorage().then((authToken) => {
   if (authToken) {
     // Check if authorized in actions
-    store.dispatch({ type: ActionTypes.AUTH_USER });
+    store.dispatch({ type: ActionTypes.AUTH_USER_SUCCESS, payload: {} });
   } else {
     // No authorization
-    store.dispatch({ type: ActionTypes.DEAUTH_USER });
+    store.dispatch({ type: ActionTypes.DEAUTH_USER_SUCCESS });
   }
 }).catch((error) => {
+  console.error(error);
   // Use this to alert the user attempting to log in to site
   localStorageEnabled = false;
   console.log('local storage enabled:', localStorageEnabled);

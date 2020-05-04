@@ -5,10 +5,13 @@ import ActionTypes, { getBearerTokenHeader } from './index';
 // Get all users (AUTH)
 export function fetchUsers() {
   return dispatch => new Promise((resolve, reject) => {
+    dispatch({ type: ActionTypes.FETCH_USERS_REQUEST });
+
     axios.get(`${ROOT_URL}/users`, { headers: getBearerTokenHeader() }).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_USERS, payload: response.data });
+      dispatch({ type: ActionTypes.FETCH_USERS_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
+      dispatch({ type: ActionTypes.FETCH_USERS_FAILURE, payload: error.response.data });
       reject(error);
     });
   });
@@ -17,12 +20,15 @@ export function fetchUsers() {
 // New user (AUTH)
 export function createUser(firstName, lastName, email, password) {
   return dispatch => new Promise((resolve, reject) => {
+    dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
+
     axios.post(`${ROOT_URL}/users`, {
       firstName, lastName, email, password,
     }, { headers: getBearerTokenHeader() }).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
+      dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
+      dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
       reject(error);
     });
   });
@@ -33,8 +39,6 @@ export function createUser(firstName, lastName, email, password) {
 // export function deleteAllUsers() {
 //   return dispatch => new Promise((resolve, reject) => {
 //     axios.delete(`${ROOT_URL}/users`, { headers: getBearerTokenHeader() }).then((response) => {
-//       console.log(response.data); // TODO: Remove testing console log
-//       // dispatch({ type: ActionTypes.FETCH_RESORUCES, payload: response.data });
 //       resolve();
 //     }).catch((error) => {
 //       reject(error);
@@ -49,10 +53,13 @@ export function fetchUserByID(id) {
       dispatch({ type: ActionTypes.FETCH_USER, payload: {} });
       resolve();
     } else {
+      dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
+
       axios.get(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
-        dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
+        dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
         resolve();
       }).catch((error) => {
+        dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
         reject(error);
       });
     }
@@ -62,10 +69,13 @@ export function fetchUserByID(id) {
 // Update by id (AUTH)
 export function updateUserByID(id, update) {
   return dispatch => new Promise((resolve, reject) => {
+    dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
+
     axios.put(`${ROOT_URL}/users/${id}`, update, { headers: getBearerTokenHeader() }).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
+      dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
+      dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
       reject(error);
     });
   });
@@ -74,8 +84,7 @@ export function updateUserByID(id, update) {
 // Delete by id (AUTH)
 export function deleteUserByID(id) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.delete(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
-      // dispatch({ type: ActionTypes.FETCH_RESORUCES, payload: response.data });
+    axios.delete(`${ROOT_URL}/users/${id}`, {}, { headers: getBearerTokenHeader() }).then((response) => {
       resolve();
     }).catch((error) => {
       reject(error);
