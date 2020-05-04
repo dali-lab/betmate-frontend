@@ -18,11 +18,13 @@ export function fetchUsers() {
 }
 
 // New user (AUTH)
-export function createUser(title, description, value) {
+export function createUser(firstName, lastName, email, password) {
   return dispatch => new Promise((resolve, reject) => {
     dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
 
-    axios.post(`${ROOT_URL}/users`, { title, description, value }, { headers: getBearerTokenHeader() }).then((response) => {
+    axios.post(`${ROOT_URL}/users`, {
+      firstName, lastName, email, password,
+    }, { headers: getBearerTokenHeader() }).then((response) => {
       dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
@@ -47,15 +49,20 @@ export function createUser(title, description, value) {
 // Get user by id (AUTH)
 export function fetchUserByID(id) {
   return dispatch => new Promise((resolve, reject) => {
-    dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
-
-    axios.get(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
+    if (!id) {
+      dispatch({ type: ActionTypes.FETCH_USER, payload: {} });
       resolve();
-    }).catch((error) => {
-      dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
-      reject(error);
-    });
+    } else {
+      dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
+
+      axios.get(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
+        dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
+        resolve();
+      }).catch((error) => {
+        dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
+        reject(error);
+      });
+    }
   });
 }
 
@@ -64,7 +71,7 @@ export function updateUserByID(id, update) {
   return dispatch => new Promise((resolve, reject) => {
     dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
 
-    axios.put(`${ROOT_URL}/users/${id}`, { update }, { headers: getBearerTokenHeader() }).then((response) => {
+    axios.put(`${ROOT_URL}/users/${id}`, update, { headers: getBearerTokenHeader() }).then((response) => {
       dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {

@@ -51,15 +51,20 @@ export function createResource(title, description, value) {
 // Get
 export function fetchResourceByID(id) {
   return dispatch => new Promise((resolve, reject) => {
-    dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
-
-    axios.get(`${ROOT_URL}/resources/${id}`).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
+    if (!id) {
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: {} });
       resolve();
-    }).catch((error) => {
-      dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE, payload: error.response.data });
-      reject(error);
-    });
+    } else {
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
+
+      axios.get(`${ROOT_URL}/resources/${id}`).then((response) => {
+        dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
+        resolve();
+      }).catch((error) => {
+        dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE, payload: error.response.data });
+        reject(error);
+      });
+    }
   });
 }
 
@@ -68,7 +73,7 @@ export function updateResourceByID(id, update) {
   return dispatch => new Promise((resolve, reject) => {
     dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
 
-    axios.put(`${ROOT_URL}/resources/${id}`, { update }, { headers: getBearerTokenHeader() }).then((response) => {
+    axios.put(`${ROOT_URL}/resources/${id}`, update, { headers: getBearerTokenHeader() }).then((response) => {
       dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
       resolve();
     }).catch((error) => {
