@@ -47,19 +47,24 @@ export function createResource(title, description, value) {
 // Get
 export function fetchResourceByID(id) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.get(`${ROOT_URL}/resources/${id}`).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_RESOURCE, payload: response.data });
+    if (!id) {
+      dispatch({ type: ActionTypes.FETCH_RESOURCE, payload: {} });
       resolve();
-    }).catch((error) => {
-      reject(error);
-    });
+    } else {
+      axios.get(`${ROOT_URL}/resources/${id}`).then((response) => {
+        dispatch({ type: ActionTypes.FETCH_RESOURCE, payload: response.data });
+        resolve();
+      }).catch((error) => {
+        reject(error);
+      });
+    }
   });
 }
 
 // Update (AUTH)
 export function updateResourceByID(id, update) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.put(`${ROOT_URL}/resources/${id}`, { update }, { headers: getBearerTokenHeader() }).then((response) => {
+    axios.put(`${ROOT_URL}/resources/${id}`, update, { headers: getBearerTokenHeader() }).then((response) => {
       dispatch({ type: ActionTypes.FETCH_RESOURCE, payload: response.data });
       resolve();
     }).catch((error) => {
@@ -71,8 +76,7 @@ export function updateResourceByID(id, update) {
 // Delete (AUTH)
 export function deleteResourceByID(id) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.delete(`${ROOT_URL}/resources/${id}`, {}, { headers: getBearerTokenHeader() }).then((response) => {
-      console.log(response.data); // TODO: Remove testing console log
+    axios.delete(`${ROOT_URL}/resources/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
       // dispatch({ type: ActionTypes.FETCH_RESORUCES, payload: response.data });
       resolve();
     }).catch((error) => {

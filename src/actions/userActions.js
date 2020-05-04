@@ -15,9 +15,11 @@ export function fetchUsers() {
 }
 
 // New user (AUTH)
-export function createUser(title, description, value) {
+export function createUser(firstName, lastName, email, password) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.post(`${ROOT_URL}/users`, { title, description, value }, { headers: getBearerTokenHeader() }).then((response) => {
+    axios.post(`${ROOT_URL}/users`, {
+      firstName, lastName, email, password,
+    }, { headers: getBearerTokenHeader() }).then((response) => {
       dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       resolve();
     }).catch((error) => {
@@ -43,19 +45,24 @@ export function createUser(title, description, value) {
 // Get user by id (AUTH)
 export function fetchUserByID(id) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.get(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
+    if (!id) {
+      dispatch({ type: ActionTypes.FETCH_USER, payload: {} });
       resolve();
-    }).catch((error) => {
-      reject(error);
-    });
+    } else {
+      axios.get(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
+        dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
+        resolve();
+      }).catch((error) => {
+        reject(error);
+      });
+    }
   });
 }
 
 // Update by id (AUTH)
 export function updateUserByID(id, update) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.put(`${ROOT_URL}/users/${id}`, { update }, { headers: getBearerTokenHeader() }).then((response) => {
+    axios.put(`${ROOT_URL}/users/${id}`, update, { headers: getBearerTokenHeader() }).then((response) => {
       dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       resolve();
     }).catch((error) => {
@@ -67,9 +74,7 @@ export function updateUserByID(id, update) {
 // Delete by id (AUTH)
 export function deleteUserByID(id) {
   return dispatch => new Promise((resolve, reject) => {
-    console.log('user id delete', getBearerTokenHeader());
-    axios.delete(`${ROOT_URL}/users/${id}`, {}, { headers: getBearerTokenHeader() }).then((response) => {
-      console.log(response.data); // TODO: Remove testing console log
+    axios.delete(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
       // dispatch({ type: ActionTypes.FETCH_RESORUCES, payload: response.data });
       resolve();
     }).catch((error) => {
