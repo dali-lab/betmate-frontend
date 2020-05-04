@@ -6,6 +6,8 @@ import {
 
 import { signInUser, signOutUser } from '../actions/authActions';
 
+import requireAuth from '../hocs/requireAuth';
+
 import AdminPanel from '../containers/adminPanel';
 import SearchPane from '../containers/search/searchPane';
 import SignUpPanel from '../containers/authentication/signUpPanel';
@@ -35,7 +37,7 @@ const App = (props) => {
           <Route exact path="/signin" component={SignInPanel} />
           <Route exact path="/signup" component={SignUpPanel} />
           <Route exact path="/signout" component={SignOutPanel} />
-          <Route path="/admin" component={AdminPanel} />
+          <Route path="/admin" component={requireAuth(AdminPanel, SignInPanel)} />
           <Route component={FallBack} />
         </Switch>
       </div>
