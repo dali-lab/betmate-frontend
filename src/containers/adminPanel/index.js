@@ -52,50 +52,79 @@ class AdminPanel extends React.Component {
     this.deleteResource = this.deleteResource.bind(this);
   }
 
-  getAllUsers() {
+  getAllUsers(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
     this.props.fetchUsers();
   }
 
 
-  getUserById(id) {
+  getUserById(e, id) {
+    e.preventDefault();
+    e.stopPropagation();
+
     this.props.fetchUserByID(id);
-    console.log(id);
   }
 
-  getAllResources() {
+  getAllResources(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
     this.props.fetchResources();
   }
 
-  getResourceById(id) {
+  getResourceById(e, id) {
+    e.preventDefault();
+    e.stopPropagation();
+
     this.props.fetchResourceByID(id);
-    console.log(id);
   }
 
-  updateUser(id, update) {
+  updateUser(e, id, update) {
+    e.preventDefault();
+    e.stopPropagation();
+
     this.props.updateUserByID(id, update);
   }
 
-  updateResource(id, update) {
-    console.log('resource updated');
+  updateResource(e, id, update) {
+    e.preventDefault();
+    e.stopPropagation();
+
     this.props.updateResourceByID(id, update);
   }
 
-  createUser(firstName, lastName, email, password) {
+  createUser(e, firstName, lastName, email, password) {
+    e.preventDefault();
+    e.stopPropagation();
+
     this.props.createUser(firstName, lastName, email, password);
   }
 
-  createResource(title, description, value) {
+  createResource(e, title, description, value) {
+    e.preventDefault();
+    e.stopPropagation();
+
     this.props.createResource(title, description, value);
   }
 
-  deleteUser(id) {
-    this.props.deleteUserByID(id);
-    console.log(id);
+  deleteUser(e, id) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.props.deleteUserByID(id).then(() => {
+      this.props.fetchUserByID();
+    });
   }
 
-  deleteResource(id) {
-    this.props.deleteResourceByID(id);
-    console.log(id);
+  deleteResource(e, id) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.props.deleteResourceByID(id).then(() => {
+      this.props.fetchResourceByID();
+    });
   }
 
 
@@ -103,165 +132,126 @@ class AdminPanel extends React.Component {
     return (
       <div>
         <div>Welcome to the admin panel!</div>
-
-        <button type="button" onClick={this.getAllUsers}>Get all users</button>
-
-        <input type="text" placeholder="user id" value={this.state.user_id_get} onChange={e => this.setState({ user_id_get: e.target.value })} />
-        <button type="button" onClick={e => this.getUserById(this.state.user_id_get)}> Submit </button>
-        <button type="button" onClick={e => this.deleteUser(this.state.user_id_get)}>Delete user</button>
-        <br />
-
-        <button type="button" onClick={this.getAllResources}>Get all resources</button>
-
-        <input type="text" placeholder="resource id" value={this.state.resource_id_get} onChange={e => this.setState({ resource_id_get: e.target.value })} />
-        <button type="button" onClick={e => this.getResourceById(this.state.resource_id_get)}> Submit </button>
-        <button type="button" onClick={e => this.deleteResource(this.state.resource_id_get)}>Delete resource</button>
-        <br />
+        <NavLink to="/signout">Sign Out</NavLink>
+        <br /><br />
 
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <div>
-            <p><b>Create resource:</b></p>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <p> Title: </p>
-              <input type="text" value={this.state.resource_title_create} onChange={e => this.setState({ resource_title_create: e.target.value })} />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <p> Description: </p>
-              <input type="text" value={this.state.resource_description_create} onChange={e => this.setState({ resource_description_create: e.target.value })} />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <p> Value: </p>
-              <input type="text" value={this.state.resource_value_create} onChange={e => this.setState({ resource_value_create: e.target.value })} />
-            </div>
-            <br />
+          <div style={{ width: '400px' }}>
+            <button type="button" onClick={this.getAllResources}>Get All Resources</button><br /><br />
 
-            <button type="button" onClick={e => this.createResource(this.state.resource_title_create, this.state.resource_description_create, this.state.resource_value_create)}>create</button>
-            <br />
+            <input type="text" placeholder="Resource ID" value={this.state.resource_id_get} onChange={e => this.setState({ resource_id_get: e.target.value })} /><br />
+            <button type="button" onClick={e => this.getResourceById(e, this.state.resource_id_get)}>Get Resource</button><br />
+            <button type="button" onClick={e => this.deleteResource(e, this.state.resource_id_get)}>Delete Resource</button><br />
 
-            <p> <b>Resources: </b></p>
-            <br />
-
-            <div> {this.props.results && this.props.results.length ? this.props.results.map((element) => {
-              return <SearchItem key={element.id || element._id} displayObject={element} />;
-            }) : null}
-            </div>
-
-            <p> <b>Selected resource: </b></p>
-            <br />
-
-            <div> {this.props.resource ? <SearchItem key={this.props.resource.id || this.props.resource._id} displayObject={this.props.resource} />
-              : null}
-            </div>
+            <p><b>Create resource</b></p>
+            <form onSubmit={e => this.createResource(
+              e, this.state.resource_title_create, this.state.resource_description_create, this.state.resource_value_create,
+            )}
+            >
+              <input type="text" placeholder="Title" value={this.state.resource_title_create} onChange={e => this.setState({ resource_title_create: e.target.value })} /><br />
+              <input type="text" placeholder="Description" value={this.state.resource_description_create} onChange={e => this.setState({ resource_description_create: e.target.value })} /><br />
+              <input type="text" placeholder="Value" value={this.state.resource_value_create} onChange={e => this.setState({ resource_value_create: e.target.value })} /><br />
+              <input type="submit" value="Create Resource" />
+            </form>
             <br />
 
             <div>
-              <p> <b> Update resource </b> </p>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <p> Id: </p>
-                <input type="text" value={this.state.resource_id_update} onChange={e => this.setState({ resource_id_update: e.target.value })} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <p> Title: </p>
-                <input type="text" value={this.state.resource_title_update} onChange={e => this.setState({ resource_title_update: e.target.value })} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <p> Description: </p>
-                <input type="text" value={this.state.resource_description_update} onChange={e => this.setState({ resource_description_update: e.target.value })} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <p> Value: </p>
-                <input type="text" value={this.state.resource_value_update} onChange={e => this.setState({ resource_value_update: e.target.value })} />
-              </div>
-              <br />
+              <p><b>Update resource</b></p>
 
-              <button type="button"
-                onClick={e => this.updateResource(this.state.resource_id_update,
-                  { title: this.state.resource_title_update, description: this.state.resource_description_update, value: this.state.resource_value_update })}
-              >update
-              </button>
+              <form onSubmit={e => this.updateResource(
+                e, this.state.resource_id_update,
+                {
+                  title: this.state.resource_title_update,
+                  description: this.state.resource_description_update,
+                  value: this.state.resource_value_update,
+                },
+              )}
+              >
+                <input type="text" placeholder="Resource ID" value={this.state.resource_id_update} onChange={e => this.setState({ resource_id_update: e.target.value })} /><br />
+                <input type="text" placeholder="Title" value={this.state.resource_title_update} onChange={e => this.setState({ resource_title_update: e.target.value })} /><br />
+                <input type="text" placeholder="Description" value={this.state.resource_description_update} onChange={e => this.setState({ resource_description_update: e.target.value })} /><br />
+                <input type="text" placeholder="Value" value={this.state.resource_value_update} onChange={e => this.setState({ resource_value_update: e.target.value })} /><br />
+                <input type="submit" value="Update Resource" />
+              </form>
+            </div>
 
+            <p><b>Selected resource:</b></p>
+            <div>
+              {this.props.resource && Object.keys(this.props.resource).length !== 0
+                ? <SearchItem key={this.props.resource.id || this.props.resource._id} displayObject={this.props.resource} />
+                : null}
+            </div>
+
+            <p><b>Resources:</b></p>
+            <div>
+              { Array.isArray(this.props.results) && this.props.results.length
+                ? this.props.results.map((element) => {
+                  return <SearchItem key={element.id || element._id} displayObject={element} />;
+                }) : null }
             </div>
           </div>
-          <div style={{ width: '600px' }} />
-          <div>
 
-            <p><b>Create user:</b></p>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <p> First name: </p>
-              <input type="text" value={this.state.user_first_name_create} onChange={e => this.setState({ user_first_name_create: e.target.value })} />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <p> Last name: </p>
-              <input type="text" value={this.state.user_last_name_create} onChange={e => this.setState({ user_last_name_create: e.target.value })} />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <p> Email: </p>
-              <input type="text" value={this.state.user_email_create} onChange={e => this.setState({ user_email_create: e.target.value })} />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <p> Password: </p>
-              <input type="text" value={this.state.user_password_create} onChange={e => this.setState({ user_password_create: e.target.value })} />
-            </div>
+          <div style={{ width: '200px' }} />
+
+          <div style={{ width: '400px' }}>
+            <button type="button" onClick={this.getAllUsers}>Get All Users</button><br /><br />
+
+            <input type="text" placeholder="User ID" value={this.state.user_id_get} onChange={e => this.setState({ user_id_get: e.target.value })} /><br />
+            <button type="button" onClick={e => this.getUserById(e, this.state.user_id_get)}>Get User</button><br />
+            <button type="button" onClick={e => this.deleteUser(e, this.state.user_id_get)}>Delete User</button>
             <br />
 
-            <button type="button"
-              onClick={e => this.createUser(this.state.user_first_name_create, this.state.user_last_name_create, this.state.user_email_create,
-                this.state.user_password_create)}
-            >create
-            </button>
+            <p><b>Create user</b></p>
+            <form onSubmit={e => this.createUser(
+              e,
+              this.state.user_first_name_create,
+              this.state.user_last_name_create,
+              this.state.user_email_create,
+              this.state.user_password_create,
+            )}
+            >
+              <input type="text" placeholder="First Name" value={this.state.user_first_name_create} onChange={e => this.setState({ user_first_name_create: e.target.value })} /><br />
+              <input type="text" placeholder="Last Name" value={this.state.user_last_name_create} onChange={e => this.setState({ user_last_name_create: e.target.value })} /><br />
+              <input type="text" placeholder="Email" value={this.state.user_email_create} onChange={e => this.setState({ user_email_create: e.target.value })} /><br />
+              <input type="password" placeholder="Password" value={this.state.user_password_create} onChange={e => this.setState({ user_password_create: e.target.value })} /><br />
+              <input type="submit" value="Create User" />
+            </form>
 
-            <p> <b> Users: </b> </p>
-            <br />
+            <div>
+              <p><b>Update user</b></p>
 
-            <div> {this.props.users && this.props.users.length ? this.props.users.map((element) => {
-              return <SearchItem key={element.id || element._id} displayObject={element} />;
-            }) : null}
+              <form onSubmit={e => this.updateUser(
+                e, this.state.user_id_create,
+                {
+                  first_name: this.state.user_first_name_update,
+                  last_name: this.state.user_last_name_update,
+                  email: this.state.user_email_update,
+                  password: this.state.user_password_update,
+                },
+              )}
+              >
+                <input type="text" placeholder="User ID" value={this.state.user_id_create} onChange={e => this.setState({ user_id_create: e.target.value })} /><br />
+                <input type="text" placeholder="First Name" value={this.state.user_first_name_update} onChange={e => this.setState({ user_first_name_update: e.target.value })} /><br />
+                <input type="text" placeholder="Last Name" value={this.state.user_last_name_update} onChange={e => this.setState({ user_last_name_update: e.target.value })} /><br />
+                <input type="text" placeholder="Email" value={this.state.user_email_update} onChange={e => this.setState({ user_email_update: e.target.value })} /><br />
+                <input type="password" placeholder="Password" value={this.state.user_password_update} onChange={e => this.setState({ user_password_update: e.target.value })} /><br />
+                <input type="submit" value="Update User" />
+              </form>
             </div>
 
-            <p> <b> Selected user: </b></p>
-            <br />
-
-            <div> {this.props.user ? <SearchItem key={this.props.user.id || this.props.user._id} displayObject={this.props.user} />
+            <p><b>Selected user:</b></p>
+            <div> {this.props.user && Object.keys(this.props.user).length !== 0
+              ? <SearchItem key={this.props.user.id || this.props.user._id} displayObject={this.props.user} />
               : null}
             </div>
 
-            <div>
-              <p> <b> Update user </b> </p>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <p> Id: </p>
-                <input type="text" value={this.state.user_id_create} onChange={e => this.setState({ user_id_create: e.target.value })} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <p> First name: </p>
-                <input type="text" value={this.state.user_first_name_update} onChange={e => this.setState({ user_first_name_update: e.target.value })} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <p> Last name: </p>
-                <input type="text" value={this.state.user_last_name_update} onChange={e => this.setState({ user_last_name_update: e.target.value })} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <p> Email: </p>
-                <input type="text" value={this.state.user_email_update} onChange={e => this.setState({ user_email_update: e.target.value })} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <p> Password: </p>
-                <input type="text" value={this.state.user_password_update} onChange={e => this.setState({ user_password_update: e.target.value })} />
-              </div>
-              <br />
-
-              <button type="button"
-                onClick={e => this.updateUser(this.state.user_id_create,
-                  {
-                    first_name: this.state.user_first_name_update, last_name: this.state.user_last_name_update, email: this.state.user_email_update, password: this.state.user_password_update,
-                  })}
-              >update
-              </button>
-
+            <p><b>Users:</b></p>
+            <div> {Array.isArray(this.props.users) && this.props.users.length ? this.props.users.map((element) => {
+              return <SearchItem key={element.id || element._id} displayObject={element} />;
+            }) : null}
             </div>
-
           </div>
         </div>
-        <NavLink to="/signout">Sign Out</NavLink>
       </div>
     );
   }
