@@ -45,12 +45,17 @@ export function createUser(firstName, lastName, email, password) {
 // Get user by id (AUTH)
 export function fetchUserByID(id) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.get(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
+    if (!id) {
+      dispatch({ type: ActionTypes.FETCH_USER, payload: {} });
       resolve();
-    }).catch((error) => {
-      reject(error);
-    });
+    } else {
+      axios.get(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
+        dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
+        resolve();
+      }).catch((error) => {
+        reject(error);
+      });
+    }
   });
 }
 

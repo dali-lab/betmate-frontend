@@ -47,12 +47,17 @@ export function createResource(title, description, value) {
 // Get
 export function fetchResourceByID(id) {
   return dispatch => new Promise((resolve, reject) => {
-    axios.get(`${ROOT_URL}/resources/${id}`).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_RESOURCE, payload: response.data });
+    if (!id) {
+      dispatch({ type: ActionTypes.FETCH_RESOURCE, payload: {} });
       resolve();
-    }).catch((error) => {
-      reject(error);
-    });
+    } else {
+      axios.get(`${ROOT_URL}/resources/${id}`).then((response) => {
+        dispatch({ type: ActionTypes.FETCH_RESOURCE, payload: response.data });
+        resolve();
+      }).catch((error) => {
+        reject(error);
+      });
+    }
   });
 }
 
