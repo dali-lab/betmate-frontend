@@ -12,7 +12,7 @@ import ActionTypes from './index';
  */
 // eslint-disable-next-line import/prefer-default-export
 export function search(query, filters, sort, page, numPerPage) {
-  return dispatch => new Promise((resolve, reject) => {
+  return (dispatch) => new Promise((resolve, reject) => {
     dispatch({ type: ActionTypes.SEARCH_REQUEST });
 
     // eslint-disable-next-line max-len

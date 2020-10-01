@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -13,7 +14,7 @@ export default (SuccessComp, FailureComp) => {
       : <FailureComp {...props} />;
   };
 
-  const mapStateToProps = state => ({
+  const mapStateToProps = (state) => ({
     authenticated: state.auth.authenticated,
   });
 

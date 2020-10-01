@@ -6,13 +6,13 @@ import LoadingIcon from '../components/loadingIcon';
 // Functional loading component for displaying arbitrary loading component when prop loading is true
 const WithLoadingLoader = ({ loading, children }) => {
   return (
-    <React.Fragment>
+    <>
       {loading ? (
         <LoadingIcon />
       ) : (
         { ...children }
       )}
-    </React.Fragment>
+    </>
   );
 };
 

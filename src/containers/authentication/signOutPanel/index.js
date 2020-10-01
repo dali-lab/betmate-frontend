@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 
 import { signOutUser } from '../../../actions/authActions';
 
-
 class SearchPane extends React.Component {
   constructor(props) {
     super(props);

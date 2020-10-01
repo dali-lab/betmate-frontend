@@ -27,7 +27,7 @@ const reducer = (state = {}, action) => {
    * Will load the passed error message into the error-reducer from action payload
    * Checks both for a message passed as a part of an object and as plain text (when using some middleware object returns aren't allowed)
    */
-  return Object.assign({}, state, { [requestName]: requestState === 'FAILURE' ? action.payload.message : '' });
+  return { ...state, [requestName]: requestState === 'FAILURE' ? action.payload.message : '' };
 };
 
 export default reducer;

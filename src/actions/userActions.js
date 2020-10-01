@@ -4,7 +4,7 @@ import ActionTypes, { getBearerTokenHeader } from './index';
 
 // Get all users (AUTH)
 export function fetchUsers() {
-  return dispatch => new Promise((resolve, reject) => {
+  return (dispatch) => new Promise((resolve, reject) => {
     dispatch({ type: ActionTypes.FETCH_USERS_REQUEST });
 
     axios.get(`${ROOT_URL}/users`, { headers: getBearerTokenHeader() }).then((response) => {
@@ -19,7 +19,7 @@ export function fetchUsers() {
 
 // New user (AUTH)
 export function createUser(firstName, lastName, email, password) {
-  return dispatch => new Promise((resolve, reject) => {
+  return (dispatch) => new Promise((resolve, reject) => {
     dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
 
     axios.post(`${ROOT_URL}/users`, {
@@ -48,7 +48,7 @@ export function createUser(firstName, lastName, email, password) {
 
 // Get user by id (AUTH)
 export function fetchUserByID(id) {
-  return dispatch => new Promise((resolve, reject) => {
+  return (dispatch) => new Promise((resolve, reject) => {
     if (!id) {
       dispatch({ type: ActionTypes.FETCH_USER, payload: {} });
       resolve();
@@ -68,7 +68,7 @@ export function fetchUserByID(id) {
 
 // Update by id (AUTH)
 export function updateUserByID(id, update) {
-  return dispatch => new Promise((resolve, reject) => {
+  return (dispatch) => new Promise((resolve, reject) => {
     dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
 
     axios.put(`${ROOT_URL}/users/${id}`, update, { headers: getBearerTokenHeader() }).then((response) => {
@@ -83,7 +83,7 @@ export function updateUserByID(id, update) {
 
 // Delete by id (AUTH)
 export function deleteUserByID(id) {
-  return dispatch => new Promise((resolve, reject) => {
+  return (dispatch) => new Promise((resolve, reject) => {
     axios.delete(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
       resolve();
     }).catch((error) => {

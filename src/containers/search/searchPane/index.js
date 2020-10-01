@@ -38,8 +38,7 @@ class SearchPane extends React.Component {
                 }) : null}
               </>
             )
-            : this.props.isLoading ? <div>Searching...</div> : this.props.errorMessage
-          }
+            : this.props.isLoading ? <div>Searching...</div> : this.props.errorMessage}
         </div>
       </div>
     );
@@ -51,7 +50,7 @@ const loadActions = ['SEARCH', 'FETCH_RESOURCES'];
 const loadingSelector = createLoadingSelector(loadActions);
 const errorSelector = createErrorSelector(loadActions);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   results: state.data.resources,
   numResults: state.data.numResults,
   isLoading: loadingSelector(state),

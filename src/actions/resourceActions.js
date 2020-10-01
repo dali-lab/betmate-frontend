@@ -6,7 +6,7 @@ import ActionTypes, { getBearerTokenHeader } from './index';
  * A function for fetching all resources loaded into backend (or a given number based on backend parameters)
  */
 export function fetchResources() {
-  return dispatch => new Promise((resolve, reject) => {
+  return (dispatch) => new Promise((resolve, reject) => {
     dispatch({ type: ActionTypes.FETCH_RESOURCES_REQUEST });
 
     axios.get(`${ROOT_URL}/resources`).then((response) => {
@@ -21,7 +21,7 @@ export function fetchResources() {
 
 // New resource (AUTH)
 export function createResource(title, description, value) {
-  return dispatch => new Promise((resolve, reject) => {
+  return (dispatch) => new Promise((resolve, reject) => {
     dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
 
     axios.post(`${ROOT_URL}/resources`, { title, description, value }, { headers: getBearerTokenHeader() }).then((response) => {
@@ -50,7 +50,7 @@ export function createResource(title, description, value) {
 
 // Get
 export function fetchResourceByID(id) {
-  return dispatch => new Promise((resolve, reject) => {
+  return (dispatch) => new Promise((resolve, reject) => {
     if (!id) {
       dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: {} });
       resolve();
@@ -70,7 +70,7 @@ export function fetchResourceByID(id) {
 
 // Update (AUTH)
 export function updateResourceByID(id, update) {
-  return dispatch => new Promise((resolve, reject) => {
+  return (dispatch) => new Promise((resolve, reject) => {
     dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
 
     axios.put(`${ROOT_URL}/resources/${id}`, update, { headers: getBearerTokenHeader() }).then((response) => {
@@ -85,7 +85,7 @@ export function updateResourceByID(id, update) {
 
 // Delete (AUTH)
 export function deleteResourceByID(id) {
-  return dispatch => new Promise((resolve, reject) => {
+  return (dispatch) => new Promise((resolve, reject) => {
     axios.delete(`${ROOT_URL}/resources/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
       resolve();
     }).catch((error) => {

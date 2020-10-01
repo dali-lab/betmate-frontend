@@ -88,7 +88,7 @@ const loadActions = ['AUTH_USER'];
 const loadingSelector = createLoadingSelector(loadActions);
 const errorSelector = createErrorSelector(loadActions);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   authenticated: state.auth.authenticated,
   isLoading: loadingSelector(state),
   errorMessage: errorSelector(state),
