@@ -10,20 +10,20 @@ import ActionTypes, { setBearerToken } from './index';
  * @param {*} lastName
  */
 export function signUpUser(email, password, firstName, lastName) {
-  return dispatch => new Promise((resolve, reject) => {
-    dispatch({ type: ActionTypes.AUTH_USER_REQUEST });
+  return async (dispatch) => {
+    try {
+      dispatch({ type: ActionTypes.AUTH_USER_REQUEST });
 
-    axios.post(`${ROOT_URL}/auth/signup`, {
-      email, password, firstName, lastName,
-    }).then((response) => {
+      const response = await axios.post(`${ROOT_URL}/auth/signup`, {
+        email, password, firstName, lastName,
+      });
+
       if (response.data.token) setBearerToken(response.data.token);
       dispatch({ type: ActionTypes.AUTH_USER_SUCCESS, payload: response.data.user });
-      resolve();
-    }).catch((error) => {
+    } catch (error) {
       dispatch({ type: ActionTypes.AUTH_USER_FAILURE, payload: error.response.data });
-      reject(error);
-    });
-  });
+    }
+  };
 }
 
 /**
@@ -33,18 +33,17 @@ export function signUpUser(email, password, firstName, lastName) {
  * @param {*} password
  */
 export function signInUser(email, password) {
-  return dispatch => new Promise((resolve, reject) => {
-    dispatch({ type: ActionTypes.AUTH_USER_REQUEST });
+  return async (dispatch) => {
+    try {
+      dispatch({ type: ActionTypes.AUTH_USER_REQUEST });
 
-    axios.post(`${ROOT_URL}/auth/signin`, { email, password }).then((response) => {
+      const response = await axios.post(`${ROOT_URL}/auth/signin`, { email, password });
       if (response.data.token) setBearerToken(response.data.token);
       dispatch({ type: ActionTypes.AUTH_USER_SUCCESS, payload: response.data.user });
-      resolve();
-    }).catch((error) => {
+    } catch (error) {
       dispatch({ type: ActionTypes.AUTH_USER_FAILURE, payload: error.response.data });
-      reject(error);
-    });
-  });
+    }
+  };
 }
 
 /**

@@ -6,32 +6,28 @@ import ActionTypes, { getBearerTokenHeader } from './index';
  * A function for fetching all resources loaded into backend (or a given number based on backend parameters)
  */
 export function fetchResources() {
-  return (dispatch) => new Promise((resolve, reject) => {
-    dispatch({ type: ActionTypes.FETCH_RESOURCES_REQUEST });
-
-    axios.get(`${ROOT_URL}/resources`).then((response) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: ActionTypes.FETCH_RESOURCES_REQUEST });
+      const response = await axios.get(`${ROOT_URL}/resources`);
       dispatch({ type: ActionTypes.FETCH_RESOURCES_SUCCESS, payload: response.data });
-      resolve();
-    }).catch((error) => {
+    } catch (error) {
       dispatch({ type: ActionTypes.FETCH_RESOURCES_FAILURE, payload: error.response.data });
-      reject(error);
-    });
-  });
+    }
+  };
 }
 
 // New resource (AUTH)
 export function createResource(title, description, value) {
-  return (dispatch) => new Promise((resolve, reject) => {
-    dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
-
-    axios.post(`${ROOT_URL}/resources`, { title, description, value }, { headers: getBearerTokenHeader() }).then((response) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
+      const response = await axios.post(`${ROOT_URL}/resources`, { title, description, value }, { headers: getBearerTokenHeader() });
       dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
-      resolve();
-    }).catch((error) => {
+    } catch (error) {
       dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE, payload: error.response.data });
-      reject(error);
-    });
-  });
+    }
+  };
 }
 
 // // TODO: Add additional auth to call this
@@ -50,46 +46,42 @@ export function createResource(title, description, value) {
 
 // Get
 export function fetchResourceByID(id) {
-  return (dispatch) => new Promise((resolve, reject) => {
-    if (!id) {
-      dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: {} });
-      resolve();
-    } else {
+  return async (dispatch) => {
+    try {
+      if (!id) {
+        dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: {} });
+        return;
+      }
       dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
-
-      axios.get(`${ROOT_URL}/resources/${id}`).then((response) => {
-        dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
-        resolve();
-      }).catch((error) => {
-        dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE, payload: error.response.data });
-        reject(error);
-      });
+      const response = await axios.get(`${ROOT_URL}/resources/${id}`);
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
+    } catch (error) {
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE, payload: error.response.data });
     }
-  });
+  };
 }
 
 // Update (AUTH)
 export function updateResourceByID(id, update) {
-  return (dispatch) => new Promise((resolve, reject) => {
-    dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
-
-    axios.put(`${ROOT_URL}/resources/${id}`, update, { headers: getBearerTokenHeader() }).then((response) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: ActionTypes.FETCH_RESOURCE_REQUEST });
+      const response = await axios.put(`${ROOT_URL}/resources/${id}`, update, { headers: getBearerTokenHeader() });
       dispatch({ type: ActionTypes.FETCH_RESOURCE_SUCCESS, payload: response.data });
-      resolve();
-    }).catch((error) => {
+    } catch (error) {
       dispatch({ type: ActionTypes.FETCH_RESOURCE_FAILURE, payload: error.response.data });
-      reject(error);
-    });
-  });
+    }
+  };
 }
 
 // Delete (AUTH)
+// TODO: Update action types
 export function deleteResourceByID(id) {
-  return (dispatch) => new Promise((resolve, reject) => {
-    axios.delete(`${ROOT_URL}/resources/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
-      resolve();
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+  return async (dispatch) => {
+    try {
+      await axios.delete(`${ROOT_URL}/resources/${id}`, { headers: getBearerTokenHeader() });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 }

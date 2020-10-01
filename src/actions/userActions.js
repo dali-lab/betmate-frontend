@@ -4,90 +4,80 @@ import ActionTypes, { getBearerTokenHeader } from './index';
 
 // Get all users (AUTH)
 export function fetchUsers() {
-  return (dispatch) => new Promise((resolve, reject) => {
-    dispatch({ type: ActionTypes.FETCH_USERS_REQUEST });
-
-    axios.get(`${ROOT_URL}/users`, { headers: getBearerTokenHeader() }).then((response) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: ActionTypes.FETCH_USERS_REQUEST });
+      const response = await axios.get(`${ROOT_URL}/users`, { headers: getBearerTokenHeader() });
       dispatch({ type: ActionTypes.FETCH_USERS_SUCCESS, payload: response.data });
-      resolve();
-    }).catch((error) => {
+    } catch (error) {
       dispatch({ type: ActionTypes.FETCH_USERS_FAILURE, payload: error.response.data });
-      reject(error);
-    });
-  });
+    }
+  };
 }
 
 // New user (AUTH)
 export function createUser(firstName, lastName, email, password) {
-  return (dispatch) => new Promise((resolve, reject) => {
-    dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
-
-    axios.post(`${ROOT_URL}/users`, {
-      firstName, lastName, email, password,
-    }, { headers: getBearerTokenHeader() }).then((response) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
+      const response = await axios.post(`${ROOT_URL}/users`, {
+        firstName, lastName, email, password,
+      }, { headers: getBearerTokenHeader() });
       dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
-      resolve();
-    }).catch((error) => {
+    } catch (error) {
       dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
-      reject(error);
-    });
-  });
+    }
+  };
 }
 
 // // TODO: Add additional auth to call this
 // // Delete all users (AUTH)
+// // TODO: UPDATE THIS ACTION
 // export function deleteAllUsers() {
-//   return dispatch => new Promise((resolve, reject) => {
-//     axios.delete(`${ROOT_URL}/users`, { headers: getBearerTokenHeader() }).then((response) => {
-//       resolve();
-//     }).catch((error) => {
-//       reject(error);
-//     });
-//   });
+//   return async (dispatch) => {
+//     await axios.delete(`${ROOT_URL}/users`, { headers: getBearerTokenHeader() });
+//   };
 // }
 
 // Get user by id (AUTH)
 export function fetchUserByID(id) {
-  return (dispatch) => new Promise((resolve, reject) => {
-    if (!id) {
-      dispatch({ type: ActionTypes.FETCH_USER, payload: {} });
-      resolve();
-    } else {
-      dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
+  return async (dispatch) => {
+    try {
+      if (!id) {
+        dispatch({ type: ActionTypes.FETCH_USER, payload: {} });
+        return;
+      }
 
-      axios.get(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
-        dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
-        resolve();
-      }).catch((error) => {
-        dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
-        reject(error);
-      });
+      dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
+      const response = await axios.get(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() });
+      dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
+    } catch (error) {
+      dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
     }
-  });
+  };
 }
 
 // Update by id (AUTH)
 export function updateUserByID(id, update) {
-  return (dispatch) => new Promise((resolve, reject) => {
-    dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
-
-    axios.put(`${ROOT_URL}/users/${id}`, update, { headers: getBearerTokenHeader() }).then((response) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
+      const response = await axios.put(`${ROOT_URL}/users/${id}`, update, { headers: getBearerTokenHeader() });
       dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
-      resolve();
-    }).catch((error) => {
+    } catch (error) {
       dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
-      reject(error);
-    });
-  });
+    }
+  };
 }
 
 // Delete by id (AUTH)
+// TODO: Update action types
 export function deleteUserByID(id) {
-  return (dispatch) => new Promise((resolve, reject) => {
-    axios.delete(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() }).then((response) => {
-      resolve();
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+  return async (dispatch) => {
+    try {
+      await axios.delete(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 }
