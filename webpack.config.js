@@ -35,8 +35,13 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: () => [autoprefixer()],
-              sourceMap: true,
+              postcssOptions: {
+                plugins: [
+                  [
+                    'autoprefixer',
+                  ],
+                ],
+              },
             },
           },
           {
@@ -71,6 +76,7 @@ module.exports = {
       template: './src/index.html',
       filename: './200.html',
     }),
+    autoprefixer,
   ],
   devServer: {
     hot: true,

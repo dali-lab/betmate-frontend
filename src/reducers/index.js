@@ -4,14 +4,12 @@ import { combineReducers } from 'redux';
 
 import AuthReducer from './auth-reducer';
 import DataReducer from './data-reducer';
-import ErrorReducer from './error-reducer';
-import LoadingReducer from './loading-reducer';
+import RequestReducer from './request-reducer';
 
 const rootReducer = combineReducers({
   auth: AuthReducer,
   data: DataReducer,
-  error: ErrorReducer,
-  loading: LoadingReducer,
+  request: RequestReducer,
 });
 
 export default rootReducer;

@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { ROOT_URL } from '../constants';
 import ActionTypes, { getBearerTokenHeader } from './index';
+import { ROOT_URL, requestTimeout } from '../constants';
 
 // Get all users (AUTH)
 export function fetchUsers() {
   return async (dispatch) => {
     try {
       dispatch({ type: ActionTypes.FETCH_USERS_REQUEST });
-      const response = await axios.get(`${ROOT_URL}/users`, { headers: getBearerTokenHeader() });
+      const response = await axios.get(`${ROOT_URL}/users`, { timeout: requestTimeout, headers: getBearerTokenHeader() });
       dispatch({ type: ActionTypes.FETCH_USERS_SUCCESS, payload: response.data });
     } catch (error) {
       dispatch({ type: ActionTypes.FETCH_USERS_FAILURE, payload: error.response.data });
@@ -22,7 +22,7 @@ export function createUser(firstName, lastName, email, password) {
       dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
       const response = await axios.post(`${ROOT_URL}/users`, {
         firstName, lastName, email, password,
-      }, { headers: getBearerTokenHeader() });
+      }, { timeout: requestTimeout, headers: getBearerTokenHeader() });
       dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
     } catch (error) {
       dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
@@ -49,7 +49,7 @@ export function fetchUserByID(id) {
       }
 
       dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
-      const response = await axios.get(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() });
+      const response = await axios.get(`${ROOT_URL}/users/${id}`, { timeout: requestTimeout, headers: getBearerTokenHeader() });
       dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
     } catch (error) {
       dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
@@ -62,7 +62,7 @@ export function updateUserByID(id, update) {
   return async (dispatch) => {
     try {
       dispatch({ type: ActionTypes.FETCH_USER_REQUEST });
-      const response = await axios.put(`${ROOT_URL}/users/${id}`, update, { headers: getBearerTokenHeader() });
+      const response = await axios.put(`${ROOT_URL}/users/${id}`, update, { timeout: requestTimeout, headers: getBearerTokenHeader() });
       dispatch({ type: ActionTypes.FETCH_USER_SUCCESS, payload: response.data });
     } catch (error) {
       dispatch({ type: ActionTypes.FETCH_USER_FAILURE, payload: error.response.data });
@@ -75,7 +75,7 @@ export function updateUserByID(id, update) {
 export function deleteUserByID(id) {
   return async (dispatch) => {
     try {
-      await axios.delete(`${ROOT_URL}/users/${id}`, { headers: getBearerTokenHeader() });
+      await axios.delete(`${ROOT_URL}/users/${id}`, { timeout: requestTimeout, headers: getBearerTokenHeader() });
     } catch (error) {
       console.error(error);
     }

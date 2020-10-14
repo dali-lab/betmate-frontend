@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { ROOT_URL } from '../constants';
 import ActionTypes, { setBearerToken } from './index';
+import { requestTimeout, ROOT_URL } from '../constants';
 
 /**
  * Sign up a user and return a user object and a bearer token
@@ -16,7 +16,7 @@ export function signUpUser(email, password, firstName, lastName) {
 
       const response = await axios.post(`${ROOT_URL}/auth/signup`, {
         email, password, firstName, lastName,
-      });
+      }, { timeout: requestTimeout });
 
       if (response.data.token) setBearerToken(response.data.token);
       dispatch({ type: ActionTypes.AUTH_USER_SUCCESS, payload: response.data.user });
@@ -37,7 +37,7 @@ export function signInUser(email, password) {
     try {
       dispatch({ type: ActionTypes.AUTH_USER_REQUEST });
 
-      const response = await axios.post(`${ROOT_URL}/auth/signin`, { email, password });
+      const response = await axios.post(`${ROOT_URL}/auth/signin`, { email, password }, { timeout: requestTimeout });
       if (response.data.token) setBearerToken(response.data.token);
       dispatch({ type: ActionTypes.AUTH_USER_SUCCESS, payload: response.data.user });
     } catch (error) {

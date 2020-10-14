@@ -3,12 +3,12 @@
 
 const reducer = (state = {}, action) => {
   /**
-   * Check if the action name ends in "REQUEST", "SUCCESS", or "FAILURE"
+   * Check if the action name ends in "REQUEST", "SUCCESS", "FAILURE", or "CLEAR_ERR"
    */
-  const matches = /(.*)_(REQUEST|SUCCESS|FAILURE)/.exec(action.type);
+  const matches = /(.*)_(REQUEST|SUCCESS|FAILURE|CLEAR_ERR)/.exec(action.type);
 
   /**
-   * The passed action name does not end in "REQUEST", "SUCCESS", or "FAILURE"
+   * The passed action name does not end in "REQUEST", "SUCCESS", "FAILURE", or "CLEAR_ERR"
    */
   if (!matches) {
     return state;
@@ -27,7 +27,11 @@ const reducer = (state = {}, action) => {
    * Will assign true to the value of requestName within the loadingReducer if the request has not completed,
    * and false if the request completes. This allows you to check loading through the loadingReducer automatically   *
    */
-  return { ...state, [requestName]: requestState === 'REQUEST' && requestState !== 'CLEAR_ERR' };
+  const updatedState = { ...state, [requestName]: {} };
+  updatedState[requestName].loading = requestState === 'REQUEST' && requestState !== 'CLEAR_ERR';
+  updatedState[requestName].message = action?.payload?.message || '';
+  updatedState[requestName].code = action?.payload?.code || null;
+  return updatedState;
 };
 
 export default reducer;
