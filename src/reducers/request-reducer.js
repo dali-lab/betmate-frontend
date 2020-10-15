@@ -29,7 +29,7 @@ const reducer = (state = {}, action) => {
    */
   const updatedState = { ...state, [requestName]: {} };
   updatedState[requestName].loading = requestState === 'REQUEST' && requestState !== 'CLEAR_ERR';
-  updatedState[requestName].message = action?.payload?.message || '';
+  updatedState[requestName].message = requestState === 'REQUEST' ? '' : action?.payload?.message || '';
   updatedState[requestName].code = action?.payload?.code || null;
   return updatedState;
 };

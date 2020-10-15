@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import withLoading from '../../../hocs/withLoadingOld';
+import withLoading from '../../../hocs/withLoading';
 
+import ActionTypes from '../../../actions';
 import { fetchResources, updateResourceByID } from '../../../actions/resourceActions';
-import { createErrorSelector, createLoadingSelector } from '../../../actions/requestActions';
+import { createErrorSelector } from '../../../actions/requestActions';
 
 import SearchItem from '../../../components/searchItem';
-import SearchBar from '../searchBar';
 
 class SearchPane extends React.Component {
   constructor(props) {
@@ -20,48 +20,35 @@ class SearchPane extends React.Component {
   render() {
     return (
       <div>
-        <>
-          <SearchBar />
-          <div>
-            {/* eslint-disable-next-line no-nested-ternary */}
-            { this.props.isLoading === false
-              ? (this.props.errorMessage || (
-                <>
-                  {/* Number of results available for given query and filter options */}
-                  {/* Check if there have been results loaded or if there is an array of resources in redux */}
-                  <p>{this.props.numResults || (this.props.results && this.props.results.length) ? this.props.numResults || this.props.results.length : 0} results</p>
+        {this.props.isLoading ? 'Loading results...' : (this.props.errorMessage
+          || (
+          <>
+            {/* Number of results available for given query and filter options */}
+            {/* Check if there have been results loaded or if there is an array of resources in redux */}
+            <p>{this.props.numResults || (this.props.results && this.props.results.length) ? this.props.numResults || this.props.results.length : 0} results</p>
 
-                  {/* Go through passed data array and break into SearchItem elements */}
-                  {this.props.results && this.props.results.length ? this.props.results.map((element) => {
-                    return <SearchItem key={element.id || element._id} displayObject={element} />;
-                  }) : null}
-                </>
-              ))
-              : <div>Searching...</div>}
-          </div>
-        </ >
+            {/* Go through passed data array and break into SearchItem elements */}
+            {this.props.results && this.props.results.length ? this.props.results.map((element) => {
+              return <SearchItem key={element.id || element._id} displayObject={element} />;
+            }) : null}
+          </>
+          )
+        )}
       </div>
     );
   }
 }
 
 // Import loading state and error messages of specified actions from redux state
-const loadActions = ['SEARCH', 'FETCH_RESOURCES'];
-const loadingSelector = createLoadingSelector(loadActions);
-const errorSelector = createErrorSelector(loadActions);
+const errorSelector = createErrorSelector([ActionTypes.SEARCH, ActionTypes.FETCH_RESOURCES]);
 
 const mapStateToProps = (state) => ({
   results: state.data.resources,
   numResults: state.data.numResults,
-  isLoading: loadingSelector(state),
   errorMessage: errorSelector(state),
 });
 
-// TODO: Add error boundary to catch error messages
+// Waits for fetchResources action to resolve or reject
+const LoadingSearchPane = withLoading(SearchPane, [ActionTypes.FETCH_RESOURCES, ActionTypes.SEARCH]);
 
-// Calls fetchResources and waits until complete to load SearchPane
-const LoadingSearchPane = withLoading(SearchPane, [
-  fetchResources,
-]);
-
-export default connect(mapStateToProps, { updateResourceByID })(LoadingSearchPane);
+export default connect(mapStateToProps, { fetchResources, updateResourceByID })(LoadingSearchPane);

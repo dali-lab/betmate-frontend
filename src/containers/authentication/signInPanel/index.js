@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import ActionTypes from '../../../actions';
 import { signInUser } from '../../../actions/authActions';
 import {
   createErrorSelector, setError, clearError, createLoadingSelector,
@@ -71,7 +72,7 @@ class SignInPanel extends React.Component {
 }
 
 // Import loading state and error messages of specified actions from redux state
-const loadActions = ['AUTH_USER'];
+const loadActions = [ActionTypes.AUTH_USER];
 const loadingSelector = createLoadingSelector(loadActions);
 const errorSelector = createErrorSelector(loadActions);
 

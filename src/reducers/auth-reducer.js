@@ -7,7 +7,6 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  console.table(action);
   switch (action.type) {
     case `${ActionTypes.FETCH_USER}_SUCCESS`:
       return { ...state, user: action.payload };

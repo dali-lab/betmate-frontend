@@ -5,10 +5,12 @@ import {
 } from 'react-router-dom';
 
 import { signInUser, signOutUser } from '../actions/authActions';
+import { fetchResources } from '../actions/resourceActions';
 
 import requireAuth from '../hocs/requireAuth';
 
 import AdminPanel from '../containers/adminPanel';
+import SearchBar from '../containers/search/searchBar';
 import SearchPane from '../containers/search/searchPane';
 import SignUpPanel from '../containers/authentication/signUpPanel';
 import SignInPanel from '../containers/authentication/signInPanel';
@@ -19,6 +21,7 @@ const Welcome = (props) => {
     <div>
       <NavLink to="/signin">Sign In</NavLink><br />
       <NavLink to="/signup">Sign Up</NavLink><br />
+      <SearchBar />
       <SearchPane />
     </div>
   );
@@ -29,6 +32,9 @@ const FallBack = (props) => {
 };
 
 const App = (props) => {
+  // Place functions here that will dictate `withLoading` states
+  props.fetchResources();
+
   return (
     <Router>
       <div>
@@ -45,4 +51,4 @@ const App = (props) => {
   );
 };
 
-export default connect(null, { signInUser, signOutUser })(App);
+export default connect(null, { fetchResources, signInUser, signOutUser })(App);

@@ -4,7 +4,7 @@
  */
 export const createLoadingSelector = (actions) => (state) => {
   // actions not passed as an array
-  if (!Array.isArray(actions)) { return () => true; }
+  if (!Array.isArray(actions)) { return () => null; }
 
   // Returns true only if all passed actions aren't loading
   return actions.some((action) => state.request?.[action]?.loading === true);
