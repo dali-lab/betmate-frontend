@@ -7,7 +7,7 @@ function SearchItem(props) {
       {
         // Displays whatever object is passed as displayObject prop
         Object.entries(props.displayObject).map(([k, v]) => {
-          return <div key={k}>{k}: {v}</div>;
+          return <div key={k}>{JSON.stringify(k)}: {JSON.stringify(v)}</div>;
         })
       }
       {/* To make things cleaner */}

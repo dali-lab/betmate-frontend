@@ -1,6 +1,5 @@
-import axios from 'axios';
-import ActionTypes from './index';
-import { requestTimeout, ROOT_URL } from '../constants';
+import ActionTypes, { createAsyncActionCreator } from '.';
+import { ROOT_URL } from '../constants';
 
 /**
  * A function that fetches data from server and stores it in redux
@@ -12,14 +11,12 @@ import { requestTimeout, ROOT_URL } from '../constants';
  */
 // eslint-disable-next-line import/prefer-default-export
 export function search(query, filters, sort, page, numPerPage) {
-  return async (dispatch) => {
-    try {
-      dispatch({ type: ActionTypes.SEARCH_REQUEST });
-      const response = await axios.get(`${ROOT_URL}/search?query=${query.split(' ').length > 0
-        ? query.split(' ').join('+') : query || ''}&filters=${filters || ''}&sort=${sort || 'a'}&page=${page || 1}&numperpage=${numPerPage || 100}`, { timeout: requestTimeout });
-      dispatch({ type: ActionTypes.SEARCH_SUCCESS, payload: response.data });
-    } catch (error) {
-      dispatch({ type: ActionTypes.SEARCH_FAILURE, payload: error.response?.data });
-    }
-  };
+  return (dispatch) => createAsyncActionCreator(
+    dispatch, ActionTypes.SEARCH,
+    {
+      method: 'get',
+      url: `${ROOT_URL}/search?query=${query.split(' ').length > 0
+        ? query.split(' ').join('+') : query || ''}&filters=${filters || ''}&sort=${sort || 'a'}&page=${page || 1}&numperpage=${numPerPage || 100}`,
+    },
+  );
 }

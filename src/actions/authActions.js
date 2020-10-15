@@ -1,5 +1,4 @@
-import axios from 'axios';
-import ActionTypes, { setBearerToken } from './index';
+import ActionTypes, { createAsyncActionCreator, setBearerToken } from '.';
 import { requestTimeout, ROOT_URL } from '../constants';
 
 /**
@@ -10,20 +9,19 @@ import { requestTimeout, ROOT_URL } from '../constants';
  * @param {*} lastName
  */
 export function signUpUser(email, password, firstName, lastName) {
-  return async (dispatch) => {
-    try {
-      dispatch({ type: ActionTypes.AUTH_USER_REQUEST });
-
-      const response = await axios.post(`${ROOT_URL}/auth/signup`, {
+  return (dispatch) => createAsyncActionCreator(
+    dispatch, ActionTypes.AUTH_USER,
+    {
+      method: 'post',
+      url: `${ROOT_URL}/auth/signup`,
+      data: {
         email, password, firstName, lastName,
-      }, { timeout: requestTimeout });
-
-      if (response.data.token) setBearerToken(response.data.token);
-      dispatch({ type: ActionTypes.AUTH_USER_SUCCESS, payload: response.data.user });
-    } catch (error) {
-      dispatch({ type: ActionTypes.AUTH_USER_FAILURE, payload: error.response.data });
-    }
-  };
+      },
+    },
+    (response) => {
+      if (response.data.token) { setBearerToken(response.data.token); }
+    },
+  );
 }
 
 /**
@@ -33,17 +31,18 @@ export function signUpUser(email, password, firstName, lastName) {
  * @param {*} password
  */
 export function signInUser(email, password) {
-  return async (dispatch) => {
-    try {
-      dispatch({ type: ActionTypes.AUTH_USER_REQUEST });
-
-      const response = await axios.post(`${ROOT_URL}/auth/signin`, { email, password }, { timeout: requestTimeout });
-      if (response.data.token) setBearerToken(response.data.token);
-      dispatch({ type: ActionTypes.AUTH_USER_SUCCESS, payload: response.data.user });
-    } catch (error) {
-      dispatch({ type: ActionTypes.AUTH_USER_FAILURE, payload: error.response.data });
-    }
-  };
+  return (dispatch) => createAsyncActionCreator(
+    dispatch, ActionTypes.AUTH_USER,
+    {
+      method: 'post',
+      url: `${ROOT_URL}/auth/signin`,
+      data: { email, password },
+      timeout: requestTimeout,
+    },
+    (response) => {
+      if (response.data.token) { setBearerToken(response.data.token); }
+    },
+  );
 }
 
 /**
@@ -54,7 +53,6 @@ export function signOutUser() {
     localStorage.clear();
 
     // Run any additional deauth processes here (dispatch DEAUTH_USER_REQUEST if async)
-
-    dispatch({ type: ActionTypes.DEAUTH_USER_SUCCESS });
+    dispatch({ type: `${ActionTypes.DEAUTH_USER}_SUCCESS` });
   };
 }
