@@ -43,8 +43,8 @@ class SearchPane extends React.Component {
 const errorSelector = createErrorSelector([ActionTypes.SEARCH, ActionTypes.FETCH_RESOURCES]);
 
 const mapStateToProps = (state) => ({
-  results: state.data.resources,
-  numResults: state.data.numResults,
+  results: state.resource.results,
+  numResults: state.resource.numResults,
   errorMessage: errorSelector(state),
 });
 

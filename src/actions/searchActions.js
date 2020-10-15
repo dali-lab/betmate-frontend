@@ -15,7 +15,7 @@ export function search(query, filters, sort, page, numPerPage) {
     dispatch, ActionTypes.SEARCH,
     {
       method: 'get',
-      url: `${ROOT_URL}/search?query=${query.split(' ').length > 0
+      url: `${ROOT_URL}/search?query=${query && query.split(' ').length > 0
         ? query.split(' ').join('+') : query || ''}&filters=${filters || ''}&sort=${sort || 'a'}&page=${page || 1}&numperpage=${numPerPage || 100}`,
     },
   );

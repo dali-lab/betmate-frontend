@@ -3,12 +3,12 @@
 import { combineReducers } from 'redux';
 
 import AuthReducer from './auth-reducer';
-import DataReducer from './data-reducer';
+import DataReducer from './resource-reducer';
 import RequestReducer from './request-reducer';
 
 const rootReducer = combineReducers({
   auth: AuthReducer,
-  data: DataReducer,
+  resource: DataReducer,
   request: RequestReducer,
 });
 

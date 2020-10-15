@@ -72,23 +72,21 @@ class AdminPanel extends React.Component {
     e.preventDefault();
     e.stopPropagation();
 
-    this.props.fetchUserByID(id);
+    if (id) { this.props.fetchUserByID(id); }
   }
 
   updateUser(e, id, update) {
     e.preventDefault();
     e.stopPropagation();
 
-    this.props.updateUserByID(id, update);
+    if (id) { this.props.updateUserByID(id, update); }
   }
 
   deleteUser(e, id) {
     e.preventDefault();
     e.stopPropagation();
 
-    this.props.deleteUserByID(id).then(() => {
-      this.props.fetchUserByID();
-    });
+    if (id) { this.props.deleteUserByID(id); }
   }
 
   // Resource handler functions
@@ -104,14 +102,14 @@ class AdminPanel extends React.Component {
     e.preventDefault();
     e.stopPropagation();
 
-    this.props.fetchResourceByID(id);
+    if (id) { this.props.fetchResourceByID(id); }
   }
 
   updateResource(e, id, update) {
     e.preventDefault();
     e.stopPropagation();
 
-    this.props.updateResourceByID(id, update);
+    if (id) { this.props.updateResourceByID(id, update); }
   }
 
   createResource(e, title, description, value) {
@@ -125,9 +123,7 @@ class AdminPanel extends React.Component {
     e.preventDefault();
     e.stopPropagation();
 
-    this.props.deleteResourceByID(id).then(() => {
-      this.props.fetchResourceByID();
-    });
+    if (id) { this.props.deleteResourceByID(id); }
   }
 
   // NOTE: Form inputs not validated in frontend
@@ -183,22 +179,9 @@ class AdminPanel extends React.Component {
               <input type="submit" value="Update Resource" />
             </form>
 
-            {/* Shows selected or modified resource based on id */}
-            <p><b>Selected resource:</b></p>
-            <div>
-              {this.props.resource && Object.keys(this.props.resource).length !== 0
-                ? <SearchItem key={this.props.resource.id || this.props.resource._id} displayObject={this.props.resource} />
-                : null}
-            </div>
-
             {/* Shows result of fetchResources() action */}
             <p><b>Resources:</b></p>
-            <div>
-              { Array.isArray(this.props.results) && this.props.results.length
-                ? this.props.results.map((element) => {
-                  return <SearchItem key={element.id || element._id} displayObject={element} />;
-                }) : null }
-            </div>
+            <div>{Object.values(this.props.resources).map((element) => <SearchItem key={element.id || element._id} displayObject={element} />)}</div>
           </div>
 
           {/* Spacer */}
@@ -253,18 +236,9 @@ class AdminPanel extends React.Component {
               <input type="submit" value="Update User" />
             </form>
 
-            {/* Shows selected or modified user based on id */}
-            <p><b>Selected user:</b></p>
-            <div> {this.props.user && Object.keys(this.props.user).length !== 0
-              ? <SearchItem key={this.props.user.id || this.props.user._id} displayObject={this.props.user} />
-              : null}
-            </div>
-
             {/* Shows result of fetchUsers() action */}
             <p><b>Users:</b></p>
-            <div> {Array.isArray(this.props.users) && this.props.users.length ? this.props.users.map((element) => {
-              return <SearchItem key={element.id || element._id} displayObject={element} />;
-            }) : null}
+            <div>{Object.values(this.props.users).map((element) => <SearchItem key={element.id || element._id} displayObject={element} />)}
             </div>
           </div>
         </div>
@@ -274,10 +248,8 @@ class AdminPanel extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  results: state.data.resources,
-  resource: state.data.resource,
+  resources: state.resource.resources,
   users: state.auth.users,
-  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, {

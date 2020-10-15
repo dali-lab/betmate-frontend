@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 
 import { signInUser, signOutUser } from '../actions/authActions';
-import { fetchResources } from '../actions/resourceActions';
+import { search } from '../actions/searchActions';
 
 import requireAuth from '../hocs/requireAuth';
 
@@ -33,7 +33,7 @@ const FallBack = (props) => {
 
 const App = (props) => {
   // Place functions here that will dictate `withLoading` states
-  props.fetchResources();
+  props.search();
 
   return (
     <Router>
@@ -51,4 +51,4 @@ const App = (props) => {
   );
 };
 
-export default connect(null, { fetchResources, signInUser, signOutUser })(App);
+export default connect(null, { search, signInUser, signOutUser })(App);

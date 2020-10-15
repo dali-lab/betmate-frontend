@@ -47,7 +47,7 @@ class SignInPanel extends React.Component {
     } else {
       // Send only if all fields filled in
       this.props.signInUser(this.state.email, this.state.password)
-        .then((response) => {
+        .then(() => {
           this.props.history.push('/admin');
         }).catch((error) => {
         // Add error-handling logic here

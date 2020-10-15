@@ -1,7 +1,9 @@
 // Axios object reference: https://github.com/axios/axios#request-config
 
 import axios from 'axios';
-import ActionTypes, { getBearerTokenHeader, createAsyncActionCreator } from '.';
+import ActionTypes, {
+  getBearerTokenHeader, createAsyncActionCreator, generateSuccessPayload, generateFailurePayload,
+} from '.';
 import { requestTimeout, ROOT_URL } from '../constants';
 
 /**
@@ -46,19 +48,13 @@ export function createResource(title, description, value) {
 
 // Get
 export function fetchResourceByID(id) {
-  return (dispatch) => {
-    if (!id) {
-      return dispatch({ type: `${ActionTypes.FETCH_RESOURCE}_SUCCESS`, payload: {} });
-    } else {
-      return createAsyncActionCreator(
-        dispatch, ActionTypes.FETCH_RESOURCE,
-        {
-          method: 'get',
-          url: `${ROOT_URL}/resources/${id}`,
-        },
-      );
-    }
-  };
+  return (dispatch) => createAsyncActionCreator(
+    dispatch, ActionTypes.FETCH_RESOURCE,
+    {
+      method: 'get',
+      url: `${ROOT_URL}/resources/${id}`,
+    },
+  );
 }
 
 // Update (AUTH)
@@ -75,13 +71,14 @@ export function updateResourceByID(id, update) {
 }
 
 // Delete (AUTH)
-// TODO: Update action types
 export function deleteResourceByID(id) {
   return async (dispatch) => {
     try {
-      await axios.delete(`${ROOT_URL}/resources/${id}`, { timeout: requestTimeout, headers: getBearerTokenHeader() });
+      dispatch({ type: `${ActionTypes.DELETE_RESOURCE}_REQUEST` });
+      const response = await axios.delete(`${ROOT_URL}/resources/${id}`, { timeout: requestTimeout, headers: getBearerTokenHeader() });
+      dispatch({ type: `${ActionTypes.DELETE_RESOURCE}_SUCCESS`, payload: generateSuccessPayload(response, { id }) });
     } catch (error) {
-      console.error(error);
+      dispatch({ type: `${ActionTypes.DELETE_RESOURCE}_FAILURE`, payload: generateFailurePayload(error) });
     }
   };
 }
