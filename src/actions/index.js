@@ -16,10 +16,10 @@ export async function createAsyncActionCreator(dispatch, actionName, axiosConfig
   try {
     dispatch({ type: `${actionName}_REQUEST` });
     const response = await axios({ ...axiosConfig, timeout: requestTimeout });
-    dispatch({ type: `${actionName}_SUCCESS`, payload: response.data });
+    dispatch({ type: `${actionName}_SUCCESS`, payload: { data: response.data, code: response.status } });
     successCallback(response);
   } catch (error) {
-    dispatch({ type: `${actionName}_FAILURE`, payload: error.response?.data || error });
+    dispatch({ type: `${actionName}_FAILURE`, payload: { message: error.response?.data?.message || error.message || 'No message found', code: error.response?.status || error.code || null } });
     failureCallback(error);
   }
 }

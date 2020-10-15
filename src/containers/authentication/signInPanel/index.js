@@ -41,15 +41,14 @@ class SignInPanel extends React.Component {
     e.stopPropagation();
 
     if (!this.state.email) {
-      this.props.setError(['AUTH_USER'], 'Please enter an email address!');
+      this.props.setError([ActionTypes.AUTH_USER], 'Please enter an email address!');
     } else if (!this.state.password) {
-      this.props.setError(['AUTH_USER'], 'Please enter a password!');
+      this.props.setError([ActionTypes.AUTH_USER], 'Please enter a password!');
     } else {
       // Send only if all fields filled in
       this.props.signInUser(this.state.email, this.state.password)
         .then((response) => {
           this.props.history.push('/admin');
-          this.props.clearError(['AUTH_USER']);
         }).catch((error) => {
         // Add error-handling logic here
           console.error(error);

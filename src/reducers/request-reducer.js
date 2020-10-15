@@ -10,9 +10,7 @@ const reducer = (state = {}, action) => {
   /**
    * The passed action name does not end in "REQUEST", "SUCCESS", "FAILURE", or "CLEAR_ERR"
    */
-  if (!matches) {
-    return state;
-  }
+  if (!matches) { return state; }
 
   /**
    * There will only be three values within a valid matches array

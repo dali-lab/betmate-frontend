@@ -52,13 +52,13 @@ class SignUpPanel extends React.Component {
     e.stopPropagation();
 
     if (!this.state.firstName) {
-      this.props.setError(['AUTH_USER'], 'Please enter your first name!');
+      this.props.setError([ActionTypes.AUTH_USER], 'Please enter your first name!');
     } else if (!this.state.lastName) {
-      this.props.setError(['AUTH_USER'], 'Please enter your last name!');
+      this.props.setError([ActionTypes.AUTH_USER], 'Please enter your last name!');
     } else if (!this.state.email) {
-      this.props.setError(['AUTH_USER'], 'Please enter an email address!');
+      this.props.setError([ActionTypes.AUTH_USER], 'Please enter an email address!');
     } else if (!this.state.password) {
-      this.props.setError(['AUTH_USER'], 'Please enter a password!');
+      this.props.setError([ActionTypes.AUTH_USER], 'Please enter a password!');
     } else {
       // Send only if all fields filled in
       this.props.signUpUser(this.state.email, this.state.password, this.state.firstName, this.state.lastName).then((response) => {
