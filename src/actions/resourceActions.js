@@ -1,10 +1,7 @@
-// Axios object reference: https://github.com/axios/axios#request-config
-
-import axios from 'axios';
 import ActionTypes, {
-  getBearerTokenHeader, createAsyncActionCreator, generateSuccessPayload, generateFailurePayload,
+  getBearerTokenHeader, createAsyncActionCreator,
 } from '.';
-import { requestTimeout, ROOT_URL } from '../constants';
+import { ROOT_URL } from '../constants';
 
 /**
  * A function for fetching all resources loaded into backend (or a given number based on backend parameters)
@@ -39,7 +36,7 @@ export function createResource(title, description, value) {
 //     axios.delete(`${ROOT_URL}/resources`, { timeout: requestTimeout }).then((response) => {
 //       resolve();
 //     }).catch((error) => {
-//       reject(error);
+//       reject();
 //     });
 //   });
 // }
@@ -72,13 +69,15 @@ export function updateResourceByID(id, update) {
 
 // Delete (AUTH)
 export function deleteResourceByID(id) {
-  return async (dispatch) => {
-    try {
-      dispatch({ type: `${ActionTypes.DELETE_RESOURCE}_REQUEST` });
-      const response = await axios.delete(`${ROOT_URL}/resources/${id}`, { timeout: requestTimeout, headers: getBearerTokenHeader() });
-      dispatch({ type: `${ActionTypes.DELETE_RESOURCE}_SUCCESS`, payload: generateSuccessPayload(response, { id }) });
-    } catch (error) {
-      dispatch({ type: `${ActionTypes.DELETE_RESOURCE}_FAILURE`, payload: generateFailurePayload(error) });
-    }
-  };
+  return (dispatch) => createAsyncActionCreator(
+    dispatch, ActionTypes.DELETE_RESOURCE,
+    {
+      method: 'delete',
+      url: `${ROOT_URL}/resources/${id}`,
+      headers: getBearerTokenHeader(),
+    },
+    {
+      additionalPayloadFields: { id },
+    },
+  );
 }

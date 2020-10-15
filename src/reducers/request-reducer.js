@@ -1,11 +1,13 @@
 // Reference:
 // https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6
 
+import { requestStates } from '../actions';
+
 const reducer = (state = {}, action) => {
   /**
    * Check if the action name ends in "REQUEST", "SUCCESS", "FAILURE", or "CLEAR_ERR"
    */
-  const matches = /(.*)_(REQUEST|SUCCESS|FAILURE|CLEAR_ERR)/.exec(action.type);
+  const matches = new RegExp(`(.*)_(${requestStates.REQUEST}|${requestStates.SUCCESS}|${requestStates.FAILURE}|${requestStates.CLEAR_ERR})`).exec(action.type);
 
   /**
    * The passed action name does not end in "REQUEST", "SUCCESS", "FAILURE", or "CLEAR_ERR"
@@ -16,7 +18,7 @@ const reducer = (state = {}, action) => {
    * There will only be three values within a valid matches array
    * 1) Full action name
    * 2) Action name
-   * 3) Matched string within action ("REQUEST", "SUCCESS", "FAILURE")
+   * 3) Matched string within action ("REQUEST", "SUCCESS", "FAILURE", "CLEAR_ERR")
    */
   const [, requestName, requestState] = matches;
 
@@ -26,8 +28,8 @@ const reducer = (state = {}, action) => {
    * and false if the request completes. This allows you to check loading through the loadingReducer automatically   *
    */
   const updatedState = { ...state, [requestName]: {} };
-  updatedState[requestName].loading = requestState === 'REQUEST' && requestState !== 'CLEAR_ERR';
-  updatedState[requestName].message = requestState === 'REQUEST' ? '' : action?.payload?.message || '';
+  updatedState[requestName].loading = requestState === requestStates.REQUEST && requestState !== requestStates.CLEAR_ERR;
+  updatedState[requestName].message = requestState === requestStates.REQUEST ? '' : action?.payload?.message || '';
   updatedState[requestName].code = action?.payload?.code || null;
   return updatedState;
 };

@@ -13,7 +13,6 @@ class SignInPanel extends React.Component {
     this.state = {
       email: '',
       password: '',
-      // errorMessage: '',
     };
 
     this.handleEmailUpdate = this.handleEmailUpdate.bind(this);
@@ -36,7 +35,7 @@ class SignInPanel extends React.Component {
     this.setState({ password: e.target.value });
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -46,13 +45,8 @@ class SignInPanel extends React.Component {
       this.props.setError([ActionTypes.AUTH_USER], 'Please enter a password!');
     } else {
       // Send only if all fields filled in
-      this.props.signInUser(this.state.email, this.state.password)
-        .then(() => {
-          this.props.history.push('/admin');
-        }).catch((error) => {
-        // Add error-handling logic here
-          console.error(error);
-        });
+      await this.props.signInUser(this.state.email, this.state.password);
+      this.props.history.push('/admin');
     }
   }
 
@@ -72,13 +66,11 @@ class SignInPanel extends React.Component {
 
 // Import loading state and error messages of specified actions from redux state
 const loadActions = [ActionTypes.AUTH_USER];
-const loadingSelector = createLoadingSelector(loadActions);
-const errorSelector = createErrorSelector(loadActions);
 
 const mapStateToProps = (state) => ({
   authenticated: state.auth.authenticated,
-  isLoading: loadingSelector(state),
-  errorMessage: errorSelector(state),
+  isLoading: createLoadingSelector(loadActions)(state),
+  errorMessage: createErrorSelector(loadActions)(state),
 });
 
 export default connect(mapStateToProps, { signInUser, setError, clearError })(SignInPanel);

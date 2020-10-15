@@ -1,4 +1,6 @@
-import ActionTypes, { createAsyncActionCreator, setBearerToken } from '.';
+import ActionTypes, {
+  requestStates, createAsyncActionCreator, setBearerToken,
+} from '.';
 import { requestTimeout, ROOT_URL } from '../constants';
 
 /**
@@ -18,8 +20,9 @@ export function signUpUser(email, password, firstName, lastName) {
         email, password, firstName, lastName,
       },
     },
-    (response) => {
-      if (response.data.token) { setBearerToken(response.data.token); }
+    {
+      successCallback: (response) => { if (response.data.token) { setBearerToken(response.data.token); } },
+      responseSubfield: 'user',
     },
   );
 }
@@ -39,8 +42,9 @@ export function signInUser(email, password) {
       data: { email, password },
       timeout: requestTimeout,
     },
-    (response) => {
-      if (response.data.token) { setBearerToken(response.data.token); }
+    {
+      successCallback: (response) => { if (response.data.token) { setBearerToken(response.data.token); } },
+      responseSubfield: 'user',
     },
   );
 }
@@ -53,6 +57,6 @@ export function signOutUser() {
     localStorage.clear();
 
     // Run any additional deauth processes here (dispatch DEAUTH_USER_REQUEST if async)
-    dispatch({ type: `${ActionTypes.DEAUTH_USER}_SUCCESS` });
+    dispatch({ type: `${ActionTypes.DEAUTH_USER}_${requestStates.SUCCESS}` });
   };
 }

@@ -16,7 +16,7 @@ const reducer = (state = initialState, action) => {
       return { ...state, users: omit(state.users, action.payload.id) };
 
     case `${ActionTypes.AUTH_USER}_SUCCESS`: // Update users if action provides user data
-      return { ...state, authenticated: true, users: action.payload.data?.user ? { ...state.users, [action.payload.data._id]: action.payload.data?.user } : state.users };
+      return { ...state, authenticated: true, users: action.payload.data ? { ...state.users, [action.payload.data._id]: action.payload.data } : state.users };
     case `${ActionTypes.DEAUTH_USER}_SUCCESS`:
       return { ...state, authenticated: false, users: {} };
     default:

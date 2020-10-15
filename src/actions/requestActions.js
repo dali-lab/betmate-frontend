@@ -4,7 +4,7 @@
  */
 export const createLoadingSelector = (actions) => (state) => {
   // actions not passed as an array
-  if (!Array.isArray(actions)) { return () => null; }
+  if (!Array.isArray(actions)) { return () => false; }
 
   // Returns true only if all passed actions aren't loading
   return actions.some((action) => state.request?.[action]?.loading === true);
@@ -37,11 +37,12 @@ export function clearError(action) {
  */
 export const createErrorSelector = (actions) => (state) => {
   // actions not passed as an array
-  if (!Array.isArray(actions)) { return () => null; }
+  if (!Array.isArray(actions)) { return () => ''; }
 
   // Returns the first found error message
-  let test = actions.map((action) => state.request?.[action]?.message || '');
-
-  test = test.filter((message) => message !== '');
-  return test[0] || '';
+  return actions.reduce((accum, action) => {
+    const message = state.request?.[action]?.message;
+    if (message) return [...accum, message];
+    else return accum;
+  }, [])[0] || '';
 };

@@ -2,12 +2,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+
+import { generateFrontendErrorMessage } from '../../constants';
+
+import ActionTypes from '../../actions';
+import { createErrorSelector, createLoadingSelector } from '../../actions/requestActions';
 import {
   fetchResources, createResource, fetchResourceByID, updateResourceByID, deleteResourceByID,
 } from '../../actions/resourceActions';
 import {
   fetchUsers, createUser, fetchUserByID, updateUserByID, deleteUserByID,
 } from '../../actions/userActions';
+
 import SearchItem from '../../components/SearchItem';
 
 class AdminPanel extends React.Component {
@@ -181,7 +187,10 @@ class AdminPanel extends React.Component {
 
             {/* Shows result of fetchResources() action */}
             <p><b>Resources:</b></p>
-            <div>{Object.values(this.props.resources).map((element) => <SearchItem key={element.id || element._id} displayObject={element} />)}</div>
+            <div>{this.props.resourceIsLoading ? 'Loading data...'
+              : (generateFrontendErrorMessage(this.props.resourceErrorMessage)
+              || Object.values(this.props.resources).map((element) => <SearchItem key={element.id || element._id} displayObject={element} />))}
+            </div>
           </div>
 
           {/* Spacer */}
@@ -238,7 +247,10 @@ class AdminPanel extends React.Component {
 
             {/* Shows result of fetchUsers() action */}
             <p><b>Users:</b></p>
-            <div>{Object.values(this.props.users).map((element) => <SearchItem key={element.id || element._id} displayObject={element} />)}
+            <div>
+              {this.props.userIsLoading ? 'Loading data...'
+                : (generateFrontendErrorMessage(this.props.userErrorMessage)
+                || Object.values(this.props.users).map((element) => <SearchItem key={element.id || element._id} displayObject={element} />))}
             </div>
           </div>
         </div>
@@ -247,7 +259,15 @@ class AdminPanel extends React.Component {
   }
 }
 
+const userSelectorActions = [ActionTypes.FETCH_USER, ActionTypes.FETCH_USERS, ActionTypes.DELETE_USER];
+const resourceSelectorActions = [ActionTypes.FETCH_RESOURCE, ActionTypes.FETCH_RESOURCES, ActionTypes.DELETE_RESOURCE];
+
 const mapStateToProps = (state) => ({
+  resourceIsLoading: createLoadingSelector(resourceSelectorActions)(state),
+  resourceErrorMessage: createErrorSelector(resourceSelectorActions)(state),
+  userIsLoading: createLoadingSelector(userSelectorActions)(state),
+  userErrorMessage: createErrorSelector(userSelectorActions)(state),
+
   resources: state.resource.resources,
   users: state.auth.users,
 });

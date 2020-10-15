@@ -19,7 +19,6 @@ const store = createStore(reducers, {}, compose(
 ));
 
 // Check if auth token is present in browser
-let localStorageEnabled = true;
 const getTokenFromLocalStorage = () => {
   return new Promise((resolve) => {
     resolve(localStorage.getItem(authTokenName));
@@ -27,18 +26,13 @@ const getTokenFromLocalStorage = () => {
 };
 
 getTokenFromLocalStorage().then((authToken) => {
-  if (authToken) {
-    // Check if authorized in actions
+  if (authToken) { // User has previous authentication token
     store.dispatch({ type: `${ActionTypes.AUTH_USER}_SUCCESS`, payload: {} });
-  } else {
-    // No authorization
+  } else { // No authorization
     store.dispatch({ type: `${ActionTypes.DEAUTH_USER}_SUCCESS` });
   }
 }).catch((error) => {
   console.error(error);
-  // Use this to alert the user attempting to log in to site
-  localStorageEnabled = false;
-  console.log('local storage token loaded:', localStorageEnabled);
 });
 
 // we now wrap App in a Provider

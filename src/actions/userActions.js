@@ -1,8 +1,7 @@
-import axios from 'axios';
 import ActionTypes, {
-  getBearerTokenHeader, createAsyncActionCreator, generateSuccessPayload, generateFailurePayload,
+  getBearerTokenHeader, createAsyncActionCreator,
 } from '.';
-import { ROOT_URL, requestTimeout } from '../constants';
+import { ROOT_URL } from '../constants';
 
 // Get all users (AUTH)
 export function fetchUsers() {
@@ -73,13 +72,15 @@ export function updateUserByID(id, update) {
 
 // Delete by id (AUTH)
 export function deleteUserByID(id) {
-  return async (dispatch) => {
-    try {
-      dispatch({ type: `${ActionTypes.DELETE_USER}_REQUEST` });
-      const response = await axios.delete(`${ROOT_URL}/resources/${id}`, { timeout: requestTimeout, headers: getBearerTokenHeader() });
-      dispatch({ type: `${ActionTypes.DELETE_USER}_SUCCESS`, payload: generateSuccessPayload(response, { id }) });
-    } catch (error) {
-      dispatch({ type: `${ActionTypes.DELETE_USER}_FAILURE`, payload: generateFailurePayload(error) });
-    }
-  };
+  return (dispatch) => createAsyncActionCreator(
+    dispatch, ActionTypes.DELETE_USER,
+    {
+      method: 'delete',
+      url: `${ROOT_URL}/users/${id}`,
+      headers: getBearerTokenHeader(),
+    },
+    {
+      additionalPayloadFields: { id },
+    },
+  );
 }
