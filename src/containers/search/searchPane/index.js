@@ -7,7 +7,7 @@ import ActionTypes from '../../../actions';
 import { fetchResources, updateResourceByID } from '../../../actions/resourceActions';
 import { createErrorSelector } from '../../../actions/requestActions';
 
-import SearchItem from '../../../components/searchItem';
+import SearchItem from '../../../components/SearchItem';
 
 class SearchPane extends React.Component {
   constructor(props) {
@@ -22,16 +22,16 @@ class SearchPane extends React.Component {
       <div>
         {this.props.isLoading ? 'Loading results...' : (this.props.errorMessage
           || (
-          <>
-            {/* Number of results available for given query and filter options */}
-            {/* Check if there have been results loaded or if there is an array of resources in redux */}
-            <p>{this.props.numResults || (this.props.results && this.props.results.length) ? this.props.numResults || this.props.results.length : 0} results</p>
+            <>
+              {/* Number of results available for given query and filter options */}
+              {/* Check if there have been results loaded or if there is an array of resources in redux */}
+              <p>{this.props.numResults || (this.props.results && this.props.results.length) ? this.props.numResults || this.props.results.length : 0} results</p>
 
-            {/* Go through passed data array and break into SearchItem elements */}
-            {this.props.results && this.props.results.length ? this.props.results.map((element) => {
-              return <SearchItem key={element.id || element._id} displayObject={element} />;
-            }) : null}
-          </>
+              {/* Go through passed data array and break into SearchItem elements */}
+              {this.props.results && this.props.results.length ? this.props.results.map((element) => {
+                return <SearchItem key={element.id || element._id} displayObject={element} />;
+              }) : null}
+            </>
           )
         )}
       </div>

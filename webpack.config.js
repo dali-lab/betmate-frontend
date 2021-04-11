@@ -12,14 +12,18 @@ module.exports = {
   output: { publicPath: '/' },
   entry: ['babel-polyfill', './src'], // this is where our app lives
   devtool: 'source-map', // this enables debugging with source in chrome devtools
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: [/\.js$/, /\.ts$/, /\.tsx$/],
         exclude: /node_modules/,
         use: [
           { loader: 'babel-loader' },
           { loader: 'eslint-loader' },
+          // { loader: 'ts-loader' },
         ],
       },
       {
