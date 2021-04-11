@@ -2,17 +2,18 @@
   "name": "crud-template-frontend",
   "version": "1.0.0",
   "description": "DALI Lab CRUD template",
-  "main": "src/index.js",
+  "main": "src/index.tsx",
   "repository": "https://github.com/dali-lab/crud-template-frontend",
   "author": "Adam McQuilkin <Adam.J.Mcquilkin.22@Dartmouth.edu>",
   "contributors": [
     "Alex Lopez <Alejandro.A.Lopez.Cochachi.23@Dartmouth.edu>",
-    "Thomas Monfre <Thomas.A.Monfre.21@Dartmouth.edu>"
+    "Thomas Monfre <Thomas.A.Monfre.21@Dartmouth.edu>",
+    "Jack Keane <John.F.Keane.22@Dartmouth.edu>"
   ],
   "license": "MIT",
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --inline --hot",
-    "test": "eslint ./src",
+    "test": "eslint . --fix",
     "build": "yarn clean; NODE_ENV=production webpack --colors",
     "clean": "rimraf dist",
     "deploy": "yarn build; surge -p dist -d betmate-dev.surge.sh; yarn clean"
@@ -41,7 +42,6 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.21.2",
-    "eslint-plugin-react-hooks": "^4.2.0",
     "file-loader": "^6.1.0",
     "html-webpack-plugin": "^5.3.1",
     "mini-css-extract-plugin": "^0.11.2",
