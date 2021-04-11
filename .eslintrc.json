@@ -6,7 +6,11 @@
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": "./tsconfig.json"
+        "project": "./tsconfig.json",
+        "ecmaFeatures": {
+            "jsx": true,
+            "sourceType": "module"
+        }
     },
     "env": {
         "browser": true,
@@ -65,8 +69,9 @@
     },
     "plugins": [
         "@typescript-eslint",
-        "import",
-        "react"
+        "react",
+        "react-hooks",
+        "eslint-plugin-import"
     ],
     "settings": {
         "import/resolver": {
