@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { search } from '../../../actions/searchActions';
+import { fetchWagerById } from '../../../actions/wagerActionCreators';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -54,6 +55,12 @@ class SearchBar extends React.Component {
   render() {
     return (
       <div>
+
+        <button
+          type='button'
+          onClick={() => { this.props.fetchWagerById('1'); }}
+        >Doesnt matter</button>
+        <div>{JSON.stringify(this.props.wager)}</div>
         <form onSubmit={this.handleSubmit}>
           {/* Search Bar */}
           <input type="search" placeholder="Enter search here!" value={this.state.query} onChange={this.handleQueryUpdate} />
@@ -92,4 +99,7 @@ class SearchBar extends React.Component {
   }
 }
 
-export default connect(null, { search })(SearchBar);
+const mapStateToProps = (state) => ({
+  wager: state.wager.wagers['1'] || {},
+});
+export default connect(mapStateToProps, { search, fetchWagerById })(SearchBar);

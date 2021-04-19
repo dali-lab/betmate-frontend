@@ -49,6 +49,7 @@
         "indent": ["error", 2, { "SwitchCase": 1 }],
 
         "import/extensions": "off",
+        "import/no-cycle": "warn",
         "react/jsx-filename-extension": [0, { "extensions": [".jsx", ".tsx"] }],
         "react/jsx-props-no-spreading": "warn",
         "react/require-default-props": "off",
