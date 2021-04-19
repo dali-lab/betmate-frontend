@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { ConnectedThunkCreator } from '../../../types/state';
-import { signOutUser as signOutUserType } from '../../../actions/authActions';
+import { signOutUser as signOutUserType } from '../../../store/actionCreators/authActions';
 
 export interface SignOutPanelProps {
   signOutUser: ConnectedThunkCreator<typeof signOutUserType>

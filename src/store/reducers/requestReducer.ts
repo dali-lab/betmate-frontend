@@ -1,8 +1,8 @@
 // Reference:
 // https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6
 
-import { RequestState } from '../types/requests';
-import { Actions } from '../types/state';
+import { RequestState } from '../../types/requests';
+import { Actions } from '../../types/state';
 
 const initialState: RequestState = {};
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ThunkResult } from '../types/state';
+import { ThunkResult } from '../../types/state';
 
 export const fetchWagerById = (id: string): ThunkResult => async (dispatch) => {
   try {

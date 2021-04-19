@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { ConnectedThunkCreator } from '../../../types/state';
-import { setError as setErrorType } from '../../../actions/requestActions';
-import { signInUser as signInUserType } from '../../../actions/authActions';
+import { setError as setErrorType } from '../../../store/actionCreators/requestActions';
+import { signInUser as signInUserType } from '../../../store/actionCreators/authActions';
 
 export interface SignInPanelProps extends RouteComponentProps {
   isAuthenticated: boolean,

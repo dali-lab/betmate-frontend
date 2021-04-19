@@ -1,5 +1,5 @@
-import { AuthState } from '../types/auth';
-import { Actions } from '../types/state';
+import { AuthState } from '../../types/auth';
+import { Actions } from '../../types/state';
 
 const initialState: AuthState = {
   isAuthenticated: false,

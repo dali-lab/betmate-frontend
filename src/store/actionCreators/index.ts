@@ -2,8 +2,8 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import {
   ActionPayload, ActionTypes, FailurePayload,
-} from '../types/state';
-import { authTokenName, requestTimeout } from '../constants';
+} from '../../types/state';
+import { authTokenName, requestTimeout } from '../../constants';
 
 /**
 * Generates valid "success" payload given a response object and additional custom parameters

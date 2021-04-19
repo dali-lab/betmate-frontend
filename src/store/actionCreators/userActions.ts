@@ -1,7 +1,7 @@
-import { User } from '../types/auth';
-import { ThunkResult } from '../types/state';
+import { User } from '../../types/auth';
+import { ThunkResult } from '../../types/state';
 import { getBearerTokenHeader, createAsyncActionCreator } from '.';
-import { ROOT_URL } from '../constants';
+import { ROOT_URL } from '../../constants';
 
 // New user (AUTH)
 export const createUser = (firstName: string, lastName: string, email: string, password: string): ThunkResult => {

@@ -6,7 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { Actions, RootState } from './types/state';
-import reducers from './reducers';
+import reducers from './store/reducers';
 import { authTokenName } from './constants';
 
 import App from './components/app';

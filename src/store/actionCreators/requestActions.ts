@@ -1,5 +1,5 @@
-import { ErrorData } from '../types/requests';
-import { Action, ActionTypes, RootState } from '../types/state';
+import { ErrorData } from '../../types/requests';
+import { Action, ActionTypes, RootState } from '../../types/state';
 
 /**
  * Returns a function that can be added directly to a mapStateToProps object
