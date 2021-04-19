@@ -1,29 +1,25 @@
 {
-  "name": "crud-template-frontend",
+  "name": "betmate-frontend",
   "version": "1.0.0",
-  "description": "DALI Lab CRUD template",
+  "description": "Betmate DALI Frontend Application",
   "main": "src/index.tsx",
-  "repository": "https://github.com/dali-lab/crud-template-frontend",
+  "repository": "https://github.com/dali-lab/betmate-frontend",
   "author": "Adam McQuilkin <Adam.J.Mcquilkin.22@Dartmouth.edu>",
   "contributors": [
     "Alex Lopez <Alejandro.A.Lopez.Cochachi.23@Dartmouth.edu>",
     "Thomas Monfre <Thomas.A.Monfre.21@Dartmouth.edu>",
     "Jack Keane <John.F.Keane.22@Dartmouth.edu>"
   ],
-  "license": "MIT",
+  "private": true,
+  "license": "none",
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server --inline --hot",
-    "test": "eslint . --fix",
-    "build": "yarn clean; NODE_ENV=production webpack --colors",
+    "dev": "webpack serve",
+    "test": "eslint src",
+    "build": "NODE_ENV=production webpack",
     "clean": "rimraf dist",
     "deploy": "yarn build; surge -p dist -d betmate-dev.surge.sh; yarn clean"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.6",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/preset-react": "^7.10.4",
-    "@babel/preset-typescript": "^7.13.0",
     "@types/chess.js": "^0.10.1",
     "@types/node": "^14.14.37",
     "@types/react": "^17.0.3",
@@ -35,9 +31,6 @@
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "autoprefixer": "^10.0.1",
-    "babel-eslint": "^10.0.1",
-    "babel-loader": "^8.0.5",
-    "babel-polyfill": "^6.26.0",
     "css-loader": "^4.3.0",
     "eslint": "^7.10.0",
     "eslint-config-airbnb": "^18.2.0",
@@ -58,8 +51,8 @@
     "surge": "^0.21.6",
     "ts-loader": "^8.1.0",
     "ts-node": "^9.1.1",
-    "webpack": "^5.31.2",
-    "webpack-cli": "^3.3.12",
+    "webpack": "^5.34.0",
+    "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {

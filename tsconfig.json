@@ -15,7 +15,6 @@
     "skipLibCheck": true,
     "strict": false,
     "strictNullChecks": true,
-    "declaration": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "module": "commonjs",
@@ -28,7 +27,6 @@
     "sourceMap": true,
   },
   "include": [
-    "src/**/*",
-    ".babelrc"
+    "src/**/*"
   ],
 }

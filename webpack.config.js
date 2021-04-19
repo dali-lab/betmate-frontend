@@ -10,7 +10,7 @@ const autoprefixer = require('autoprefixer');
 module.exports = {
   mode: env,
   output: { publicPath: '/' },
-  entry: ['babel-polyfill', './src'], // this is where our app lives
+  entry: ['./src'], // this is where our app lives
   devtool: 'source-map', // this enables debugging with source in chrome devtools
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
@@ -22,7 +22,6 @@ module.exports = {
         exclude: [/node_modules/, /dist/],
         use: [
           { loader: 'ts-loader' },
-          // { loader: 'babel-loader' },
           { loader: 'eslint-loader' },
         ],
       },
