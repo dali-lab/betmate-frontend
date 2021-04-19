@@ -14,25 +14,59 @@
     },
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "jest": true
     },
     "rules": {
         "strict": 0,
-        "quotes": [2, "single"],
+        "quotes": [
+            2,
+            "single"
+        ],
         "no-else-return": 0,
-        "new-cap": ["error", {"capIsNewExceptions": ["Router"]}],
+        "new-cap": [
+            "error",
+            {
+                "capIsNewExceptions": [
+                    "Router"
+                ]
+            }
+        ],
         "no-console": 0,
-        "import/no-unresolved": [2, { "caseSensitive": false } ],
-        "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
+        "import/no-unresolved": [
+            2,
+            {
+                "caseSensitive": false
+            }
+        ],
+        "no-unused-vars": [
+            "error",
+            {
+                "vars": "all",
+                "args": "none"
+            }
+        ],
         "no-underscore-dangle": 0,
         "arrow-body-style": 0,
-        "one-var": ["error", { "uninitialized": "always", "initialized": "never" }],
-        "one-var-declaration-per-line": ["error", "initializations"],
-        "max-len": ["error", 200],
+        "one-var": [
+            "error",
+            {
+                "uninitialized": "always",
+                "initialized": "never"
+            }
+        ],
+        "one-var-declaration-per-line": [
+            "error",
+            "initializations"
+        ],
+        "max-len": [
+            "error",
+            200
+        ],
         "no-extra-parens": 0,
         "no-restricted-syntax": [
-          0,
-          "DebuggerStatement"
+            0,
+            "DebuggerStatement"
         ],
         "no-debugger": "warn",
         "react/jsx-uses-react": 2,
@@ -42,31 +76,43 @@
         "react/jsx-first-prop-new-line": 0,
         "jsx-a11y/click-events-have-key-events": 0,
         "jsx-a11y/no-noninteractive-element-interactions": 0,
-        "react/jsx-one-expression-per-line":0,
+        "react/jsx-one-expression-per-line": 0,
         "linebreak-style": "off",
         "comma-dangle": "off",
         "jsx-a11y/anchor-is-valid": "off",
-        "indent": ["error", 2, { "SwitchCase": 1 }],
-
+        "indent": [
+            "error",
+            2,
+            {
+                "SwitchCase": 1
+            }
+        ],
         "import/extensions": "off",
         "import/no-cycle": "warn",
-        "react/jsx-filename-extension": [0, { "extensions": [".jsx", ".tsx"] }],
+        "react/jsx-filename-extension": [
+            0,
+            {
+                "extensions": [
+                    ".jsx",
+                    ".tsx"
+                ]
+            }
+        ],
         "react/jsx-props-no-spreading": "warn",
         "react/require-default-props": "off",
         "import/prefer-default-export": "off",
-
         // Bugfix https://stackoverflow.com/questions/63961803/eslint-says-all-enums-in-typescript-app-are-already-declared-in-the-upper-scope
         "no-shadow": "off",
-        "@typescript-eslint/no-shadow": ["error"],
+        "@typescript-eslint/no-shadow": [
+            "error"
+        ],
         "@typescript-eslint/no-empty-interface": "off",
-
         // Disable prop-types as we use TypeScript for type checking
         "react/prop-types": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/interface-name-prefix": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/ban-ts-ignore": "off"
-
     },
     "plugins": [
         "@typescript-eslint",
@@ -77,7 +123,11 @@
     "settings": {
         "import/resolver": {
             "node": {
-                "extensions": [".tsx", ".ts", ".js"]
+                "extensions": [
+                    ".tsx",
+                    ".ts",
+                    ".js"
+                ]
             }
         }
     }
