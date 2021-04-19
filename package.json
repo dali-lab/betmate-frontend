@@ -19,9 +19,6 @@
     "clean": "rimraf dist",
     "deploy": "yarn build; surge -p dist -d betmate-dev.surge.sh; yarn clean"
   },
-  "engines": {
-    "node": ">=10.17.0"
-  },
   "devDependencies": {
     "@types/chess.js": "^0.10.1",
     "@types/node": "^14.14.37",
