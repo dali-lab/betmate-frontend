@@ -6,7 +6,7 @@ export const fetchWagerById = (id: string): ThunkResult => async (dispatch) => {
     dispatch({
       type: 'FETCH_WAGER',
       status: 'REQUEST',
-      payload: null,
+      payload: {} as any,
     });
     const response = await axios({ url: 'https://jsonplaceholder.typicode.com/todos/1', method: 'get' });
     console.log('REQUEST DATA', response.data);
@@ -19,7 +19,7 @@ export const fetchWagerById = (id: string): ThunkResult => async (dispatch) => {
     dispatch({
       type: 'FETCH_WAGER',
       status: 'FAILURE',
-      payload: null, // TODO: Update data
+      payload: {} as any, // TODO: Update data
     });
   }
 };

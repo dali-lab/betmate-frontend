@@ -12,6 +12,6 @@ export const requestTimeout = 1000;
  * * Note: to maintain truthiness state of message, if message is considered falsy this function will return an empty string
  * @param {*} message - Message string to render
  */
-export function generateFrontendErrorMessage(message) {
+export const generateFrontendErrorMessage = (message: string): string => {
   return message ? `Error: "${message}"` : '';
-}
+};

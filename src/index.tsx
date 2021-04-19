@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { Actions, RootState } from './types/state';
-import ActionTypes from './actions';
 import reducers from './reducers';
 import { authTokenName } from './constants';
 
@@ -14,9 +14,8 @@ import './style.scss';
 
 // this creates the store with the reducers, and does some other stuff to initialize devtools
 // boilerplate to copy, don't have to know
-const store = createStore(reducers, {}, compose(
+const store = createStore(reducers, {}, composeWithDevTools(
   applyMiddleware(thunk as ThunkMiddleware<RootState, Actions>),
-  (window as any).__REDUX_DEVTOOLS_EXTENSION__ ? (window as any).__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
 ));
 
 // Check if auth token is present in browser
@@ -28,9 +27,9 @@ const getTokenFromLocalStorage = () => {
 
 getTokenFromLocalStorage().then((authToken) => {
   if (authToken) { // User has previous authentication token
-    store.dispatch({ type: `${ActionTypes.AUTH_USER}_SUCCESS`, payload: {} });
+    store.dispatch({ type: 'AUTH_USER', status: 'SUCCESS', payload: {} });
   } else { // No authorization
-    store.dispatch({ type: `${ActionTypes.DEAUTH_USER}_SUCCESS` });
+    store.dispatch({ type: 'DEAUTH_USER', status: 'SUCCESS' });
   }
 }).catch((error) => {
   console.error(error);

@@ -1,23 +1,29 @@
 import { Action as ReduxActionType } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { AuthActions, AuthActionTypes, AuthState } from './auth';
+import { RequestState } from './requests';
 import { WagerActions, WagerActionTypes, WagerState } from './wager';
 
 /* -------- Action Types -------- */
 
-export type Actions = WagerActions;
-export type ActionTypes = WagerActionTypes;
-export type RequestStatusTypes = 'REQUEST' | 'SUCCESS' | 'FAILURE';
+export type Actions = WagerActions | AuthActions;
+export type ActionTypes = WagerActionTypes | AuthActionTypes;
+export type RequestStatusTypes = 'REQUEST' | 'SUCCESS' | 'FAILURE' | 'CLEAR_ERR';
 
 export interface ActionPayload<D = any> {
   data: D,
   message?: string,
-//   code?: Code
+  code?: number
+}
+
+export interface FailurePayload {
+  message: string,
 }
 
 export interface Action<T, D = any> extends ReduxActionType {
   type: T,
   status: RequestStatusTypes,
-  payload: ActionPayload<D> | null
+  payload: ActionPayload<D>
 }
 
 /* -------- State -------- */
@@ -28,6 +34,8 @@ export interface Action<T, D = any> extends ReduxActionType {
 
 export interface RootState {
   wager: WagerState,
+  auth: AuthState,
+  requests: RequestState
 }
 
 export type GlobalDispatch = ThunkDispatch<RootState, undefined, Actions>;

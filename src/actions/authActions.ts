@@ -1,6 +1,5 @@
-import ActionTypes, {
-  requestStates, createAsyncActionCreator, setBearerToken,
-} from '.';
+import { ThunkResult } from '../types/state';
+import { createAsyncActionCreator, setBearerToken } from '.';
 import { requestTimeout, ROOT_URL } from '../constants';
 
 /**
@@ -10,9 +9,9 @@ import { requestTimeout, ROOT_URL } from '../constants';
  * @param {*} firstName
  * @param {*} lastName
  */
-export function signUpUser(email, password, firstName, lastName) {
+export const signUpUser = (email: string, password: string, firstName: string, lastName: string): ThunkResult => {
   return (dispatch) => createAsyncActionCreator(
-    dispatch, ActionTypes.AUTH_USER,
+    dispatch, 'AUTH_USER',
     {
       method: 'post',
       url: `${ROOT_URL}/auth/signup`,
@@ -25,7 +24,7 @@ export function signUpUser(email, password, firstName, lastName) {
       responseSubfield: 'user',
     },
   );
-}
+};
 
 /**
  * A function that takes a username and a password and sends them to the backend server for authentication
@@ -33,9 +32,9 @@ export function signUpUser(email, password, firstName, lastName) {
  * @param {*} username
  * @param {*} password
  */
-export function signInUser(email, password) {
+export const signInUser = (email: string, password: string): ThunkResult => {
   return (dispatch) => createAsyncActionCreator(
-    dispatch, ActionTypes.AUTH_USER,
+    dispatch, 'AUTH_USER',
     {
       method: 'post',
       url: `${ROOT_URL}/auth/signin`,
@@ -47,16 +46,16 @@ export function signInUser(email, password) {
       responseSubfield: 'user',
     },
   );
-}
+};
 
 /**
  * A function that clears a user's authentication status
  */
-export function signOutUser() {
+export const signOutUser = (): ThunkResult => {
   return (dispatch) => {
     localStorage.clear();
 
     // Run any additional deauth processes here (dispatch DEAUTH_USER_REQUEST if async)
-    dispatch({ type: `${ActionTypes.DEAUTH_USER}_${requestStates.SUCCESS}` });
+    dispatch({ type: 'DEAUTH_USER', status: 'SUCCESS', payload: { data: {} } });
   };
-}
+};

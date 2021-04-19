@@ -1,15 +1,15 @@
-import { Move } from 'chess.js';
+// import { Move } from 'chess.js';
 import { Action } from './state';
 
 export type WagerWDL = 'win' | 'draw' | 'loss';
-export type WagerMove = [Move, number, boolean];
+// export type WagerMove = [Move, number, boolean];
 
 export interface IWager {
   game_id: string,
   wdl: boolean,
   amount: number,
   odds: number,
-  data: WagerWDL | WagerMove,
+  data: WagerWDL,
   resolved: boolean,
   id: string
 }

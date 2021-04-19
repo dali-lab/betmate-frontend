@@ -11,7 +11,7 @@ const wagerReducer = (state = initialState, action: Actions): WagerState => {
         ...state,
         wagers: {
           ...state.wagers,
-          [action.payload?.data.wager.id || '']: action.payload?.data.wager || {} as IWager,
+          [action.payload.data.wager.id || '']: action.payload.data.wager as IWager,
         },
       };
     default:

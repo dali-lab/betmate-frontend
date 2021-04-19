@@ -22,7 +22,7 @@ module.exports = {
         exclude: [/node_modules/, /dist/],
         use: [
           { loader: 'ts-loader' },
-          { loader: 'babel-loader' },
+          // { loader: 'babel-loader' },
           { loader: 'eslint-loader' },
         ],
       },

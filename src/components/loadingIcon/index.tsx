@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Generic loading component
-const LoadingIcon = (props) => {
+const LoadingIcon = (): JSX.Element => {
   return (
     <div>Loading content...</div>
   );
