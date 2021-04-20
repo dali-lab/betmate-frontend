@@ -1,3 +1,5 @@
+var path = require('path');
+
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -13,6 +15,10 @@ module.exports = {
   entry: ['./src'], // this is where our app lives
   devtool: 'source-map', // this enables debugging with source in chrome devtools
   resolve: {
+    modules: [
+      path.join(__dirname, "src"),
+      "node_modules"
+    ],
     extensions: ['.tsx', '.ts', '.js']
   },
   module: {
