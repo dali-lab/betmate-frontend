@@ -1,7 +1,7 @@
 import { Empty } from '.';
-import { Action } from './state';
+import { Action, AsyncAction } from './state';
 
-// /* -------- State -------- */
+/* -------- State -------- */
 
 export interface User {
   email: string,
@@ -33,11 +33,12 @@ export type CreateUserData = { user: User };
 export type UpdateUserData = { user: User };
 export type DeleteUserData = Empty;
 
-type AuthUserAction = Action<typeof AUTH_USER, AuthUserData>;
-type DeAuthUserAction = Action<typeof DEAUTH_USER, DeAuthUserData>;
-type CreateUserAction = Action<typeof CREATE_USER, AuthUserData>;
-type UpdateUserAction = Action<typeof UPDATE_USER, AuthUserData>;
-type DeleteUserAction = Action<typeof DELETE_USER, DeAuthUserData>;
+type AuthUserActions = AsyncAction<typeof AUTH_USER, AuthUserData>;
+type DeAuthUserActions = Action<typeof DEAUTH_USER, DeAuthUserData>;
 
-export type AuthActions = AuthUserAction | DeAuthUserAction | CreateUserAction | UpdateUserAction | DeleteUserAction;
+type CreateUserActions = AsyncAction<typeof CREATE_USER, AuthUserData>;
+type UpdateUserActions = AsyncAction<typeof UPDATE_USER, AuthUserData>;
+type DeleteUserActions = AsyncAction<typeof DELETE_USER, DeAuthUserData>;
+
+export type AuthActions = AuthUserActions | DeAuthUserActions | CreateUserActions | UpdateUserActions | DeleteUserActions;
 export type AuthActionTypes = typeof AUTH_USER | typeof DEAUTH_USER | typeof CREATE_USER | typeof UPDATE_USER | typeof DELETE_USER;

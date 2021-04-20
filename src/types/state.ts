@@ -1,43 +1,47 @@
 import { Action as ReduxActionType } from 'redux';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { Empty } from '.';
+
 import { AuthActions, AuthActionTypes, AuthState } from './auth';
+import { GameActions, GameActionTypes, GameState } from './game';
 import { RequestState } from './requests';
+import { SocketActions, SocketActionTypes } from './socket';
 import { WagerActions, WagerActionTypes, WagerState } from './wager';
 
 /* -------- Action Types -------- */
 
-export type Actions = WagerActions | AuthActions;
-export type ActionTypes = WagerActionTypes | AuthActionTypes;
-export type RequestStatusTypes = 'REQUEST' | 'SUCCESS' | 'FAILURE' | 'CLEAR_ERR';
+export type Actions = AuthActions | GameActions | SocketActions | WagerActions;
+export type ActionTypes = AuthActionTypes | GameActionTypes | SocketActionTypes | WagerActionTypes;
 
-export interface ActionPayload<D = any> {
-  data: D,
-  message?: string,
-  code?: number
-}
+export const REQUEST = 'REQUEST';
+export const SUCCESS = 'SUCCESS';
+export const FAILURE = 'FAILURE';
+
+export type RequestStatus = typeof REQUEST | typeof SUCCESS | typeof FAILURE;
+
+export type Code = number | string | null;
 
 export interface FailurePayload {
   message: string,
 }
 
-export interface Action<T, D = any> extends ReduxActionType {
+/* Action type that doesn't need to hanldle underlying loading and/or failure states */
+export interface Action<T, D = unknown, S extends RequestStatus = RequestStatus> extends ReduxActionType {
   type: T,
-  status: RequestStatusTypes,
-  payload: ActionPayload<D>
+  payload: D,
+  status: S
 }
+
+/* Action type that requires handling of loading and/or failure states */
+export type AsyncAction<T extends string, D, R = Empty> =
+  Action<T, R, 'REQUEST'> |
+  Action<T, D, 'SUCCESS'> |
+  Action<T, { message: string, code: Code }, 'FAILURE'>;
 
 /* -------- State -------- */
 
-// export interface RequestState {
-//     [type: string]: SingleRequestState
-//   }
-
 export interface RootState {
-  wager: WagerState,
   auth: AuthState,
-  requests: RequestState
+  game: GameState,
+  requests: RequestState,
+  wager: WagerState
 }
-
-export type GlobalDispatch = ThunkDispatch<RootState, undefined, Actions>;
-export type ThunkResult<R = void> = ThunkAction<R, RootState, undefined, Actions>;
-export type ConnectedThunkCreator<T extends (...args: any) => ThunkResult> = (...args: Parameters<T>) => void;
