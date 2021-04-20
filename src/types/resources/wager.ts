@@ -11,7 +11,7 @@ export interface Wager {
   odds: number,
   data: WagerWDL,
   resolved: boolean,
-  id: string
+  _id: string
 }
 
 /* -------- State -------- */
@@ -40,7 +40,7 @@ export type DeleteWagerData = { id: string };
 export type CreateWagerActions = AsyncAction<typeof CREATE_WAGER, FetchWagerData, CreateWagerRequestData>;
 export type FetchWagerActions = AsyncAction<typeof FETCH_WAGER, FetchWagerData, FetchWagerRequestData>;
 export type UpdateWagerActions = AsyncAction<typeof UPDATE_WAGER, FetchWagerData, UpdateWagerRequestData>;
-export type DeleteWagerActions = AsyncAction<typeof DELETE_WAGER, FetchWagerData, DeleteWagerRequestData>;
+export type DeleteWagerActions = AsyncAction<typeof DELETE_WAGER, DeleteWagerData, DeleteWagerRequestData>;
 export type FetchWagersActions = AsyncAction<typeof FETCH_WAGERS, FetchWagersData>;
 
 export type WagerActions = CreateWagerActions | FetchWagerActions | UpdateWagerActions | DeleteWagerActions | FetchWagersActions | DeleteWagerActions;

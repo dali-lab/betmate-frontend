@@ -39,7 +39,7 @@ export const updateGameById = async (id: string, fields: Partial<Game>): Promise
 
   // return result;
 
-  return { data: { game: { _id: id, ...fields } } } as RequestReturnType<FetchGameData>;
+  return { data: { game: { _id: id, state: 'asdfhasdf', ...fields } } } as RequestReturnType<FetchGameData>;
 };
 
 export const deleteGameById = async (id: string): Promise<RequestReturnType<DeleteGameData>> => {

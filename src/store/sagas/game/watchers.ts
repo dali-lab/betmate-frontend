@@ -4,12 +4,16 @@ import * as gameRequests from 'store/requests/gameRequests';
 import { getErrorPayload } from 'utils/error';
 
 import { Actions, RequestReturnType } from 'types/state';
-import { FetchGameData } from 'types/resources/game';
+
+import {
+  FetchGameData,
+  CreateGameActions, FetchGameActions, UpdateGameActions, DeleteGameActions,
+} from 'types/resources/game';
 
 export function* watchCreateGame() {
   while (true) {
     try {
-      const action = yield take((a: Actions) => (a.type === 'CREATE_GAME' && a.status === 'REQUEST'));
+      const action: CreateGameActions = yield take((a: Actions) => (a.type === 'CREATE_GAME' && a.status === 'REQUEST'));
       if (action.status !== 'REQUEST') return; // Type protection only
 
       const response: RequestReturnType<FetchGameData> = yield call(gameRequests.createGame, action.payload.state);
@@ -23,7 +27,7 @@ export function* watchCreateGame() {
 export function* watchFetchGameById() {
   while (true) {
     try {
-      const action = yield take((a: Actions) => (a.type === 'FETCH_GAME' && a.status === 'REQUEST'));
+      const action: FetchGameActions = yield take((a: Actions) => (a.type === 'FETCH_GAME' && a.status === 'REQUEST'));
       if (action.status !== 'REQUEST') return; // Type protection only
 
       const response: RequestReturnType<FetchGameData> = yield call(gameRequests.fetchGameById, action.payload.id);
@@ -37,7 +41,7 @@ export function* watchFetchGameById() {
 export function* watchUpdateGameById() {
   while (true) {
     try {
-      const action = yield take((a: Actions) => (a.type === 'UPDATE_GAME' && a.status === 'REQUEST'));
+      const action: UpdateGameActions = yield take((a: Actions) => (a.type === 'UPDATE_GAME' && a.status === 'REQUEST'));
       if (action.status !== 'REQUEST') return; // Type protection only
 
       const response: RequestReturnType<FetchGameData> = yield call(gameRequests.updateGameById, action.payload.id, action.payload.fields);
@@ -48,10 +52,10 @@ export function* watchUpdateGameById() {
   }
 }
 
-export function* watchDeleteResourceById() {
+export function* watchDeleteGameById() {
   while (true) {
     try {
-      const action = yield take((a: Actions) => (a.type === 'DELETE_GAME' && a.status === 'REQUEST'));
+      const action: DeleteGameActions = yield take((a: Actions) => (a.type === 'DELETE_GAME' && a.status === 'REQUEST'));
       if (action.status !== 'REQUEST') return; // Type protection only
 
       yield call(gameRequests.deleteGameById, action.payload.id);

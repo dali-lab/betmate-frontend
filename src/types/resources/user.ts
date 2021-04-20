@@ -1,16 +1,16 @@
-import { Empty } from 'types';
 import { AsyncAction } from 'types/state';
 
 /* -------- State -------- */
 
 export interface User {
   email: string,
-  password: string,
-  first_name?: string,
-  last_name?: string,
-  full_name?: string,
+  password?: string,
+  firstName?: string,
+  lastName?: string,
+  fullName?: string,
   account: number,
   wager_hist: string[],
+  _id: string
 }
 
 export interface UserState {
@@ -20,21 +20,23 @@ export interface UserState {
 /* -------- Action Types -------- */
 
 export const CREATE_USER = 'CREATE_USER';
+export const FETCH_USER = 'FETCH_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
 
 export type CreateUserRequestData = { email: string, password: string, firstName: string, lastName: string };
-export type CreateUserResponseData = { user: User };
-
+export type FetchUserRequestData = { uid: string };
 export type UpdateUserRequestData = { uid: string, fields: Partial<User> };
-export type UpdateUserResponseData = { user: User };
-
 export type DeleteUserRequestData = { uid: string };
-export type DeleteUserResponseData = Empty;
 
-export type CreateUserActions = AsyncAction<typeof CREATE_USER, CreateUserResponseData, CreateUserRequestData>;
-export type UpdateUserActions = AsyncAction<typeof UPDATE_USER, UpdateUserResponseData, UpdateUserRequestData>;
-export type DeleteUserActions = AsyncAction<typeof DELETE_USER, DeleteUserResponseData, DeleteUserRequestData>;
+export type FetchUserData = { user: User };
+export type FetchUsersData = { user: User[] };
+export type DeleteUserData = { uid: string };
 
-export type UserActions = CreateUserActions | UpdateUserActions | DeleteUserActions;
-export type UserActionTypes = typeof CREATE_USER | typeof UPDATE_USER | typeof DELETE_USER;
+export type CreateUserActions = AsyncAction<typeof CREATE_USER, FetchUserData, CreateUserRequestData>;
+export type FetchUserActions = AsyncAction<typeof FETCH_USER, FetchUserData, FetchUserRequestData>;
+export type UpdateUserActions = AsyncAction<typeof UPDATE_USER, FetchUserData, UpdateUserRequestData>;
+export type DeleteUserActions = AsyncAction<typeof DELETE_USER, DeleteUserData, DeleteUserRequestData>;
+
+export type UserActions = CreateUserActions | FetchUserActions | UpdateUserActions | DeleteUserActions;
+export type UserActionTypes = typeof CREATE_USER | typeof FETCH_USER | typeof UPDATE_USER | typeof DELETE_USER;

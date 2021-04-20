@@ -35,6 +35,24 @@ store.dispatch<Actions>({ type: 'FETCH_GAME', status: 'REQUEST', payload: { id: 
 store.dispatch<Actions>({ type: 'UPDATE_GAME', status: 'REQUEST', payload: { id: 'asdfhausdf98ashdfnasd0f9', fields: { state: 'asdf88g7865656asd7f6sdhf97s8df' } } });
 store.dispatch<Actions>({ type: 'DELETE_GAME', status: 'REQUEST', payload: { id: 'asdfhausdf98ashdfnasd0f9' } });
 
+store.dispatch<Actions>({ type: 'AUTH_USER', status: 'REQUEST', payload: { email: '98asfh9basdbf78as78df', password: 'asd8fgadsfhskdjfh' } });
+
+store.dispatch<Actions>({
+  type: 'CREATE_USER',
+  status: 'REQUEST',
+  payload: {
+    email: 'asdfdf', password: 'sa8dfhsadf', firstName: 'Bill', lastName: 'Bob',
+  },
+});
+store.dispatch<Actions>({ type: 'FETCH_USER', status: 'REQUEST', payload: { uid: 'asdfhausdf98ashdfnasd0f9' } });
+store.dispatch<Actions>({ type: 'UPDATE_USER', status: 'REQUEST', payload: { uid: 'asdfhausdf98ashdfnasd0f9', fields: { email: '8adsf9878asd678fas7d6f' } } });
+store.dispatch<Actions>({ type: 'DELETE_USER', status: 'REQUEST', payload: { uid: 'asdfhausdf98ashdfnasd0f9' } });
+
+store.dispatch<Actions>({ type: 'CREATE_WAGER', status: 'REQUEST', payload: { gameId: '8293493', amount: 3428983945 } });
+store.dispatch<Actions>({ type: 'FETCH_WAGER', status: 'REQUEST', payload: { id: 'asdfhausdf98ashdfnasd0f9' } });
+store.dispatch<Actions>({ type: 'UPDATE_WAGER', status: 'REQUEST', payload: { id: 'asdfhausdf98ashdfnasd0f9', fields: { amount: 420 } } });
+store.dispatch<Actions>({ type: 'DELETE_WAGER', status: 'REQUEST', payload: { id: 'asdfhausdf98ashdfnasd0f9' } });
+
 // // Check if auth token is present in browser
 // const getTokenFromLocalStorage = () => {
 //   return new Promise((resolve) => {

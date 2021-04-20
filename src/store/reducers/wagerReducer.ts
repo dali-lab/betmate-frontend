@@ -15,7 +15,7 @@ const wagerReducer = (state = initialState, action: Actions): WagerState => {
         ...state,
         wagers: {
           ...state.wagers,
-          [action.payload.wager.id]: action.payload.wager,
+          [action.payload.wager._id]: action.payload.wager,
         },
       };
 
@@ -24,14 +24,14 @@ const wagerReducer = (state = initialState, action: Actions): WagerState => {
         ...state,
         wagers: action.payload.wagers.reduce((accum, wager) => ({
           ...accum,
-          [wager.id]: wager,
+          [wager._id]: wager,
         }), state.wagers),
       };
 
     case 'DELETE_WAGER':
       return {
         ...state,
-        wagers: omit(state.wagers, action.payload.wager.id),
+        wagers: omit(state.wagers, action.payload.id),
       };
 
     default:
