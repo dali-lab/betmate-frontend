@@ -11,7 +11,6 @@ export interface RequestState {
 }
 
 export type ErrorData = { message: string };
-
 export type ErrorAction = Action<Actions, ErrorData>;
 
 export type RequestActions = ErrorAction;

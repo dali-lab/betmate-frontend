@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router, Route, NavLink, Switch,
 } from 'react-router-dom';
 
-import { signInUser, signOutUser } from '../store/actionCreators/authActions';
+import { signInUser, signOutUser } from '../store/actionCreators/authActionCreators';
 
 import SignUpPanel from '../containers/authentication/signUpPanel';
 import SignInPanel from '../containers/authentication/signInPanel';

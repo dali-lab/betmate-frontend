@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { ActionTypes, RootState } from '../../../types/state';
-import { createErrorSelector, createLoadingSelector } from '../../../store/actionCreators/requestActions';
-import { signInUser } from '../../../store/actionCreators/authActions';
+import { createErrorSelector, createLoadingSelector } from '../../../store/actionCreators/requestActionCreators';
+import { signInUser } from '../../../store/actionCreators/authActionCreators';
 import SignInPanel from './component';
 
 // Import loading state and error messages of specified actions from redux state

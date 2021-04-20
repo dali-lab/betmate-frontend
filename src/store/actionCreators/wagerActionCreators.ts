@@ -1,25 +1,26 @@
-// import axios from 'axios';
+import { Actions } from '../../types/state';
+import { Wager } from '../../types/resources/wager';
 
-export const fetchWagerById = (id: string) => { };
-// export const fetchWagerById = (id: string): ThunkResult => async (dispatch) => {
-//   try {
-//     dispatch({
-//       type: 'FETCH_WAGER',
-//       status: 'REQUEST',
-//       payload: {} as any,
-//     });
-//     const response = await axios({ url: 'https://jsonplaceholder.typicode.com/todos/1', method: 'get' });
-//     console.log('REQUEST DATA', response.data);
-//     dispatch({
-//       type: 'FETCH_WAGER',
-//       status: 'SUCCESS',
-//       payload: { wager: response.data as any }, // TODO: change data type
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: 'FETCH_WAGER',
-//       status: 'FAILURE',
-//       payload: {} as any, // TODO: Update data
-//     });
-//   }
-// };
+export const createWager = (gameId: string, amount: number): Actions => ({
+  type: 'CREATE_WAGER',
+  status: 'REQUEST',
+  payload: { gameId, amount },
+});
+
+export const fetchWagerById = (id: string): Actions => ({
+  type: 'FETCH_WAGER',
+  status: 'REQUEST',
+  payload: { id },
+});
+
+export const updateWagerById = (id: string, fields: Partial<Wager>): Actions => ({
+  type: 'UPDATE_WAGER',
+  status: 'REQUEST',
+  payload: { id, fields },
+});
+
+export const deleteWagerById = (id: string): Actions => ({
+  type: 'DELETE_WAGER',
+  status: 'REQUEST',
+  payload: { id },
+});

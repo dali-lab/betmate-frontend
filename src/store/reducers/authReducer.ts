@@ -1,4 +1,4 @@
-import { AuthState } from '../../types/auth';
+import { AuthState } from '../../types/resources/auth';
 import { Actions } from '../../types/state';
 
 const initialState: AuthState = {
@@ -11,9 +11,19 @@ const reducer = (state = initialState, action: Actions): AuthState => {
 
   switch (action.type) {
     case 'AUTH_USER':
-      return { ...state, isAuthenticated: true, user: action.payload.user };
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload.user,
+      };
+
     case 'DEAUTH_USER':
-      return { ...state, isAuthenticated: false, user: null };
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+      };
+
     default:
       return state;
   }

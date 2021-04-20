@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { signOutUser as signOutUserType } from '../../../store/actionCreators/authActions';
+import { signOutUser as signOutUserType } from '../../../store/actionCreators/authActionCreators';
 
 export interface SignOutPanelProps {
   signOutUser: typeof signOutUserType

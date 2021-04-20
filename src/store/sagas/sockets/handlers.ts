@@ -7,7 +7,7 @@ import { Socket } from 'socket.io-client';
 
 import { createErrorChannel, createUpdateGameStateChannel } from './channels';
 
-import { MakeMoveData, UpdateGameStateData } from '../../../types/game';
+import { MakeMoveData, UpdateGameStateData } from '../../../types/resources/game';
 import { Actions } from '../../../types/state';
 import { ErrorPayload } from '../../../types/socket';
 

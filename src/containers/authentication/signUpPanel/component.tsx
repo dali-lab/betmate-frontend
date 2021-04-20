@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 
-import { signUpUser as signUpUserType } from '../../../store/actionCreators/authActions';
+import { signUpUser as signUpUserType } from '../../../store/actionCreators/authActionCreators';
 
 export interface SignInPanelProps extends RouteComponentProps {
   isAuthenticated: boolean,

@@ -1,16 +1,18 @@
 import { Action as ReduxActionType } from 'redux';
 import { Empty } from '.';
 
-import { AuthActions, AuthActionTypes, AuthState } from './auth';
-import { GameActions, GameActionTypes, GameState } from './game';
 import { RequestState } from './requests';
 import { SocketActions, SocketActionTypes } from './socket';
-import { WagerActions, WagerActionTypes, WagerState } from './wager';
+
+import { AuthActions, AuthActionTypes, AuthState } from './resources/auth';
+import { GameActions, GameActionTypes, GameState } from './resources/game';
+import { UserActions, UserActionTypes } from './resources/user';
+import { WagerActions, WagerActionTypes, WagerState } from './resources/wager';
 
 /* -------- Action Types -------- */
 
-export type Actions = AuthActions | GameActions | SocketActions | WagerActions;
-export type ActionTypes = AuthActionTypes | GameActionTypes | SocketActionTypes | WagerActionTypes;
+export type Actions = AuthActions | GameActions | SocketActions | UserActions | WagerActions;
+export type ActionTypes = AuthActionTypes | GameActionTypes | SocketActionTypes | UserActionTypes | WagerActionTypes;
 
 export const REQUEST = 'REQUEST';
 export const SUCCESS = 'SUCCESS';

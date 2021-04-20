@@ -1,5 +1,5 @@
 import { eventChannel } from 'redux-saga';
-import { UpdateGameStateData } from '../../../types/game';
+import { UpdateGameStateData } from '../../../types/resources/game';
 import { ChannelCreator, ErrorPayload, Events } from '../../../types/socket';
 
 export const createUpdateGameStateChannel: ChannelCreator<UpdateGameStateData> = (socket) => eventChannel(
