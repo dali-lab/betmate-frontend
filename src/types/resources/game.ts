@@ -8,8 +8,8 @@ export interface Game {
 
 /* -------- State -------- */
 
-export interface GameState extends Game {
-
+export interface GameState {
+  games: Record<string, Game>
 }
 
 /* -------- Action Types -------- */

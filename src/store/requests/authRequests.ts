@@ -20,6 +20,7 @@ export const signInUser = async (email: string, password: string): Promise<Reque
         password,
         account: 548441,
         wager_hist: ['asdfhasdkjf'],
+        _id: 'asdfasgdfsdfkh',
       },
     },
   } as RequestReturnType<AuthUserResponseData>;
