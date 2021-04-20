@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { ConnectedThunkCreator } from '../../../types/state';
-import { setError as setErrorType } from '../../../store/actionCreators/requestActions';
 import { signInUser as signInUserType } from '../../../store/actionCreators/authActions';
 
 export interface SignInPanelProps extends RouteComponentProps {
   isAuthenticated: boolean,
   isLoading: boolean,
-  errorMessage: string,
-  setError: typeof setErrorType,
-  signInUser: ConnectedThunkCreator<typeof signInUserType>
+  errorMessages: string[],
+  signInUser: typeof signInUserType
 }
 
 const SignInPanel: React.FC<SignInPanelProps> = (props) => {
@@ -35,9 +32,9 @@ const SignInPanel: React.FC<SignInPanelProps> = (props) => {
     e.stopPropagation();
 
     if (!email) {
-      props.setError('AUTH_USER', 'Please enter an email address!');
+      console.warn('Please enter an email address!');
     } else if (!password) {
-      props.setError('AUTH_USER', 'Please enter a password!');
+      console.warn('Please enter a password!');
     } else {
       // Send only if all fields filled in
       await props.signInUser(email, password);
@@ -52,7 +49,7 @@ const SignInPanel: React.FC<SignInPanelProps> = (props) => {
         <input type="password" placeholder="Password" value={password} onChange={handlePasswordUpdate} />
         <input type="submit" value="Sign In" />
       </form>
-      {props.isLoading ? <div>Authenticating...</div> : props.errorMessage}
+      {props.isLoading ? <div>Authenticating...</div> : props.errorMessages[0]}
     </div>
   );
 };

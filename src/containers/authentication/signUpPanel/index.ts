@@ -2,9 +2,7 @@ import { connect } from 'react-redux';
 
 import SignUpPanel from './component';
 import { signUpUser } from '../../../store/actionCreators/authActions';
-import {
-  createErrorSelector, setError, clearError, createLoadingSelector,
-} from '../../../store/actionCreators/requestActions';
+import { createErrorSelector, createLoadingSelector } from '../../../store/actionCreators/requestActions';
 import { ActionTypes, RootState } from '../../../types/state';
 
 // Import loading state and error messages of specified actions from redux state
@@ -18,4 +16,4 @@ const mapStateToProps = (state: RootState) => ({
   errorMessage: errorSelector(state),
 });
 
-export default connect(mapStateToProps, { signUpUser, setError, clearError })(SignUpPanel);
+export default connect(mapStateToProps, { signUpUser })(SignUpPanel);

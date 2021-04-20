@@ -16,7 +16,8 @@ const reducer = (state = initialState, action: Actions): RequestState => {
     ...state,
     [action.type]: {
       isLoading: action.status === 'REQUEST',
-      message: action.status === 'FAILURE' ? action.payload?.message ?? '' : '',
+      // message: action.status === 'FAILURE' ? action.payload.message : '',
+      message: '',
       code: action.status === 'FAILURE' ? 200 : '', // action.payload?.code ?? null : null,
     },
   };

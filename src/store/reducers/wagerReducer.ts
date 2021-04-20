@@ -1,4 +1,4 @@
-import { IWager, WagerState } from '../../types/wager';
+import { WagerState } from '../../types/wager';
 import { Actions } from '../../types/state';
 
 const initialState: WagerState = { wagers: {} };
@@ -11,7 +11,7 @@ const wagerReducer = (state = initialState, action: Actions): WagerState => {
         ...state,
         wagers: {
           ...state.wagers,
-          [action.payload.data.wager.id || '']: action.payload.data.wager as IWager,
+          [action.payload.wager.id || '']: action.payload.wager,
         },
       };
     default:

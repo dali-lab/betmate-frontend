@@ -11,7 +11,7 @@ const reducer = (state = initialState, action: Actions): AuthState => {
 
   switch (action.type) {
     case 'AUTH_USER':
-      return { ...state, isAuthenticated: true, user: action.payload.data.user };
+      return { ...state, isAuthenticated: true, user: action.payload.user };
     case 'DEAUTH_USER':
       return { ...state, isAuthenticated: false, user: null };
     default:

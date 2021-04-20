@@ -1,8 +1,6 @@
 import { connect } from 'react-redux';
 import { ActionTypes, RootState } from '../../../types/state';
-import {
-  createErrorSelector, createLoadingSelector, setError, clearError,
-} from '../../../store/actionCreators/requestActions';
+import { createErrorSelector, createLoadingSelector } from '../../../store/actionCreators/requestActions';
 import { signInUser } from '../../../store/actionCreators/authActions';
 import SignInPanel from './component';
 
@@ -15,4 +13,4 @@ const mapStateToProps = (state: RootState) => ({
   errorMessage: createErrorSelector(loadActions)(state),
 });
 
-export default connect(mapStateToProps, { signInUser, setError, clearError })(SignInPanel);
+export default connect(mapStateToProps, { signInUser })(SignInPanel);
