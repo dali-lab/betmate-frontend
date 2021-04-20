@@ -8,16 +8,12 @@ import wagerSaga from 'store/sagas/wager';
 import watchSockets from 'store/sagas/sockets';
 
 function* rootSaga() {
-  try {
-    yield spawn(authSaga);
-    yield spawn(gameSaga);
-    yield spawn(userSaga);
-    yield spawn(wagerSaga);
+  yield spawn(authSaga);
+  yield spawn(gameSaga);
+  yield spawn(userSaga);
+  yield spawn(wagerSaga);
 
-    yield spawn(watchSockets);
-  } catch (error) {
-    console.error(error);
-  }
+  yield spawn(watchSockets);
 }
 
 export default rootSaga;
