@@ -9,8 +9,16 @@ import { createErrorChannel, createUpdateGameStateChannel } from 'store/sagas/so
 
 import { MakeMoveData, UpdateGameStateData } from 'types/resources/game';
 import { Actions } from 'types/state';
-import { ErrorPayload } from 'types/socket';
+import { SocketErrorData } from 'types/socket';
 
+/**
+ * Saga that emits 'make_move' events onto the passed socket and completes the following:
+ * - Waits for an event of type 'MAKE_MOVE'
+ * - Emits a 'make_move' socket event using the `socket.emit` method
+ * - Dispatches success or failure based on if whether an error occurred
+ * - Repeat
+ * @param socket socket to watch for events on
+ */
 export function* makeMoveHandler(socket: Socket) {
   while (true) {
     try {
@@ -23,6 +31,13 @@ export function* makeMoveHandler(socket: Socket) {
   }
 }
 
+/**
+ * Saga that watches for events on the created socketChannel and handles them in the following way:
+ * - Waits for an event on the channel
+ * - Dispatches the event to the redux store (or an error state if saga fails)
+ * - Repeat
+ * @param socket socket to watch for events on
+ */
 export function* updateGameStateHandler(socket: Socket) {
   const socketChannel: EventChannel<UpdateGameStateData> = yield call(createUpdateGameStateChannel, socket);
 
@@ -36,16 +51,22 @@ export function* updateGameStateHandler(socket: Socket) {
   }
 }
 
-// TODO: Update typing
+/**
+ * Saga that watches for error events on the created socketChannel and handles them in the following way:
+ * - Waits for an event on the channel
+ * - Dispatches the event to the redux store (or an error state if saga fails)
+ * - Repeat
+ * @param socket socket to watch for events on
+ */
 export function* errorHandler(socket: Socket) {
-  const socketChannel: EventChannel<ErrorPayload> = yield call(createErrorChannel, socket);
+  const socketChannel: EventChannel<SocketErrorData> = yield call(createErrorChannel, socket);
 
   while (true) {
     try {
-      const payload = yield take(socketChannel);
-      yield put({ type: 'REDUX_ERROR', payload: payload.messages });
+      const payload: SocketErrorData = yield take(socketChannel);
+      yield put<Actions>({ type: 'SOCKET_ERROR', status: 'FAILURE', payload: { message: payload.message } });
     } catch (error) {
-      yield put({ type: 'REDUX_ERROR', payload: { message: error.message } });
+      yield put<Actions>({ type: 'SOCKET_ERROR', status: 'FAILURE', payload: { message: error.message } });
     }
   }
 }

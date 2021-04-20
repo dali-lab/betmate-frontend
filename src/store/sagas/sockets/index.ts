@@ -16,6 +16,15 @@ import { InitializeSocketAction } from '../../../types/socket';
  */
 const createSocket = (address: string) => io(address);
 
+/**
+ * Saga that completes the following steps indefinitely:
+ * - Wait for an action of type 'INITIALIZE_SOCKET'
+ * - Create a socket connection based on passed config
+ * - Start individual event channels to handle specific socket events
+ * - Wait for an action of type 'CLOSE_SOCKET'
+ * - Close socket and all handlers
+ * - Repeat
+ */
 function* watchSockets() {
   try {
     while (true) {
@@ -25,7 +34,6 @@ function* watchSockets() {
 
       // Open all forked processes
       const makeMoveHandlerFork = yield fork(makeMoveHandler, socket);
-
       const updateGameStateHandlerFork = yield fork(updateGameStateHandler, socket);
       const errorHandlerFork = yield fork(errorHandler, socket);
 
