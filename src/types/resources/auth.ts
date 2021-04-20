@@ -19,8 +19,8 @@ export type AuthUserResponseData = { user: User };
 
 export type DeAuthUserData = Empty;
 
-type AuthUserActions = AsyncAction<typeof AUTH_USER, AuthUserResponseData, AuthUserRequestData>;
-type DeAuthUserActions = Action<typeof DEAUTH_USER, DeAuthUserData>;
+export type AuthUserActions = AsyncAction<typeof AUTH_USER, AuthUserResponseData, AuthUserRequestData>;
+export type DeAuthUserActions = Action<typeof DEAUTH_USER, DeAuthUserData>;
 
 export type AuthActions = AuthUserActions | DeAuthUserActions;
 export type AuthActionTypes = typeof AUTH_USER | typeof DEAUTH_USER;

@@ -32,9 +32,9 @@ export type UpdateUserResponseData = { user: User };
 export type DeleteUserRequestData = { uid: string };
 export type DeleteUserResponseData = Empty;
 
-type CreateUserActions = AsyncAction<typeof CREATE_USER, CreateUserResponseData, CreateUserRequestData>;
-type UpdateUserActions = AsyncAction<typeof UPDATE_USER, UpdateUserResponseData, UpdateUserRequestData>;
-type DeleteUserActions = AsyncAction<typeof DELETE_USER, DeleteUserResponseData, DeleteUserRequestData>;
+export type CreateUserActions = AsyncAction<typeof CREATE_USER, CreateUserResponseData, CreateUserRequestData>;
+export type UpdateUserActions = AsyncAction<typeof UPDATE_USER, UpdateUserResponseData, UpdateUserRequestData>;
+export type DeleteUserActions = AsyncAction<typeof DELETE_USER, DeleteUserResponseData, DeleteUserRequestData>;
 
 export type UserActions = CreateUserActions | UpdateUserActions | DeleteUserActions;
 export type UserActionTypes = typeof CREATE_USER | typeof UPDATE_USER | typeof DELETE_USER;

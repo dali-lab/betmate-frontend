@@ -30,6 +30,11 @@ sagaMiddleware.run(rootSaga);
 store.dispatch<Actions>({ type: 'INITIALIZE_SOCKET', status: 'SUCCESS', payload: { url: 'http://localhost:9090' } });
 store.dispatch<Actions>({ type: 'MAKE_MOVE', status: 'REQUEST', payload: { boardState: 'aasdfkjasdfjhoauisdhfuoahsdf', gameId: 'asdf8fghsd' } });
 
+store.dispatch<Actions>({ type: 'CREATE_GAME', status: 'REQUEST', payload: { state: 'asdfhasdiufaisdbfasdbf' } });
+store.dispatch<Actions>({ type: 'FETCH_GAME', status: 'REQUEST', payload: { id: 'asdfhausdf98ashdfnasd0f9' } });
+store.dispatch<Actions>({ type: 'UPDATE_GAME', status: 'REQUEST', payload: { id: 'asdfhausdf98ashdfnasd0f9', fields: { state: 'asdf88g7865656asd7f6sdhf97s8df' } } });
+store.dispatch<Actions>({ type: 'DELETE_GAME', status: 'REQUEST', payload: { id: 'asdfhausdf98ashdfnasd0f9' } });
+
 // // Check if auth token is present in browser
 // const getTokenFromLocalStorage = () => {
 //   return new Promise((resolve) => {

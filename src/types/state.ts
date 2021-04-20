@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { Action as ReduxActionType } from 'redux';
 
 import { Empty } from 'types';
@@ -39,6 +40,8 @@ export type AsyncAction<T extends string, D, R = Empty> =
   Action<T, R, 'REQUEST'> |
   Action<T, D, 'SUCCESS'> |
   Action<T, { message: string, code: Code }, 'FAILURE'>;
+
+export type RequestReturnType<D> = AxiosResponse<D>;
 
 /* -------- State -------- */
 
