@@ -1,7 +1,8 @@
 import { EventChannel } from 'redux-saga';
 import { Socket } from 'socket.io-client';
-import { Empty } from '.';
-import { Action } from './state';
+
+import { Empty } from 'types';
+import { Action } from 'types/state';
 
 export type ClientEvents = 'join_game' | 'make_move';
 export type ServerEvents = 'wagers' | 'new_move' | 'error';

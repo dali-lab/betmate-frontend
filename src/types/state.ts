@@ -1,13 +1,14 @@
 import { Action as ReduxActionType } from 'redux';
-import { Empty } from '.';
 
-import { RequestState } from './requests';
-import { SocketActions, SocketActionTypes } from './socket';
+import { Empty } from 'types';
 
-import { AuthActions, AuthActionTypes, AuthState } from './resources/auth';
-import { GameActions, GameActionTypes, GameState } from './resources/game';
-import { UserActions, UserActionTypes } from './resources/user';
-import { WagerActions, WagerActionTypes, WagerState } from './resources/wager';
+import { RequestState } from 'types/requests';
+import { SocketActions, SocketActionTypes } from 'types/socket';
+
+import { AuthActions, AuthActionTypes, AuthState } from 'types/resources/auth';
+import { GameActions, GameActionTypes, GameState } from 'types/resources/game';
+import { UserActions, UserActionTypes } from 'types/resources/user';
+import { WagerActions, WagerActionTypes, WagerState } from 'types/resources/wager';
 
 /* -------- Action Types -------- */
 

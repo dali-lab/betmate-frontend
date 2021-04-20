@@ -1,6 +1,6 @@
-import { Empty } from '..';
-import { Action, AsyncAction } from '../state';
-import { User } from './user';
+import { Empty } from 'types';
+import { Action, AsyncAction } from 'types/state';
+import { User } from 'types/resources/user';
 
 /* -------- State -------- */
 

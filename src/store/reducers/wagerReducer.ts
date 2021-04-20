@@ -1,7 +1,7 @@
 import omit from 'lodash.omit';
 
-import { WagerState } from '../../types/resources/wager';
-import { Actions } from '../../types/state';
+import { WagerState } from 'types/resources/wager';
+import { Actions } from 'types/state';
 
 const initialState: WagerState = { wagers: {} };
 const wagerReducer = (state = initialState, action: Actions): WagerState => {

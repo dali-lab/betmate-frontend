@@ -5,11 +5,11 @@ import {
 
 import { Socket } from 'socket.io-client';
 
-import { createErrorChannel, createUpdateGameStateChannel } from './channels';
+import { createErrorChannel, createUpdateGameStateChannel } from 'store/sagas/sockets/channels';
 
-import { MakeMoveData, UpdateGameStateData } from '../../../types/resources/game';
-import { Actions } from '../../../types/state';
-import { ErrorPayload } from '../../../types/socket';
+import { MakeMoveData, UpdateGameStateData } from 'types/resources/game';
+import { Actions } from 'types/state';
+import { ErrorPayload } from 'types/socket';
 
 export function* makeMoveHandler(socket: Socket) {
   while (true) {

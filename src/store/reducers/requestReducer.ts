@@ -1,8 +1,5 @@
-// Reference:
-// https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6
-
-import { RequestState } from '../../types/requests';
-import { Actions } from '../../types/state';
+import { RequestState } from 'types/requests';
+import { Actions } from 'types/state';
 
 const initialState: RequestState = {};
 
@@ -16,9 +13,9 @@ const reducer = (state = initialState, action: Actions): RequestState => {
     ...state,
     [action.type]: {
       isLoading: action.status === 'REQUEST',
-      // message: action.status === 'FAILURE' ? action.payload.message : '',
+      // message: action.status === 'FAILURE' ? action.payload.message : '', // TODO: FIX THIS
       message: '',
-      code: action.status === 'FAILURE' ? 200 : '', // action.payload?.code ?? null : null,
+      code: action.status === 'FAILURE' ? 200 : '',
     },
   };
 

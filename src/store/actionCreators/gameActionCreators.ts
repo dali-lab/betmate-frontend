@@ -1,5 +1,5 @@
-import { Game } from '../../types/resources/game';
-import { Actions } from '../../types/state';
+import { Game } from 'types/resources/game';
+import { Actions } from 'types/state';
 
 export const createGame = (state: string): Actions => ({
   type: 'CREATE_GAME',

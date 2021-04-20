@@ -1,5 +1,5 @@
-import { Actions } from '../../types/state';
-import { Wager } from '../../types/resources/wager';
+import { Actions } from 'types/state';
+import { Wager } from 'types/resources/wager';
 
 export const createWager = (gameId: string, amount: number): Actions => ({
   type: 'CREATE_WAGER',

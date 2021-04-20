@@ -1,4 +1,4 @@
-import { authTokenName } from '../../constants';
+import { authTokenName } from 'constants/index';
 
 /**
  * Gets the site-stored authToken from localStorage and returns it in the form of an authorization header

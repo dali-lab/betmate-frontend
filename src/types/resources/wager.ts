@@ -1,5 +1,5 @@
 // import { Move } from 'chess.js';
-import { AsyncAction } from '../state';
+import { AsyncAction } from 'types/state';
 
 export type WagerWDL = 'win' | 'draw' | 'loss';
 // export type WagerMove = [Move, number, boolean];

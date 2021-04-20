@@ -1,10 +1,8 @@
-// the starting point for your redux store
-// this defines what your store state will look like
 import { combineReducers } from 'redux';
 
-import AuthReducer from './authReducer';
-import RequestReducer from './requestReducer';
-import WagerReducer from './wagerReducer';
+import AuthReducer from 'store/reducers/authReducer';
+import RequestReducer from 'store/reducers/requestReducer';
+import WagerReducer from 'store/reducers/wagerReducer';
 
 const rootReducer = combineReducers({
   auth: AuthReducer,

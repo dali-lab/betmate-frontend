@@ -1,5 +1,5 @@
-import { Empty } from '..';
-import { AsyncAction } from '../state';
+import { Empty } from 'types';
+import { AsyncAction } from 'types/state';
 
 /* -------- State -------- */
 

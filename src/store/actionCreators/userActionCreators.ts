@@ -1,5 +1,5 @@
-import { Actions } from '../../types/state';
-import { User } from '../../types/resources/user';
+import { Actions } from 'types/state';
+import { User } from 'types/resources/user';
 
 export const createUser = (firstName: string, lastName: string, email: string, password: string): Actions => ({
   type: 'CREATE_USER',

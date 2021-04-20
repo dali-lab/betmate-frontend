@@ -1,6 +1,6 @@
 /* -------- State -------- */
 
-import { Action, Actions } from './state';
+import { Action, Actions } from 'types/state';
 
 export interface RequestState {
   [id: string]: {

@@ -1,4 +1,4 @@
-import { ActionTypes, RootState } from '../../types/state';
+import { ActionTypes, RootState } from 'types/state';
 
 /**
  * Returns a function that can be added directly to a mapStateToProps object

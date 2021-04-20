@@ -1,5 +1,5 @@
 import { spawn } from 'redux-saga/effects';
-import watchSockets from './sockets';
+import watchSockets from 'store/sagas/sockets';
 
 function* rootSaga() {
   try {

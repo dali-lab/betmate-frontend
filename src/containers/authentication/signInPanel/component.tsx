@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { signInUser as signInUserType } from '../../../store/actionCreators/authActionCreators';
+import { signInUser as signInUserType } from 'store/actionCreators/authActionCreators';
 
 export interface SignInPanelProps extends RouteComponentProps {
   isAuthenticated: boolean,
@@ -37,7 +37,7 @@ const SignInPanel: React.FC<SignInPanelProps> = (props) => {
       console.warn('Please enter a password!');
     } else {
       // Send only if all fields filled in
-      await props.signInUser(email, password);
+      props.signInUser(email, password);
       props.history.push('/admin');
     }
   };

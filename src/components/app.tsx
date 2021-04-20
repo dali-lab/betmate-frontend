@@ -4,11 +4,11 @@ import {
   BrowserRouter as Router, Route, NavLink, Switch,
 } from 'react-router-dom';
 
-import { signInUser, signOutUser } from '../store/actionCreators/authActionCreators';
+import { signInUser, signOutUser } from 'store/actionCreators/authActionCreators';
 
-import SignUpPanel from '../containers/authentication/signUpPanel';
-import SignInPanel from '../containers/authentication/signInPanel';
-import SignOutPanel from '../containers/authentication/signOutPanel';
+import SignUpPanel from 'containers/authentication/signUpPanel';
+import SignInPanel from 'containers/authentication/signInPanel';
+import SignOutPanel from 'containers/authentication/signOutPanel';
 
 const Welcome = () => {
   return (
