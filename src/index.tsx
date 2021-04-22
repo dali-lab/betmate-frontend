@@ -1,41 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import thunk, { ThunkMiddleware } from 'redux-thunk';
-import { Provider } from 'react-redux';
+
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga';
+import { Provider } from 'react-redux';
 
-import { Actions, RootState } from './types/state';
+import App from 'components/app';
+
 import reducers from './store/reducers';
-import { authTokenName } from './constants';
+import rootSaga from './store/sagas';
 
-import App from './components/app';
 import './style.scss';
 
-// this creates the store with the reducers, and does some other stuff to initialize devtools
-// boilerplate to copy, don't have to know
+const sagaMiddleware = createSagaMiddleware();
+
 const store = createStore(reducers, {}, composeWithDevTools(
-  applyMiddleware(thunk as ThunkMiddleware<RootState, Actions>),
+  applyMiddleware(sagaMiddleware),
 ));
 
-// Check if auth token is present in browser
-const getTokenFromLocalStorage = () => {
-  return new Promise((resolve) => {
-    resolve(localStorage.getItem(authTokenName));
-  });
-};
+sagaMiddleware.run(rootSaga);
 
-getTokenFromLocalStorage().then((authToken) => {
-  if (authToken) { // User has previous authentication token
-    store.dispatch({ type: 'AUTH_USER', status: 'SUCCESS', payload: {} });
-  } else { // No authorization
-    store.dispatch({ type: 'DEAUTH_USER', status: 'SUCCESS' });
-  }
-}).catch((error) => {
-  console.error(error);
-});
-
-// we now wrap App in a Provider
 ReactDOM.render(
   <Provider store={store}>
     <App />

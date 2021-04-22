@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 
-import { signUpUser as signUpUserType } from '../../../store/actionCreators/authActions';
-import { setError as setErrorType } from '../../../store/actionCreators/requestActions';
-import { ConnectedThunkCreator } from '../../../types/state';
+import { signUpUser as signUpUserType } from 'store/actionCreators/authActionCreators';
 
 export interface SignInPanelProps extends RouteComponentProps {
   isAuthenticated: boolean,
   isLoading: boolean,
-  errorMessage: string,
-  setError: typeof setErrorType,
-  signUpUser: ConnectedThunkCreator<typeof signUpUserType>
+  errorMessages: string[],
+  signUpUser: typeof signUpUserType
 }
 
 const SignUpPanel: React.FC<SignInPanelProps> = (props) => {
@@ -46,13 +43,13 @@ const SignUpPanel: React.FC<SignInPanelProps> = (props) => {
     e.stopPropagation();
 
     if (!firstName) {
-      props.setError('AUTH_USER', 'Please enter your first name!');
+      console.warn('Please enter your first name!');
     } else if (!lastName) {
-      props.setError('AUTH_USER', 'Please enter your last name!');
+      console.warn('Please enter your last name!');
     } else if (!email) {
-      props.setError('AUTH_USER', 'Please enter an email address!');
+      console.warn('Please enter an email address!');
     } else if (!password) {
-      props.setError('AUTH_USER', 'Please enter a password!');
+      console.warn('AUTH_USER', 'Please enter a password!');
     } else {
       // Send only if all fields filled in
       props.signUpUser(email, password, firstName, lastName);
@@ -69,7 +66,7 @@ const SignUpPanel: React.FC<SignInPanelProps> = (props) => {
         <input type="password" placeholder="Password" value={password} onChange={handlePasswordUpdate} />
         <input type="submit" value="Sign Up" />
       </form>
-      {props.isLoading ? <div>Authenticating...</div> : props.errorMessage}
+      {props.isLoading ? <div>Authenticating...</div> : props.errorMessages[0]}
     </div>
   );
 };

@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
 
-import SignUpPanel from './component';
-import { signUpUser } from '../../../store/actionCreators/authActions';
-import {
-  createErrorSelector, setError, clearError, createLoadingSelector,
-} from '../../../store/actionCreators/requestActions';
-import { ActionTypes, RootState } from '../../../types/state';
+import SignUpPanel from 'containers/authentication/signUpPanel/component';
 
-// Import loading state and error messages of specified actions from redux state
+import { signUpUser } from 'store/actionCreators/authActionCreators';
+import { createErrorSelector, createLoadingSelector } from 'store/actionCreators/requestActionCreators';
+
+import { ActionTypes, RootState } from 'types/state';
+
 const loadActions: ActionTypes[] = ['AUTH_USER'];
 const loadingSelector = createLoadingSelector(loadActions);
 const errorSelector = createErrorSelector(loadActions);
@@ -18,4 +17,4 @@ const mapStateToProps = (state: RootState) => ({
   errorMessage: errorSelector(state),
 });
 
-export default connect(mapStateToProps, { signUpUser, setError, clearError })(SignUpPanel);
+export default connect(mapStateToProps, { signUpUser })(SignUpPanel);

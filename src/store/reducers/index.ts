@@ -1,15 +1,17 @@
-// the starting point for your redux store
-// this defines what your store state will look like
 import { combineReducers } from 'redux';
 
-import AuthReducer from './authReducer';
-import RequestReducer from './requestReducer';
-import WagerReducer from './wagerReducer';
+import authReducer from 'store/reducers/authReducer';
+import gameReducer from 'store/reducers/gameReducer';
+import requestReducer from 'store/reducers/requestReducer';
+import userReducer from 'store/reducers/userReducer';
+import wagerReducer from 'store/reducers/wagerReducer';
 
 const rootReducer = combineReducers({
-  auth: AuthReducer,
-  request: RequestReducer,
-  wager: WagerReducer,
+  auth: authReducer,
+  game: gameReducer,
+  request: requestReducer,
+  user: userReducer,
+  wager: wagerReducer,
 });
 
 export default rootReducer;

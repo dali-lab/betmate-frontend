@@ -1,9 +1,4 @@
 {
-    "extends": [
-        "airbnb-typescript/base",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:react/recommended"
-    ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "project": "./tsconfig.json",
@@ -12,9 +7,22 @@
             "sourceType": "module"
         }
     },
+    "extends": [
+        "airbnb-typescript/base",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended"
+    ],
+    "plugins": [
+        "@typescript-eslint",
+        "redux-saga",
+        "react-hooks",
+        "import",
+        "react"
+    ],
     "env": {
         "browser": true,
         "es6": true,
+        "node": true,
         "jest": true
     },
     "rules": {
@@ -114,15 +122,13 @@
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/ban-ts-ignore": "off"
     },
-    "plugins": [
-        "@typescript-eslint",
-        "react",
-        "react-hooks",
-        "eslint-plugin-import"
-    ],
     "settings": {
         "import/resolver": {
             "node": {
+                "moduleDirectory": [
+                    "node_modules",
+                    "src/"
+                ],
                 "extensions": [
                     ".tsx",
                     ".ts",
