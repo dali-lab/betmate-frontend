@@ -5,11 +5,11 @@ import {
 
 import { Socket } from 'socket.io-client';
 
-import { createErrorChannel, createUpdateGameStateChannel } from 'store/sagas/sockets/channels';
-
 import { MakeMoveData, UpdateGameStateData } from 'types/resources/game';
 import { Actions } from 'types/state';
 import { SocketErrorData } from 'types/socket';
+
+import { createErrorChannel, createUpdateGameStateChannel } from './channels';
 
 /**
  * Saga that emits 'make_move' events onto the passed socket and completes the following:

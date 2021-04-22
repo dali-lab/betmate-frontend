@@ -4,10 +4,10 @@ import {
 
 import { io, Socket } from 'socket.io-client';
 
-import { errorHandler, makeMoveHandler, updateGameStateHandler } from './handlers';
+import { InitializeSocketAction } from 'types/socket';
+import { Actions } from 'types/state';
 
-import { Actions } from '../../../types/state';
-import { InitializeSocketAction } from '../../../types/socket';
+import { errorHandler, makeMoveHandler, updateGameStateHandler } from './handlers';
 
 /**
  * Function that creates and returns a websocket instance
