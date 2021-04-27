@@ -9,10 +9,12 @@ import { signInUser, signOutUser } from 'store/actionCreators/authActionCreators
 import SignUpPanel from 'containers/authentication/signUpPanel';
 import SignInPanel from 'containers/authentication/signInPanel';
 import SignOutPanel from 'containers/authentication/signOutPanel';
+import Dashboard from './dashboard/dashboard';
 
 const Welcome = () => {
   return (
     <div>
+      <Dashboard/>
       <NavLink to="/signin">Sign In</NavLink><br />
       <NavLink to="/signup">Sign Up</NavLink><br />
     </div>
