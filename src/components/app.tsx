@@ -9,7 +9,7 @@ import { signInUser, signOutUser } from 'store/actionCreators/authActionCreators
 import SignUpPanel from 'containers/authentication/signUpPanel';
 import SignInPanel from 'containers/authentication/signInPanel';
 import SignOutPanel from 'containers/authentication/signOutPanel';
-import Dashboard from './dashboard/dashboard';
+import Dashboard from './dashboard';
 
 const Welcome = () => {
   return (

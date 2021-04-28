@@ -13,6 +13,12 @@ export const fetchGameById = (id: string): Actions => ({
   payload: { id },
 });
 
+// export const fetchGamesById = (id: string): Actions => ({
+//   type: 'FETCH_GAMES',
+//   status: 'REQUEST',
+//   payload: { id },
+// });
+
 export const updateGameById = (id: string, fields: Partial<Game>): Actions => ({
   type: 'UPDATE_GAME',
   status: 'REQUEST',

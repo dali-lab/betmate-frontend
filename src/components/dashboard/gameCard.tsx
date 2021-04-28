@@ -7,7 +7,6 @@ const GameCard = (props) => {
       <p>{props.playerFavor} to win</p>
       <p> Your earnings: ${props.earnings}</p>
     </div>
-
   );
 };
 
