@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './dashboard.scss';
-import { fetchGameById } from 'store/requests/gameRequests';
-import GameCard from './gameCard';
+import { fetchGameById } from 'store/actionCreators/gameActionCreators';
+import GameCard from './gameCard/gameCard';
 import filler from './currentGamesDummy';
 
 export interface DashboardProps {
@@ -25,6 +25,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           <button>Browse</button>
         </div>
       </div>
+      {console.log(props.fetchGameById('6089db6dbc142e14a0672f82'))}
       <h3 className='betting-header'>Continue Betting</h3>
       {filler.map((i) => (
         <div key='key' className='card-box'>
