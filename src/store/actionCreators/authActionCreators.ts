@@ -12,7 +12,7 @@ export const signUpUser = (email: string, password: string, firstName: string, l
 });
 
 export const signInUser = (email: string, password: string): Actions => ({
-  type: 'AUTH_USER',
+  type: 'SIGN_IN_USER',
   status: 'REQUEST',
   payload: {
     email,

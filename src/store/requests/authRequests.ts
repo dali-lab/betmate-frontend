@@ -1,27 +1,36 @@
-// import { createBackendAxiosRequest } from 'store/requests';
+import { createBackendAxiosRequest } from 'store/requests';
 
 import { AuthUserResponseData } from 'types/resources/auth';
 import { RequestReturnType } from 'types/state';
 
-export const signInUser = async (email: string, password: string): Promise<RequestReturnType<AuthUserResponseData>> => {
-  // const result = await createBackendAxiosRequest({
-  //   method: 'POST',
-  //   url: '/',
-  // });
-
-  // // Validation here
-
-  // return result;
-
-  return {
+export const createUser = async (email: string, password: string, firstName: string, lastName: string): Promise<RequestReturnType<AuthUserResponseData>> => {
+  const result = await createBackendAxiosRequest({
+    method: 'POST',
+    url: '/auth/signup',
     data: {
-      user: {
-        email,
-        password,
-        account: 548441,
-        wager_hist: ['asdfhasdkjf'],
-        _id: 'asdfasgdfsdfkh',
-      },
+      email,
+      password,
+      firstName,
+      lastName,
     },
-  } as RequestReturnType<AuthUserResponseData>;
+  });
+
+  // Validation here
+
+  return result as RequestReturnType<AuthUserResponseData>;
+};
+
+export const signInUser = async (email: string, password: string): Promise<RequestReturnType<AuthUserResponseData>> => {
+  const result = await createBackendAxiosRequest({
+    method: 'POST',
+    url: '/auth/signin',
+    data: {
+      email,
+      password,
+    },
+  });
+
+  // Validation here
+
+  return result as RequestReturnType<AuthUserResponseData>;
 };

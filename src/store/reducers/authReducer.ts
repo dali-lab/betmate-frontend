@@ -10,7 +10,8 @@ const reducer = (state = initialState, action: Actions): AuthState => {
   if (action.status !== 'SUCCESS') return state;
 
   switch (action.type) {
-    case 'AUTH_USER':
+    case 'CREATE_USER':
+    case 'SIGN_IN_USER':
       return {
         ...state,
         isAuthenticated: true,

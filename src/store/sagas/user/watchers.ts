@@ -6,23 +6,8 @@ import { getErrorPayload } from 'utils/error';
 import { Actions, RequestReturnType } from 'types/state';
 
 import {
-  FetchUserData,
-  CreateUserActions, FetchUserActions, UpdateUserActions, DeleteUserActions,
+  FetchUserData, FetchUserActions, UpdateUserActions, DeleteUserActions,
 } from 'types/resources/user';
-
-export function* watchCreateUser() {
-  while (true) {
-    try {
-      const action: CreateUserActions = yield take((a: Actions) => (a.type === 'CREATE_USER' && a.status === 'REQUEST'));
-      if (action.status !== 'REQUEST') return; // Type protection only
-
-      const response: RequestReturnType<FetchUserData> = yield call(userRequests.createUser, action.payload.email, action.payload.password, action.payload.firstName, action.payload.lastName);
-      yield put<Actions>({ type: 'CREATE_USER', payload: { user: response.data.user }, status: 'SUCCESS' });
-    } catch (error) {
-      yield put<Actions>({ type: 'CREATE_USER', payload: getErrorPayload(error), status: 'FAILURE' });
-    }
-  }
-}
 
 export function* watchFetchUserById() {
   while (true) {

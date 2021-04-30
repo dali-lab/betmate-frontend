@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { signInUser as signInUserType } from 'store/actionCreators/authActionCreators';
+import logo from '../../../assets/logo.png';
 
 export interface SignInPanelProps extends RouteComponentProps {
   isAuthenticated: boolean,
@@ -15,9 +16,9 @@ const SignInPanel: React.FC<SignInPanelProps> = (props) => {
 
   useEffect(() => {
     if (props.isAuthenticated) {
-      props.history.push('/admin');
+      props.history.push('/');
     }
-  });
+  }, [props.isAuthenticated]);
 
   const handleEmailUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -38,18 +39,26 @@ const SignInPanel: React.FC<SignInPanelProps> = (props) => {
     } else {
       // Send only if all fields filled in
       props.signInUser(email, password);
-      props.history.push('/admin');
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="Email" value={email} onChange={handleEmailUpdate} />
-        <input type="password" placeholder="Password" value={password} onChange={handlePasswordUpdate} />
-        <input type="submit" value="Sign In" />
-      </form>
-      {props.isLoading ? <div>Authenticating...</div> : props.errorMessages[0]}
+    <div className="auth-container">
+      <div className="auth-box">
+        <div className="title-container">
+          <h1>Betmate</h1>
+          <img src={logo} alt="logo"/>
+        </div>
+        <form className="form-container" onSubmit={handleSubmit}>
+          <input type="email" placeholder="Email" value={email} onChange={handleEmailUpdate} />
+          <input type="password" placeholder="Password" value={password} onChange={handlePasswordUpdate} />
+          <input type="submit" value="Sign In" />
+        </form>
+        {props.isLoading
+          ? <div>Authenticating...</div>
+          : (props.errorMessages && <p>{props.errorMessages[0]}</p>)
+        }
+      </div>
     </div>
   );
 };
