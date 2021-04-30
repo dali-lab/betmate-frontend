@@ -14,7 +14,7 @@ const errorSelector = createErrorSelector(loadActions);
 const mapStateToProps = (state: RootState) => ({
   isAuthenticated: state.auth.isAuthenticated,
   isLoading: loadingSelector(state),
-  errorMessage: errorSelector(state),
+  errorMessages: errorSelector(state),
 });
 
 export default connect(mapStateToProps, { signUpUser })(SignUpPanel);

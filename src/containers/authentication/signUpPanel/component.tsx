@@ -70,7 +70,9 @@ const SignUpPanel: React.FC<SignInPanelProps> = (props) => {
           <input type="password" placeholder="Password" value={password} onChange={handlePasswordUpdate} />
           <input type="submit" value="Sign Up" />
         </form>
-        {props.isLoading ? <div>Authenticating...</div> : props.errorMessages[0]}
+        <div className="auth-status-message-container">
+          {props.isLoading ? <div>Authenticating...</div> : <div>{props.errorMessages[0]}</div>}
+        </div>
       </div>
     </div>
   );

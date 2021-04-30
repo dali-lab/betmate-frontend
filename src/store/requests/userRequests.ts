@@ -1,24 +1,7 @@
-import { createBackendAxiosRequest } from 'store/requests';
+// import { createBackendAxiosRequest } from 'store/requests';
 
 import { FetchUserData, DeleteUserData, User } from 'types/resources/user';
 import { RequestReturnType } from 'types/state';
-
-export const createUser = async (email: string, password: string, firstName: string, lastName: string): Promise<RequestReturnType<FetchUserData>> => {
-  const result = await createBackendAxiosRequest({
-    method: 'POST',
-    url: '/auth/signup',
-    data: {
-      email,
-      password,
-      firstName,
-      lastName,
-    },
-  });
-
-  // Validation here
-
-  return result as RequestReturnType<FetchUserData>;
-};
 
 export const fetchUserById = async (uid: string): Promise<RequestReturnType<FetchUserData>> => {
   // const result = await createBackendAxiosRequest({

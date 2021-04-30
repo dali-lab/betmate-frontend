@@ -6,7 +6,7 @@ import logo from '../../../assets/logo.png';
 export interface SignInPanelProps extends RouteComponentProps {
   isAuthenticated: boolean,
   isLoading: boolean,
-  errorMessage: string[],
+  errorMessages: string[],
   signInUser: typeof signInUserType
 }
 
@@ -55,7 +55,7 @@ const SignInPanel: React.FC<SignInPanelProps> = (props) => {
           <input type="submit" value="Sign In" />
         </form>
         <div className="auth-status-message-container">
-          {props.isLoading ? <div>Authenticating...</div> : <div>{props.errorMessage[0]}</div>}
+          {props.isLoading ? <div>Authenticating...</div> : <div>{props.errorMessages[0]}</div>}
         </div>
       </div>
     </div>

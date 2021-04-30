@@ -12,7 +12,7 @@ const loadActions: ActionTypes[] = ['SIGN_IN_USER'];
 const mapStateToProps = (state: RootState) => ({
   isAuthenticated: state.auth.isAuthenticated,
   isLoading: createLoadingSelector(loadActions)(state),
-  errorMessage: createErrorSelector(loadActions)(state),
+  errorMessages: createErrorSelector(loadActions)(state),
 });
 
 export default connect(mapStateToProps, { signInUser })(SignInPanel);
