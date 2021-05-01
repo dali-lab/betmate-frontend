@@ -4,7 +4,7 @@ import { AuthUserResponseData } from 'types/resources/auth';
 import { RequestReturnType } from 'types/state';
 
 export const createUser = async (email: string, password: string, firstName: string, lastName: string): Promise<RequestReturnType<AuthUserResponseData>> => {
-  const result = await createBackendAxiosRequest({
+  const result = await createBackendAxiosRequest<AuthUserResponseData>({
     method: 'POST',
     url: '/auth/signup',
     data: {
@@ -17,11 +17,11 @@ export const createUser = async (email: string, password: string, firstName: str
 
   // Validation here
 
-  return result as RequestReturnType<AuthUserResponseData>;
+  return result;
 };
 
 export const signInUser = async (email: string, password: string): Promise<RequestReturnType<AuthUserResponseData>> => {
-  const result = await createBackendAxiosRequest({
+  const result = await createBackendAxiosRequest<AuthUserResponseData>({
     method: 'POST',
     url: '/auth/signin',
     data: {
@@ -32,5 +32,5 @@ export const signInUser = async (email: string, password: string): Promise<Reque
 
   // Validation here
 
-  return result as RequestReturnType<AuthUserResponseData>;
+  return result;
 };
