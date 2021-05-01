@@ -9,7 +9,7 @@ import wagerReducer from 'store/reducers/wagerReducer';
 const rootReducer = combineReducers({
   auth: authReducer,
   game: gameReducer,
-  request: requestReducer,
+  requests: requestReducer,
   user: userReducer,
   wager: wagerReducer,
 });

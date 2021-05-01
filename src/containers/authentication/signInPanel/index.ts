@@ -1,18 +1,20 @@
 import { connect } from 'react-redux';
 
-import SignInPanel from 'containers/authentication/signInPanel/component';
-
 import { createErrorSelector, createLoadingSelector } from 'store/actionCreators/requestActionCreators';
 import { signInUser } from 'store/actionCreators/authActionCreators';
-
 import { ActionTypes, RootState } from 'types/state';
 
-const loadActions: ActionTypes[] = ['AUTH_USER'];
+import SignInPanel from 'containers/authentication/signInPanel/component';
+import '../style.scss';
+
+const loadActions: ActionTypes[] = ['SIGN_IN_USER'];
+const loadingSelector = createLoadingSelector(loadActions);
+const errorSelector = createErrorSelector(loadActions);
 
 const mapStateToProps = (state: RootState) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  isLoading: createLoadingSelector(loadActions)(state),
-  errorMessage: createErrorSelector(loadActions)(state),
+  isLoading: loadingSelector(state),
+  errorMessages: errorSelector(state),
 });
 
 export default connect(mapStateToProps, { signInUser })(SignInPanel);

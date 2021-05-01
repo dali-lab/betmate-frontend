@@ -11,16 +11,20 @@ export interface AuthState {
 
 /* -------- Action Types -------- */
 
-export const AUTH_USER = 'AUTH_USER';
+export const SIGN_IN_USER = 'SIGN_IN_USER';
 export const DEAUTH_USER = 'DEAUTH_USER';
+export const CREATE_USER = 'CREATE_USER';
 
-export type AuthUserRequestData = { email: string, password: string };
-export type AuthUserResponseData = { user: User };
+export type CreateUserRequestData = { email: string, password: string, firstName: string, lastName: string };
+export type SignInRequestData = { email: string, password: string };
+export type AuthUserResponseData = { user: User, token: string };
+export type AuthUserPayload = { user: User };
 
 export type DeAuthUserData = Empty;
 
-export type AuthUserActions = AsyncAction<typeof AUTH_USER, AuthUserResponseData, AuthUserRequestData>;
+export type CreateUserActions = AsyncAction<typeof CREATE_USER, AuthUserPayload, CreateUserRequestData>;
+export type SignInUserActions = AsyncAction<typeof SIGN_IN_USER, AuthUserPayload, SignInRequestData>;
 export type DeAuthUserActions = Action<typeof DEAUTH_USER, DeAuthUserData>;
 
-export type AuthActions = AuthUserActions | DeAuthUserActions;
-export type AuthActionTypes = typeof AUTH_USER | typeof DEAUTH_USER;
+export type AuthActions = CreateUserActions | SignInUserActions | DeAuthUserActions;
+export type AuthActionTypes = typeof CREATE_USER | typeof SIGN_IN_USER | typeof DEAUTH_USER;
