@@ -17,8 +17,8 @@ export const fetchUserById = async (uid: string): Promise<RequestReturnType<Fetc
     data: {
       user: {
         email: 'a8dsf87asbhdf7hasd89fh',
-        firstName: 'Bill',
-        lastName: 'Bob',
+        first_name: 'Bill',
+        last_name: 'Bob',
         account: 866798,
         wager_hist: ['8676786'],
         _id: uid,
@@ -41,8 +41,8 @@ export const updateUserById = async (uid: string, fields: Partial<User>): Promis
     data: {
       user: {
         email: 'a8dsf87asbhdf7hasd89fh',
-        firstName: 'Bill',
-        lastName: 'Bob',
+        first_name: 'Bill',
+        last_name: 'Bob',
         account: 866798,
         wager_hist: ['8676786'],
         _id: uid,

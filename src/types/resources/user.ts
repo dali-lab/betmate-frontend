@@ -5,9 +5,9 @@ import { AsyncAction } from 'types/state';
 export interface User {
   email: string,
   password?: string,
-  firstName?: string,
-  lastName?: string,
-  fullName?: string,
+  first_name?: string,
+  last_name?: string,
+  full_name?: string,
   account: number,
   wager_hist: string[],
   _id: string
