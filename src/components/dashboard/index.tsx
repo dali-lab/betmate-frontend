@@ -1,11 +1,16 @@
 import { connect } from 'react-redux';
 
-// import { createErrorSelector, createLoadingSelector } from 'store/actionCreators/requestActionCreators';
+import { createErrorSelector, createLoadingSelector } from 'store/actionCreators/requestActionCreators';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 
-// import { ActionTypes, RootState } from 'types/state';
+import { ActionTypes, RootState } from 'types/state';
 import Dashboard from 'components/dashboard/dashboard';
 
-// const loadActions: ActionTypes[] = ['AUTH_USER'];
+const loadActions: ActionTypes[] = ['FETCH_GAME', 'FETCH_GAMES'];
+const mapStateToProps = (state: RootState) => ({
+  games: state.game.games,
+  isLoading: createLoadingSelector(loadActions)(state),
+  errorMessage: createErrorSelector(loadActions)(state),
+});
 
-export default connect(null, { fetchGameById })(Dashboard);
+export default connect(mapStateToProps, { fetchGameById })(Dashboard);

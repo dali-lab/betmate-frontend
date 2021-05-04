@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react';
 import './dashboard.scss';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
+import { Game } from 'types/resources/game';
 import GameCard from './gameCard/gameCard';
 import filler from './currentGamesDummy';
 
 export interface DashboardProps {
   fetchGameById: typeof fetchGameById
+  games: Record<string, Game>;
 }
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
   useEffect(() => {
-    props.fetchGameById('6089db6dbc142e14a0672f82');
+    props.fetchGameById('60905e78dbf54e0b317855f8');
   });
 
   return (
@@ -25,23 +27,23 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           <button>Browse</button>
         </div>
       </div>
-      {console.log(props.fetchGameById('6089db6dbc142e14a0672f82'))}
       <h3 className='betting-header'>Continue Betting</h3>
-      {filler.map((i) => (
-        <div key='key' className='card-box'>
+      {Object.keys(props.games).map((id) => {
+        const game = props.games[id];
+        return <div key={id} className='card-box'>
           <GameCard
-            gameID={i.gameID}
-            player1={i.player1}
-            player2={i.player2}
-            player1Rating={i.player1Rating}
-            player2Rating= {i.player2Rating}
-            playerFavor={i.playerFavor}
-            earnings={i.earnings}/>
-        </div>
-      ))}
+            gameID={id}
+            player1={game.player_black.name}
+            player2={game.player_white.name}
+            player1Rating={game.player_black.elo}
+            player2Rating= {game.player_black.elo}
+            playerFavor={game.game_status === 'white_win' ? 'white' : 'black'}
+            earnings={'10.9'}/>
+        </div>;
+      })}
       <h3 className='betting-header'>Matches</h3>
       {filler.map((i) => (
-        <div key='key' className='card-box'>
+        <div key={i.gameID} className='card-box'>
           <GameCard
             gameID={i.gameID}
             player1={i.player1}

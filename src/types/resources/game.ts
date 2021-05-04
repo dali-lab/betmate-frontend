@@ -1,8 +1,21 @@
 import { Empty } from 'types';
 import { AsyncAction } from 'types/state';
 
+export interface Player {
+  name: string,
+  elo: number
+}
+
 export interface Game {
-  state: string,
+  complete: boolean
+  game_status: string
+  move_hist: string[]
+  player_black: Player
+  player_white: Player
+  state: string
+  time_black: number
+  time_white: number
+  wagers: string[]
   _id: string
 }
 
@@ -33,8 +46,8 @@ export type FetchGameRequestData = { id: string };
 export type UpdateGameRequestData = { id: string, fields: Partial<Game> };
 export type DeleteGameRequestData = { id: string };
 
-export type FetchGameData = { game: Game };
-export type FetchGamesData = { games: Game[] };
+export type FetchGameData = Game;
+export type FetchGamesData = Game[];
 export type DeleteGameData = { id: string };
 
 export type JoinGameActions = AsyncAction<typeof JOIN_GAME, JoinGameData>; // ws

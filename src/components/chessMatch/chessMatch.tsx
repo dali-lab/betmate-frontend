@@ -9,7 +9,8 @@ const Chess = require('chess.js');
 const chess = new Chess();
 
 const ChessMatch = () => {
-  const [fen, updateFen] = useState('');
+  const [fen, updateFen] = useState(chess.fen());
+
   const clicky = () => {
     const moves = chess.moves();
     const move = moves[Math.floor(Math.random() * moves.length)];

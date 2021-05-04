@@ -5,7 +5,7 @@ import { RequestReturnType } from 'types/state';
 export const createBackendAxiosRequest = async <D>(
   config: AxiosRequestConfig,
 ): Promise<RequestReturnType<D>> => axios({
-  baseURL: `${ROOT_URL}/api/`,
+  baseURL: `${ROOT_URL}/`,
   timeout: requestTimeout,
   ...config,
 });
