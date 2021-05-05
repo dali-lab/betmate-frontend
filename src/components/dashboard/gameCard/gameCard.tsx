@@ -1,8 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import './gameCard.scss';
+import './style.scss';
 
-const GameCard = (props) => {
+const GameCard = (props: any) => {
   return (
     <div>
       <p className='game-title regular-text'>Game {props.gameID}: {props.player1}({props.player1Rating}) vs {props.player2}({props.player2Rating})</p>

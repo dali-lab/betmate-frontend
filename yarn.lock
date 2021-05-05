@@ -3619,11 +3619,6 @@ chessboardjsx@^2.4.7:
     react-dnd-html5-backend "4.0.5"
     react-dnd-multi-backend "3.1.2"
 
-chessground@^7.11.1, chessground@^7.6.12:
-  version "7.11.1"
-  resolved "https://registry.yarnpkg.com/chessground/-/chessground-7.11.1.tgz#7e126d660d63025f9bf27371a8778e2baeeb1b57"
-  integrity sha512-IwGSEZBsQlquHyudv1Y5EwlfTXrz0CEWisJuEim2W3eX07IBpYUsr0ChTD35du+Cr0x1+e6GbCLY3hVejKG7ow==
-
 chokidar@^2.1.8:
   version "2.1.8"
   resolved "https://registry.npmjs.org/chokidar/-/chokidar-2.1.8.tgz"
@@ -10667,14 +10662,6 @@ react-app-polyfill@^1.0.6:
     raf "^3.4.1"
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
-
-react-chessground@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/react-chessground/-/react-chessground-1.5.0.tgz#fdc03c100b7d87053dc23e7015002261a3369103"
-  integrity sha512-wwlfGHa41yvWa295dEgrzbvAR5GutYAYUd7I5Z86RfhSKNg1/vVF0L4LQ6YGdS5DUZoN2MHQzMECli3b0ELE/g==
-  dependencies:
-    chessground "^7.6.12"
-    react-scripts "^3.3.0"
 
 react-dev-utils@^10.2.1:
   version "10.2.1"

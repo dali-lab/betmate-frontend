@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import React, { useState } from 'react';
-import 'react-chessground/dist/styles/chessground.css';
-import './chessMatch.scss';
 import Chessboard from 'chessboardjsx';
-// import Chess from 'chess.js';
-const Chess = require('chess.js');
+import { Chess } from 'chess.js';
+import './style.scss';
 
 const chess = new Chess();
 

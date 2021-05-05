@@ -30,7 +30,7 @@ export const fetchGameById = async (id: string): Promise<RequestReturnType<Fetch
   return result;
 };
 
-export const fetchGames = async (game_status: string): Promise<RequestReturnType<FetchGamesData>> => {
+export const fetchGamesByStatus = async (game_status: string): Promise<RequestReturnType<FetchGamesData>> => {
   const result = await createBackendAxiosRequest<FetchGamesData>({
     method: 'GET',
     url: '/chess/',
