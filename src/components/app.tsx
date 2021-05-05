@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   BrowserRouter as Router, Route, Switch,
 } from 'react-router-dom';
 
-import { signInUser, signOutUser } from 'store/actionCreators/authActionCreators';
+import { jwtSignIn } from 'store/actionCreators/authActionCreators';
 
 import SignUpPanel from 'containers/authentication/signUpPanel';
 import SignInPanel from 'containers/authentication/signInPanel';
 import SignOutPanel from 'containers/authentication/signOutPanel';
+import { authTokenName } from 'utils';
 import NavBar from './NavBar';
+import WagerPanel from './WagerPanel';
 
 const Welcome = () => {
   return (
     <div>
       <NavBar />
-      Dashboard coming soon!
+      <WagerPanel gameId="6089d9d700b79d5122e8183f" />
     </div>
   );
 };
@@ -24,7 +26,12 @@ const FallBack = () => {
   return <div>Uh oh... URL Not Found! Please contact the system administrator.</div>;
 };
 
-const App = () => {
+const App = (props) => {
+  useEffect(() => {
+    const token = localStorage.getItem(authTokenName);
+    if (token) props.jwtSignIn();
+  }, []);
+
   return (
     <Router>
       <div>
@@ -40,4 +47,4 @@ const App = () => {
   );
 };
 
-export default connect(null, { signInUser, signOutUser })(App);
+export default connect(null, { jwtSignIn })(App);

@@ -1,0 +1,134 @@
+.wager-panel-container {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: calc(100vh - 80px);
+    background: #423E43;
+    p {
+        font-family: 'Roboto';
+        color: #F2F2F2;
+        font-size: 14px;
+    }
+}
+
+.balance-text {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    p {
+        font-weight: bold;
+        font-size: 18px !important;
+        color: #F2F2F2;
+        text-align: right;
+        width: 100%;
+        margin: 5px auto;
+    }
+    img {
+        width: 16px;
+        height: 16px;
+        margin: auto 12px auto 8px;
+    }
+}
+
+.bet-subpanel {
+    background: #5D5D66;
+    border: 5px solid #BFBFCD;
+    border-radius: 20px;
+    width: calc(100% - 10px);
+    h1 {
+        text-align: center;
+        font-family: "Roboto";
+        font-weight: 500;
+        font-size: 24px;
+        color: #F2F2F2;
+        margin: 10px 0;
+    }
+    input {
+        margin: 0 auto;
+        display: block;
+    }
+}
+
+.options-container {
+    display: flex;
+    justify-content: space-around;
+    p {
+        margin: 10px auto 5px auto;
+    }
+    label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+.wager-amounts-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 40px;
+    margin-top: 20px;
+    label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img {
+            width: 30px;
+            height: 30px;
+        }
+        p {
+            margin: 10px auto 5px auto;
+        }
+    }
+}
+
+.wdl-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    img {
+        width: 25px;
+        height: 25px;
+        margin-right: 8px;
+    }
+}
+
+input[type="submit"] {
+    margin: 15px auto;
+    display: block;
+    background: #E5AF27;
+    border: none;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 6px 20px;
+    border-radius: 14px;
+}
+
+input {
+    cursor: pointer;
+}
+
+.vertical-bar-container {
+    height: 40px;
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin: 0 auto;
+}
+
+.status-text {
+    text-align: center;
+}
+
+.wdl-bar-container {
+    height: 20px;
+    width: 100%;
+    display: flex;
+    div {
+        height: 100%;
+    }
+}

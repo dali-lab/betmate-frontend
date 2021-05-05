@@ -1,4 +1,5 @@
 import { Actions } from 'types/state';
+import { authTokenName } from 'utils';
 
 export const signUpUser = (email: string, password: string, firstName: string, lastName: string): Actions => ({
   type: 'CREATE_USER',
@@ -24,4 +25,10 @@ export const signOutUser = (): Actions => ({
   type: 'DEAUTH_USER',
   status: 'SUCCESS',
   payload: {},
+});
+
+export const jwtSignIn = (): Actions => ({
+  type: 'JWT_SIGN_IN',
+  status: 'REQUEST',
+  payload: { token: localStorage.getItem(authTokenName) || '' },
 });

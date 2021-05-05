@@ -11,6 +11,7 @@ const reducer = (state = initialState, action: Actions): AuthState => {
 
   switch (action.type) {
     case 'CREATE_USER':
+    case 'JWT_SIGN_IN':
     case 'SIGN_IN_USER':
       return {
         ...state,

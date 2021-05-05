@@ -15,7 +15,7 @@ const wagerReducer = (state = initialState, action: Actions): WagerState => {
         ...state,
         wagers: {
           ...state.wagers,
-          [action.payload.wager._id]: action.payload.wager,
+          [action.payload._id]: action.payload,
         },
       };
 

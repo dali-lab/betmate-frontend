@@ -16,8 +16,16 @@ export function* watchCreateWager() {
       const action: CreateWagerActions = yield take((a: Actions) => (a.type === 'CREATE_WAGER' && a.status === 'REQUEST'));
       if (action.status !== 'REQUEST') return; // Type protection only
 
-      const response: RequestReturnType<FetchWagerData> = yield call(wagerRequests.createWager, action.payload.gameId, action.payload.amount);
-      yield put<Actions>({ type: 'CREATE_WAGER', payload: { wager: response.data.wager }, status: 'SUCCESS' });
+      const response: RequestReturnType<FetchWagerData> = yield call(
+        wagerRequests.createWager,
+        action.payload.gameId,
+        action.payload.wager,
+        action.payload.amount,
+        action.payload.wdl,
+        action.payload.odds,
+        action.payload.moveNumber,
+      );
+      yield put<Actions>({ type: 'CREATE_WAGER', payload: response.data, status: 'SUCCESS' });
     } catch (error) {
       yield put<Actions>({ type: 'CREATE_WAGER', payload: getErrorPayload(error), status: 'FAILURE' });
     }
@@ -31,7 +39,7 @@ export function* watchFetchWagerById() {
       if (action.status !== 'REQUEST') return; // Type protection only
 
       const response: RequestReturnType<FetchWagerData> = yield call(wagerRequests.fetchWagerById, action.payload.id);
-      yield put<Actions>({ type: 'FETCH_WAGER', payload: { wager: response.data.wager }, status: 'SUCCESS' });
+      yield put<Actions>({ type: 'FETCH_WAGER', payload: response.data, status: 'SUCCESS' });
     } catch (error) {
       yield put<Actions>({ type: 'FETCH_WAGER', payload: getErrorPayload(error), status: 'FAILURE' });
     }
@@ -45,7 +53,7 @@ export function* watchUpdateWagerById() {
       if (action.status !== 'REQUEST') return; // Type protection only
 
       const response: RequestReturnType<FetchWagerData> = yield call(wagerRequests.updateWagerById, action.payload.id, action.payload.fields);
-      yield put<Actions>({ type: 'UPDATE_WAGER', payload: { wager: response.data.wager }, status: 'SUCCESS' });
+      yield put<Actions>({ type: 'UPDATE_WAGER', payload: response.data, status: 'SUCCESS' });
     } catch (error) {
       yield put<Actions>({ type: 'UPDATE_WAGER', payload: getErrorPayload(error), status: 'FAILURE' });
     }
