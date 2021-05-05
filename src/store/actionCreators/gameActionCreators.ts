@@ -13,7 +13,7 @@ export const fetchGameById = (id: string): Actions => ({
   payload: { id },
 });
 
-export const fetchGamesById = (game_status: string): Actions => ({
+export const fetchGames = (game_status: string): Actions => ({
   type: 'FETCH_GAMES',
   status: 'REQUEST',
   payload: { game_status },

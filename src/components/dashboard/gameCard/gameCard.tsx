@@ -1,14 +1,15 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import './gameCard.scss';
 
 const GameCard = (props) => {
   return (
-    <a href="http://localhost:8080/chess">
+    <div>
       <p className='game-title regular-text'>Game {props.gameID}: {props.player1}({props.player1Rating}) vs {props.player2}({props.player2Rating})</p>
       <p className='regular-text'>{props.playerFavor} to win</p>
       <p className='regular-text'> Your earnings: ${props.earnings}</p>
-    </a>
+    </div>
   );
 };
 
-export default GameCard;
+export default withRouter(GameCard);

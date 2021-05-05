@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import './dashboard.scss';
-import { fetchGamesById } from 'store/actionCreators/gameActionCreators';
+import { fetchGames } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
+import { RouteComponentProps } from 'react-router';
 import GameCard from './gameCard/gameCard';
 
-export interface DashboardProps {
-  fetchGamesById: typeof fetchGamesById
+export interface DashboardProps extends RouteComponentProps{
+  fetchGames: typeof fetchGames
   games: Record<string, Game>;
 }
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
   useEffect(() => {
-    props.fetchGamesById('in_progress');
+    props.fetchGames('in_progress');
   }, []);
 
   return (
@@ -29,7 +30,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
       <h3 className='betting-header'>Continue Betting</h3>
       {Object.keys(props.games).map((id) => {
         const game = props.games[id];
-        return <div key={id} className='card-box'>
+        return <div key={id} className='card-box' onClick={() => props.history.push(`/chess/${id}`)}>
           <GameCard
             gameID={id}
             player1={game.player_black.name}
