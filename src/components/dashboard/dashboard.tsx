@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import './dashboard.scss';
-import { fetchGameById } from 'store/actionCreators/gameActionCreators';
+import { fetchGamesById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
 import GameCard from './gameCard/gameCard';
 import filler from './currentGamesDummy';
 
 export interface DashboardProps {
-  fetchGameById: typeof fetchGameById
+  fetchGamesById: typeof fetchGamesById
   games: Record<string, Game>;
 }
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
   useEffect(() => {
-    props.fetchGameById('60905e78dbf54e0b317855f8');
-  });
+    props.fetchGamesById('in_progress');
+  }, []);
 
   return (
     <div>

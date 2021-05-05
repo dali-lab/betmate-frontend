@@ -45,6 +45,7 @@ export type CreateGameRequestData = { state: string };
 export type FetchGameRequestData = { id: string };
 export type UpdateGameRequestData = { id: string, fields: Partial<Game> };
 export type DeleteGameRequestData = { id: string };
+export type FetchGamesRequestData = { game_status: string };
 
 export type FetchGameData = Game;
 export type FetchGamesData = Game[];
@@ -58,7 +59,7 @@ export type CreateGameActions = AsyncAction<typeof CREATE_GAME, FetchGameData, C
 export type FetchGameActions = AsyncAction<typeof FETCH_GAME, FetchGameData, FetchGameRequestData>;
 export type UpdateGameActions = AsyncAction<typeof UPDATE_GAME, FetchGameData, UpdateGameRequestData>;
 export type DeleteGameActions = AsyncAction<typeof DELETE_GAME, DeleteGameData, DeleteGameRequestData>;
-export type FetchGamesActions = AsyncAction<typeof FETCH_GAMES, FetchGamesData>;
+export type FetchGamesActions = AsyncAction<typeof FETCH_GAMES, FetchGamesData, FetchGamesRequestData>;
 
 export type GameActions =
   JoinGameActions | MakeMoveActions | UpdateGameStateActions |

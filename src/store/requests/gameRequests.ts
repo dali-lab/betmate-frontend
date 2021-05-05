@@ -1,6 +1,8 @@
 import { createBackendAxiosRequest } from 'store/requests';
 
-import { DeleteGameData, FetchGameData, Game } from 'types/resources/game';
+import {
+  DeleteGameData, FetchGameData, FetchGamesData, Game,
+} from 'types/resources/game';
 import { RequestReturnType } from 'types/state';
 
 export const createGame = async (state: string): Promise<RequestReturnType<FetchGameData>> => {
@@ -24,6 +26,16 @@ export const fetchGameById = async (id: string): Promise<RequestReturnType<Fetch
     url: `/chess/${id}`,
   });
 
+  // Validation here
+  return result;
+};
+
+export const fetchGamesById = async (game_status: string): Promise<RequestReturnType<FetchGamesData>> => {
+  const result = await createBackendAxiosRequest<FetchGamesData>({
+    method: 'GET',
+    url: '/chess/',
+    params: { game_status },
+  });
   // Validation here
   return result;
 };
