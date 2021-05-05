@@ -3,30 +3,6 @@
 import { FetchUserData, DeleteUserData, User } from 'types/resources/user';
 import { RequestReturnType } from 'types/state';
 
-export const createUser = async (email: string, password: string, firstName: string, lastName: string): Promise<RequestReturnType<FetchUserData>> => {
-  // const result = await createBackendAxiosRequest({
-  //   method: 'POST',
-  //   url: '/',
-  // });
-
-  // // Validation here
-
-  // return result;
-
-  return {
-    data: {
-      user: {
-        email,
-        firstName,
-        lastName,
-        account: 866798,
-        wager_hist: ['8676786'],
-        _id: '8ya789gf8d7g8a7sdfgh',
-      },
-    },
-  } as RequestReturnType<FetchUserData>;
-};
-
 export const fetchUserById = async (uid: string): Promise<RequestReturnType<FetchUserData>> => {
   // const result = await createBackendAxiosRequest({
   //   method: 'POST',
@@ -41,8 +17,8 @@ export const fetchUserById = async (uid: string): Promise<RequestReturnType<Fetc
     data: {
       user: {
         email: 'a8dsf87asbhdf7hasd89fh',
-        firstName: 'Bill',
-        lastName: 'Bob',
+        first_name: 'Bill',
+        last_name: 'Bob',
         account: 866798,
         wager_hist: ['8676786'],
         _id: uid,
@@ -65,8 +41,8 @@ export const updateUserById = async (uid: string, fields: Partial<User>): Promis
     data: {
       user: {
         email: 'a8dsf87asbhdf7hasd89fh',
-        firstName: 'Bill',
-        lastName: 'Bob',
+        first_name: 'Bill',
+        last_name: 'Bob',
         account: 866798,
         wager_hist: ['8676786'],
         _id: uid,

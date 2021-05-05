@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  BrowserRouter as Router, Route, NavLink, Switch,
+  BrowserRouter as Router, Route, Switch,
 } from 'react-router-dom';
 
 import { signInUser, signOutUser } from 'store/actionCreators/authActionCreators';
@@ -11,13 +11,13 @@ import SignInPanel from 'containers/authentication/signInPanel';
 import SignOutPanel from 'containers/authentication/signOutPanel';
 import Dashboard from './dashboard';
 import ChessMatch from './chessMatch/chessMatch';
+import NavBar from './NavBar';
 
 const Welcome = () => {
   return (
     <div>
+      <NavBar />
       <Dashboard/>
-      <NavLink to="/signin">Sign In</NavLink><br />
-      <NavLink to="/signup">Sign Up</NavLink><br />
     </div>
   );
 };

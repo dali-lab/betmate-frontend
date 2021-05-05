@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
-
 import { signUpUser as signUpUserType } from 'store/actionCreators/authActionCreators';
+import logo from '../../../assets/logo.png';
 
 export interface SignInPanelProps extends RouteComponentProps {
   isAuthenticated: boolean,
@@ -18,9 +18,9 @@ const SignUpPanel: React.FC<SignInPanelProps> = (props) => {
 
   useEffect(() => {
     if (props.isAuthenticated) {
-      props.history.push('/admin');
+      props.history.push('/');
     }
-  });
+  }, [props.isAuthenticated]);
 
   const handleFirstNameUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFirstName(e.target.value);
@@ -53,20 +53,27 @@ const SignUpPanel: React.FC<SignInPanelProps> = (props) => {
     } else {
       // Send only if all fields filled in
       props.signUpUser(email, password, firstName, lastName);
-      props.history.push('/admin');
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="First Name" value={firstName} onChange={handleFirstNameUpdate} />
-        <input type="text" placeholder="Last Name" value={lastName} onChange={handleLastNameUpdate} />
-        <input type="text" placeholder="Email" value={email} onChange={handleEmailUpdate} />
-        <input type="password" placeholder="Password" value={password} onChange={handlePasswordUpdate} />
-        <input type="submit" value="Sign Up" />
-      </form>
-      {props.isLoading ? <div>Authenticating...</div> : props.errorMessages[0]}
+    <div className="auth-container">
+      <div className="auth-box">
+        <div className="title-container">
+          <h1>Betmate</h1>
+          <img src={logo} alt="logo"/>
+        </div>
+        <form className="form-container" onSubmit={handleSubmit}>
+          <input type="text" placeholder="First Name" value={firstName} onChange={handleFirstNameUpdate} />
+          <input type="text" placeholder="Last Name" value={lastName} onChange={handleLastNameUpdate} />
+          <input type="text" placeholder="Email" value={email} onChange={handleEmailUpdate} />
+          <input type="password" placeholder="Password" value={password} onChange={handlePasswordUpdate} />
+          <input type="submit" value="Sign Up" />
+        </form>
+        <div className="auth-status-message-container">
+          {props.isLoading ? <div>Authenticating...</div> : <div>{props.errorMessages[0]}</div>}
+        </div>
+      </div>
     </div>
   );
 };

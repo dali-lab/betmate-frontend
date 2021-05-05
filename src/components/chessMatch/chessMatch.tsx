@@ -15,7 +15,6 @@ const ChessMatch = () => {
     const moves = chess.moves();
     const move = moves[Math.floor(Math.random() * moves.length)];
     chess.move(move);
-    // console.log(chess.fen());
     updateFen(chess.fen());
   };
   return (

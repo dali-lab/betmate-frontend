@@ -1,0 +1,64 @@
+// Login/Sign up shared styles
+.auth-container {
+    background: #242424;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-box {
+    background: #393939;
+    border: 5px solid #C4DAFF;
+    border-radius: 35px;
+    width: 600px;
+    padding-bottom: 10px;
+}
+
+.title-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    h1 {
+        font-family: 'Roboto';
+        font-weight: bold;
+        font-size: 80px;
+        color: #F8FAFF;
+        margin-right: 30px;
+    }
+    img {
+        width: 60px;
+        height: 60px;
+        margin: auto 0;
+    }
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    input {
+        margin: 15px 0;
+        width: 400px;
+        height: 30px;
+        border-radius: 7px;
+        border: 0;
+        padding-left: 8px;
+    }    
+    input[type='submit'] {
+        background: #1354BD;
+        border: 0;
+        width: 160px;
+        height: 35px;
+        border-radius: 8px;
+        color: #F8FAFF;
+        font-family: 'Roboto';
+        font-weight: 300;
+        font-size: 18px;
+        cursor: pointer;
+    }
+}
+
+.auth-status-message-container {
+    text-align: center;
+}
