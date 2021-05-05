@@ -9,13 +9,15 @@ import { signInUser, signOutUser } from 'store/actionCreators/authActionCreators
 import SignUpPanel from 'containers/authentication/signUpPanel';
 import SignInPanel from 'containers/authentication/signInPanel';
 import SignOutPanel from 'containers/authentication/signOutPanel';
+import Dashboard from './dashboard';
+import ChessMatch from './chessMatch/chessMatch';
 import NavBar from './NavBar';
 
 const Welcome = () => {
   return (
     <div>
       <NavBar />
-      Dashboard coming soon!
+      <Dashboard/>
     </div>
   );
 };
@@ -30,6 +32,7 @@ const App = () => {
       <div>
         <Switch>
           <Route exact path="/" component={Welcome} />
+          <Route exact path="/chess/:id" component={ChessMatch} />
           <Route exact path="/signin" component={SignInPanel} />
           <Route exact path="/signup" component={SignUpPanel} />
           <Route exact path="/signout" component={SignOutPanel} />

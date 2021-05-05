@@ -16,14 +16,14 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
         ...state,
         games: {
           ...state.games,
-          [action.payload.game._id]: action.payload.game,
+          [action.payload._id]: action.payload,
         },
       };
 
     case 'FETCH_GAMES':
       return {
         ...state,
-        games: action.payload.games.reduce((accum, game) => ({
+        games: action.payload.reduce((accum, game) => ({
           ...accum,
           [game._id]: game,
         }), state.games),
