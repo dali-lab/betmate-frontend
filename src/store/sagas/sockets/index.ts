@@ -8,7 +8,9 @@ import { io, Socket } from 'socket.io-client';
 import { InitializeSocketAction } from 'types/socket';
 import { Actions } from 'types/state';
 
-import { errorHandler, makeMoveHandler, updateGameStateHandler } from './handlers';
+import {
+  errorHandler, joinGameHandler, makeMoveHandler, updateGameStateHandler,
+} from './handlers';
 
 /**
  * Function that creates and returns a websocket instance
@@ -34,6 +36,7 @@ function* watchSockets() {
       const socket: Socket = yield call(createSocket, action.payload.url);
 
       // Open all forked processes
+      const joinGameHandlerFork = yield fork(joinGameHandler, socket);
       const makeMoveHandlerFork = yield fork(makeMoveHandler, socket);
       const updateGameStateHandlerFork = yield fork(updateGameStateHandler, socket);
       const errorHandlerFork = yield fork(errorHandler, socket);
@@ -41,6 +44,7 @@ function* watchSockets() {
       yield take((a: Actions) => a.type === 'CLOSE_SOCKET');
 
       // Close all forked processes
+      yield cancel(joinGameHandlerFork);
       yield cancel(makeMoveHandlerFork);
       yield cancel(updateGameStateHandlerFork);
       yield cancel(errorHandlerFork);

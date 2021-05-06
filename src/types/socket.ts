@@ -4,7 +4,7 @@ import { Socket } from 'socket.io-client';
 import { Empty } from 'types';
 import { Action } from 'types/state';
 
-export type ClientEvents = 'join_game' | 'make_move';
+export type ClientEvents = 'join_game' | 'leave_game' | 'make_move';
 export type ServerEvents = 'wagers' | 'new_move' | 'error';
 export type Events = ClientEvents | ServerEvents;
 

@@ -16,7 +16,10 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
         ...state,
         games: {
           ...state.games,
-          [action.payload._id]: action.payload,
+          [action.payload._id]: {
+            ...state.games[action.payload._id],
+            ...action.payload,
+          },
         },
       };
 
@@ -42,7 +45,7 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
           ...state.games,
           [action.payload.gameId]: {
             ...state.games[action.payload.gameId],
-            state: action.payload.boardState,
+            state: action.payload.state,
           },
         },
       };

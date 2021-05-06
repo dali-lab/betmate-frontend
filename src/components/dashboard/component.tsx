@@ -12,7 +12,7 @@ export interface DashboardProps extends RouteComponentProps{
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
   useEffect(() => {
-    props.fetchGamesByStatus('in_progress');
+    props.fetchGamesByStatus('in_progress,not_started');
   }, []);
 
   return (

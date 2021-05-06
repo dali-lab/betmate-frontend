@@ -4,7 +4,7 @@ import { createErrorSelector, createLoadingSelector } from 'store/actionCreators
 import { fetchGamesByStatus } from 'store/actionCreators/gameActionCreators';
 
 import { ActionTypes, RootState } from 'types/state';
-import Dashboard from 'components/dashboard/dashboard';
+import Dashboard from 'components/dashboard/component';
 import { withRouter } from 'react-router';
 
 const loadActions: ActionTypes[] = ['FETCH_GAMES'];

@@ -28,6 +28,7 @@ export interface GameState {
 /* -------- Action Types -------- */
 
 export const JOIN_GAME = 'JOIN_GAME'; // ws
+export const LEAVE_GAME = 'LEAVE_GAME'; // ws
 export const MAKE_MOVE = 'MAKE_MOVE'; // ws
 export const UPDATE_GAME_STATE = 'UPDATE_GAME_STATE'; // ws
 
@@ -37,9 +38,10 @@ export const UPDATE_GAME = 'UPDATE_GAME';
 export const DELETE_GAME = 'DELETE_GAME';
 export const FETCH_GAMES = 'FETCH_GAMES';
 
-export type JoinGameData = { gameId: string, uid: string }; // ws
+export type JoinGameData = { gameId: string }; // ws
+export type LeaveGameData = { gameId: string }; // ws
 export type MakeMoveData = { gameId: string, boardState: string }; // ws
-export type UpdateGameStateData = { gameId: string, boardState: string }; // ws
+export type UpdateGameStateData = { gameId: string, state: string, move_hist: string[], time_white: number, time_black: number }; // ws
 
 export type CreateGameRequestData = { state: string };
 export type FetchGameRequestData = { id: string };
@@ -51,7 +53,8 @@ export type FetchGameData = Game;
 export type FetchGamesData = Game[];
 export type DeleteGameData = { id: string };
 
-export type JoinGameActions = AsyncAction<typeof JOIN_GAME, JoinGameData>; // ws
+export type JoinGameActions = AsyncAction<typeof JOIN_GAME, JoinGameData, JoinGameData>; // ws
+export type LeaveGameActions = AsyncAction<typeof LEAVE_GAME, LeaveGameData, LeaveGameData>; // ws
 export type MakeMoveActions = AsyncAction<typeof MAKE_MOVE, Empty, MakeMoveData>; // ws
 export type UpdateGameStateActions = AsyncAction<typeof UPDATE_GAME_STATE, UpdateGameStateData>; // ws
 
@@ -66,5 +69,5 @@ export type GameActions =
   CreateGameActions | FetchGameActions | UpdateGameActions | DeleteGameActions | FetchGamesActions;
 
 export type GameActionTypes =
-  typeof JOIN_GAME | typeof MAKE_MOVE | typeof UPDATE_GAME_STATE | typeof FETCH_GAME
+  typeof JOIN_GAME | typeof LEAVE_GAME | typeof MAKE_MOVE | typeof UPDATE_GAME_STATE | typeof FETCH_GAME
   | typeof CREATE_GAME | typeof FETCH_GAME | typeof UPDATE_GAME | typeof DELETE_GAME | typeof FETCH_GAMES;

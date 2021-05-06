@@ -6,11 +6,31 @@ import {
 
 import { Socket } from 'socket.io-client';
 
-import { MakeMoveData, UpdateGameStateData } from 'types/resources/game';
+import { JoinGameData, MakeMoveData, UpdateGameStateData } from 'types/resources/game';
 import { Actions } from 'types/state';
 import { SocketErrorData } from 'types/socket';
 
 import { createErrorChannel, createUpdateGameStateChannel } from './channels';
+
+/**
+ * Saga that emits 'join_game' events onto the passed socket and completes the following:
+ * - Waits for an event of type 'JOIN_GAME'
+ * - Emits a 'join_game' socket event using the `socket.emit` method
+ * - Dispatches success or failure based on if whether an error occurred
+ * - Repeat
+ * @param socket socket to watch for events on
+ */
+export function* joinGameHandler(socket: Socket) {
+  while (true) {
+    try {
+      const action: { payload: JoinGameData } = yield take((a: Actions) => a.type === 'JOIN_GAME' && a.status === 'REQUEST');
+      yield apply(socket, socket.emit, ['join_game', action.payload.gameId]);
+      yield put<Actions>({ type: 'JOIN_GAME', status: 'SUCCESS', payload: { gameId: action.payload.gameId } });
+    } catch (error) {
+      yield put<Actions>({ type: 'JOIN_GAME', status: 'FAILURE', payload: { message: error.message, code: null } });
+    }
+  }
+}
 
 /**
  * Saga that emits 'make_move' events onto the passed socket and completes the following:
