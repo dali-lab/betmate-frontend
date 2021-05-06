@@ -1,15 +1,15 @@
 .wager-panel-container {
-    width: 350px;
+    width: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    min-height: calc(100vh - 80px);
     background: #423E43;
+    min-height: calc(100vh - 80px);
     p {
         font-family: 'Roboto';
         color: #F2F2F2;
-        font-size: 14px;
+        font-size: 13px;
     }
 }
 
@@ -34,14 +34,14 @@
 
 .bet-subpanel {
     background: #5D5D66;
-    border: 5px solid #BFBFCD;
+    border: 4px solid #BFBFCD;
     border-radius: 20px;
     width: calc(100% - 10px);
     h1 {
         text-align: center;
         font-family: "Roboto";
         font-weight: 500;
-        font-size: 24px;
+        font-size: 20px;
         color: #F2F2F2;
         margin: 10px 0;
     }
@@ -55,7 +55,7 @@
     display: flex;
     justify-content: space-around;
     p {
-        margin: 10px auto 5px auto;
+        margin: 4px auto;
     }
     label {
         display: flex;
@@ -74,11 +74,11 @@
         flex-direction: column;
         align-items: center;
         img {
-            width: 30px;
-            height: 30px;
+            width: 26px;
+            height: 26px;
         }
         p {
-            margin: 10px auto 5px auto;
+            margin: 5px auto;
         }
     }
 }
@@ -86,10 +86,10 @@
 .wdl-option {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     img {
-        width: 25px;
-        height: 25px;
+        width: 21px;
+        height: 21px;
         margin-right: 8px;
     }
 }
@@ -112,7 +112,7 @@ input {
 }
 
 .vertical-bar-container {
-    height: 40px;
+    height: 35px;
     width: 30px;
     display: flex;
     flex-direction: column;
@@ -125,7 +125,7 @@ input {
 }
 
 .wdl-bar-container {
-    height: 20px;
+    height: 15px;
     width: 100%;
     display: flex;
     div {

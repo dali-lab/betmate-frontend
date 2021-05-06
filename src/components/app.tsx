@@ -10,14 +10,15 @@ import SignUpPanel from 'containers/authentication/signUpPanel';
 import SignInPanel from 'containers/authentication/signInPanel';
 import SignOutPanel from 'containers/authentication/signOutPanel';
 import { authTokenName } from 'utils';
+import Dashboard from '../containers/Dashboard';
+import ChessMatch from '../containers/ChessMatch';
 import NavBar from './NavBar';
-import WagerPanel from './WagerPanel';
 
 const Welcome = () => {
   return (
     <div>
       <NavBar />
-      <WagerPanel gameId="6089d9d700b79d5122e8183f" />
+      <Dashboard/>
     </div>
   );
 };
@@ -37,6 +38,7 @@ const App = (props) => {
       <div>
         <Switch>
           <Route exact path="/" component={Welcome} />
+          <Route exact path="/chess/:id" component={ChessMatch} />
           <Route exact path="/signin" component={SignInPanel} />
           <Route exact path="/signup" component={SignUpPanel} />
           <Route exact path="/signout" component={SignOutPanel} />

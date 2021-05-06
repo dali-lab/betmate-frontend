@@ -12,6 +12,7 @@ const loadActions: ActionTypes[] = ['CREATE_WAGER'];
 const mapStateToProps = (state: RootState) => ({
   isAuthenticated: state.auth.isAuthenticated,
   balance: state.auth.user?.account,
+  games: state.game.games,
   isLoading: loadingSelector(loadActions, state),
   errorMessages: errorSelector(loadActions, state),
 });

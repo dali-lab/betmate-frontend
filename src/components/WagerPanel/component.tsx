@@ -9,6 +9,7 @@ import BalanceIcon from 'assets/wager_panel/balance-icon.svg';
 import { createWager } from 'store/actionCreators/wagerActionCreators';
 import { jwtSignIn } from 'store/actionCreators/authActionCreators';
 import { VerticalBar, WDLBar } from 'components/WagerPanel/helper_components';
+import { Game } from 'types/resources/game';
 
 const wagerAmounts = {
   1: OneToken,
@@ -38,6 +39,7 @@ interface WagerPanelProps {
   jwtSignIn: typeof jwtSignIn,
   isLoading: boolean,
   errorMessages: string[],
+  games: Record<string, Game>,
 }
 
 const WagerPanel: React.FC<WagerPanelProps> = (props) => {
@@ -70,7 +72,7 @@ const WagerPanel: React.FC<WagerPanelProps> = (props) => {
       setMoveSubmissionError(false);
       setWdlSubmissionError(false);
     }
-  }, [props.isLoading, props.errorMessages.length]);
+  }, [props.isLoading]);
 
   const handleMoveSubmit = (e) => {
     e.preventDefault();
@@ -81,8 +83,8 @@ const WagerPanel: React.FC<WagerPanelProps> = (props) => {
         moveWager,
         moveWagerAmount,
         false, // not a wdl wager
-        3, // TODO: don't hardcode odds and movenumber
-        1,
+        3, // TODO: don't hardcode move odds
+        1, // props.games[props.gameId].move_hist.length + 1
       );
     }
   };
@@ -96,8 +98,8 @@ const WagerPanel: React.FC<WagerPanelProps> = (props) => {
         wdlWager,
         wdlWagerAmount,
         true, // is a wdl wager
-        3, // TODO: don't hardcode odds and movenumber
-        1,
+        3, // props.games[props.gameId].odds[wdlWager],
+        1, // props.games[props.gameId].move_hist.length + 1,
       );
     }
   };
@@ -106,7 +108,7 @@ const WagerPanel: React.FC<WagerPanelProps> = (props) => {
     Object.keys(wagerAmounts).map((amount, i) => (
       <label htmlFor={`${wagerType}-${i}`} key={amount}>
         <img src={wagerAmounts[amount]}/>
-        <p>{amount} Token{Number(amount) > 1 && 's'}</p>
+        <p>${amount}</p>
         <input
           id={`${wagerType}-${i}`}
           name={`${wagerType}-tokens`}
