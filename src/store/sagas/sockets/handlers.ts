@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { EventChannel } from 'redux-saga';
 import {
   call, put, take, apply,

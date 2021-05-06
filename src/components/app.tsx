@@ -10,7 +10,7 @@ import SignUpPanel from 'containers/authentication/signUpPanel';
 import SignInPanel from 'containers/authentication/signInPanel';
 import SignOutPanel from 'containers/authentication/signOutPanel';
 import Dashboard from './dashboard';
-import ChessMatch from './chessMatch/chessMatch';
+import ChessMatch from './chessMatch';
 import NavBar from './NavBar';
 
 const Welcome = () => {

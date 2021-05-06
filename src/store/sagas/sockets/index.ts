@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {
   call, take, fork, cancel,
 } from 'redux-saga/effects';

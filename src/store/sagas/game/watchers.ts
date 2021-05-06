@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { call, take, put } from 'redux-saga/effects';
 
 import * as gameRequests from 'store/requests/gameRequests';

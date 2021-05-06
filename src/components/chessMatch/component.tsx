@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router';
 import Chessboard from 'chessboardjsx';
-import { Chess } from 'chess.js';
+// import { Chess } from 'chess.js';
 import './style.scss';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Chess = require('chess.js');
 
 const chess = new Chess();
 
-const ChessMatch = () => {
+interface ChessMatchProps extends RouteComponentProps<{ id: string }> {}
+
+const ChessMatch: React.FC<ChessMatchProps> = (props) => {
   const [fen, updateFen] = useState(chess.fen());
+
+  useEffect(() => {
+    console.log(props.match.params.id);
+  });
 
   const clicky = () => {
     const moves = chess.moves();
