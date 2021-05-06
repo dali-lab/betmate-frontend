@@ -9,7 +9,7 @@ import { InitializeSocketAction } from 'types/socket';
 import { Actions } from 'types/state';
 
 import {
-  errorHandler, joinGameHandler, makeMoveHandler, updateGameStateHandler,
+  errorHandler, joinGameHandler, leaveGameHandler, makeMoveHandler, updateGameStateHandler,
 } from './handlers';
 
 /**
@@ -37,6 +37,7 @@ function* watchSockets() {
 
       // Open all forked processes
       const joinGameHandlerFork = yield fork(joinGameHandler, socket);
+      const leaveGameHandlerFork = yield fork(leaveGameHandler, socket);
       const makeMoveHandlerFork = yield fork(makeMoveHandler, socket);
       const updateGameStateHandlerFork = yield fork(updateGameStateHandler, socket);
       const errorHandlerFork = yield fork(errorHandler, socket);
@@ -45,6 +46,7 @@ function* watchSockets() {
 
       // Close all forked processes
       yield cancel(joinGameHandlerFork);
+      yield cancel(leaveGameHandlerFork);
       yield cancel(makeMoveHandlerFork);
       yield cancel(updateGameStateHandlerFork);
       yield cancel(errorHandlerFork);

@@ -3,8 +3,8 @@ import { RouteComponentProps } from 'react-router';
 import Chessboard from 'chessboardjsx';
 // import { Chess } from 'chess.js';
 import './style.scss';
-import { joinGame as joinGameType } from 'store/actionCreators/websocketActionCreators';
-import { fetchGameById as fetchGameByIdType } from 'store/actionCreators/gameActionCreators';
+import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
+import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -13,9 +13,10 @@ const Chess = require('chess.js');
 const chess = new Chess();
 
 interface ChessMatchProps extends RouteComponentProps<{ id: string }> {
-  joinGame: typeof joinGameType
-  fetchGameById: typeof fetchGameByIdType
-  games: Record<string, Game>;
+  joinGame: typeof joinGame,
+  leaveGame: typeof leaveGame,
+  fetchGameById: typeof fetchGameById,
+  games: Record<string, Game>,
 }
 
 const ChessMatch: React.FC<ChessMatchProps> = (props) => {
@@ -26,6 +27,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     console.log(gameId);
     props.joinGame(gameId);
     props.fetchGameById(gameId);
+    return () => { props.leaveGame(gameId); };
   }, []);
 
   useEffect(() => {
