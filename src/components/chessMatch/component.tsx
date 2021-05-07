@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
+import { useParams } from 'react-router';
 import Chessboard from 'chessboardjsx';
 // import { Chess } from 'chess.js';
 import './style.scss';
@@ -7,28 +7,28 @@ import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreator
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
 
-interface ChessMatchProps extends RouteComponentProps<{ id: string }> {
-  joinGame: typeof joinGame,
-  leaveGame: typeof leaveGame,
-  fetchGameById: typeof fetchGameById,
-  games: Record<string, Game>,
+interface ChessMatchProps {
+  joinGame: typeof joinGame
+  leaveGame: typeof leaveGame
+  fetchGameById: typeof fetchGameById
+  games: Record<string, Game>
 }
 
 const ChessMatch: React.FC<ChessMatchProps> = (props) => {
-  const gameId = props.match.params.id;
+  const { id: gameId } = useParams<{ id: string }>();
   const [fen, updateFen] = useState('');
 
   useEffect(() => {
     console.log(gameId);
-    props.joinGame(gameId);
     props.fetchGameById(gameId);
+    props.joinGame(gameId);
     return () => { props.leaveGame(gameId); };
   }, []);
 
   useEffect(() => {
     const game = props.games[gameId];
     if (game) updateFen(game.state);
-  }, [props.games]);
+  }, [props.games[gameId]?.state]);
 
   return (
     <div className='chess-board'>

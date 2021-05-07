@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {
-  call, take, fork, cancel,
+  call, take, fork, cancel, put,
 } from 'redux-saga/effects';
 
 import { io, Socket } from 'socket.io-client';
 
-import { InitializeSocketAction } from 'types/socket';
 import { Actions } from 'types/state';
+import { ROOT_URL } from 'utils';
 
 import {
   errorHandler, joinGameHandler, leaveGameHandler, makeMoveHandler, updateGameStateHandler,
 } from './handlers';
+
+const WS_URL = `${ROOT_URL}/chessws`;
 
 /**
  * Function that creates and returns a websocket instance
@@ -31,9 +33,9 @@ const createSocket = (address: string) => io(address);
 function* watchSockets() {
   try {
     while (true) {
-      const action: InitializeSocketAction = yield take((a: Actions) => a.type === 'INITIALIZE_SOCKET');
+      const socket: Socket = yield call(createSocket, WS_URL);
 
-      const socket: Socket = yield call(createSocket, action.payload.url);
+      yield put<Actions>({ type: 'INITIALIZE_SOCKET', status: 'SUCCESS', payload: { url: WS_URL } });
 
       // Open all forked processes
       const joinGameHandlerFork = yield fork(joinGameHandler, socket);

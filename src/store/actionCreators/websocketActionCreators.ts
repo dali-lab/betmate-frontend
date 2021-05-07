@@ -1,10 +1,16 @@
 import { JoinGameActions, LeaveGameActions } from 'types/resources/game';
-import { InitializeSocketAction } from 'types/socket';
+import { CloseSocketAction, InitializeSocketAction } from 'types/socket';
 
 export const initializeSocket = (url: string): InitializeSocketAction => ({
   type: 'INITIALIZE_SOCKET',
   status: 'REQUEST',
   payload: { url },
+});
+
+export const closeSocket = (): CloseSocketAction => ({
+  type: 'CLOSE_SOCKET',
+  status: 'REQUEST',
+  payload: {},
 });
 
 export const joinGame = (gameId: string): JoinGameActions => ({

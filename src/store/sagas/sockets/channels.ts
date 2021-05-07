@@ -28,7 +28,7 @@ export const createUpdateGameStateChannel: ChannelCreator<GameUpdateActions> = (
     };
 
     socket.on<Events>('new_move', newMoveHandler);
-    socket.on<Events>('wagers', newOddsHandler);
+    socket.on<Events>('new_odds', newOddsHandler);
     socket.on<Events>('game_over', newGameOverHandler);
 
     return () => {

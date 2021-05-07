@@ -5,12 +5,11 @@ import {
 } from 'react-router-dom';
 
 import { signInUser, signOutUser } from 'store/actionCreators/authActionCreators';
-import { initializeSocket } from 'store/actionCreators/websocketActionCreators';
+import { closeSocket } from 'store/actionCreators/websocketActionCreators';
 
 import SignUpPanel from 'containers/authentication/signUpPanel';
 import SignInPanel from 'containers/authentication/signInPanel';
 import SignOutPanel from 'containers/authentication/signOutPanel';
-import { ROOT_URL } from 'utils';
 import Dashboard from './dashboard';
 import ChessMatch from './chessMatch';
 import NavBar from './NavBar';
@@ -29,12 +28,12 @@ const FallBack = () => {
 };
 
 interface AppProps {
-  initializeSocket: typeof initializeSocket
+  closeSocket: typeof closeSocket
 }
 
 const App: React.FC<AppProps> = (props) => {
   useEffect(() => {
-    props.initializeSocket(`${ROOT_URL}/chessws`);
+    return () => { props.closeSocket(); };
   }, []);
 
   return (
@@ -53,4 +52,6 @@ const App: React.FC<AppProps> = (props) => {
   );
 };
 
-export default connect(null, { signInUser, signOutUser, initializeSocket })(App);
+export default connect(null, {
+  signInUser, signOutUser, closeSocket,
+})(App);

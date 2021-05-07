@@ -25,6 +25,8 @@ export interface Game {
   wagers: string[]
   odds: GameOdds
   _id: string
+  created_at: string
+  updated_at: string
 }
 
 /* -------- State -------- */
