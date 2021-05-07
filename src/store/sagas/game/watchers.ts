@@ -7,7 +7,12 @@ import { Actions, RequestReturnType } from 'types/state';
 
 import {
   FetchGameData,
-  CreateGameActions, FetchGameActions, UpdateGameActions, DeleteGameActions,
+  FetchGamesData,
+  CreateGameActions,
+  FetchGameActions,
+  UpdateGameActions,
+  DeleteGameActions,
+  FetchGamesActions,
 } from 'types/resources/game';
 
 export function* watchCreateGame() {
@@ -17,7 +22,7 @@ export function* watchCreateGame() {
       if (action.status !== 'REQUEST') return; // Type protection only
 
       const response: RequestReturnType<FetchGameData> = yield call(gameRequests.createGame, action.payload.state);
-      yield put<Actions>({ type: 'CREATE_GAME', payload: { game: response.data.game }, status: 'SUCCESS' });
+      yield put<Actions>({ type: 'CREATE_GAME', payload: response.data, status: 'SUCCESS' });
     } catch (error) {
       yield put<Actions>({ type: 'CREATE_GAME', payload: getErrorPayload(error), status: 'FAILURE' });
     }
@@ -31,9 +36,23 @@ export function* watchFetchGameById() {
       if (action.status !== 'REQUEST') return; // Type protection only
 
       const response: RequestReturnType<FetchGameData> = yield call(gameRequests.fetchGameById, action.payload.id);
-      yield put<Actions>({ type: 'FETCH_GAME', payload: { game: response.data.game }, status: 'SUCCESS' });
+      yield put<Actions>({ type: 'FETCH_GAME', payload: response.data, status: 'SUCCESS' });
     } catch (error) {
       yield put<Actions>({ type: 'FETCH_GAME', payload: getErrorPayload(error), status: 'FAILURE' });
+    }
+  }
+}
+
+export function* watchfetchGamesByStatus() {
+  while (true) {
+    try {
+      const action: FetchGamesActions = yield take((a: Actions) => (a.type === 'FETCH_GAMES' && a.status === 'REQUEST'));
+      if (action.status !== 'REQUEST') return; // Type protection only
+
+      const response: RequestReturnType<FetchGamesData> = yield call(gameRequests.fetchGamesByStatus, action.payload.game_status);
+      yield put<Actions>({ type: 'FETCH_GAMES', payload: response.data, status: 'SUCCESS' });
+    } catch (error) {
+      yield put<Actions>({ type: 'FETCH_GAMES', payload: getErrorPayload(error), status: 'FAILURE' });
     }
   }
 }
@@ -45,7 +64,7 @@ export function* watchUpdateGameById() {
       if (action.status !== 'REQUEST') return; // Type protection only
 
       const response: RequestReturnType<FetchGameData> = yield call(gameRequests.updateGameById, action.payload.id, action.payload.fields);
-      yield put<Actions>({ type: 'UPDATE_GAME', payload: { game: response.data.game }, status: 'SUCCESS' });
+      yield put<Actions>({ type: 'UPDATE_GAME', payload: response.data, status: 'SUCCESS' });
     } catch (error) {
       yield put<Actions>({ type: 'UPDATE_GAME', payload: getErrorPayload(error), status: 'FAILURE' });
     }
