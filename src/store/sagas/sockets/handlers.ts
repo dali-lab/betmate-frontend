@@ -90,7 +90,6 @@ export function* updateGameStateHandler(socket: Socket) {
       yield put<Actions>(action);
     } catch (error) {
       yield put<Actions>({ type: 'UPDATE_GAME_STATE', status: 'FAILURE', payload: { message: error.message, code: null } });
-      yield put<Actions>({ type: 'UPDATE_GAME_ODDS', status: 'FAILURE', payload: { message: error.message, code: null } });
     }
   }
 }
