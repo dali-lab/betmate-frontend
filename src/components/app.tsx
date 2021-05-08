@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   BrowserRouter as Router, Route, Switch,
 } from 'react-router-dom';
 
 import { signInUser, signOutUser } from 'store/actionCreators/authActionCreators';
+import { closeSocket } from 'store/actionCreators/websocketActionCreators';
 
 import SignUpPanel from 'containers/authentication/signUpPanel';
 import SignInPanel from 'containers/authentication/signInPanel';
 import SignOutPanel from 'containers/authentication/signOutPanel';
 import Dashboard from './dashboard';
-import ChessMatch from './chessMatch/chessMatch';
+import ChessMatch from './chessMatch';
 import NavBar from './NavBar';
 
 const Welcome = () => {
@@ -26,7 +27,15 @@ const FallBack = () => {
   return <div>Uh oh... URL Not Found! Please contact the system administrator.</div>;
 };
 
-const App = () => {
+interface AppProps {
+  closeSocket: typeof closeSocket
+}
+
+const App: React.FC<AppProps> = (props) => {
+  useEffect(() => {
+    return () => { props.closeSocket(); };
+  }, []);
+
   return (
     <Router>
       <div>
@@ -43,4 +52,6 @@ const App = () => {
   );
 };
 
-export default connect(null, { signInUser, signOutUser })(App);
+export default connect(null, {
+  signInUser, signOutUser, closeSocket,
+})(App);

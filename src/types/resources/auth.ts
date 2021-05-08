@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { Empty } from 'types';
 import { Action, AsyncAction } from 'types/state';
 import { User } from 'types/resources/user';

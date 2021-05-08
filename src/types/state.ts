@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { AxiosResponse } from 'axios';
 import { Action as ReduxActionType } from 'redux';
 
