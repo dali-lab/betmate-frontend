@@ -7,7 +7,7 @@ import {
 import { Socket } from 'socket.io-client';
 
 import {
-  JoinGameData, LeaveGameData, MakeMoveData, UpdateGameActions,
+  GameUpdateActions, JoinGameData, LeaveGameData,
 } from 'types/resources/game';
 import { Actions } from 'types/state';
 import { SocketErrorAction, SocketGameErrorAction } from 'types/socket';
@@ -55,26 +55,6 @@ export function* leaveGameHandler(socket: Socket) {
 }
 
 /**
- * Saga that emits 'make_move' events onto the passed socket and completes the following:
- * - Waits for an event of type 'MAKE_MOVE'
- * - Emits a 'make_move' socket event using the `socket.emit` method
- * - Dispatches success or failure based on if whether an error occurred
- * - Repeat
- * @param socket socket to watch for events on
- */
-export function* makeMoveHandler(socket: Socket) {
-  while (true) {
-    try {
-      const action: { payload: MakeMoveData } = yield take((a: Actions) => a.type === 'MAKE_MOVE' && a.status === 'REQUEST');
-      yield apply(socket, socket.emit, ['make_move', action.payload]);
-      yield put<Actions>({ type: 'MAKE_MOVE', status: 'SUCCESS', payload: {} });
-    } catch (error) {
-      yield put<Actions>({ type: 'MAKE_MOVE', status: 'FAILURE', payload: { message: error.message, code: null } });
-    }
-  }
-}
-
-/**
  * Saga that watches for events on the created socketChannel and handles them in the following way:
  * - Waits for an event on the channel
  * - Dispatches the event to the redux store (or an error state if saga fails)
@@ -82,11 +62,11 @@ export function* makeMoveHandler(socket: Socket) {
  * @param socket socket to watch for events on
  */
 export function* updateGameStateHandler(socket: Socket) {
-  const socketChannel: EventChannel<UpdateGameActions> = yield call(createUpdateGameStateChannel, socket);
+  const socketChannel: EventChannel<GameUpdateActions> = yield call(createUpdateGameStateChannel, socket);
 
   while (true) {
     try {
-      const action: UpdateGameActions = yield take(socketChannel);
+      const action: GameUpdateActions = yield take(socketChannel);
       yield put<Actions>(action);
     } catch (error) {
       yield put<Actions>({ type: 'UPDATE_GAME_STATE', status: 'FAILURE', payload: { message: error.message, code: null } });
