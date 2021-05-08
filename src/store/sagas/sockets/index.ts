@@ -52,6 +52,9 @@ function* watchSockets() {
       yield cancel(makeMoveHandlerFork);
       yield cancel(updateGameStateHandlerFork);
       yield cancel(errorHandlerFork);
+
+      // allow possible reconnection to socket
+      yield take((a: Actions) => a.type === 'INITIALIZE_SOCKET' && a.status === 'REQUEST');
     }
   } catch (error) {
     console.error(error);
