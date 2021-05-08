@@ -15,14 +15,10 @@ interface ChessMatchProps {
   fetchGameById: typeof fetchGameById,
 }
 
-interface ParamTypes {
-  id: string,
-}
-
 const ChessMatch: React.FC<ChessMatchProps> = (props) => {
   const [fen, updateFen] = useState(chess.fen());
 
-  const { id } = useParams<ParamTypes>();
+  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     props.fetchGameById(id);
@@ -48,7 +44,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
           <button onClick={() => clicky()}/>
           <Chessboard position={fen} width={450}/>
         </div>
-        <WagerPanel gameId={id}/>
+        <WagerPanel/>
       </div>
     </>
   );
