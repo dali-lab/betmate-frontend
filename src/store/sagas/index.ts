@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { spawn } from 'redux-saga/effects';
 
 import authSaga from 'store/sagas/auth';
