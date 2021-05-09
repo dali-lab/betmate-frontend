@@ -42,17 +42,10 @@ interface WagerSubPanelProps {
 }
 
 const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
-  const [moveWager, setMoveWager] = useState('');
-  const [wdlWager, setWdlWager] = useState('');
-
-  const [moveWagerAmount, setMoveWagerAmount] = useState(0);
-  const [wdlWagerAmount, setWdlWagerAmount] = useState(0);
-
-  const [moveSubmissionLoading, setMoveSubmissionLoading] = useState(false);
-  const [wdlSubmissionLoading, setWdlSubmissionLoading] = useState(false);
-
-  const [moveSubmissionError, setMoveSubmissionError] = useState(false);
-  const [wdlSubmissionError, setWdlSubmissionError] = useState(false);
+  const [wager, setWager] = useState('');
+  const [wagerAmount, setWagerAmount] = useState(0);
+  const [submissionLoading, setSubmissionLoading] = useState(false);
+  const [submissionError, setSubmissionError] = useState(false);
 
   const { id: gameId } = useParams<{ id: string }>();
 
@@ -60,47 +53,28 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
     if (props.isLoading === false) {
       // if an error occurs, both isLoading -> false and errorMessages -> [error] will update at the same time
       if (props.errorMessages) {
-        // identifies the panel responsible for the error
-        if (moveSubmissionLoading) setMoveSubmissionError(true);
-        if (wdlSubmissionLoading) setWdlSubmissionError(true);
+        setSubmissionError(true);
       }
       // clear loading text on screen
-      setMoveSubmissionLoading(false);
-      setWdlSubmissionLoading(false);
+      setSubmissionLoading(false);
       if (props.isAuthenticated) props.jwtSignIn(); // updates the user balance post-bet
     } else {
       // clears error messages on screen if a new wager is submitted on either panel
-      setMoveSubmissionError(false);
-      setWdlSubmissionError(false);
+      setSubmissionError(false);
     }
-  }, [props.isLoading]);
+  }, [props.isLoading, props.errorMessages.length]);
 
-  const handleMoveSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setMoveSubmissionLoading(true);
-    if (moveWager && moveWagerAmount) {
+    setSubmissionLoading(true);
+    if (wager && wagerAmount) {
       props.createWager(
         gameId,
-        moveWager,
-        moveWagerAmount,
-        false, // not a wdl wager
+        wager,
+        wagerAmount,
+        props.betType === 'wdl',
         3, // TODO: don't hardcode move odds
         1, // props.games[gameId].move_hist.length + 1
-      );
-    }
-  };
-
-  const handleWdlSubmit = (e) => {
-    e.preventDefault();
-    setWdlSubmissionLoading(true);
-    if (wdlWager && wdlWagerAmount) {
-      props.createWager(
-        gameId,
-        wdlWager,
-        wdlWagerAmount,
-        true, // is a wdl wager
-        3, // props.games[gameId].odds[wdlWager],
-        1, // props.games[gameId].move_hist.length + 1,
       );
     }
   };
@@ -115,14 +89,8 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
           name={`${wagerType}-tokens`}
           type="radio"
           value={amount}
-          checked={
-            (wagerType === 'move' && moveWagerAmount === Number(amount))
-            || (wagerType === 'wdl' && wdlWagerAmount === Number(amount))
-          }
-          onChange={(e) => {
-            if (wagerType === 'move') setMoveWagerAmount(Number(e.currentTarget.value));
-            if (wagerType === 'wdl') setWdlWagerAmount(Number(e.currentTarget.value));
-          }}
+          checked={ wagerAmount === Number(amount)}
+          onChange={(e) => { setWagerAmount(Number(e.currentTarget.value)); }}
         />
       </label>
     ))
@@ -142,8 +110,8 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
           name="moves"
           type="radio"
           value={move}
-          checked={moveWager === move}
-          onChange={(e) => { setMoveWager(e.currentTarget.value); }}
+          checked={wager === move}
+          onChange={(e) => { setWager(e.currentTarget.value); }}
         />
       </label>;
     });
@@ -162,8 +130,8 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
           name="wdl"
           type="radio"
           value={outcomeCode}
-          checked={wdlWager === outcomeCode}
-          onChange={(e) => { setWdlWager(e.currentTarget.value); }}
+          checked={wager === outcomeCode}
+          onChange={(e) => { setWager(e.currentTarget.value); }}
         />
       </label>;
     })
@@ -172,7 +140,7 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
   return (
     <div className="bet-subpanel">
       <h1>{props.betType === 'move' ? 'Move' : 'Game'} Betting</h1>
-      <form onSubmit={props.betType === 'move' ? handleMoveSubmit : handleWdlSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="options-container">
           {props.betType === 'move' ? renderMoveOptions() : renderGameOutcomes()}
         </div>
@@ -180,8 +148,8 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
           {renderAmounts(props.betType)}
         </div>
         <input type="submit" value="Submit" disabled={!props.isAuthenticated || props.isLoading}/>
-        {props.isLoading && (props.betType === 'move' ? moveSubmissionLoading : wdlSubmissionLoading) ? <p className="status-text">Submitting bet...</p> : null}
-        {props.errorMessages && (props.betType === 'move' ? moveSubmissionError : wdlSubmissionError) ? <p className="status-text">{props.errorMessages[0]}</p> : null}
+        {props.isLoading && submissionLoading ? <p className="status-text">Submitting bet...</p> : null}
+        {props.errorMessages && submissionError ? <p className="status-text">{props.errorMessages[0]}</p> : null}
       </form>
     </div>
   );
