@@ -75,5 +75,6 @@ input {
     display: flex;
     div {
         height: 100%;
+        transition: width 1s ease-in-out;
     }
 }

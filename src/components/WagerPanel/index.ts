@@ -7,6 +7,7 @@ import './style.scss';
 const mapStateToProps = (state: RootState) => ({
   isAuthenticated: state.auth.isAuthenticated,
   balance: state.auth.user?.account,
+  games: state.game.games,
 });
 
 export default connect(mapStateToProps, {})(WagerPanel);
