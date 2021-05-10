@@ -1,24 +1,25 @@
 import React, { useEffect } from 'react';
 import { fetchGamesByStatus } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
-import { RouteComponentProps } from 'react-router';
-import GameCard from './gameCard/gameCard';
+import { useHistory } from 'react-router-dom';
+import GameCard from './GameCard/gameCard';
 import './style.scss';
 
-export interface DashboardProps extends RouteComponentProps{
+export interface DashboardProps{
   fetchGamesByStatus: typeof fetchGamesByStatus
   games: Record<string, Game>;
 }
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
+  const history = useHistory();
+
   useEffect(() => {
-    props.fetchGamesByStatus('in_progress');
+    props.fetchGamesByStatus('not_started');
   }, []);
 
   return (
     <div>
       <div className='main-dashboard'>
-        <h1 className='welcome-message'>Welcome, Ben</h1>
         <input
           className='searchBar'
           placeholder= 'search for a game, player, or type of chess'
@@ -34,7 +35,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         .map((game) => {
           const id = game._id;
           return (
-            <div key={id} className='card-box' onClick={() => props.history.push(`/chess/${id}`)}>
+            <div key={id} className='card-box' onClick={() => history.push(`/chess/${id}`)}>
               <GameCard
                 gameID={id}
                 player1={game.player_black.name}
@@ -42,7 +43,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                 player1Rating={game.player_black.elo}
                 player2Rating= {game.player_black.elo}
                 playerFavor={game.game_status === 'white_win' ? 'white' : 'black'}
-                earnings={'10.9'}/>
+                earnings={10.9}/>
             </div>
           );
         })}
@@ -58,12 +59,11 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
               player1Rating={game.player_black.elo}
               player2Rating= {game.player_black.elo}
               playerFavor={game.game_status === 'white_win' ? 'white' : 'black'}
-              earnings={'10.9'}/>
+              earnings={10.9}/>
           </div>
         );
       })}
     </div>
-
   );
 };
 

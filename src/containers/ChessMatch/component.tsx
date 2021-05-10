@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Chessboard from 'chessboardjsx';
-// import { Chess } from 'chess.js';
 import './style.scss';
 import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
+import WagerPanel from 'components/WagerPanel';
+import NavBar from 'components/NavBar';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
 
@@ -19,7 +20,6 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
   const [fen, updateFen] = useState('');
 
   useEffect(() => {
-    console.log(gameId);
     props.fetchGameById(gameId);
     props.joinGame(gameId);
     return () => { props.leaveGame(gameId); };
@@ -31,9 +31,20 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
   }, [props.games[gameId]?.state]);
 
   return (
-    <div className='chess-board'>
-      <Chessboard position={fen} />
-    </div>
+    <>
+      <NavBar />
+      <div className='chess-match-container'>
+        <div className="chat-container">
+          <div className="chat-box">
+            <h1>Chat</h1>
+          </div>
+        </div>
+        <div>
+          <Chessboard position={fen} width={450}/>
+        </div>
+        <WagerPanel/>
+      </div>
+    </>
   );
 };
 

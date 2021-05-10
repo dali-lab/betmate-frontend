@@ -1,3 +1,4 @@
+import { getBearerTokenHeader } from 'store/actionCreators';
 import { createBackendAxiosRequest } from 'store/requests';
 
 import { AuthUserResponseData } from 'types/resources/auth';
@@ -28,6 +29,18 @@ export const signInUser = async (email: string, password: string): Promise<Reque
       email,
       password,
     },
+  });
+
+  // Validation here
+
+  return result;
+};
+
+export const jwtSignIn = async (): Promise<RequestReturnType<AuthUserResponseData>> => {
+  const result = await createBackendAxiosRequest<AuthUserResponseData>({
+    method: 'GET',
+    url: '/auth/jwt-signin',
+    headers: getBearerTokenHeader(),
   });
 
   // Validation here

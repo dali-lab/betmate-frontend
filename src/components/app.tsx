@@ -4,14 +4,15 @@ import {
   BrowserRouter as Router, Route, Switch,
 } from 'react-router-dom';
 
-import { signInUser, signOutUser } from 'store/actionCreators/authActionCreators';
+import { jwtSignIn } from 'store/actionCreators/authActionCreators';
 import { closeSocket } from 'store/actionCreators/websocketActionCreators';
 
 import SignUpPanel from 'containers/authentication/signUpPanel';
 import SignInPanel from 'containers/authentication/signInPanel';
 import SignOutPanel from 'containers/authentication/signOutPanel';
-import Dashboard from './dashboard';
-import ChessMatch from './chessMatch';
+import { authTokenName } from 'utils';
+import Dashboard from '../containers/Dashboard';
+import ChessMatch from '../containers/ChessMatch';
 import NavBar from './NavBar';
 
 const Welcome = () => {
@@ -28,12 +29,18 @@ const FallBack = () => {
 };
 
 interface AppProps {
-  closeSocket: typeof closeSocket
+  closeSocket: typeof closeSocket,
+  jwtSignIn: typeof jwtSignIn,
 }
 
 const App: React.FC<AppProps> = (props) => {
   useEffect(() => {
     return () => { props.closeSocket(); };
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem(authTokenName);
+    if (token) props.jwtSignIn();
   }, []);
 
   return (
@@ -52,6 +59,4 @@ const App: React.FC<AppProps> = (props) => {
   );
 };
 
-export default connect(null, {
-  signInUser, signOutUser, closeSocket,
-})(App);
+export default connect(null, { jwtSignIn, closeSocket })(App);
