@@ -6,9 +6,9 @@ import { getErrorPayload } from 'utils/error';
 
 import { Actions, RequestReturnType } from 'types/state';
 import {
-  AuthUserResponseData, SignInUserActions, CreateUserActions, DeAuthUserActions, JwtSignInActions,
+  AuthUserResponseData, SignInUserActions, CreateUserActions, JwtSignInActions,
 } from 'types/resources/auth';
-import { getBearerToken, removeBearerToken, setBearerToken } from 'store/actionCreators';
+import { setBearerToken } from 'store/actionCreators';
 
 export function* watchCreateUser() {
   while (true) {
@@ -20,7 +20,6 @@ export function* watchCreateUser() {
 
       yield call(setBearerToken, response.data.token);
 
-      yield put<Actions>({ type: 'JOIN_AUTH', payload: { token: response.data.token }, status: 'REQUEST' });
       yield put<Actions>({ type: 'CREATE_USER', payload: { user: response.data.user }, status: 'SUCCESS' });
     } catch (error) {
       yield put<Actions>({ type: 'CREATE_USER', payload: getErrorPayload(error), status: 'FAILURE' });
@@ -38,25 +37,9 @@ export function* watchSignInUser() {
 
       yield call(setBearerToken, response.data.token);
 
-      yield put<Actions>({ type: 'JOIN_AUTH', payload: { token: response.data.token }, status: 'REQUEST' });
       yield put<Actions>({ type: 'SIGN_IN_USER', payload: { user: response.data.user }, status: 'SUCCESS' });
     } catch (error) {
       yield put<Actions>({ type: 'SIGN_IN_USER', payload: getErrorPayload(error), status: 'FAILURE' });
-    }
-  }
-}
-
-export function* watchDeauthUser() {
-  while (true) {
-    try {
-      const action: DeAuthUserActions = yield take((a: Actions) => (a.type === 'DEAUTH_USER' && a.status === 'SUCCESS'));
-      if (action.status !== 'SUCCESS') return; // Type protection only
-
-      const token = yield call(getBearerToken);
-      if (token) yield call(removeBearerToken);
-      yield put<Actions>({ type: 'LEAVE_AUTH', payload: { token }, status: 'REQUEST' });
-    } catch (error) {
-      yield put<Actions>({ type: 'LEAVE_AUTH', payload: getErrorPayload(error), status: 'FAILURE' });
     }
   }
 }

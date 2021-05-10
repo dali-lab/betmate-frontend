@@ -9,10 +9,11 @@ import { Socket } from 'socket.io-client';
 import { GameUpdateActions, JoinGameData, LeaveGameData } from 'types/resources/game';
 import { Actions } from 'types/state';
 import {
-  JoinAuthData, LeaveAuthData, SocketErrorAction, SocketGameErrorAction,
+  SocketErrorAction, SocketGameErrorAction,
 } from 'types/socket';
 
 import { FetchWagersActions } from 'types/resources/wager';
+import { getBearerToken, removeBearerToken } from 'store/actionCreators';
 import { createErrorChannel, createUpdateGameStateChannel, createUpdateWagerStateChannel } from './channels';
 
 /**
@@ -105,11 +106,13 @@ export function* updateWagerStateHandler(socket: Socket) {
  * @param socket socket to watch for events on
  */
 export function* joinAuthHandler(socket: Socket) {
+  const authActions = ['CREATE_USER', 'SIGN_IN_USER', 'JWT_SIGN_IN'];
   while (true) {
     try {
-      const action: { payload: JoinAuthData } = yield take((a: Actions) => a.type === 'JOIN_AUTH' && a.status === 'REQUEST');
-      yield apply(socket, socket.emit, ['join_auth', action.payload.token]);
-      yield put<Actions>({ type: 'JOIN_AUTH', status: 'SUCCESS', payload: { token: action.payload.token } });
+      yield take((a: Actions) => authActions.includes(a.type) && a.status === 'SUCCESS');
+      const token = yield call(getBearerToken);
+      yield apply(socket, socket.emit, ['join_auth', token]);
+      yield put<Actions>({ type: 'JOIN_AUTH', status: 'SUCCESS', payload: { token } });
     } catch (error) {
       yield put<Actions>({ type: 'JOIN_AUTH', status: 'FAILURE', payload: { message: error.message, code: null } });
     }
@@ -127,9 +130,12 @@ export function* joinAuthHandler(socket: Socket) {
 export function* leaveAuthHandler(socket: Socket) {
   while (true) {
     try {
-      const action: { payload: LeaveAuthData } = yield take((a: Actions) => a.type === 'LEAVE_AUTH' && a.status === 'REQUEST');
-      yield apply(socket, socket.emit, ['leave_auth', action.payload.token]);
-      yield put<Actions>({ type: 'LEAVE_AUTH', status: 'SUCCESS', payload: { token: action.payload.token } });
+      yield take((a: Actions) => a.type === 'DEAUTH_USER' && a.status === 'SUCCESS');
+
+      const token = yield call(getBearerToken);
+      if (token) yield call(removeBearerToken);
+      yield apply(socket, socket.emit, ['leave_auth', token]);
+      yield put<Actions>({ type: 'LEAVE_AUTH', status: 'SUCCESS', payload: { token } });
     } catch (error) {
       yield put<Actions>({ type: 'LEAVE_AUTH', status: 'FAILURE', payload: { message: error.message, code: null } });
     }
