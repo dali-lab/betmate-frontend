@@ -9,7 +9,7 @@ import { Actions } from 'types/state';
 import { ROOT_URL } from 'utils';
 
 import {
-  errorHandler, joinGameHandler, leaveGameHandler, updateGameStateHandler,
+  errorHandler, joinAuthHandler, joinGameHandler, leaveAuthHandler, leaveGameHandler, updateGameStateHandler,
 } from './handlers';
 
 const WS_URL = `${ROOT_URL}/chessws`;
@@ -19,7 +19,18 @@ const WS_URL = `${ROOT_URL}/chessws`;
  * @param address WS url to connect to
  * @returns websocket instance
  */
-const createSocket = (address: string) => io(address);
+const createSocket = (address: string) => {
+  // const token = localStorage.getItem('token');
+  // return token
+  //   ? io(address, { extraHeaders: { Authorization: `Bearer ${token}` } })
+  //   : io(address);
+  // // console.log('TOKEN', token);
+  // // if (token) {
+  // //   const parsed = JSON.parse(atob(token?.split('.')[1]));
+  // //   console.log('parsed', parsed);
+  // // }
+  return io(address);
+};
 
 /**
  * Saga that completes the following steps indefinitely:
@@ -40,14 +51,22 @@ function* watchSockets() {
       // Open all forked processes
       const joinGameHandlerFork = yield fork(joinGameHandler, socket);
       const leaveGameHandlerFork = yield fork(leaveGameHandler, socket);
+      const joinAuthHandlerFork = yield fork(joinAuthHandler, socket);
+      const leaveAuthHandlerFork = yield fork(leaveAuthHandler, socket);
       const updateGameStateHandlerFork = yield fork(updateGameStateHandler, socket);
       const errorHandlerFork = yield fork(errorHandler, socket);
+
+      // Attempt auth with token
+      const token = localStorage.getItem('token');
+      if (token) yield put<Actions>({ type: 'JOIN_AUTH', payload: { token }, status: 'REQUEST' });
 
       yield take((a: Actions) => a.type === 'CLOSE_SOCKET');
 
       // Close all forked processes
       yield cancel(joinGameHandlerFork);
       yield cancel(leaveGameHandlerFork);
+      yield cancel(joinAuthHandlerFork);
+      yield cancel(leaveAuthHandlerFork);
       yield cancel(updateGameStateHandlerFork);
       yield cancel(errorHandlerFork);
 

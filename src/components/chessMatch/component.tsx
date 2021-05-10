@@ -3,13 +3,13 @@ import { useParams } from 'react-router';
 import Chessboard from 'chessboardjsx';
 // import { Chess } from 'chess.js';
 import './style.scss';
-import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
+import { joinRoom, leaveRoom } from 'store/actionCreators/websocketActionCreators';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
 
 interface ChessMatchProps {
-  joinGame: typeof joinGame
-  leaveGame: typeof leaveGame
+  joinGame: typeof joinRoom
+  leaveGame: typeof leaveRoom
   fetchGameById: typeof fetchGameById
   games: Record<string, Game>
 }

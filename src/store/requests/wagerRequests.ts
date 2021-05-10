@@ -16,13 +16,16 @@ export const createWager = async (gameId: string, amount: number): Promise<Reque
   return {
     data: {
       wager: {
-        gameId,
-        amount,
+        game_id: 'adsf88as9d7fasdf',
+        better_id: 'adsf88as9d7fasdf',
+        amount: 2834,
         wdl: true,
         odds: 69,
         data: 'win',
         resolved: true,
-        _id: 'asd8fh7asdfhasdnfjnsdf',
+        status: 'in_progress',
+        _id: 'asdf',
+        ...{} as Partial<Wager>,
       },
     },
   } as RequestReturnType<FetchWagerData>;
@@ -41,15 +44,20 @@ export const fetchWagerById = async (id: string): Promise<RequestReturnType<Fetc
   return {
     data: {
       wager: {
-        gameId: 'adsf88as9d7fasdf',
+        game_id: 'adsf88as9d7fasdf',
+        better_id: 'adsf88as9d7fasdf',
         amount: 2834,
         wdl: true,
         odds: 69,
+        move_number: 10,
         data: 'win',
         resolved: true,
+        status: 'in_progress',
         _id: id,
+        ...{} as Partial<Wager>,
       },
     },
+
   } as RequestReturnType<FetchWagerData>;
 };
 
@@ -66,12 +74,14 @@ export const updateWagerById = async (id: string, fields: Partial<Wager>): Promi
   return {
     data: {
       wager: {
-        gameId: 'adsf88as9d7fasdf',
+        game_id: 'adsf88as9d7fasdf',
+        better_id: 'adsf88as9d7fasdf',
         amount: 2834,
         wdl: true,
         odds: 69,
         data: 'win',
         resolved: true,
+        status: 'in_progress',
         _id: id,
         ...fields,
       },

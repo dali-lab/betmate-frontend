@@ -3,16 +3,29 @@
 import { AsyncAction } from 'types/state';
 
 export type WagerWDL = 'win' | 'draw' | 'loss';
-// export type WagerMove = [Move, number, boolean];
+
+export enum WagerStatus {
+  PENDING = 'pending',
+  WON = 'won',
+  LOST = 'lost',
+  CANCELLED = 'cancelled',
+}
 
 export interface Wager {
-  gameId: string,
+  _id: string,
+  game_id: string,
+  better_id: string,
   wdl: boolean,
   amount: number,
   odds: number,
-  data: WagerWDL,
+  data: string,
+  move_number: number,
   resolved: boolean,
-  _id: string
+  status: WagerStatus,
+  winning_pool_share?: number,
+  winnings?: number,
+  created_at: Date,
+  updated_at: Date,
 }
 
 /* -------- State -------- */
@@ -37,6 +50,7 @@ export type DeleteWagerRequestData = { id: string };
 export type FetchWagerData = { wager: Wager };
 export type FetchWagersData = { wagers: Wager[] };
 export type DeleteWagerData = { id: string };
+export type WagerResultData = { gameId: string, wagers: Wager[] }; // ws
 
 export type CreateWagerActions = AsyncAction<typeof CREATE_WAGER, FetchWagerData, CreateWagerRequestData>;
 export type FetchWagerActions = AsyncAction<typeof FETCH_WAGER, FetchWagerData, FetchWagerRequestData>;

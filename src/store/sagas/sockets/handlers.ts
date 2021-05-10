@@ -6,13 +6,14 @@ import {
 
 import { Socket } from 'socket.io-client';
 
-import {
-  GameUpdateActions, JoinGameData, LeaveGameData,
-} from 'types/resources/game';
+import { GameUpdateActions, JoinGameData, LeaveGameData } from 'types/resources/game';
 import { Actions } from 'types/state';
-import { SocketErrorAction, SocketGameErrorAction } from 'types/socket';
+import {
+  JoinAuthData, LeaveAuthData, SocketErrorAction, SocketGameErrorAction,
+} from 'types/socket';
 
-import { createErrorChannel, createUpdateGameStateChannel } from './channels';
+import { FetchWagersActions } from 'types/resources/wager';
+import { createErrorChannel, createUpdateGameStateChannel, createUpdateWagerStateChannel } from './channels';
 
 /**
  * Saga that emits 'join_game' events onto the passed socket and completes the following:
@@ -26,6 +27,7 @@ export function* joinGameHandler(socket: Socket) {
   while (true) {
     try {
       const action: { payload: JoinGameData } = yield take((a: Actions) => a.type === 'JOIN_GAME' && a.status === 'REQUEST');
+      yield apply(console, console.log, ['ayo', action.payload.gameId]);
       yield apply(socket, socket.emit, ['join_game', action.payload.gameId]);
       yield put<Actions>({ type: 'JOIN_GAME', status: 'SUCCESS', payload: { gameId: action.payload.gameId } });
     } catch (error) {
@@ -70,6 +72,66 @@ export function* updateGameStateHandler(socket: Socket) {
       yield put<Actions>(action);
     } catch (error) {
       yield put<Actions>({ type: 'UPDATE_GAME_STATE', status: 'FAILURE', payload: { message: error.message, code: null } });
+    }
+  }
+}
+
+/**
+ * Saga that watches for events on the created socketChannel and handles them in the following way:
+ * - Waits for an event on the channel
+ * - Dispatches the event to the redux store (or an error state if saga fails)
+ * - Repeat
+ * @param socket socket to watch for events on
+ */
+export function* updateWagerStateHandler(socket: Socket) {
+  const socketChannel: EventChannel<FetchWagersActions> = yield call(createUpdateWagerStateChannel, socket);
+
+  while (true) {
+    try {
+      const action: FetchWagersActions = yield take(socketChannel);
+      yield put<Actions>(action);
+    } catch (error) {
+      yield put<Actions>({ type: 'FETCH_WAGERS', status: 'FAILURE', payload: { message: error.message, code: null } });
+    }
+  }
+}
+
+/**
+ * Saga that emits 'join_auth' events onto the passed socket and completes the following:
+ * - Waits for an event of type 'JOIN_AUTH'
+ * - Emits a 'join_auth' socket event using the `socket.emit` method
+ * - Dispatches success or failure based on if whether an error occurred
+ * - Repeat
+ * @param socket socket to watch for events on
+ */
+export function* joinAuthHandler(socket: Socket) {
+  while (true) {
+    try {
+      const action: { payload: JoinAuthData } = yield take((a: Actions) => a.type === 'JOIN_AUTH' && a.status === 'REQUEST');
+      yield apply(socket, socket.emit, ['join_auth', action.payload.token]);
+      yield put<Actions>({ type: 'JOIN_AUTH', status: 'SUCCESS', payload: { token: action.payload.token } });
+    } catch (error) {
+      yield put<Actions>({ type: 'JOIN_AUTH', status: 'FAILURE', payload: { message: error.message, code: null } });
+    }
+  }
+}
+
+/**
+ * Saga that emits 'join_auth' events onto the passed socket and completes the following:
+ * - Waits for an event of type 'JOIN_AUTH'
+ * - Emits a 'join_auth' socket event using the `socket.emit` method
+ * - Dispatches success or failure based on if whether an error occurred
+ * - Repeat
+ * @param socket socket to watch for events on
+ */
+export function* leaveAuthHandler(socket: Socket) {
+  while (true) {
+    try {
+      const action: { payload: LeaveAuthData } = yield take((a: Actions) => a.type === 'LEAVE_AUTH' && a.status === 'REQUEST');
+      yield apply(socket, socket.emit, ['leave_auth', action.payload.token]);
+      yield put<Actions>({ type: 'LEAVE_AUTH', status: 'SUCCESS', payload: { token: action.payload.token } });
+    } catch (error) {
+      yield put<Actions>({ type: 'LEAVE_AUTH', status: 'FAILURE', payload: { message: error.message, code: null } });
     }
   }
 }

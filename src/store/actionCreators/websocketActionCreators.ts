@@ -13,13 +13,13 @@ export const closeSocket = (): CloseSocketAction => ({
   payload: {},
 });
 
-export const joinGame = (gameId: string): JoinGameActions => ({
+export const joinRoom = (gameId: string): JoinGameActions => ({
   type: 'JOIN_GAME',
   status: 'REQUEST',
   payload: { gameId },
 });
 
-export const leaveGame = (gameId: string): LeaveGameActions => ({
+export const leaveRoom = (gameId: string): LeaveGameActions => ({
   type: 'LEAVE_GAME',
   status: 'REQUEST',
   payload: { gameId },
