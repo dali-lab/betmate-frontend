@@ -6,4 +6,5 @@ export default function* authSaga() {
   yield fork(authWatchers.watchSignInUser);
   yield fork(authWatchers.watchCreateUser);
   yield fork(authWatchers.watchDeauthUser);
+  yield fork(authWatchers.watchJwtSignIn);
 }

@@ -42,12 +42,19 @@ export const UPDATE_WAGER = 'UPDATE_WAGER';
 export const DELETE_WAGER = 'DELETE_WAGER';
 export const FETCH_WAGERS = 'FETCH_WAGERS';
 
-export type CreateWagerRequestData = { gameId: string, amount: number };
+export type CreateWagerRequestData = {
+  gameId: string,
+  wager: string,
+  amount: number,
+  wdl: boolean,
+  odds: number,
+  moveNumber: number,
+};
 export type FetchWagerRequestData = { id: string };
 export type UpdateWagerRequestData = { id: string, fields: Partial<Wager> };
 export type DeleteWagerRequestData = { id: string };
 
-export type FetchWagerData = { wager: Wager };
+export type FetchWagerData = Wager;
 export type FetchWagersData = { wagers: Wager[] };
 export type DeleteWagerData = { id: string };
 export type WagerResultData = { gameId: string, wagers: Wager[] }; // ws

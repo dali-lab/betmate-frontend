@@ -1,8 +1,17 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import './style.scss';
 
-const GameCard = (props: any) => {
+interface GameCardProps {
+  gameID: string;
+  player1: string;
+  player1Rating: number;
+  player2: string;
+  player2Rating: number;
+  playerFavor: string;
+  earnings: number;
+}
+
+const GameCard: React.FC<GameCardProps> = (props) => {
   return (
     <div>
       <p className='game-title regular-text'>Game {props.gameID}: {props.player1}({props.player1Rating}) vs {props.player2}({props.player2Rating})</p>
@@ -12,4 +21,4 @@ const GameCard = (props: any) => {
   );
 };
 
-export default withRouter(GameCard);
+export default GameCard;

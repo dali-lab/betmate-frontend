@@ -61,7 +61,7 @@ export type CreateGameRequestData = { state: string };
 export type FetchGameRequestData = { id: string };
 export type UpdateGameRequestData = { id: string, fields: Partial<Game> };
 export type DeleteGameRequestData = { id: string };
-export type FetchGamesRequestData = { game_status: string };
+export type FetchGamesRequestData = { game_status: string[] };
 
 export type FetchGameData = Game;
 export type FetchGamesData = Game[];
