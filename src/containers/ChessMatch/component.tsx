@@ -1,35 +1,34 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import Chessboard from 'chessboardjsx';
 import './style.scss';
+import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
 import WagerPanel from 'components/WagerPanel';
 import NavBar from 'components/NavBar';
-import { useParams } from 'react-router';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Chess = require('chess.js');
-
-const chess = new Chess();
+import { Game } from 'types/resources/game';
 
 interface ChessMatchProps {
-  fetchGameById: typeof fetchGameById,
+  joinGame: typeof joinGame
+  leaveGame: typeof leaveGame
+  fetchGameById: typeof fetchGameById
+  games: Record<string, Game>
 }
 
 const ChessMatch: React.FC<ChessMatchProps> = (props) => {
-  const [fen, updateFen] = useState(chess.fen());
-
-  const { id } = useParams<{ id: string }>();
+  const { id: gameId } = useParams<{ id: string }>();
+  const [fen, updateFen] = useState('');
 
   useEffect(() => {
-    props.fetchGameById(id);
+    props.fetchGameById(gameId);
+    props.joinGame(gameId);
+    return () => { props.leaveGame(gameId); };
   }, []);
 
-  const clicky = () => {
-    const moves = chess.moves();
-    const move = moves[Math.floor(Math.random() * moves.length)];
-    chess.move(move);
-    updateFen(chess.fen());
-  };
+  useEffect(() => {
+    const game = props.games[gameId];
+    if (game) updateFen(game.state);
+  }, [props.games[gameId]?.state]);
 
   return (
     <>
@@ -41,7 +40,6 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
           </div>
         </div>
         <div>
-          <button onClick={() => clicky()}/>
           <Chessboard position={fen} width={450}/>
         </div>
         <WagerPanel/>
