@@ -1,3 +1,37 @@
+.player-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1em;
+    font-family: Roboto;
+    font-style: normal;
+    color: white;
+    h3 {
+        font-size: 18px;
+        margin: 0;
+        font-weight: 300;
+    }
+    p {
+        font-size: 16px;
+        font-weight: 200;
+        margin: 0;
+    }
+}
+// .player-name {
+//     font-family: Roboto;
+//     font-style: normal;
+//     font-weight: 50;
+//     color: white;
+//     margin: 0;
+// }
+// .player-time {
+//     font-family: Roboto;
+//     font-style: normal;
+//     font-weight: 500;
+//     line-height: 21px;
+//     color: white;
+// }
+
 .chess-match-container {
     display: flex;
     justify-content: space-around;

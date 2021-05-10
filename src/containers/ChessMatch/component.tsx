@@ -29,7 +29,6 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     const game = props.games[gameId];
     if (game) updateFen(game.state);
   }, [props.games[gameId]?.state]);
-
   return (
     <>
       <NavBar />
@@ -40,7 +39,27 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
           </div>
         </div>
         <div>
-          <Chessboard position={fen} width={450}/>
+          <div className='player-info'>
+            <div>
+              <h3 className='player-name'>{props.games[gameId].player_black.name} </h3>
+              <p className='player-name'>({props.games[gameId].player_black.elo})</p>
+            </div>
+
+            <p className='player-time'>{new Date(props.games[gameId].time_black * 1000).toISOString().substr(14, 8)}</p>
+            {console.log(props.games[gameId])}
+          </div>
+          <div className='chessBoard'>
+            <Chessboard position={fen} width={700}/>
+          </div>
+          <div className='player-info'>
+            <div>
+              <h3 className='player-name'>{props.games[gameId].player_white.name} </h3>
+              <p className='player-name'>({props.games[gameId].player_white.elo})</p>
+            </div>
+
+            <p className='player-time'>{new Date(props.games[gameId].time_white * 1000).toISOString().substr(14, 8)}</p>
+            {console.log(props.games[gameId])}
+          </div>
         </div>
         <WagerPanel/>
       </div>
