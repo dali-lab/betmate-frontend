@@ -73,8 +73,8 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
         wager,
         wagerAmount,
         props.betType === 'wdl',
-        3, // TODO: don't hardcode move odds
-        1, // props.games[gameId].move_hist.length + 1
+        props.betType === 'wdl' ? 1 / props.games[gameId].odds[wager] : 3, // TODO: don't hardcode move odds
+        props.games[gameId].move_hist.length + 1,
       );
     }
   };

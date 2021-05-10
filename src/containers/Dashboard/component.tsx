@@ -14,7 +14,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    props.fetchGamesByStatus('not_started');
+    props.fetchGamesByStatus(['not_started', 'in_progress']);
   }, []);
 
   return (
