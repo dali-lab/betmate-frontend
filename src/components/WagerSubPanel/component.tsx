@@ -102,38 +102,42 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
     ), 0);
     return Object.keys(moveOptions).map((move, i) => {
       const [probability, color] = moveOptions[move];
-      return <label htmlFor={`move-option-${i}`} key={move}>
-        <VerticalBar color={color} maxPercentage={Number(maxPercentage)} percentage={probability} />
-        <p>{move}</p>
-        <input
-          id={`move-option-${i}`}
-          name="moves"
-          type="radio"
-          value={move}
-          checked={wager === move}
-          onChange={(e) => { setWager(e.currentTarget.value); }}
-        />
-      </label>;
+      return (
+        <label htmlFor={`move-option-${i}`} key={move}>
+          <VerticalBar color={color} maxPercentage={Number(maxPercentage)} percentage={probability} />
+          <p>{move}</p>
+          <input
+            id={`move-option-${i}`}
+            name="moves"
+            type="radio"
+            value={move}
+            checked={wager === move}
+            onChange={(e) => { setWager(e.currentTarget.value); }}
+          />
+        </label>
+      );
     });
   };
 
   const renderGameOutcomes = () => (
     Object.keys(gameOutcomes).map((outcome, i) => {
       const [outcomeCode, image] = gameOutcomes[outcome];
-      return <label htmlFor={`wdl-option-${i}`} key={outcome}>
-        <div className="wdl-option">
-          <img src={image} />
-          <p>{outcome}</p>
-        </div>
-        <input
-          id={`wdl-option-${i}`}
-          name="wdl"
-          type="radio"
-          value={outcomeCode}
-          checked={wager === outcomeCode}
-          onChange={(e) => { setWager(e.currentTarget.value); }}
-        />
-      </label>;
+      return (
+        <label htmlFor={`wdl-option-${i}`} key={outcome}>
+          <div className="wdl-option">
+            <img src={image} />
+            <p>{outcome}</p>
+          </div>
+          <input
+            id={`wdl-option-${i}`}
+            name="wdl"
+            type="radio"
+            value={outcomeCode}
+            checked={wager === outcomeCode}
+            onChange={(e) => { setWager(e.currentTarget.value); }}
+          />
+        </label>
+      );
     })
   );
 
