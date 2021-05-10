@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 // import { Move } from 'chess.js';
 import { AsyncAction } from 'types/state';
 

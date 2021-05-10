@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { AsyncAction } from 'types/state';
 
 /* -------- State -------- */
