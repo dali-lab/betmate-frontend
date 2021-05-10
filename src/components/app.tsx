@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 
 import { jwtSignIn } from 'store/actionCreators/authActionCreators';
+import { closeSocket } from 'store/actionCreators/websocketActionCreators';
 
 import SignUpPanel from 'containers/authentication/signUpPanel';
 import SignInPanel from 'containers/authentication/signInPanel';
@@ -27,7 +28,16 @@ const FallBack = () => {
   return <div>Uh oh... URL Not Found! Please contact the system administrator.</div>;
 };
 
-const App = (props) => {
+interface AppProps {
+  closeSocket: typeof closeSocket,
+  jwtSignIn: typeof jwtSignIn,
+}
+
+const App: React.FC<AppProps> = (props) => {
+  useEffect(() => {
+    return () => { props.closeSocket(); };
+  }, []);
+
   useEffect(() => {
     const token = localStorage.getItem(authTokenName);
     if (token) props.jwtSignIn();
@@ -49,4 +59,4 @@ const App = (props) => {
   );
 };
 
-export default connect(null, { jwtSignIn })(App);
+export default connect(null, { jwtSignIn, closeSocket })(App);

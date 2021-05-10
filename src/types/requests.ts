@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* -------- State -------- */
 
 import { Code } from './state';

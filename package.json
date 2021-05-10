@@ -13,11 +13,11 @@
   "private": true,
   "license": "none",
   "scripts": {
-    "dev": "webpack serve",
+    "dev": " TARGET_ENV=local webpack serve",
     "test": "eslint src",
-    "build": "NODE_ENV=production webpack",
-    "clean": "rimraf dist",
-    "deploy": "yarn build; surge -p dist -d betmate-dev.surge.sh; yarn clean"
+    "build-dev": "NODE_ENV=production TARGET_ENV=dev webpack",
+    "build-prod": "NODE_ENV=production TARGET_ENV=prod webpack",
+    "clean": "rimraf dist"
   },
   "devDependencies": {
     "@types/chess.js": "^0.10.1",

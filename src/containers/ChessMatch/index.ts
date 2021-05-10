@@ -1,7 +1,14 @@
 import { connect } from 'react-redux';
-import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 
-import ChessMatch from 'containers/ChessMatch/component';
+import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
+import { fetchGameById } from 'store/actionCreators/gameActionCreators';
+import { RootState } from 'types/state';
+
+import ChessMatch from './component';
 import './style.scss';
 
-export default connect(null, { fetchGameById })(ChessMatch);
+const mapStateToProps = (state: RootState) => ({
+  games: state.game.games,
+});
+
+export default connect(mapStateToProps, { joinGame, leaveGame, fetchGameById })(ChessMatch);
