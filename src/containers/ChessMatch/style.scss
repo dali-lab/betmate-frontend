@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     margin: 1em;
     font-family: Roboto;
     font-style: normal;
@@ -17,20 +18,33 @@
         margin: 0;
     }
 }
-// .player-name {
-//     font-family: Roboto;
-//     font-style: normal;
-//     font-weight: 50;
-//     color: white;
-//     margin: 0;
-// }
-// .player-time {
-//     font-family: Roboto;
-//     font-style: normal;
-//     font-weight: 500;
-//     line-height: 21px;
-//     color: white;
-// }
+
+.player-title {
+    display: flex;
+    flex-direction: row;
+}
+
+.player-icon {
+    margin-right: 12px;
+}
+
+.player-name {
+    margin-left: 10px;
+}
+
+.time-rect {
+    background: #423E43;
+    border-radius: 5px;
+    width: 12%;
+}
+
+.white-rect {
+    border: 1px solid #2AD9FF;
+}
+
+.black-rect {
+    border: 1px solid #27E595;
+}
 
 .chess-match-container {
     display: flex;
