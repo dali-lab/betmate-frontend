@@ -41,7 +41,7 @@ export const createUpdateGameStateChannel: ChannelCreator<GameUpdateActions> = (
 );
 
 /**
- * A function to create an event channel that listens for 'new_move' events on the passed socket and pushes them to the created channel
+ * A function to create an event channel that listens for wager related events on the passed socket and pushes them to the created channel
  * @param socket socket to monitor for events on
  * @returns saga eventChannel creator function
  */

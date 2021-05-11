@@ -28,7 +28,6 @@ export function* joinGameHandler(socket: Socket) {
   while (true) {
     try {
       const action: { payload: JoinGameData } = yield take((a: Actions) => a.type === 'JOIN_GAME' && a.status === 'REQUEST');
-      yield apply(console, console.log, ['ayo', action.payload.gameId]);
       yield apply(socket, socket.emit, ['join_game', action.payload.gameId]);
       yield put<Actions>({ type: 'JOIN_GAME', status: 'SUCCESS', payload: { gameId: action.payload.gameId } });
     } catch (error) {
@@ -38,9 +37,9 @@ export function* joinGameHandler(socket: Socket) {
 }
 
 /**
- * Saga that emits 'join_game' events onto the passed socket and completes the following:
- * - Waits for an event of type 'JOIN_GAME'
- * - Emits a 'join_game' socket event using the `socket.emit` method
+ * Saga that emits 'leave_game' events onto the passed socket and completes the following:
+ * - Waits for an event of type 'LEAVE_GAME'
+ * - Emits a 'leave_game' socket event using the `socket.emit` method
  * - Dispatches success or failure based on if whether an error occurred
  * - Repeat
  * @param socket socket to watch for events on
@@ -58,7 +57,7 @@ export function* leaveGameHandler(socket: Socket) {
 }
 
 /**
- * Saga that watches for events on the created socketChannel and handles them in the following way:
+ * Saga that watches for events on the game-update socket channel and handles them in the following way:
  * - Waits for an event on the channel
  * - Dispatches the event to the redux store (or an error state if saga fails)
  * - Repeat
@@ -78,7 +77,7 @@ export function* updateGameStateHandler(socket: Socket) {
 }
 
 /**
- * Saga that watches for events on the created socketChannel and handles them in the following way:
+ * Saga that watches for events on the update-wagers socket channel and handles them in the following way:
  * - Waits for an event on the channel
  * - Dispatches the event to the redux store (or an error state if saga fails)
  * - Repeat
@@ -98,9 +97,10 @@ export function* updateWagerStateHandler(socket: Socket) {
 }
 
 /**
- * Saga that emits 'join_auth' events onto the passed socket and completes the following:
- * - Waits for an event of type 'JOIN_AUTH'
- * - Emits a 'join_auth' socket event using the `socket.emit` method
+ * Saga that listens for successful auth-related events and handles them in the following way:
+ * - Waits for a successful auth event of type CREATE_USER, SIGN_IN_USER, or JWT_SIGN_IN
+ * - Gets the saved JWT token
+ * - Emits a 'join_auth' socket event using the `socket.emit` method with the JWT
  * - Dispatches success or failure based on if whether an error occurred
  * - Repeat
  * @param socket socket to watch for events on
@@ -120,9 +120,10 @@ export function* joinAuthHandler(socket: Socket) {
 }
 
 /**
- * Saga that emits 'join_auth' events onto the passed socket and completes the following:
- * - Waits for an event of type 'JOIN_AUTH'
- * - Emits a 'join_auth' socket event using the `socket.emit` method
+ * Saga that listens for deauth events and completes the following:
+ * - Waits for an event of type 'DEAUTH_USER'
+ * - Gets the saved JWT, then removes it from local storage
+ * - Emits a 'leave_auth' socket event using the `socket.emit` method
  * - Dispatches success or failure based on if whether an error occurred
  * - Repeat
  * @param socket socket to watch for events on

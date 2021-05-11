@@ -19,18 +19,7 @@ const WS_URL = `${ROOT_URL}/chessws`;
  * @param address WS url to connect to
  * @returns websocket instance
  */
-const createSocket = (address: string) => {
-  // const token = localStorage.getItem('token');
-  // return token
-  //   ? io(address, { extraHeaders: { Authorization: `Bearer ${token}` } })
-  //   : io(address);
-  // // console.log('TOKEN', token);
-  // // if (token) {
-  // //   const parsed = JSON.parse(atob(token?.split('.')[1]));
-  // //   console.log('parsed', parsed);
-  // // }
-  return io(address);
-};
+const createSocket = (address: string) => io(address);
 
 /**
  * Saga that completes the following steps indefinitely:

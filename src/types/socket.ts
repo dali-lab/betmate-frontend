@@ -24,7 +24,7 @@ export const LEAVE_AUTH = 'LEAVE_AUTH';
 
 export type InitializeSocketData = { url: string };
 export type SocketErrorData = { message: string };
-export type SocketGameErrorData = { roomId: string, message: string };
+export type SocketGameErrorData = { gameId: string, message: string };
 export type CloseSocketData = Empty;
 export type JoinAuthData = { token: string };
 export type LeaveAuthData = { token: string };
