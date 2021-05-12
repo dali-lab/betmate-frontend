@@ -44,14 +44,16 @@ export const fetchWagerById = async (id: string): Promise<RequestReturnType<Fetc
 
   return {
     data: {
-      gameId: 'adsf88as9d7fasdf',
+      game_id: 'adsf88as9d7fasdf',
       amount: 2834,
       wdl: true,
       odds: 69,
       data: 'win',
       resolved: true,
       _id: id,
+      ...{} as Partial<Wager>,
     },
+
   } as RequestReturnType<FetchWagerData>;
 };
 
@@ -67,7 +69,7 @@ export const updateWagerById = async (id: string, fields: Partial<Wager>): Promi
 
   return {
     data: {
-      gameId: 'adsf88as9d7fasdf',
+      game_id: 'adsf88as9d7fasdf',
       amount: 2834,
       wdl: true,
       odds: 69,

@@ -4,12 +4,13 @@ import {
   UpdateGameEndData,
   UpdateGameOddsData, UpdateGameStateData,
 } from 'types/resources/game';
+import { FetchWagersActions, WagerResultData } from 'types/resources/wager';
 import {
   ChannelCreator, SocketErrorData, Events, SocketErrorAction, SocketGameErrorAction, SocketGameErrorData,
 } from 'types/socket';
 
 /**
- * A function to create an event channel that listens for 'new_move' events on the passed socket and pushes them to the created channel
+ * A function to create an event channel that listens for game related events on the passed socket and pushes them to the created channel
  * @param socket socket to monitor for events on
  * @returns saga eventChannel creator function
  */
@@ -23,18 +24,38 @@ export const createUpdateGameStateChannel: ChannelCreator<GameUpdateActions> = (
       pushToChannel({ type: 'UPDATE_GAME_ODDS', status: 'SUCCESS', payload });
     };
 
-    const newGameOverHandler = (payload: UpdateGameEndData) => {
+    const gameOverHandler = (payload: UpdateGameEndData) => {
       pushToChannel({ type: 'UPDATE_GAME_END', status: 'SUCCESS', payload });
     };
 
     socket.on<Events>('new_move', newMoveHandler);
     socket.on<Events>('new_odds', newOddsHandler);
-    socket.on<Events>('game_over', newGameOverHandler);
+    socket.on<Events>('game_over', gameOverHandler);
 
     return () => {
       socket.off('new_move', newMoveHandler);
       socket.off('wagers', newOddsHandler);
-      socket.off('game_over', newGameOverHandler);
+      socket.off('game_over', gameOverHandler);
+    };
+  },
+);
+
+/**
+ * A function to create an event channel that listens for wager related events on the passed socket and pushes them to the created channel
+ * @param socket socket to monitor for events on
+ * @returns saga eventChannel creator function
+ */
+export const createUpdateWagerStateChannel: ChannelCreator<FetchWagersActions> = (socket) => eventChannel(
+  (pushToChannel) => {
+    const wagerResultHandler = (payload: WagerResultData) => {
+      const { wagers } = payload;
+      pushToChannel({ type: 'FETCH_WAGERS', status: 'SUCCESS', payload: { wagers } });
+    };
+
+    socket.on<Events>('wager_result', wagerResultHandler);
+
+    return () => {
+      socket.off('wager_result', wagerResultHandler);
     };
   },
 );

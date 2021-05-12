@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Chessboard from 'chessboardjsx';
 import './style.scss';
-import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
 import WagerPanel from 'components/WagerPanel';
 import NavBar from 'components/NavBar';
+import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
 
