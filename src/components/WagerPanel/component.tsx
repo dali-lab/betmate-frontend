@@ -25,7 +25,7 @@ const WagerPanel: React.FC<WagerPanelProps> = (props) => {
       <WagerSubPanel betType="move"/>
       <WagerSubPanel betType="wdl"/>
       {/* TODO: don't hardcode wdl numbers */}
-      <WDLBar odds={props.games[gameId].odds}/>
+      <WDLBar odds={props.games[gameId]?.odds}/>
     </div>
   );
 };

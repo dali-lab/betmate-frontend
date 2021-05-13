@@ -54,8 +54,8 @@ export type JoinGameData = { gameId: string }; // ws
 export type LeaveGameData = { gameId: string }; // ws
 export type MakeMoveData = { gameId: string, boardState: string }; // ws
 export type UpdateGameStateData = { gameId: string, state: string, move_hist: string[], time_white: number, time_black: number }; // ws
-export type UpdateGameOddsData = { gameId: string, odds: GameOdds };
-export type UpdateGameEndData = { gameId: string, completed: boolean, game_status: string };
+export type UpdateGameOddsData = { gameId: string, odds: GameOdds }; // ws
+export type UpdateGameEndData = { gameId: string, completed: boolean, game_status: string }; // ws
 
 export type CreateGameRequestData = { state: string };
 export type FetchGameRequestData = { id: string };

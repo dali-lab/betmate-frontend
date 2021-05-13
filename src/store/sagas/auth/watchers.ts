@@ -19,6 +19,7 @@ export function* watchCreateUser() {
       const response: RequestReturnType<AuthUserResponseData> = yield call(authRequests.createUser, action.payload.email, action.payload.password, action.payload.firstName, action.payload.lastName);
 
       yield call(setBearerToken, response.data.token);
+
       yield put<Actions>({ type: 'CREATE_USER', payload: { user: response.data.user }, status: 'SUCCESS' });
     } catch (error) {
       yield put<Actions>({ type: 'CREATE_USER', payload: getErrorPayload(error), status: 'FAILURE' });
@@ -35,6 +36,7 @@ export function* watchSignInUser() {
       const response: RequestReturnType<AuthUserResponseData> = yield call(authRequests.signInUser, action.payload.email, action.payload.password);
 
       yield call(setBearerToken, response.data.token);
+
       yield put<Actions>({ type: 'SIGN_IN_USER', payload: { user: response.data.user }, status: 'SUCCESS' });
     } catch (error) {
       yield put<Actions>({ type: 'SIGN_IN_USER', payload: getErrorPayload(error), status: 'FAILURE' });
