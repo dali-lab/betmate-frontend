@@ -7,6 +7,7 @@ import NavBar from 'components/NavBar';
 import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
+import ChatBox from 'components/ChatBox';
 
 interface ChessMatchProps {
   joinGame: typeof joinGame
@@ -34,11 +35,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     <>
       <NavBar />
       <div className='chess-match-container'>
-        <div className="chat-container">
-          <div className="chat-box">
-            <h1>Chat</h1>
-          </div>
-        </div>
+        <ChatBox />
         <div>
           <Chessboard position={fen} width={450}/>
         </div>

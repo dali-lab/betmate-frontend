@@ -22,7 +22,7 @@ const wagerReducer = (state = initialState, action: Actions): WagerState => {
     case 'FETCH_WAGERS':
       return {
         ...state,
-        wagers: action.payload.wagers.reduce((accum, wager) => ({
+        wagers: action.payload.reduce((accum, wager) => ({
           ...accum,
           [wager._id]: wager,
         }), state.wagers),

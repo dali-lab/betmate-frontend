@@ -51,7 +51,7 @@ export const createUpdateWagerStateChannel: ChannelCreator<FetchWagersActions | 
   (pushToChannel) => {
     const wagerResultHandler = (payload: WagerResultData) => {
       const { wagers } = payload;
-      pushToChannel({ type: 'FETCH_WAGERS', status: 'SUCCESS', payload: { wagers } });
+      pushToChannel({ type: 'FETCH_WAGERS', status: 'SUCCESS', payload: wagers });
     };
     const poolWagerHandler = (payload: BroadcastPoolWager) => {
       pushToChannel({ type: 'BROADCAST_POOL_WAGER', status: 'SUCCESS', payload });

@@ -8,7 +8,7 @@ import { Actions, RequestReturnType } from 'types/state';
 
 import {
   FetchWagerData,
-  CreateWagerActions, FetchWagerActions, UpdateWagerActions, DeleteWagerActions,
+  CreateWagerActions, FetchWagerActions, UpdateWagerActions, DeleteWagerActions, FetchWagersActions, FetchWagersData,
 } from 'types/resources/wager';
 
 export function* watchCreateWager() {
@@ -43,6 +43,20 @@ export function* watchFetchWagerById() {
       yield put<Actions>({ type: 'FETCH_WAGER', payload: response.data, status: 'SUCCESS' });
     } catch (error) {
       yield put<Actions>({ type: 'FETCH_WAGER', payload: getErrorPayload(error), status: 'FAILURE' });
+    }
+  }
+}
+
+export function* watchFetchWagers() {
+  while (true) {
+    try {
+      const action: FetchWagersActions = yield take((a: Actions) => (a.type === 'FETCH_WAGERS' && a.status === 'REQUEST'));
+      if (action.status !== 'REQUEST') return; // Type protection only
+
+      const response: RequestReturnType<FetchWagersData> = yield call(wagerRequests.fetchWagers);
+      yield put<Actions>({ type: 'FETCH_WAGERS', payload: response.data, status: 'SUCCESS' });
+    } catch (error) {
+      yield put<Actions>({ type: 'FETCH_WAGERS', payload: getErrorPayload(error), status: 'FAILURE' });
     }
   }
 }
