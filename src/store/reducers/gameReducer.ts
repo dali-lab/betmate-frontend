@@ -61,7 +61,7 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
             ...state.games[action.payload.gameId],
             pool_wagers: {
               ...state.games[action.payload.gameId].pool_wagers,
-              move: {
+              [action.payload.type]: {
                 ...state.games[action.payload.gameId].pool_wagers.move,
                 wagers: [
                   ...state.games[action.payload.gameId].pool_wagers.move.wagers,
