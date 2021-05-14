@@ -18,7 +18,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   }, []);
 
   return (
-    <div>
+    <div className='main-page'>
       <div className='main-dashboard'>
         <input
           className='searchBar'
