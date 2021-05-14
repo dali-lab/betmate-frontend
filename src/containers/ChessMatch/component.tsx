@@ -9,6 +9,7 @@ import { Game } from 'types/resources/game';
 import playerIconBlack from 'assets/player_icon_black.svg';
 import playerIconWhite from 'assets/player_icon_white.svg';
 import './style.scss';
+import PlayerInfo from 'containers/ChessMatch/playerInfo/component';
 
 interface ChessMatchProps {
   joinGame: typeof joinGame
@@ -41,34 +42,23 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
           </div>
         </div>
         <div>
-          <div className='player-info'>
-            <div className='player-title'>
-              <img className='player-icon' src={playerIconBlack}/>
-              <div>
-                <h3 className='player-name'>{props.games[gameId].player_black.name} </h3>
-                <p className='player-name'>({props.games[gameId].player_black.elo})</p>
-              </div>
-            </div>
-            <div className='time-rect black-rect'>
-              <h3 className='player-time'>{new Date(props.games[gameId].time_black * 1000).toISOString().substr(14, 8)}</h3>
-            </div>          </div>
-
+          <PlayerInfo
+            icon={playerIconBlack}
+            name={props.games[gameId].player_black.name}
+            elo={props.games[gameId].player_black.elo}
+            time={props.games[gameId].time_black}
+            isBlack={true}
+          />
           <div className='chessBoard'>
             <Chessboard position={fen} width={600}/>
           </div>
-
-          <div className='player-info'>
-            <div className='player-title'>
-              <img className='player-icon' src={playerIconWhite}/>
-              <div>
-                <h3 className='player-name'>{props.games[gameId].player_white.name} </h3>
-                <p className='player-name'>({props.games[gameId].player_white.elo})</p>
-              </div>
-            </div>
-            <div className='time-rect white-rect'>
-              <h3 className='player-time'>{new Date(props.games[gameId].time_white * 1000).toISOString().substr(14, 8)}</h3>
-            </div>
-          </div>
+          <PlayerInfo
+            icon={playerIconWhite}
+            name={props.games[gameId].player_white.name}
+            elo={props.games[gameId].player_white.elo}
+            time={props.games[gameId].time_white}
+            isBlack={false}
+          />
         </div>
         <WagerPanel/>
       </div>
