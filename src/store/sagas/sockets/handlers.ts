@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { EventChannel } from 'redux-saga';
 import {
@@ -110,8 +111,9 @@ export function* updatePoolWagerHandler(socket: Socket) {
   while (true) {
     try {
       const action: CreateWagerActions = yield take((a: Actions) => a.type === 'CREATE_WAGER' && a.status === 'SUCCESS');
-      if (action.status !== 'SUCCESS') return;
-      if (action.payload.wdl) return;
+      if (action.status !== 'SUCCESS') continue;
+      if (action.payload.wdl) continue;
+
       const { game_id: gameId, data, amount } = action.payload;
       const message: BroadcastPoolWager = {
         gameId, type: 'move', data, amount,

@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { call, take, put } from 'redux-saga/effects';
 
@@ -15,7 +16,7 @@ export function* watchCreateWager() {
   while (true) {
     try {
       const action: CreateWagerActions = yield take((a: Actions) => (a.type === 'CREATE_WAGER' && a.status === 'REQUEST'));
-      if (action.status !== 'REQUEST') return; // Type protection only
+      if (action.status !== 'REQUEST') continue; // Type protection only
 
       const response: RequestReturnType<FetchWagerData> = yield call(
         wagerRequests.createWager,
@@ -37,7 +38,7 @@ export function* watchFetchWagerById() {
   while (true) {
     try {
       const action: FetchWagerActions = yield take((a: Actions) => (a.type === 'FETCH_WAGER' && a.status === 'REQUEST'));
-      if (action.status !== 'REQUEST') return; // Type protection only
+      if (action.status !== 'REQUEST') continue; // Type protection only
 
       const response: RequestReturnType<FetchWagerData> = yield call(wagerRequests.fetchWagerById, action.payload.id);
       yield put<Actions>({ type: 'FETCH_WAGER', payload: response.data, status: 'SUCCESS' });
@@ -65,7 +66,7 @@ export function* watchUpdateWagerById() {
   while (true) {
     try {
       const action: UpdateWagerActions = yield take((a: Actions) => (a.type === 'UPDATE_WAGER' && a.status === 'REQUEST'));
-      if (action.status !== 'REQUEST') return; // Type protection only
+      if (action.status !== 'REQUEST') continue; // Type protection only
 
       const response: RequestReturnType<FetchWagerData> = yield call(wagerRequests.updateWagerById, action.payload.id, action.payload.fields);
       yield put<Actions>({ type: 'UPDATE_WAGER', payload: response.data, status: 'SUCCESS' });
@@ -79,7 +80,7 @@ export function* watchDeleteWagerById() {
   while (true) {
     try {
       const action: DeleteWagerActions = yield take((a: Actions) => (a.type === 'DELETE_WAGER' && a.status === 'REQUEST'));
-      if (action.status !== 'REQUEST') return; // Type protection only
+      if (action.status !== 'REQUEST') continue; // Type protection only
 
       yield call(wagerRequests.deleteWagerById, action.payload.id);
       yield put<Actions>({ type: 'DELETE_WAGER', payload: { id: action.payload.id }, status: 'SUCCESS' });
