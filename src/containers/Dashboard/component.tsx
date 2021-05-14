@@ -37,8 +37,8 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           className='searchBar'
           placeholder= 'search for a game, player, or type of chess'
         />
-        <div className='browse-button'>
-          <button>Browse</button>
+        <div >
+          <button className='browse-button'>Browse</button>
         </div>
       </div>
       <h3 className='betting-header'>Continue Betting</h3>

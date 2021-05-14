@@ -23,12 +23,18 @@
 }
 
 .searchBar {
-    flex: 0 1 auto;
     min-width: 400px;
+    text-align: center;
 }
 
 .browse-button {
-    flex: 1 0 0%;
+    border:none;
+    background-color: #FFC430;
+    border-radius: 5px;
+    min-width: 50px;
+    min-height: 25px;
+    font-weight: bold;
+    margin-left: 1em;
 }
 
 .betting-header {
@@ -38,9 +44,11 @@
 
 .card-box {
     background: #1E1E22;
-    border-radius: 15px;
+    // border-radius: 15px;
     width: 12%;
-    border: 10px solid #2AD9FF;
+    border: 7px solid;
+    border-radius: inherit;
+    border-color: #99F2FF;
     display: inline-block;
     width: 25em;
     height: 15em;
