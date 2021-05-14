@@ -41,9 +41,9 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
         <div>
           <PlayerInfo
             icon={playerIconBlack}
-            name={props.games[gameId].player_black.name}
-            elo={props.games[gameId].player_black.elo}
-            time={props.games[gameId].time_black}
+            name={props.games[gameId]?.player_black.name}
+            elo={props.games[gameId]?.player_black.elo}
+            time={props.games[gameId]?.time_black}
             isBlack={true}
           />
           <div className='chessBoard'>
@@ -51,9 +51,9 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
           </div>
           <PlayerInfo
             icon={playerIconWhite}
-            name={props.games[gameId].player_white.name}
-            elo={props.games[gameId].player_white.elo}
-            time={props.games[gameId].time_white}
+            name={props.games[gameId]?.player_white.name}
+            elo={props.games[gameId]?.player_white.elo}
+            time={props.games[gameId]?.time_white}
             isBlack={false}
           />
         </div>
