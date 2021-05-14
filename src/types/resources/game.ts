@@ -18,6 +18,11 @@ export interface AnonMoveWager {
   amount: number
 }
 
+export interface PoolWagerState {
+  options: string[]
+  wagers: AnonMoveWager[]
+}
+
 export interface Game {
   complete: boolean
   game_status: string
@@ -30,7 +35,7 @@ export interface Game {
   wagers: string[]
   odds: GameOdds
   pool_wagers: {
-    move: AnonMoveWager[]
+    move: PoolWagerState
   },
   _id: string
   created_at: string
@@ -63,7 +68,7 @@ export type JoinGameData = { gameId: string }; // ws
 export type LeaveGameData = { gameId: string }; // ws
 export type MakeMoveData = { gameId: string, boardState: string }; // ws
 export type UpdateGameStateData = { gameId: string, state: string, move_hist: string[], time_white: number, time_black: number }; // ws
-export type UpdateGameOddsData = { gameId: string, odds: GameOdds }; // ws
+export type UpdateGameOddsData = { gameId: string, odds: GameOdds, pool_wagers: { move: PoolWagerState } }; // ws
 export type UpdateGameEndData = { gameId: string, completed: boolean, game_status: string }; // ws
 export type BroadcastPoolWager = { gameId: string, type: 'move', data: string, amount: number }; // ws
 

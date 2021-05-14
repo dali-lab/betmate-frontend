@@ -39,16 +39,6 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
       };
 
     case 'UPDATE_GAME_ODDS':
-      return {
-        ...state,
-        games: {
-          ...state.games,
-          [action.payload.gameId]: {
-            ...state.games[action.payload.gameId],
-            ...action.payload,
-          },
-        },
-      };
     case 'UPDATE_GAME_STATE':
     case 'UPDATE_GAME_END':
       return {
@@ -57,7 +47,6 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
           ...state.games,
           [action.payload.gameId]: {
             ...state.games[action.payload.gameId],
-            pool_wagers: { move: [] },
             ...action.payload,
           },
         },
@@ -72,10 +61,13 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
             ...state.games[action.payload.gameId],
             pool_wagers: {
               ...state.games[action.payload.gameId].pool_wagers,
-              move: [
+              move: {
                 ...state.games[action.payload.gameId].pool_wagers.move,
-                { data: action.payload.data, amount: action.payload.amount },
-              ],
+                wagers: [
+                  ...state.games[action.payload.gameId].pool_wagers.move.wagers,
+                  { data: action.payload.data, amount: action.payload.amount },
+                ],
+              },
             },
           },
         },
