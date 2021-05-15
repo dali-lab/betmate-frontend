@@ -93,6 +93,7 @@ export function* updateWagerStateHandler(socket: Socket) {
     try {
       const action: FetchWagersActions | BroadcastPoolWagerActions = yield take(socketChannel);
       yield put<Actions>(action);
+      if (action.type === 'FETCH_WAGERS') yield put<Actions>({ type: 'JWT_SIGN_IN', status: 'REQUEST', payload: { token: getBearerToken() || '' } });
     } catch (error) {
       yield put<Actions>({ type: 'FETCH_WAGERS', status: 'FAILURE', payload: { message: error.message, code: null } });
     }
