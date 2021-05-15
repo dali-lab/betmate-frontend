@@ -1,5 +1,5 @@
 import React, {
-  useEffect, useState, Dispatch, SetStateAction,
+  useEffect, useState,
 } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { jwtSignIn } from 'store/actionCreators/authActionCreators';
@@ -15,41 +15,44 @@ interface SubmitWagerProps {
   wager: string,
   wagerAmount: number,
   games: Record<string, Game>,
-  panelLoading: boolean, // this differentiates loading between different wager panels
-  setPanelLoading: Dispatch<SetStateAction<boolean>>
 }
 
 const SubmitWager: React.FC<SubmitWagerProps> = (props) => {
   const [submissionStatus, setSubmissionStatus] = useState('');
+  const [panelLoading, setPanelLoading] = useState(false);
 
   const { id: gameId } = useParams<{ id: string }>();
   const history = useHistory();
 
   useEffect(() => {
     // loading
-    if (props.isLoading === true && props.panelLoading) {
+    if (props.isLoading === true && panelLoading) {
       setSubmissionStatus('loading');
 
     // finished loading
-    } else if (props.isLoading === false && props.panelLoading) {
+    } else if (props.isLoading === false && panelLoading) {
       // error
       if (props.errorMessages.length !== 0) {
         setSubmissionStatus('error');
       } else { // successful submission occurred
         setSubmissionStatus('success');
       }
-      props.setPanelLoading(false);
+      setPanelLoading(false);
       if (props.isAuthenticated) props.jwtSignIn(); // updates the user balance post-bet
     }
-  }, [props.isLoading, props.errorMessages.length, props.panelLoading]);
+  }, [props.isLoading, props.errorMessages.length, panelLoading]);
 
   useEffect(() => {
     setSubmissionStatus('');
   }, []);
 
+  useEffect(() => {
+    setPanelLoading(false);
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.setPanelLoading(true);
+    setPanelLoading(true);
     if (props.wager && props.wagerAmount) {
       props.createWager(
         gameId,

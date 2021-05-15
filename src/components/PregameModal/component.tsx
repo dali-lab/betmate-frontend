@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './style.scss';
 import GameOutcomes from 'components/wagerFormComponents/GameOutcomes';
 import WagerAmounts from 'components/wagerFormComponents/WagerAmounts';
@@ -16,13 +16,8 @@ interface PregameModalProps {
 const PregameModal: React.FC<PregameModalProps> = (props) => {
   const [wager, setWager] = useState('');
   const [wagerAmount, setWagerAmount] = useState(0);
-  const [panelLoading, setPanelLoading] = useState(false);
 
   const { id: gameId } = useParams<{ id: string }>();
-
-  useEffect(() => {
-    setPanelLoading(false);
-  }, []);
 
   return (
     <div className="blur-background">
@@ -42,8 +37,6 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
             <SubmitWager
               wager={wager}
               wagerAmount={wagerAmount}
-              panelLoading={panelLoading}
-              setPanelLoading={setPanelLoading}
             />
           </form>
           <button

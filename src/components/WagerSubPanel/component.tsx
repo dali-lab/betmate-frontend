@@ -11,7 +11,6 @@ interface WagerSubPanelProps {
 const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
   const [wager, setWager] = useState('');
   const [wagerAmount, setWagerAmount] = useState(0);
-  const [panelLoading, setPanelLoading] = useState(false);
 
   return (
     <div className="bet-subpanel">
@@ -25,8 +24,6 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
         <SubmitWager
           wager={wager}
           wagerAmount={wagerAmount}
-          panelLoading={panelLoading}
-          setPanelLoading={setPanelLoading}
         />
       </form>
     </div>
