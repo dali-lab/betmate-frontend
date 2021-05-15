@@ -7,12 +7,14 @@ import NavBar from 'components/NavBar';
 import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
+import PregameModal from 'components/PregameModal';
 
 interface ChessMatchProps {
   joinGame: typeof joinGame
   leaveGame: typeof leaveGame
   fetchGameById: typeof fetchGameById
   games: Record<string, Game>
+  showModal: Record<string, boolean>
 }
 
 const ChessMatch: React.FC<ChessMatchProps> = (props) => {
@@ -30,8 +32,11 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     if (game) updateFen(game.state);
   }, [props.games[gameId]?.state]);
 
+  if (props.showModal[gameId]) console.log('modal shows');
+
   return (
     <>
+      {props.showModal[gameId] && <PregameModal id={gameId}/>}
       <NavBar />
       <div className='chess-match-container'>
         <div className="chat-container">

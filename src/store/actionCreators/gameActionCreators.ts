@@ -30,3 +30,9 @@ export const deleteGameById = (id: string): Actions => ({
   status: 'REQUEST',
   payload: { id },
 });
+
+export const updatePregameModal = (gameId: string, showModal: boolean): Actions => ({
+  type: 'UPDATE_PREGAME_MODAL',
+  status: 'REQUEST',
+  payload: { gameId, showModal },
+});

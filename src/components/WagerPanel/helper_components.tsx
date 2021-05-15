@@ -20,11 +20,12 @@ export const VerticalBar: React.FC<VerticalBarProps> = (props) => {
 
 interface WDLBarProps {
   odds: GameOdds,
+  height: number
 }
 
 export const WDLBar: React.FC<WDLBarProps> = (props) => {
   return (
-    <div className="wdl-bar-container">
+    <div className="wdl-bar-container" style={{ height: props.height }}>
       <div style={{ background: 'white', width: `${props.odds?.white_win * 100}%` }} />
       <div style={{ background: 'grey', width: `${props.odds?.draw * 100}%` }} />
       <div style={{ background: 'black', width: `${props.odds?.black_win * 100}%` }} />
