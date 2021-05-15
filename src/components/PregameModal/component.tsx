@@ -9,7 +9,6 @@ import { useParams } from 'react-router';
 import { updatePregameModal } from 'store/actionCreators/gameActionCreators';
 
 interface PregameModalProps {
-  id: string,
   games: Record<string, Game>,
   updatePregameModal: typeof updatePregameModal,
 }

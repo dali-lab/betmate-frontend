@@ -13,6 +13,16 @@ export interface GameOdds {
   black_win: number
 }
 
+export interface AnonMoveWager {
+  data: string
+  amount: number
+}
+
+export interface PoolWagerState {
+  options: string[]
+  wagers: AnonMoveWager[]
+}
+
 export interface Game {
   complete: boolean
   game_status: string
@@ -24,6 +34,9 @@ export interface Game {
   time_white: number
   wagers: string[]
   odds: GameOdds
+  pool_wagers: {
+    move: PoolWagerState
+  },
   _id: string
   created_at: string
   updated_at: string
@@ -45,6 +58,7 @@ export const UPDATE_PREGAME_MODAL = 'UPDATE_PREGAME_MODAL';
 export const UPDATE_GAME_STATE = 'UPDATE_GAME_STATE'; // ws
 export const UPDATE_GAME_ODDS = 'UPDATE_GAME_ODDS'; // ws
 export const UPDATE_GAME_END = 'UPDATE_GAME_END'; // ws
+export const BROADCAST_POOL_WAGER = 'BROADCAST_POOL_WAGER'; // ws
 
 export const CREATE_GAME = 'CREATE_GAME';
 export const FETCH_GAME = 'FETCH_GAME';
@@ -57,8 +71,9 @@ export type LeaveGameData = { gameId: string }; // ws
 export type MakeMoveData = { gameId: string, boardState: string }; // ws
 export type UpdatePregameModalData = { gameId: string, showModal: boolean };
 export type UpdateGameStateData = { gameId: string, state: string, move_hist: string[], time_white: number, time_black: number }; // ws
-export type UpdateGameOddsData = { gameId: string, odds: GameOdds }; // ws
+export type UpdateGameOddsData = { gameId: string, odds: GameOdds, pool_wagers: { move: PoolWagerState } }; // ws
 export type UpdateGameEndData = { gameId: string, completed: boolean, game_status: string }; // ws
+export type BroadcastPoolWager = { gameId: string, type: 'move', data: string, amount: number }; // ws
 
 export type CreateGameRequestData = { state: string };
 export type FetchGameRequestData = { id: string };
@@ -77,6 +92,7 @@ export type UpdatePregameModalActions = Action<typeof UPDATE_PREGAME_MODAL, Upda
 export type UpdateGameStateActions = AsyncAction<typeof UPDATE_GAME_STATE, UpdateGameStateData>; // ws
 export type UpdateGameOddsActions = AsyncAction<typeof UPDATE_GAME_ODDS, UpdateGameOddsData>; // ws
 export type UpdateGameEndActions = AsyncAction<typeof UPDATE_GAME_END, UpdateGameEndData>; // ws
+export type BroadcastPoolWagerActions = AsyncAction<typeof BROADCAST_POOL_WAGER, BroadcastPoolWager>; // ws
 
 export type CreateGameActions = AsyncAction<typeof CREATE_GAME, FetchGameData, CreateGameRequestData>;
 export type FetchGameActions = AsyncAction<typeof FETCH_GAME, FetchGameData, FetchGameRequestData>;
@@ -88,8 +104,8 @@ export type GameUpdateActions = UpdateGameStateActions | UpdateGameOddsActions |
 
 export type GameActions =
   JoinGameActions | LeaveGameActions | MakeMoveActions | UpdatePregameModalActions | GameUpdateActions |
-  CreateGameActions | FetchGameActions | UpdateGameActions | DeleteGameActions | FetchGamesActions;
+  CreateGameActions | FetchGameActions | UpdateGameActions | DeleteGameActions | FetchGamesActions | BroadcastPoolWagerActions;
 
 export type GameActionTypes =
   typeof JOIN_GAME | typeof LEAVE_GAME | typeof MAKE_MOVE | typeof UPDATE_GAME_STATE | typeof UPDATE_GAME_ODDS | typeof UPDATE_GAME_END | typeof FETCH_GAME
-  | typeof CREATE_GAME | typeof FETCH_GAME | typeof UPDATE_GAME | typeof DELETE_GAME | typeof FETCH_GAMES;
+  | typeof CREATE_GAME | typeof FETCH_GAME | typeof UPDATE_GAME | typeof DELETE_GAME | typeof FETCH_GAMES | typeof BROADCAST_POOL_WAGER;
