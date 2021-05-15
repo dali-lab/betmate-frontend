@@ -36,7 +36,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
 
   return (
     <>
-      {props.showModal[gameId] && <PregameModal id={gameId}/>}
+      {props.showModal[gameId] && <PregameModal/>}
       <NavBar />
       <div className='chess-match-container'>
         <div className="chat-container">

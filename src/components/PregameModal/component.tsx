@@ -6,13 +6,11 @@ import { WDLBar } from 'components/WagerPanel/helper_components';
 import { Game } from 'types/resources/game';
 import SubmitWager from 'components/wagerFormComponents/SubmitWager';
 import { useParams } from 'react-router';
-import { createWager } from 'store/actionCreators/wagerActionCreators';
 import { updatePregameModal } from 'store/actionCreators/gameActionCreators';
 
 interface PregameModalProps {
   id: string,
   games: Record<string, Game>,
-  createWager: typeof createWager,
   updatePregameModal: typeof updatePregameModal,
 }
 

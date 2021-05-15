@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
 import { RootState } from 'types/state';
-import { createWager } from 'store/actionCreators/wagerActionCreators';
 import { updatePregameModal } from 'store/actionCreators/gameActionCreators';
 
 import PregameModal from './component';
@@ -11,4 +10,4 @@ const mapStateToProps = (state: RootState) => ({
   games: state.game.games,
 });
 
-export default connect(mapStateToProps, { createWager, updatePregameModal })(PregameModal);
+export default connect(mapStateToProps, { updatePregameModal })(PregameModal);
