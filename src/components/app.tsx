@@ -11,6 +11,7 @@ import SignUpPanel from 'containers/authentication/signUpPanel';
 import SignInPanel from 'containers/authentication/signInPanel';
 import SignOutPanel from 'containers/authentication/signOutPanel';
 import { authTokenName } from 'utils';
+import UserPage from 'containers/UserPage';
 import Dashboard from '../containers/Dashboard';
 import ChessMatch from '../containers/ChessMatch';
 import NavBar from './NavBar';
@@ -52,6 +53,7 @@ const App: React.FC<AppProps> = (props) => {
           <Route exact path="/signin" component={SignInPanel} />
           <Route exact path="/signup" component={SignUpPanel} />
           <Route exact path="/signout" component={SignOutPanel} />
+          <Route exact path="/user" component={UserPage} />
           <Route component={FallBack} />
         </Switch>
       </div>
