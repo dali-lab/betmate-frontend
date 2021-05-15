@@ -6,13 +6,15 @@ import {
 
 import { Socket } from 'socket.io-client';
 
-import { GameUpdateActions, JoinGameData, LeaveGameData } from 'types/resources/game';
+import {
+  BroadcastPoolWager, BroadcastPoolWagerActions, GameUpdateActions, JoinGameData, LeaveGameData,
+} from 'types/resources/game';
 import { Actions } from 'types/state';
 import {
   SocketErrorAction, SocketGameErrorAction,
 } from 'types/socket';
 
-import { FetchWagersActions } from 'types/resources/wager';
+import { CreateWagerActions, FetchWagersActions } from 'types/resources/wager';
 import { getBearerToken, removeBearerToken } from 'store/actionCreators';
 import { createErrorChannel, createUpdateGameStateChannel, createUpdateWagerStateChannel } from './channels';
 
@@ -84,14 +86,40 @@ export function* updateGameStateHandler(socket: Socket) {
  * @param socket socket to watch for events on
  */
 export function* updateWagerStateHandler(socket: Socket) {
-  const socketChannel: EventChannel<FetchWagersActions> = yield call(createUpdateWagerStateChannel, socket);
+  const socketChannel: EventChannel<FetchWagersActions | BroadcastPoolWagerActions> = yield call(createUpdateWagerStateChannel, socket);
 
   while (true) {
     try {
-      const action: FetchWagersActions = yield take(socketChannel);
+      const action: FetchWagersActions | BroadcastPoolWagerActions = yield take(socketChannel);
       yield put<Actions>(action);
     } catch (error) {
       yield put<Actions>({ type: 'FETCH_WAGERS', status: 'FAILURE', payload: { message: error.message, code: null } });
+    }
+  }
+}
+
+/**
+ * Saga that watches for successful pool wagers and handles them in the following way:
+ * - Waits for a successful wager action
+ * - Check if it is a pool wager
+ * - If so, send to websocket on 'pool_wager' channel
+ * - Repeat
+ * @param socket socket to watch for events on
+ */
+export function* updatePoolWagerHandler(socket: Socket) {
+  while (true) {
+    try {
+      const action: CreateWagerActions = yield take((a: Actions) => a.type === 'CREATE_WAGER' && a.status === 'SUCCESS');
+      if (action.status !== 'SUCCESS') return;
+      if (action.payload.wdl) return;
+      const { game_id: gameId, data, amount } = action.payload;
+      const message: BroadcastPoolWager = {
+        gameId, type: 'move', data, amount,
+      };
+      yield apply(socket, socket.emit, ['pool_wager', message]);
+      yield put<Actions>({ type: 'BROADCAST_POOL_WAGER', status: 'SUCCESS', payload: message });
+    } catch (error) {
+      yield put<Actions>({ type: 'BROADCAST_POOL_WAGER', status: 'FAILURE', payload: { message: error.message, code: null } });
     }
   }
 }

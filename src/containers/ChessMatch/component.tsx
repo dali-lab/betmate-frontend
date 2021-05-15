@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
 import Chessboard from 'chessboardjsx';
-import './style.scss';
 import WagerPanel from 'components/WagerPanel';
 import NavBar from 'components/NavBar';
 import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
+import { useParams } from 'react-router';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
 import PregameModal from 'components/PregameModal';
+import playerIconBlack from 'assets/player_icon_black.svg';
+import playerIconWhite from 'assets/player_icon_white.svg';
+import './style.scss';
+import PlayerInfo from 'containers/ChessMatch/playerInfo/component';
 
 interface ChessMatchProps {
   joinGame: typeof joinGame
@@ -32,8 +35,6 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     if (game) updateFen(game.state);
   }, [props.games[gameId]?.state]);
 
-  if (props.showModal[gameId]) console.log('modal shows');
-
   return (
     <>
       {props.showModal[gameId] && <PregameModal id={gameId}/>}
@@ -45,7 +46,23 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
           </div>
         </div>
         <div>
-          <Chessboard position={fen} width={450}/>
+          <PlayerInfo
+            icon={playerIconBlack}
+            name={props.games[gameId].player_black.name}
+            elo={props.games[gameId].player_black.elo}
+            time={props.games[gameId].time_black}
+            isBlack={true}
+          />
+          <div className='chessBoard'>
+            <Chessboard position={fen} width={600}/>
+          </div>
+          <PlayerInfo
+            icon={playerIconWhite}
+            name={props.games[gameId].player_white.name}
+            elo={props.games[gameId].player_white.elo}
+            time={props.games[gameId].time_white}
+            isBlack={false}
+          />
         </div>
         <WagerPanel/>
       </div>

@@ -6,7 +6,7 @@ import { Empty } from 'types';
 import { Action, AsyncAction } from 'types/state';
 
 export type ClientEvents = 'join_game' | 'leave_game' | 'make_move' | 'join_auth' | 'leave_auth';
-export type ServerEvents = 'new_odds' | 'new_move' | 'game_over' | 'wager_result' | 'socket_error' | 'game_error';
+export type ServerEvents = 'new_odds' | 'new_move' | 'game_over' | 'wager_result' | 'socket_error' | 'game_error' | 'pool_wager';
 export type Events = ClientEvents | ServerEvents;
 
 export type ChannelCreator<T = unknown> = (socket: Socket) => EventChannel<T>;
