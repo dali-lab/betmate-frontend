@@ -26,9 +26,6 @@ export const createWager = async (
     timeout: 5000, // default is 1000ms, but this endpoint has an intentional 1000ms delay + is making an API request
   });
 
-  // // Validation here
-  console.log(result);
-
   return result;
 };
 

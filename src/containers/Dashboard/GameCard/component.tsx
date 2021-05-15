@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import blackPawn from 'assets/dashboard/blackPawn';
 
 import './style.scss';
 

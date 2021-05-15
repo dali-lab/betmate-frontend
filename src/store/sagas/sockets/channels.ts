@@ -1,5 +1,7 @@
 import { eventChannel } from 'redux-saga';
 import {
+  BroadcastPoolWager,
+  BroadcastPoolWagerActions,
   GameUpdateActions,
   UpdateGameEndData,
   UpdateGameOddsData, UpdateGameStateData,
@@ -45,17 +47,22 @@ export const createUpdateGameStateChannel: ChannelCreator<GameUpdateActions> = (
  * @param socket socket to monitor for events on
  * @returns saga eventChannel creator function
  */
-export const createUpdateWagerStateChannel: ChannelCreator<FetchWagersActions> = (socket) => eventChannel(
+export const createUpdateWagerStateChannel: ChannelCreator<FetchWagersActions | BroadcastPoolWagerActions> = (socket) => eventChannel(
   (pushToChannel) => {
     const wagerResultHandler = (payload: WagerResultData) => {
       const { wagers } = payload;
       pushToChannel({ type: 'FETCH_WAGERS', status: 'SUCCESS', payload: { wagers } });
     };
+    const poolWagerHandler = (payload: BroadcastPoolWager) => {
+      pushToChannel({ type: 'BROADCAST_POOL_WAGER', status: 'SUCCESS', payload });
+    };
 
     socket.on<Events>('wager_result', wagerResultHandler);
+    socket.on<Events>('pool_wager', poolWagerHandler);
 
     return () => {
       socket.off('wager_result', wagerResultHandler);
+      socket.off('pool_wager', poolWagerHandler);
     };
   },
 );
