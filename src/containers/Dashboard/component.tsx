@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { fetchGamesByStatus } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
+import magnifier from 'assets/dashboard/magnifier.svg';
 import GameCard from './GameCard/component';
 import './style.scss';
 
@@ -33,6 +34,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   return (
     <div className='main-page'>
       <div className='main-dashboard'>
+        <img src={magnifier} />
         <input
           className='searchBar'
           placeholder= 'search for a game, player, or type of chess'
@@ -41,7 +43,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           <button className='browse-button'>Browse</button>
         </div>
       </div>
-      <h3 className='betting-header'>Continue Betting</h3>
+      <h3 className='betting-header'>Popular Matches 🔥</h3>
       {Object
         .values(props.games)
         .sort((gameA, gameB) => new Date(gameB.updated_at).getTime() - new Date(gameA.updated_at).getTime())
@@ -60,7 +62,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
             </div>
           );
         })}
-      <h3 className='betting-header'>Matches</h3>
+      <h3 className='betting-header'>Continue Watching 👀</h3>
       {Object.keys(props.games).map((id) => {
         const game = props.games[id];
         console.log(game);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import blackPawn from 'assets/dashboard/blackPawn';
+import blackPawn from 'assets/dashboard/blackPawn.svg';
+import whitePawn from 'assets/dashboard/whitePawn.svg';
 
 import './style.scss';
 
@@ -18,11 +19,22 @@ const GameCard: React.FC<GameCardProps> = (props) => {
   const history = useHistory();
   return (
     <div className='game-card'>
-      <p className='game-title regular-text'>
-        {props.player1}({props.player1Rating}) vs {props.player2}({props.player2Rating})
-      </p>
+      <div className='game-title'>
+        <img src={blackPawn}/>
+        <div className='game-title regular-text'>
+          <div className='game-title-small'>
+            <p className='player-name-whole player-title'>{props.player1}</p>
+            <p className='player-title'>({props.player1Rating})</p>
+          </div>
+          <p className='vs-text'>vs</p>
+          <div className='game-title-small'>
+            <p className='player-name-whole player-title'>{props.player2}</p>
+            <p className='player-title'>({props.player2Rating})</p>
+          </div>
+        </div>
+        <img src={whitePawn}/>
+      </div>
       <p className='regular-text'>{props.playerFavor} to win</p>
-      <p className='regular-text'> Your earnings: ${props.earnings}</p>
       <button className='join-button' onClick={() => history.push(`/chess/${props.gameID}`)}>join game</button>
     </div>
   );
