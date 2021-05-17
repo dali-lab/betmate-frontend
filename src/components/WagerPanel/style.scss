@@ -54,6 +54,9 @@ input {
     flex-direction: column;
     justify-content: flex-end;
     margin: 0 auto;
+    div {
+        transition: height 1s ease-in-out;
+    }
 }
 
 .wdl-bar-container {

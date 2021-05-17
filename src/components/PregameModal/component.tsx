@@ -37,6 +37,7 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
             <SubmitWager
               wager={wager}
               wagerAmount={wagerAmount}
+              betType={'wdl'}
             />
           </form>
           <button

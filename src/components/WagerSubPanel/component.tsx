@@ -22,6 +22,7 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
         }
         <WagerAmounts wagerAmount={wagerAmount} setWagerAmount={setWagerAmount} betType={props.betType}/>
         <SubmitWager
+          betType={props.betType}
           wager={wager}
           wagerAmount={wagerAmount}
         />
