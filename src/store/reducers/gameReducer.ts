@@ -38,6 +38,7 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
         games: omit(state.games, action.payload.id),
       };
 
+    case 'START_GAME':
     case 'UPDATE_GAME_ODDS':
     case 'UPDATE_GAME_STATE':
     case 'UPDATE_GAME_END':
