@@ -3,7 +3,9 @@ import omit from 'lodash.omit';
 import { GameState } from 'types/resources/game';
 import { Actions } from 'types/state';
 
-const initialState: GameState = { games: {} };
+const initialState: GameState = {
+  games: {},
+};
 
 const gameReducer = (state = initialState, action: Actions): GameState => {
   if (action.status !== 'SUCCESS') return state;
@@ -22,7 +24,6 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
           },
         },
       };
-
     case 'FETCH_GAMES':
       return {
         ...state,

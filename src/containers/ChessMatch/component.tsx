@@ -6,6 +6,7 @@ import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreator
 import { useParams } from 'react-router';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
+import PregameModal from 'components/PregameModal';
 import playerIconBlack from 'assets/player_icon_black.svg';
 import playerIconWhite from 'assets/player_icon_white.svg';
 import './style.scss';
@@ -21,6 +22,7 @@ interface ChessMatchProps {
 const ChessMatch: React.FC<ChessMatchProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
   const [fen, updateFen] = useState('');
+  const [showModal, updateShowModal] = useState(true);
 
   useEffect(() => {
     props.fetchGameById(gameId);
@@ -32,8 +34,10 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     const game = props.games[gameId];
     if (game) updateFen(game.state);
   }, [props.games[gameId]?.state]);
+
   return (
     <>
+      {props.games[gameId]?.move_hist?.length === 0 && showModal && <PregameModal updateShowModal={updateShowModal}/>}
       <NavBar />
       <div className='chess-match-container'>
         <div className="chat-container">

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { Empty } from 'types';
-import { AsyncAction } from 'types/state';
+import { Action, AsyncAction } from 'types/state';
 
 export interface Player {
   name: string
@@ -45,7 +45,7 @@ export interface Game {
 /* -------- State -------- */
 
 export interface GameState {
-  games: Record<string, Game>
+  games: Record<string, Game>,
 }
 
 /* -------- Action Types -------- */

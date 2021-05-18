@@ -1,0 +1,63 @@
+.wager-amounts-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 40px;
+    margin-top: 20px;
+    label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img {
+            width: 26px;
+            height: 26px;
+        }
+        p {
+            margin: 5px auto;
+            font-family: 'Roboto';
+            color: #F2F2F2;
+            font-size: 13px;
+        }
+    }
+    input {
+        margin: 0 auto;
+        display: block;
+    }
+}
+
+.options-container {
+    display: flex;
+    justify-content: space-around;
+    p {
+        margin: 4px auto;
+        font-family: 'Roboto';
+        color: #F2F2F2;
+        font-size: 13px;
+    }
+    label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    input {
+        margin: 0 auto;
+        display: block;
+    }
+}
+
+input[type="submit"] {
+    margin: 15px auto;
+    display: block;
+    background: #E5AF27;
+    border: none;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 6px 20px;
+    border-radius: 14px;
+}
+
+.status-text {
+    text-align: center;
+    color: #F2F2F2;
+}
