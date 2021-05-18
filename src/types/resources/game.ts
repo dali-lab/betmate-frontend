@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { Empty } from 'types';
-import { Action, AsyncAction } from 'types/state';
+import { AsyncAction } from 'types/state';
+import { GameStatus } from 'utils/chess';
 
 export interface Player {
   name: string
@@ -53,6 +54,7 @@ export interface GameState {
 export const JOIN_GAME = 'JOIN_GAME'; // ws
 export const LEAVE_GAME = 'LEAVE_GAME'; // ws
 export const MAKE_MOVE = 'MAKE_MOVE'; // ws
+export const START_GAME = 'START_GAME'; // ws
 export const UPDATE_GAME_STATE = 'UPDATE_GAME_STATE'; // ws
 export const UPDATE_GAME_ODDS = 'UPDATE_GAME_ODDS'; // ws
 export const UPDATE_GAME_END = 'UPDATE_GAME_END'; // ws
@@ -67,6 +69,7 @@ export const FETCH_GAMES = 'FETCH_GAMES';
 export type JoinGameData = { gameId: string }; // ws
 export type LeaveGameData = { gameId: string }; // ws
 export type MakeMoveData = { gameId: string, boardState: string }; // ws
+export type StartGameData = { gameId: string, game_status: GameStatus }; // ws
 export type UpdateGameStateData = { gameId: string, state: string, move_hist: string[], time_white: number, time_black: number }; // ws
 export type UpdateGameOddsData = { gameId: string, odds: GameOdds, pool_wagers: { move: PoolWagerState } }; // ws
 export type UpdateGameEndData = { gameId: string, completed: boolean, game_status: string }; // ws
@@ -85,6 +88,7 @@ export type DeleteGameData = { id: string };
 export type JoinGameActions = AsyncAction<typeof JOIN_GAME, JoinGameData, JoinGameData>; // ws
 export type LeaveGameActions = AsyncAction<typeof LEAVE_GAME, LeaveGameData, LeaveGameData>; // ws
 export type MakeMoveActions = AsyncAction<typeof MAKE_MOVE, Empty, MakeMoveData>; // ws
+export type StartGameActions = AsyncAction<typeof START_GAME, StartGameData>; // ws
 export type UpdateGameStateActions = AsyncAction<typeof UPDATE_GAME_STATE, UpdateGameStateData>; // ws
 export type UpdateGameOddsActions = AsyncAction<typeof UPDATE_GAME_ODDS, UpdateGameOddsData>; // ws
 export type UpdateGameEndActions = AsyncAction<typeof UPDATE_GAME_END, UpdateGameEndData>; // ws
@@ -96,7 +100,7 @@ export type UpdateGameActions = AsyncAction<typeof UPDATE_GAME, FetchGameData, U
 export type DeleteGameActions = AsyncAction<typeof DELETE_GAME, DeleteGameData, DeleteGameRequestData>;
 export type FetchGamesActions = AsyncAction<typeof FETCH_GAMES, FetchGamesData, FetchGamesRequestData>;
 
-export type GameUpdateActions = UpdateGameStateActions | UpdateGameOddsActions | UpdateGameEndActions;
+export type GameUpdateActions = StartGameActions | UpdateGameStateActions | UpdateGameOddsActions | UpdateGameEndActions;
 
 export type GameActions =
   JoinGameActions | LeaveGameActions | MakeMoveActions | GameUpdateActions |
@@ -104,4 +108,4 @@ export type GameActions =
 
 export type GameActionTypes =
   typeof JOIN_GAME | typeof LEAVE_GAME | typeof MAKE_MOVE | typeof UPDATE_GAME_STATE | typeof UPDATE_GAME_ODDS | typeof UPDATE_GAME_END | typeof FETCH_GAME
-  | typeof CREATE_GAME | typeof FETCH_GAME | typeof UPDATE_GAME | typeof DELETE_GAME | typeof FETCH_GAMES | typeof BROADCAST_POOL_WAGER;
+  | typeof CREATE_GAME | typeof FETCH_GAME | typeof START_GAME | typeof UPDATE_GAME | typeof DELETE_GAME | typeof FETCH_GAMES | typeof BROADCAST_POOL_WAGER;

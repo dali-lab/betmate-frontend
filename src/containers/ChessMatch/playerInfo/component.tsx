@@ -3,9 +3,9 @@ import './style.scss';
 
 interface ChessMatchProps {
   icon: string,
-  name: string,
-  elo: number,
-  time: number,
+  name: string | undefined,
+  elo: number | undefined,
+  time: number | undefined,
   isBlack: boolean
 }
 
@@ -20,7 +20,7 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
         </div>
       </div>
       <div className={props.isBlack ? 'time-rect black-rect' : 'time-rect white-rect'}>
-        <h3 className='player-time'>{new Date(props.time * 1000).toISOString().substr(14, 8)}</h3>
+        <h3 className='player-time'>{new Date((props.time ?? 0) * 1000).toISOString().substr(14, 8)}</h3>
       </div>
     </div>
   );

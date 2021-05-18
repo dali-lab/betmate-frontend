@@ -55,7 +55,7 @@ export type UpdateWagerRequestData = { id: string, fields: Partial<Wager> };
 export type DeleteWagerRequestData = { id: string };
 
 export type FetchWagerData = Wager;
-export type FetchWagersData = { wagers: Wager[] };
+export type FetchWagersData = Wager[];
 export type DeleteWagerData = { id: string };
 export type WagerResultData = { gameId: string, wagers: Wager[] }; // ws
 

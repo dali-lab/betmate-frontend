@@ -22,6 +22,12 @@ export const fetchWagerById = (id: string): Actions => ({
   payload: { id },
 });
 
+export const fetchWagers = (): Actions => ({
+  type: 'FETCH_WAGERS',
+  status: 'REQUEST',
+  payload: {},
+});
+
 export const updateWagerById = (id: string, fields: Partial<Wager>): Actions => ({
   type: 'UPDATE_WAGER',
   status: 'REQUEST',

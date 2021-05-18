@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { EventChannel } from 'redux-saga';
 import {
@@ -92,6 +93,7 @@ export function* updateWagerStateHandler(socket: Socket) {
     try {
       const action: FetchWagersActions | BroadcastPoolWagerActions = yield take(socketChannel);
       yield put<Actions>(action);
+      if (action.type === 'FETCH_WAGERS') yield put<Actions>({ type: 'JWT_SIGN_IN', status: 'REQUEST', payload: { token: getBearerToken() || '' } });
     } catch (error) {
       yield put<Actions>({ type: 'FETCH_WAGERS', status: 'FAILURE', payload: { message: error.message, code: null } });
     }
@@ -110,8 +112,9 @@ export function* updatePoolWagerHandler(socket: Socket) {
   while (true) {
     try {
       const action: CreateWagerActions = yield take((a: Actions) => a.type === 'CREATE_WAGER' && a.status === 'SUCCESS');
-      if (action.status !== 'SUCCESS') return;
-      if (action.payload.wdl) return;
+      if (action.status !== 'SUCCESS') continue;
+      if (action.payload.wdl) continue;
+
       const { game_id: gameId, data, amount } = action.payload;
       const message: BroadcastPoolWager = {
         gameId, type: 'move', data, amount,

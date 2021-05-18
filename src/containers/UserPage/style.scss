@@ -1,0 +1,11 @@
+.background {
+    margin: 40px;
+    .user-wager {
+        border: 2px solid #000;
+        display: flex;
+        justify-content: space-around;
+        p {
+            color: #000;
+        }
+    }
+}

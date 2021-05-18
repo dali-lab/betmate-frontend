@@ -18,9 +18,14 @@ const NavBar: React.FC<NavBarProps> = (props) => {
       <div className="right-side">
         {props.isAuthenticated
           ? (
-            <button>
-              <SignOutPanel />
-            </button>
+            <>
+              <button>
+                <NavLink to="/user">Account</NavLink>
+              </button>
+              <button>
+                <SignOutPanel />
+              </button>
+            </>
           ) : (
             <>
               <button>

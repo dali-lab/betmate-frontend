@@ -3,6 +3,7 @@ import {
   BroadcastPoolWager,
   BroadcastPoolWagerActions,
   GameUpdateActions,
+  StartGameData,
   UpdateGameEndData,
   UpdateGameOddsData, UpdateGameStateData,
 } from 'types/resources/game';
@@ -18,6 +19,10 @@ import {
  */
 export const createUpdateGameStateChannel: ChannelCreator<GameUpdateActions> = (socket) => eventChannel(
   (pushToChannel) => {
+    const gameStartHandler = (payload: StartGameData) => {
+      pushToChannel({ type: 'START_GAME', status: 'SUCCESS', payload });
+    };
+
     const newMoveHandler = (payload: UpdateGameStateData) => {
       pushToChannel({ type: 'UPDATE_GAME_STATE', status: 'SUCCESS', payload });
     };
@@ -30,6 +35,7 @@ export const createUpdateGameStateChannel: ChannelCreator<GameUpdateActions> = (
       pushToChannel({ type: 'UPDATE_GAME_END', status: 'SUCCESS', payload });
     };
 
+    socket.on<Events>('start_game', gameStartHandler);
     socket.on<Events>('new_move', newMoveHandler);
     socket.on<Events>('new_odds', newOddsHandler);
     socket.on<Events>('game_over', gameOverHandler);
@@ -51,7 +57,7 @@ export const createUpdateWagerStateChannel: ChannelCreator<FetchWagersActions | 
   (pushToChannel) => {
     const wagerResultHandler = (payload: WagerResultData) => {
       const { wagers } = payload;
-      pushToChannel({ type: 'FETCH_WAGERS', status: 'SUCCESS', payload: { wagers } });
+      pushToChannel({ type: 'FETCH_WAGERS', status: 'SUCCESS', payload: wagers });
     };
     const poolWagerHandler = (payload: BroadcastPoolWager) => {
       pushToChannel({ type: 'BROADCAST_POOL_WAGER', status: 'SUCCESS', payload });

@@ -6,11 +6,12 @@ import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreator
 import { useParams } from 'react-router';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
+import ChatBox from 'components/ChatBox';
 import PregameModal from 'components/PregameModal';
 import playerIconBlack from 'assets/player_icon_black.svg';
 import playerIconWhite from 'assets/player_icon_white.svg';
-import './style.scss';
 import PlayerInfo from 'containers/ChessMatch/playerInfo/component';
+import './style.scss';
 
 interface ChessMatchProps {
   joinGame: typeof joinGame
@@ -41,11 +42,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
       {props.games[gameId]?.move_hist?.length === 0 && showModal && <PregameModal updateShowModal={updateShowModal}/>}
       <NavBar />
       <div className='chess-match-container'>
-        <div className="chat-container">
-          <div className="chat-box">
-            <h1>Chat</h1>
-          </div>
-        </div>
+        <ChatBox />
         <div>
           <PlayerInfo
             icon={playerIconBlack}

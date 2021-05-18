@@ -1,7 +1,9 @@
 import { getBearerTokenHeader } from 'store/actionCreators';
 import { createBackendAxiosRequest } from 'store/requests';
 
-import { FetchWagerData, DeleteWagerData, Wager } from 'types/resources/wager';
+import {
+  FetchWagerData, DeleteWagerData, Wager, FetchWagersData,
+} from 'types/resources/wager';
 import { RequestReturnType } from 'types/state';
 
 export const createWager = async (
@@ -52,6 +54,16 @@ export const fetchWagerById = async (id: string): Promise<RequestReturnType<Fetc
     },
 
   } as RequestReturnType<FetchWagerData>;
+};
+
+export const fetchWagers = async (): Promise<RequestReturnType<FetchWagersData>> => {
+  const result = await createBackendAxiosRequest<FetchWagersData>({
+    method: 'GET',
+    url: '/wager',
+    headers: getBearerTokenHeader(),
+  });
+
+  return result;
 };
 
 export const updateWagerById = async (id: string, fields: Partial<Wager>): Promise<RequestReturnType<FetchWagerData>> => {
