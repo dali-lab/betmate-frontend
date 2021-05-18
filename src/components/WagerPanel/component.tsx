@@ -18,14 +18,13 @@ const WagerPanel: React.FC<WagerPanelProps> = (props) => {
     <div className="wager-panel-container">
       {(props.isAuthenticated && props.balance !== undefined) && (
         <div className="balance-text">
-          <p>Balance: {props.balance} tokens</p>
+          <p>Balance: {props.balance.toFixed(2)} tokens</p>
           <img src={BalanceIcon} />
         </div>
       )}
       <WagerSubPanel betType="move"/>
       <WagerSubPanel betType="wdl"/>
-      {/* TODO: don't hardcode wdl numbers */}
-      <WDLBar odds={props.games[gameId]?.odds}/>
+      <WDLBar odds={props.games[gameId]?.odds} height={20}/>
     </div>
   );
 };

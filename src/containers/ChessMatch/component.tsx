@@ -7,6 +7,7 @@ import { useParams } from 'react-router';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
 import ChatBox from 'components/ChatBox';
+import PregameModal from 'components/PregameModal';
 import playerIconBlack from 'assets/player_icon_black.svg';
 import playerIconWhite from 'assets/player_icon_white.svg';
 import PlayerInfo from 'containers/ChessMatch/playerInfo/component';
@@ -22,6 +23,7 @@ interface ChessMatchProps {
 const ChessMatch: React.FC<ChessMatchProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
   const [fen, updateFen] = useState('');
+  const [showModal, updateShowModal] = useState(true);
 
   useEffect(() => {
     props.fetchGameById(gameId);
@@ -33,8 +35,11 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     const game = props.games[gameId];
     if (game) updateFen(game.state);
   }, [props.games[gameId]?.state]);
+
+  if (!props.games[gameId]) return <p>Loading</p>;
   return (
     <>
+      {props.games[gameId]?.move_hist?.length === 0 && showModal && <PregameModal updateShowModal={updateShowModal}/>}
       <NavBar />
       <div className='chess-match-container'>
         <ChatBox />
@@ -47,7 +52,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
             isBlack={true}
           />
           <div className='chessBoard'>
-            <Chessboard position={fen} width={600}/>
+            <Chessboard position={fen} width={450}/>
           </div>
           <PlayerInfo
             icon={playerIconWhite}

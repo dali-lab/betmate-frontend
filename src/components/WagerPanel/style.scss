@@ -43,19 +43,6 @@
     }
 }
 
-input[type="submit"] {
-    margin: 15px auto;
-    display: block;
-    background: #E5AF27;
-    border: none;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    padding: 6px 20px;
-    border-radius: 14px;
-}
-
 input {
     cursor: pointer;
 }
@@ -67,10 +54,12 @@ input {
     flex-direction: column;
     justify-content: flex-end;
     margin: 0 auto;
+    div {
+        transition: height 1s ease-in-out;
+    }
 }
 
 .wdl-bar-container {
-    height: 15px;
     width: 100%;
     display: flex;
     div {

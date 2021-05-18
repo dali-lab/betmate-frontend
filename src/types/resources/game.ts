@@ -46,7 +46,7 @@ export interface Game {
 /* -------- State -------- */
 
 export interface GameState {
-  games: Record<string, Game>
+  games: Record<string, Game>,
 }
 
 /* -------- Action Types -------- */
