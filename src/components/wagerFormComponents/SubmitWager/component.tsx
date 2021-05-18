@@ -15,6 +15,7 @@ interface SubmitWagerProps {
   wager: string,
   wagerAmount: number,
   games: Record<string, Game>,
+  betType: 'wdl' | 'move',
 }
 
 const SubmitWager: React.FC<SubmitWagerProps> = (props) => {
@@ -58,8 +59,8 @@ const SubmitWager: React.FC<SubmitWagerProps> = (props) => {
         gameId,
         props.wager,
         props.wagerAmount,
-        true,
-        1 / props.games[gameId].odds[props.wager], // TODO: don't hardcode move odds
+        props.betType === 'wdl',
+        props.betType === 'wdl' ? 1 / props.games[gameId].odds[props.wager] : 3, // TODO: don't hardcode move odds
         props.games[gameId].move_hist.length + 1,
       );
     }
