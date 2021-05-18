@@ -17,12 +17,12 @@ interface ChessMatchProps {
   leaveGame: typeof leaveGame
   fetchGameById: typeof fetchGameById
   games: Record<string, Game>
-  showModal: Record<string, boolean>
 }
 
 const ChessMatch: React.FC<ChessMatchProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
   const [fen, updateFen] = useState('');
+  const [showModal, updateShowModal] = useState(true);
 
   useEffect(() => {
     props.fetchGameById(gameId);
@@ -37,7 +37,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
 
   return (
     <>
-      {props.showModal[gameId] && <PregameModal/>}
+      {props.games[gameId]?.move_hist?.length === 0 && showModal && <PregameModal updateShowModal={updateShowModal}/>}
       <NavBar />
       <div className='chess-match-container'>
         <div className="chat-container">

@@ -8,5 +8,4 @@ export default function* gameSaga() {
   yield fork(gameWatchers.watchfetchGamesByStatus);
   yield fork(gameWatchers.watchUpdateGameById);
   yield fork(gameWatchers.watchDeleteGameById);
-  yield fork(gameWatchers.watchUpdatePregameModal);
 }

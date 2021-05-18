@@ -46,7 +46,6 @@ export interface Game {
 
 export interface GameState {
   games: Record<string, Game>,
-  showPregameModal: Record<string, boolean>,
 }
 
 /* -------- Action Types -------- */
@@ -54,7 +53,6 @@ export interface GameState {
 export const JOIN_GAME = 'JOIN_GAME'; // ws
 export const LEAVE_GAME = 'LEAVE_GAME'; // ws
 export const MAKE_MOVE = 'MAKE_MOVE'; // ws
-export const UPDATE_PREGAME_MODAL = 'UPDATE_PREGAME_MODAL';
 export const UPDATE_GAME_STATE = 'UPDATE_GAME_STATE'; // ws
 export const UPDATE_GAME_ODDS = 'UPDATE_GAME_ODDS'; // ws
 export const UPDATE_GAME_END = 'UPDATE_GAME_END'; // ws
@@ -69,7 +67,6 @@ export const FETCH_GAMES = 'FETCH_GAMES';
 export type JoinGameData = { gameId: string }; // ws
 export type LeaveGameData = { gameId: string }; // ws
 export type MakeMoveData = { gameId: string, boardState: string }; // ws
-export type UpdatePregameModalData = { gameId: string, showModal: boolean };
 export type UpdateGameStateData = { gameId: string, state: string, move_hist: string[], time_white: number, time_black: number }; // ws
 export type UpdateGameOddsData = { gameId: string, odds: GameOdds, pool_wagers: { move: PoolWagerState } }; // ws
 export type UpdateGameEndData = { gameId: string, completed: boolean, game_status: string }; // ws
@@ -88,7 +85,6 @@ export type DeleteGameData = { id: string };
 export type JoinGameActions = AsyncAction<typeof JOIN_GAME, JoinGameData, JoinGameData>; // ws
 export type LeaveGameActions = AsyncAction<typeof LEAVE_GAME, LeaveGameData, LeaveGameData>; // ws
 export type MakeMoveActions = AsyncAction<typeof MAKE_MOVE, Empty, MakeMoveData>; // ws
-export type UpdatePregameModalActions = Action<typeof UPDATE_PREGAME_MODAL, UpdatePregameModalData>;
 export type UpdateGameStateActions = AsyncAction<typeof UPDATE_GAME_STATE, UpdateGameStateData>; // ws
 export type UpdateGameOddsActions = AsyncAction<typeof UPDATE_GAME_ODDS, UpdateGameOddsData>; // ws
 export type UpdateGameEndActions = AsyncAction<typeof UPDATE_GAME_END, UpdateGameEndData>; // ws
@@ -103,7 +99,7 @@ export type FetchGamesActions = AsyncAction<typeof FETCH_GAMES, FetchGamesData, 
 export type GameUpdateActions = UpdateGameStateActions | UpdateGameOddsActions | UpdateGameEndActions;
 
 export type GameActions =
-  JoinGameActions | LeaveGameActions | MakeMoveActions | UpdatePregameModalActions | GameUpdateActions |
+  JoinGameActions | LeaveGameActions | MakeMoveActions | GameUpdateActions |
   CreateGameActions | FetchGameActions | UpdateGameActions | DeleteGameActions | FetchGamesActions | BroadcastPoolWagerActions;
 
 export type GameActionTypes =
