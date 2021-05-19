@@ -42,7 +42,6 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
     ), 0);
 
     return Object.entries(poolPerMove)
-      .sort(([,poolA], [,poolB]) => (poolB - poolA))
       .map(([move, movePool], i) => {
         return (
           <label htmlFor={`move-option-${i}`} key={move}>
@@ -66,7 +65,7 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
   };
 
   return (
-    <div className="options-container">
+    <div className="options-container move-options">
       {renderMoveOptions()}
     </div>
   );
