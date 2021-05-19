@@ -9,6 +9,7 @@ import './style.scss';
 
 const mapStateToProps = (state: RootState) => ({
   games: state.game.games,
+  showModal: state.game.showModal,
 });
 
 export default connect(mapStateToProps, { joinGame, leaveGame, fetchGameById })(ChessMatch);

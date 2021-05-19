@@ -1,4 +1,4 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { useState } from 'react';
 import './style.scss';
 import GameOutcomes from 'components/wagerFormComponents/GameOutcomes';
 import WagerAmounts from 'components/wagerFormComponents/WagerAmounts';
@@ -6,10 +6,11 @@ import { WDLBar } from 'components/WagerPanel/helper_components';
 import { Game } from 'types/resources/game';
 import SubmitWager from 'components/wagerFormComponents/SubmitWager';
 import { useParams } from 'react-router';
+import { updateShowModal } from 'store/actionCreators/gameActionCreators';
 
 interface PregameModalProps {
   games: Record<string, Game>,
-  updateShowModal: Dispatch<SetStateAction<boolean>>,
+  updateShowModal: typeof updateShowModal,
 }
 
 const PregameModal: React.FC<PregameModalProps> = (props) => {
@@ -42,7 +43,7 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
           <button
             className="skip-button"
             type="button"
-            onClick={() => { props.updateShowModal(false); }}
+            onClick={() => { props.updateShowModal(gameId, false); }}
           >
             skip &gt;
           </button>
