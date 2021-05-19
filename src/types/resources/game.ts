@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { Empty } from 'types';
-import { AsyncAction } from 'types/state';
+import { AsyncAction, Action } from 'types/state';
 import { GameStatus } from 'utils/chess';
 
 export interface Player {
@@ -47,6 +47,7 @@ export interface Game {
 
 export interface GameState {
   games: Record<string, Game>,
+  showModal: Record<string, boolean>,
 }
 
 /* -------- Action Types -------- */
@@ -65,6 +66,7 @@ export const FETCH_GAME = 'FETCH_GAME';
 export const UPDATE_GAME = 'UPDATE_GAME';
 export const DELETE_GAME = 'DELETE_GAME';
 export const FETCH_GAMES = 'FETCH_GAMES';
+export const UPDATE_SHOW_MODAL = 'UPDATE_SHOW_MODAL';
 
 export type JoinGameData = { gameId: string }; // ws
 export type LeaveGameData = { gameId: string }; // ws
@@ -85,6 +87,8 @@ export type FetchGameData = Game;
 export type FetchGamesData = Game[];
 export type DeleteGameData = { id: string };
 
+export type UpdateModalData = { gameId: string, modalState: boolean };
+
 export type JoinGameActions = AsyncAction<typeof JOIN_GAME, JoinGameData, JoinGameData>; // ws
 export type LeaveGameActions = AsyncAction<typeof LEAVE_GAME, LeaveGameData, LeaveGameData>; // ws
 export type MakeMoveActions = AsyncAction<typeof MAKE_MOVE, Empty, MakeMoveData>; // ws
@@ -99,13 +103,15 @@ export type FetchGameActions = AsyncAction<typeof FETCH_GAME, FetchGameData, Fet
 export type UpdateGameActions = AsyncAction<typeof UPDATE_GAME, FetchGameData, UpdateGameRequestData>;
 export type DeleteGameActions = AsyncAction<typeof DELETE_GAME, DeleteGameData, DeleteGameRequestData>;
 export type FetchGamesActions = AsyncAction<typeof FETCH_GAMES, FetchGamesData, FetchGamesRequestData>;
+export type ShowModalActions = Action<typeof UPDATE_SHOW_MODAL, UpdateModalData>;
 
 export type GameUpdateActions = StartGameActions | UpdateGameStateActions | UpdateGameOddsActions | UpdateGameEndActions;
 
 export type GameActions =
-  JoinGameActions | LeaveGameActions | MakeMoveActions | GameUpdateActions |
+  JoinGameActions | LeaveGameActions | MakeMoveActions | GameUpdateActions | ShowModalActions |
   CreateGameActions | FetchGameActions | UpdateGameActions | DeleteGameActions | FetchGamesActions | BroadcastPoolWagerActions;
 
 export type GameActionTypes =
-  typeof JOIN_GAME | typeof LEAVE_GAME | typeof MAKE_MOVE | typeof UPDATE_GAME_STATE | typeof UPDATE_GAME_ODDS | typeof UPDATE_GAME_END | typeof FETCH_GAME
-  | typeof CREATE_GAME | typeof FETCH_GAME | typeof START_GAME | typeof UPDATE_GAME | typeof DELETE_GAME | typeof FETCH_GAMES | typeof BROADCAST_POOL_WAGER;
+  typeof JOIN_GAME | typeof LEAVE_GAME | typeof MAKE_MOVE | typeof UPDATE_GAME_STATE | typeof UPDATE_GAME_ODDS | typeof UPDATE_GAME_END | typeof FETCH_GAME |
+  typeof CREATE_GAME | typeof FETCH_GAME | typeof START_GAME | typeof UPDATE_GAME | typeof DELETE_GAME | typeof FETCH_GAMES | typeof BROADCAST_POOL_WAGER |
+  typeof UPDATE_SHOW_MODAL;

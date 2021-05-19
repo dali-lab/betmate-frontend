@@ -5,6 +5,7 @@ import { Actions } from 'types/state';
 
 const initialState: GameState = {
   games: {},
+  showModal: {},
 };
 
 const gameReducer = (state = initialState, action: Actions): GameState => {
@@ -12,6 +13,20 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
 
   switch (action.type) {
     case 'CREATE_GAME':
+      return {
+        ...state,
+        games: {
+          ...state.games,
+          [action.payload._id]: {
+            ...state.games[action.payload._id],
+            ...action.payload,
+          },
+        },
+        showModal: {
+          ...state.showModal,
+          [action.payload._id]: true,
+        },
+      };
     case 'FETCH_GAME':
     case 'UPDATE_GAME':
       return {
@@ -31,6 +46,10 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
           ...accum,
           [game._id]: game,
         }), state.games),
+        showModal: action.payload.reduce((accum, game) => ({
+          [game._id]: true,
+          ...accum,
+        }), state.showModal),
       };
 
     case 'DELETE_GAME':
@@ -51,6 +70,15 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
             ...state.games[action.payload.gameId],
             ...action.payload,
           },
+        },
+      };
+
+    case 'UPDATE_SHOW_MODAL':
+      return {
+        ...state,
+        showModal: {
+          ...state.showModal,
+          [action.payload.gameId]: action.payload.modalState,
         },
       };
 
