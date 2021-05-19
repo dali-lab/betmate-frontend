@@ -22,15 +22,13 @@
 .player-title {
     display: flex;
     flex-direction: row;
+    text-align: center;
 }
 
 .player-icon {
     margin-right: 12px;
 }
 
-.player-name {
-    margin-left: 10px;
-}
 
 .time-rect {
     background: #423E43;

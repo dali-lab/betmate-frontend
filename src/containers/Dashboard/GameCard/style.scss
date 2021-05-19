@@ -1,8 +1,57 @@
 .game-card {
-
-   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 100%;
 }
 
+.game-title {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: space-between;
+}
+
+.player-title {
+    margin-bottom: 0;
+    margin-top: 0;
+    align-self: center;
+
+    font-family: Roboto;
+}
+
+.player-name-whole{
+    color: #2AD9FF;
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.game-title-small {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0px;
+}
+.vs-text {
+    margin-right: .8em;
+    margin-left: .8em;
+    font-weight: bolder;
+    font-size: 15px;
+}
 .regular-text {
-    margin-left: 1em;
+    color: white;
+}
+
+.join-button {
+    background: #FADF9B;
+    border-radius: 10px;
+    min-width: 10em;
+    min-height: 3em;
+    cursor: pointer;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bolder;
+    border:none;
+    font-size: 15px;
 }

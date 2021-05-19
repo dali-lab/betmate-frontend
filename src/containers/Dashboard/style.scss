@@ -23,28 +23,53 @@
 }
 
 .searchBar {
-    flex: 0 1 auto;
+    background-color: #1E1E22;
     min-width: 400px;
+    text-align: center;
+    font-family: Roboto;
+    color: white;
+    outline: none;
+    border-bottom: 2px solid white;
+    border-right: none;
+    cursor: auto;
+}
+.searchBar::placeholder {
+    color: white;
+    opacity: 70%;
 }
 
 .browse-button {
-    flex: 1 0 0%;
+    border:none;
+    background-color: #FFC430;
+    border-radius: 5px;
+    min-width: 50px;
+    min-height: 25px;
+    font-weight: bold;
+    margin-left: 1em;
+    cursor: pointer; 
 }
 
+
 .betting-header {
+    font-family: Roboto;
+    font-size: 30px;
+    font-weight: 100px;
+    text-shadow: 0 0 5px #2AD9FF;
     margin-left: 1em;
     color: white;
+    margin-bottom: 0;
 }
 
 .card-box {
     background: #1E1E22;
-    border-radius: 15px;
+    // border-radius: 15px;
     width: 12%;
-    border: 10px solid #2AD9FF;
+    border: 7px solid;
+    border-radius: 10px;
+    border-color: #99F2FF;
     display: inline-block;
-    width: 40em;
-    height: 20em;
+    width: 25em;
+    height: 15em;
     margin: 1em;
     position: relative;
-    cursor: pointer;
 }
