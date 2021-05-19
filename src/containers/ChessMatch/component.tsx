@@ -39,7 +39,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
   if (!props.games[gameId]) return <p>Loading</p>;
   return (
     <>
-      {props.games[gameId].move_hist.length === 0 && props.showModal[gameId] && <PregameModal/>}
+      {props.games[gameId].game_status === 'not_started' && props.showModal[gameId] && <PregameModal/>}
       <NavBar />
       <div className='chess-match-container'>
         <ChatBox />
