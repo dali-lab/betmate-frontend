@@ -5,7 +5,7 @@ import { Wager } from 'types/resources/wager';
 import { fetchWagers } from 'store/actionCreators/wagerActionCreators';
 
 import './style.scss';
-import { ChatWager } from './helper_components';
+import { ChatWager, createFeedWager } from './helper_components';
 
 interface ChatBoxProps {
   resolvedWagers: Wager[]
@@ -14,9 +14,13 @@ interface ChatBoxProps {
 
 const ChatBox: React.FC<ChatBoxProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
+
   const resolvedWagers = props.resolvedWagers
     .filter((w) => w.game_id === gameId)
-    .sort((wA, wB) => new Date(wA.updated_at).getTime() - new Date(wB.updated_at).getTime());
+    .map(createFeedWager)
+    .flat()
+    .sort((fwA, fwB) => new Date(fwA.time).getTime() - new Date(fwB.time).getTime())
+    .map((fw) => <ChatWager wager={fw} key={fw._id} />);
 
   useEffect(() => {
     props.fetchWagers();
@@ -25,8 +29,8 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
   return (
     <div className="chat-container">
       <h1>Betting Chat 💬</h1>
-      <ScrollToBottom className="chat-box">
-        {resolvedWagers.map((w) => <ChatWager wager={w} key={w._id} />)}
+      <ScrollToBottom className="chat-box" followButtonClassName="follow-button">
+        {resolvedWagers}
       </ScrollToBottom>
     </div>
   );
