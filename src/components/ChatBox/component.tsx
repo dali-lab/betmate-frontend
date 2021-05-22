@@ -20,7 +20,7 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
     .map(createFeedWager)
     .flat()
     .sort((fwA, fwB) => new Date(fwA.time).getTime() - new Date(fwB.time).getTime())
-    .map((fw) => <ChatWager wager={fw} key={fw._id} />);
+    .map((fw) => <ChatWager wager={fw} key={`${fw._id}_${fw.time}`} />);
 
   useEffect(() => {
     props.fetchWagers();

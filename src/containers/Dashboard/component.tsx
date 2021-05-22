@@ -65,7 +65,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
       <h3 className='betting-header'>Continue Watching 👀</h3>
       {Object.keys(props.games).map((id) => {
         const game = props.games[id];
-        console.log(game);
         return (
           <div key={id} className='card-box'>
             <GameCard
