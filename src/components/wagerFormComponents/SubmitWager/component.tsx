@@ -53,7 +53,6 @@ const SubmitWager: React.FC<SubmitWagerProps> = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setPanelLoading(true);
     if (props.wager && props.wagerAmount) {
       props.createWager(
         gameId,
@@ -63,6 +62,7 @@ const SubmitWager: React.FC<SubmitWagerProps> = (props) => {
         props.betType === 'wdl' ? 1 / props.games[gameId].odds[props.wager] : 3, // TODO: don't hardcode move odds
         props.games[gameId].move_hist.length + 1,
       );
+      setPanelLoading(true);
     }
   };
 

@@ -3,5 +3,10 @@ import { createWager } from 'store/actionCreators/wagerActionCreators';
 
 import WagerSubPanel from 'components/WagerSubPanel/component';
 import './style.scss';
+import { RootState } from 'types/state';
 
-export default connect(null, { createWager })(WagerSubPanel);
+const mapStateToProps = (state: RootState) => ({
+  games: state.game.games,
+});
+
+export default connect(mapStateToProps, { createWager })(WagerSubPanel);
