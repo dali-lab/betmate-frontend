@@ -51,7 +51,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
             time={props.games[gameId]?.time_black}
             isBlack={true}
           />
-          <div className='chessBoard'>
+          <div className='chessboard'>
             <Chessboard position={fen} width={450}/>
           </div>
           <PlayerInfo

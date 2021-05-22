@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
+import ScrollToBottom from 'react-scroll-to-bottom';
 import { Wager } from 'types/resources/wager';
 import { fetchWagers } from 'store/actionCreators/wagerActionCreators';
 
@@ -23,10 +24,10 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
 
   return (
     <div className="chat-container">
-      <div className="chat-box">
-        <h1>Chat</h1>
+      <h1>Betting Chat 💬</h1>
+      <ScrollToBottom className="chat-box">
         {resolvedWagers.map((w) => <ChatWager wager={w} key={w._id} />)}
-      </div>
+      </ScrollToBottom>
     </div>
   );
 };
