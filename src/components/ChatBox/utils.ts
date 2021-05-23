@@ -1,4 +1,11 @@
-import { WagerStatus } from 'types/resources/wager';
+import { FeedWager, Wager, WagerStatus } from 'types/resources/wager';
+
+export const createFeedWager = (wager: Wager): FeedWager[] => ([
+  { ...wager, time: wager.created_at, status: WagerStatus.PENDING },
+  ...(wager.resolved
+    ? [{ ...wager, time: wager.updated_at, odds: wager.wdl ? wager.odds : wager.winning_pool_share ?? 1 }]
+    : []),
+]);
 
 const onWDLWagerCreate = (data: string, amount: number, odds: number): string => (
   `You made a $${amount} bet with ${odds.toFixed(2)}x odds for ${data.replace('_', ' to ')}`

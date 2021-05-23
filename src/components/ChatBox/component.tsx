@@ -5,7 +5,8 @@ import { Wager } from 'types/resources/wager';
 import { fetchWagers } from 'store/actionCreators/wagerActionCreators';
 
 import './style.scss';
-import { ChatWager, createFeedWager } from './helper_components';
+import { ChatWager } from './helper_components';
+import { createFeedWager } from './utils';
 
 interface ChatBoxProps {
   resolvedWagers: Wager[]
