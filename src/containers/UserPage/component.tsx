@@ -15,7 +15,6 @@ const UserPage: React.FC<UserProps> = (props) => {
   useEffect(() => {
     props.fetchWagers();
   }, []);
-  console.log('wagers', props.wagers);
 
   return (
     <div className="background">
