@@ -49,8 +49,9 @@
     background-clip: content-box, border-box;
     border-radius: 20px;
     height: 250px;
-    width: 250px;
+    width: 300px;
     margin: 0 20px;
+    overflow-y: scroll;
     h4 {
         font-family: 'Roboto';
         font-size: 16px;
