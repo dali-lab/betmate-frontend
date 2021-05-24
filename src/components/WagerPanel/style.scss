@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    background: #423E43;
+    background: #050505;
     min-height: calc(100vh - 80px);
     p {
         font-family: 'Roboto';
@@ -62,6 +62,7 @@ input {
 .wdl-bar-container {
     width: 100%;
     display: flex;
+    box-shadow: 0px 0px 20px 8px #00EFB2;
     div {
         height: 100%;
         transition: width 1s ease-in-out;

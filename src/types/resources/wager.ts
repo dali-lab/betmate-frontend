@@ -27,6 +27,10 @@ export interface Wager {
   updated_at: Date,
 }
 
+export interface FeedWager extends Wager {
+  time: Date
+}
+
 /* -------- State -------- */
 
 export interface WagerState {
