@@ -46,7 +46,7 @@
 .join-button {
     background: #FADF9B;
     border-radius: 10px;
-    min-width: 10em;
+    min-width: 8em;
     min-height: 3em;
     cursor: pointer;
     font-family: Roboto;
@@ -54,6 +54,7 @@
     font-weight: bolder;
     border:none;
     font-size: 15px;
+    margin-top: 1em;
 }
 
 .wdl-bar {
