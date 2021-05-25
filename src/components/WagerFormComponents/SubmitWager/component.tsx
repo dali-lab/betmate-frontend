@@ -37,6 +37,7 @@ const SubmitWager: React.FC<SubmitWagerProps> = (props) => {
         setSubmissionStatus('error');
       } else { // successful submission occurred
         setSubmissionStatus('success');
+        setTimeout(() => setSubmissionStatus(''), 5000);
       }
       setPanelLoading(false);
       if (props.isAuthenticated) props.jwtSignIn(); // updates the user balance post-bet
