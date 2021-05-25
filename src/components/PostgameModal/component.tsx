@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router';
 import { Game } from 'types/resources/game';
 import { Wager, WagerStatus } from 'types/resources/wager';
 import { GameStatus } from 'utils/chess';
+import { StatLine } from './helperComponents';
 import './style.scss';
 
 interface PostgameModalProps {
@@ -14,28 +15,6 @@ interface PostgameModalProps {
 const PostgameModal: React.FC<PostgameModalProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
   const history = useHistory();
-
-  const calcWinnings = () => {
-    return props
-      .resolvedWagers
-      .filter((wager) => wager.game_id === gameId && wager.status === WagerStatus.WON)
-      .reduce((winnings, wager) => {
-        return winnings
-        + (
-          wager.wdl
-            ? wager.amount * wager.odds
-            : wager.amount * wager.winning_pool_share
-        );
-      }, 0)
-      .toFixed(2);
-  };
-
-  const calcLosses = () => (
-    props.resolvedWagers
-      .filter((wager) => wager.game_id === gameId && wager.status === WagerStatus.LOST)
-      .reduce((loss, wager) => loss + wager.amount, 0)
-      .toFixed(2)
-  );
 
   const getGameResult = () => {
     switch (props.games[gameId].game_status) {
@@ -54,19 +33,31 @@ const PostgameModal: React.FC<PostgameModalProps> = (props) => {
     }
   };
 
+  const winnings = props.resolvedWagers
+    .filter((wager) => wager.game_id === gameId && wager.status === WagerStatus.WON)
+    .reduce((currWinnings, wager) => {
+      return currWinnings
+    + (
+      wager.wdl
+        ? wager.amount * wager.odds
+        : wager.amount * wager.winning_pool_share
+    );
+    }, 0)
+    .toFixed(2);
+
+  const losses = props.resolvedWagers
+    .filter((wager) => wager.game_id === gameId && wager.status === WagerStatus.LOST)
+    .reduce((loss, wager) => loss + wager.amount, 0)
+    .toFixed(2);
+
   const resolvedWagers = props.resolvedWagers
-    .filter((w) => w.game_id === gameId)
+    .filter((w) => w.game_id === gameId && w.resolved)
     .map((wager) => (
-      wager.resolved
-        ? [{ ...wager, time: wager.updated_at, odds: wager.wdl ? wager.odds : wager.winning_pool_share }]
-        : []
+      { ...wager, time: wager.updated_at, odds: wager.wdl ? wager.odds : wager.winning_pool_share }
     ))
-    .flat()
     .sort((fwA, fwB) => new Date(fwA.time).getTime() - new Date(fwB.time).getTime())
     .map((fw) => <ChatWager wager={fw} key={`${fw._id}_${fw.time}`} />);
 
-  const winnings = calcWinnings();
-  const losses = calcLosses();
   const profit = Number(winnings) - Number(losses);
 
   if (!props.games[gameId]) return <div />;
@@ -80,35 +71,18 @@ const PostgameModal: React.FC<PostgameModalProps> = (props) => {
             <div className="postgame-box blue-border">
               <div className="postgame-box-padding-container">
                 <h4>Your bets</h4>
-                {resolvedWagers}
+                {resolvedWagers.length
+                  ? resolvedWagers
+                  : <p className="no-bets-text">Looks like you didn&apos;t place any bets 😢 Theres always next game!</p>
+                }
               </div>
             </div>
             <div className="postgame-box orange-border">
               <div className="postgame-box-padding-container">
                 <h4>Stats</h4>
                 <div className="postgame-stats-container">
-                  <div className="stat-line">
-                    <p className="stat-line-left">Bets won</p>
-                    <div className="stat-line-right">
-                      <p className="green-text">
-                        {props.resolvedWagers.filter((wager) => wager.game_id === gameId && wager.status === WagerStatus.WON).length}
-                        /
-                        {props.resolvedWagers.filter((wager) => wager.game_id === gameId).length}
-                      </p>
-                      <p className="green-text">+${winnings}</p>
-                    </div>
-                  </div>
-                  <div className="stat-line">
-                    <p className="stat-line-left">Bets lost</p>
-                    <div className="stat-line-right">
-                      <p className="red-text">
-                        {props.resolvedWagers.filter((wager) => wager.game_id === gameId && wager.status === WagerStatus.LOST).length}
-                        /
-                        {props.resolvedWagers.filter((wager) => wager.game_id === gameId).length}
-                      </p>
-                      <p className="red-text">-${losses}</p>
-                    </div>
-                  </div>
+                  <StatLine winnings={winnings} losses={losses} betType='win' resolvedWagers={props.resolvedWagers} />
+                  <StatLine winnings={winnings} losses={losses} betType='loss' resolvedWagers={props.resolvedWagers} />
                   <hr />
                   <div className="stat-line">
                     <p className="stat-line-left">Total</p>
