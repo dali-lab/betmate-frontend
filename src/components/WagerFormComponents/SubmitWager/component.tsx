@@ -37,6 +37,7 @@ const SubmitWager: React.FC<SubmitWagerProps> = (props) => {
         setSubmissionStatus('error');
       } else { // successful submission occurred
         setSubmissionStatus('success');
+        setTimeout(() => setSubmissionStatus(''), 5000);
       }
       setPanelLoading(false);
       if (props.isAuthenticated) props.jwtSignIn(); // updates the user balance post-bet
@@ -53,7 +54,6 @@ const SubmitWager: React.FC<SubmitWagerProps> = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setPanelLoading(true);
     if (props.wager && props.wagerAmount) {
       props.createWager(
         gameId,
@@ -63,6 +63,7 @@ const SubmitWager: React.FC<SubmitWagerProps> = (props) => {
         props.betType === 'wdl' ? 1 / props.games[gameId].odds[props.wager] : 3, // TODO: don't hardcode move odds
         props.games[gameId].move_hist.length + 1,
       );
+      setPanelLoading(true);
     }
   };
 
