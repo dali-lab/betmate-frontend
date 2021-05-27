@@ -19,7 +19,7 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
     let decrease = 0;
     console.log(props.fen);
     // console.log(props.fen.split(' ')[1] === 'w');
-    if (playerTime > 0 && (!props.isBlack && whiteTurn) && ()) decrease = 0.01;
+    if (playerTime > 0 && (!props.isBlack && whiteTurn) && (!props.isBlack && whiteTurn)) decrease = 0.01;
     setInterval(() => setCounter((time) => time - decrease), 10);
     // return () => clearInterval(timer);
   }, [whiteTurn]);
