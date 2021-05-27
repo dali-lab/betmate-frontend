@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './style.scss';
-import { GameOutcomes, WagerAmounts, SubmitWager } from 'components/WagerFormComponents';
+import { GameOutcomes, WagerAmounts, SubmitWager } from 'components/wagerFormComponents';
 import { WDLBar } from 'components/WagerPanel/helper_components';
 import { Game } from 'types/resources/game';
 import { useParams } from 'react-router';

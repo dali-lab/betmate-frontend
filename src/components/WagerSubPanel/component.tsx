@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import GameOutcomes from 'components/WagerFormComponents/GameOutcomes';
-import MoveOptions from 'components/WagerFormComponents/MoveOptions';
-import WagerAmounts from 'components/WagerFormComponents/WagerAmounts';
-import SubmitWager from 'components/WagerFormComponents/SubmitWager';
+import GameOutcomes from 'components/wagerFormComponents/GameOutcomes';
+import MoveOptions from 'components/wagerFormComponents/MoveOptions';
+import WagerAmounts from 'components/wagerFormComponents/WagerAmounts';
+import SubmitWager from 'components/wagerFormComponents/SubmitWager';
 import { Game } from 'types/resources/game';
 import { useParams } from 'react-router';
 
