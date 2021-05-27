@@ -22,10 +22,13 @@ export interface Wager {
   move_number: number,
   resolved: boolean,
   status: WagerStatus,
-  winning_pool_share?: number,
-  winnings?: number,
+  winning_pool_share: number,
   created_at: Date,
   updated_at: Date,
+}
+
+export interface FeedWager extends Wager {
+  time: Date
 }
 
 /* -------- State -------- */

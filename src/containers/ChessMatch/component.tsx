@@ -8,9 +8,11 @@ import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
 import ChatBox from 'components/ChatBox';
 import PregameModal from 'components/PregameModal';
+import PostgameModal from 'components/PostgameModal';
 import playerIconBlack from 'assets/player_icon_black.svg';
 import playerIconWhite from 'assets/player_icon_white.svg';
 import PlayerInfo from 'containers/ChessMatch/playerInfo/component';
+import { GameStatus } from 'utils/chess';
 import './style.scss';
 
 interface ChessMatchProps {
@@ -36,27 +38,33 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     if (game) updateFen(game.state);
   }, [props.games[gameId]?.state]);
 
+  const gameOver = (game_status) => {
+    const gameOverStatuses = [GameStatus.WHITE_WIN, GameStatus.BLACK_WIN, GameStatus.DRAW];
+    return gameOverStatuses.includes(game_status);
+  };
+
   if (!props.games[gameId]) return <p>Loading</p>;
   return (
     <>
-      {props.games[gameId].game_status === 'not_started' && props.showModal[gameId] && <PregameModal/>}
+      {props.games[gameId].game_status === GameStatus.NOT_STARTED && props.showModal[gameId] && <PregameModal/>}
+      {gameOver(props.games[gameId].game_status) && <PostgameModal/>}
       <NavBar />
       <div className='chess-match-container'>
         <ChatBox />
         <div>
           <PlayerInfo
             icon={playerIconBlack}
-            name={props.games[gameId]?.player_black.name}
+            name={'Black'}
             elo={props.games[gameId]?.player_black.elo}
             time={props.games[gameId]?.time_black}
             isBlack={true}
           />
-          <div className='chessBoard'>
+          <div className='chessboard'>
             <Chessboard position={fen} width={450}/>
           </div>
           <PlayerInfo
             icon={playerIconWhite}
-            name={props.games[gameId]?.player_white.name}
+            name={'White'}
             elo={props.games[gameId]?.player_white.elo}
             time={props.games[gameId]?.time_white}
             isBlack={false}

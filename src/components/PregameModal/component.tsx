@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import './style.scss';
-import GameOutcomes from 'components/wagerFormComponents/GameOutcomes';
-import WagerAmounts from 'components/wagerFormComponents/WagerAmounts';
+import { GameOutcomes, WagerAmounts, SubmitWager } from 'components/wagerFormComponents';
 import { WDLBar } from 'components/WagerPanel/helper_components';
 import { Game } from 'types/resources/game';
-import SubmitWager from 'components/wagerFormComponents/SubmitWager';
 import { useParams } from 'react-router';
 import { updateShowModal } from 'store/actionCreators/gameActionCreators';
 

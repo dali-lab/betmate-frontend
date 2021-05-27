@@ -53,8 +53,8 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
             <div key={id} className='card-box'>
               <GameCard
                 gameID={id}
-                player1={game.player_black.name}
-                player2={game.player_white.name}
+                player1={'Black'}
+                player2={'White'}
                 player1Rating={game.player_black.elo}
                 player2Rating= {game.player_white.elo}
                 playerFavor={getFavoredPlayer(game.odds)}
@@ -70,8 +70,8 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           <div key={id} className='card-box'>
             <GameCard
               gameID={id}
-              player1={game.player_black.name}
-              player2={game.player_white.name}
+              player1={'Black'}
+              player2={'White'}
               player1Rating={game.player_black.elo}
               player2Rating= {game.player_white.elo}
               playerFavor={getFavoredPlayer(game.odds)}

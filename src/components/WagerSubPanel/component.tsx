@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GameOutcomes from 'components/wagerFormComponents/GameOutcomes';
 import MoveOptions from 'components/wagerFormComponents/MoveOptions';
 import WagerAmounts from 'components/wagerFormComponents/WagerAmounts';
@@ -15,6 +15,11 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
   const [wager, setWager] = useState('');
   const [wagerAmount, setWagerAmount] = useState(0);
   const { id: gameId } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    setWager('');
+    setWagerAmount(0);
+  }, [props.games[gameId]?.move_hist.length]);
 
   return (
     <div className="bet-subpanel">

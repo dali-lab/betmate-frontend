@@ -35,7 +35,6 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
       ...moveOptions.reduce((obj, move) => ({ ...obj, [move]: 0 }), {}),
       Other: 0,
     });
-    console.log(poolPerMove);
 
     const maxPercentage = Object.values(poolPerMove).reduce((currMax, movePool) => (
       currMax > (movePool / totalPool) ? currMax : (movePool / totalPool)

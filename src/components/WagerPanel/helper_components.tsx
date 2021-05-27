@@ -11,7 +11,7 @@ export const VerticalBar: React.FC<VerticalBarProps> = (props) => {
   return (
     <div className="vertical-bar-container">
       <div style={{
-        height: (props.percentage && props.percentage !== 0) ? 35 * (props.percentage / props.maxPercentage) : 5,
+        height: (props.percentage && props.percentage !== 0) ? 35 * (props.percentage / props.maxPercentage) + 5 : 5,
         background: props.color,
       }} />
     </div>
