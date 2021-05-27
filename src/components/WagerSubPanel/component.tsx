@@ -3,14 +3,18 @@ import GameOutcomes from 'components/wagerFormComponents/GameOutcomes';
 import MoveOptions from 'components/wagerFormComponents/MoveOptions';
 import WagerAmounts from 'components/wagerFormComponents/WagerAmounts';
 import SubmitWager from 'components/wagerFormComponents/SubmitWager';
+import { useParams } from 'react-router';
+import { Game } from 'types/resources/game';
 
 interface WagerSubPanelProps {
   betType: 'wdl' | 'move',
+  games: Record<string, Game>
 }
 
 const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
   const [wager, setWager] = useState('');
   const [wagerAmount, setWagerAmount] = useState(0);
+  const { id: gameId } = useParams<{ id: string }>();
 
   return (
     <div className="bet-subpanel">
@@ -18,7 +22,7 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
       <form>
         {props.betType === 'move'
           ? <MoveOptions wager={wager} setWager={setWager}/>
-          : <GameOutcomes wager={wager} setWager={setWager}/>
+          : <GameOutcomes odds = {props.games[gameId]?.odds} wager={wager} setWager={setWager}/>
         }
         <WagerAmounts wagerAmount={wagerAmount} setWagerAmount={setWagerAmount} betType={props.betType}/>
         <SubmitWager

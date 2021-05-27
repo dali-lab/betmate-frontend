@@ -33,7 +33,7 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
                 width={250}
               />
             </div>
-            <GameOutcomes wager={wager} setWager={setWager}/>
+            <GameOutcomes odds={props.games[gameId]?.odds} wager={wager} setWager={setWager}/>
             <WagerAmounts wagerAmount={wagerAmount} setWagerAmount={setWagerAmount} betType="wdl"/>
             <SubmitWager
               wager={wager}
