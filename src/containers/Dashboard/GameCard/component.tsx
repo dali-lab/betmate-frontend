@@ -1,9 +1,17 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { WDLBar } from 'components/WagerPanel/helper_components';
+
 import blackPawn from 'assets/dashboard/blackPawn.svg';
 import whitePawn from 'assets/dashboard/whitePawn.svg';
 
 import './style.scss';
+
+interface OddsInterface {
+  black_win: number,
+  draw: number,
+  white_win: number
+}
 
 interface GameCardProps {
   gameID: string;
@@ -13,6 +21,7 @@ interface GameCardProps {
   player2Rating: number;
   playerFavor: string;
   earnings: number;
+  gameOdds: OddsInterface
 }
 
 const GameCard: React.FC<GameCardProps> = (props) => {
@@ -34,7 +43,14 @@ const GameCard: React.FC<GameCardProps> = (props) => {
         </div>
         <img src={whitePawn}/>
       </div>
-      <p className='regular-text'>{props.playerFavor} to win</p>
+      <div className='wdl-bar'>
+        <WDLBar
+          odds={props.gameOdds}
+          height={15}
+          width={300}
+        />
+      </div>
+
       <button className='join-button' onClick={() => history.push(`/chess/${props.gameID}`)}>join game</button>
     </div>
   );

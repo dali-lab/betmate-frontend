@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './style.scss';
-import { GameOutcomes, WagerAmounts, SubmitWager } from 'components/WagerFormComponents';
 import { WDLBar } from 'components/WagerPanel/helper_components';
 import { Game } from 'types/resources/game';
 import { useParams } from 'react-router';
 import { updateShowModal } from 'store/actionCreators/gameActionCreators';
+import { GameOutcomes, WagerAmounts, SubmitWager } from '../WagerFormComponents';
 
 interface PregameModalProps {
   games: Record<string, Game>,
@@ -28,9 +28,10 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
               <WDLBar
                 odds={props.games[gameId]?.odds}
                 height={30}
+                width={250}
               />
             </div>
-            <GameOutcomes wager={wager} setWager={setWager}/>
+            <GameOutcomes odds={props.games[gameId]?.odds} wager={wager} setWager={setWager}/>
             <WagerAmounts wagerAmount={wagerAmount} setWagerAmount={setWagerAmount} betType="wdl"/>
             <SubmitWager
               wager={wager}

@@ -58,6 +58,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                 player1Rating={game.player_black.elo}
                 player2Rating= {game.player_white.elo}
                 playerFavor={getFavoredPlayer(game.odds)}
+                gameOdds = {game.odds}
                 earnings={10.9}/>
             </div>
           );
@@ -74,6 +75,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
               player1Rating={game.player_black.elo}
               player2Rating= {game.player_white.elo}
               playerFavor={getFavoredPlayer(game.odds)}
+              gameOdds = {game.odds}
               earnings={10.9}/>
           </div>
         );
