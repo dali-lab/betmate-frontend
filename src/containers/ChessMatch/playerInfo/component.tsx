@@ -11,21 +11,21 @@ interface ChessMatchProps {
 }
 
 const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
-  // const playerTime = new Date((props.time ?? 0) * 1000).toISOString().substr(14, 8);
-  // const playerTime = props.time;
-  const [playerTime, setCounter] = useState(props.time == null ? 0 : props.time);
-  const whiteTurn = props.fen?.split(' ')[1] === 'w';
-  useEffect(() => {
-    let decrease = 0;
-    console.log(props.fen);
-    // console.log(props.fen.split(' ')[1] === 'w');
-    if (playerTime > 0 && (!props.isBlack && whiteTurn) && (!props.isBlack && whiteTurn)) decrease = 0.01;
-    setInterval(() => setCounter((time) => time - decrease), 10);
-    // return () => clearInterval(timer);
-  }, [whiteTurn]);
+  const [playerTime, setTimer] = useState(props.time == null ? 0 : props.time);
+  const blackTurn = props.fen?.split(' ')[1] === 'b';
 
   useEffect(() => {
-    // console.log(playerTime);
+    let decrease = 0;
+    if (playerTime > 0 && (props.isBlack === blackTurn)) {
+      decrease = 0.01;
+    } else {
+      decrease = 0;
+    }
+
+    setInterval(() => setTimer((time) => time - decrease), 10);
+  }, [blackTurn]);
+
+  useEffect(() => {
   }, [playerTime]);
 
   const timeString = new Date((playerTime ?? 0) * 1000).toISOString();

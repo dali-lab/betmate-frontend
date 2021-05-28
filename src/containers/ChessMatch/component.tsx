@@ -51,6 +51,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
       <NavBar />
       <div className='chess-match-container'>
         <ChatBox />
+        <p>{fen?.split(' ')[1]}</p>
         <div>
           <PlayerInfo
             icon={playerIconBlack}
@@ -62,7 +63,6 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
           />
           <div className='chessboard'>
             <Chessboard position={fen} width={450}/>
-            {console.log(fen.split(' ')[1] === 'b')}
           </div>
           <PlayerInfo
             icon={playerIconWhite}
