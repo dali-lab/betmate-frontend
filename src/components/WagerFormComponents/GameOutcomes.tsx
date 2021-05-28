@@ -20,13 +20,13 @@ interface GameOutcomesProps {
 const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
   const getMultiplier = (odd: number) => {
     if (odd <= 0) return 0;
-    const multiplier = Math.trunc(1 / odd);
+    const multiplier = 1 / odd;
     if (multiplier < 2) {
       return multiplier.toFixed(2);
     } else if (multiplier < 10) {
       return multiplier.toFixed(1);
     } else {
-      return multiplier;
+      return Math.trunc(multiplier);
     }
   };
 
