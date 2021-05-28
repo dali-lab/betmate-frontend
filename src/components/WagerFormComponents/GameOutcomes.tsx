@@ -18,22 +18,29 @@ interface GameOutcomesProps {
 }
 
 const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
-  const getMultiplier = (odds: string) => {
-    let odd = 0;
+  const getMultiplier = (odd: number) => {
+    if (odd <= 0) return 0;
+    const multiplier = Math.trunc(1 / odd);
+    if (multiplier < 2) {
+      return multiplier.toFixed(2);
+    } else if (multiplier < 10) {
+      return multiplier.toFixed(1);
+    } else {
+      return multiplier;
+    }
+  };
+
+  const getOdds = (odds: string) => {
     switch (odds) {
       case 'White':
-        odd = props.odds.white_win;
-        break;
+        return getMultiplier(props.odds.white_win);
       case 'Black':
-        odd = props.odds.black_win;
-        break;
+        return getMultiplier(props.odds.black_win);
       case 'Draw':
-        odd = props.odds.draw;
-        break;
+        return getMultiplier(props.odds.draw);
       default:
-        return '';
+        return 0;
     }
-    return Math.floor((1 / odd) * 10) / 10; // round down to the nearest tenth
   };
   const renderGameOutcomes = () => (
     Object.keys(gameOutcomes).map((outcome, i) => {
@@ -44,7 +51,7 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
             <img src={image} />
             <p>{outcome}</p>
           </div>
-          <p>{getMultiplier(outcome)}x</p>
+          <p>{getOdds(outcome)}x</p>
           <input
             id={`wdl-option-${i}`}
             name="wdl"
