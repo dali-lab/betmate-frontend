@@ -13,7 +13,7 @@ const NavBar: React.FC<NavBarProps> = (props) => {
     <div className="nav-container">
       <div className="left-side">
         <NavLink to="/"><img src={logo} alt="logo" /></NavLink>
-        <h1>Welcome{props.isAuthenticated && props.firstName ? ` ${props.firstName}` : ''}!</h1>
+        <h1>BetMate</h1>
       </div>
       <div className="right-side">
         {props.isAuthenticated
