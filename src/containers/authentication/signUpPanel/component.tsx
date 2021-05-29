@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
+import { useHistory } from 'react-router';
 import { signUpUser as signUpUserType } from 'store/actionCreators/authActionCreators';
-import logo from '../../../assets/logo.png';
+import logo from '../../../assets/logo.svg';
 
-export interface SignInPanelProps extends RouteComponentProps {
+export interface SignUpPanelProps {
   isAuthenticated: boolean,
   isLoading: boolean,
   errorMessages: string[],
   signUpUser: typeof signUpUserType
 }
 
-const SignUpPanel: React.FC<SignInPanelProps> = (props) => {
+const SignUpPanel: React.FC<SignUpPanelProps> = (props) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [formValidationErrors, setFormValidationErrors] = useState('');
+
+  const history = useHistory();
 
   useEffect(() => {
     if (props.isAuthenticated) {
-      props.history.push('/');
+      history.push('/');
     }
   }, [props.isAuthenticated]);
 
@@ -38,18 +42,26 @@ const SignUpPanel: React.FC<SignInPanelProps> = (props) => {
     setPassword(e.target.value);
   };
 
+  const handleConfirmPasswordUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.target.value);
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
-
+    setFormValidationErrors('');
     if (!firstName) {
-      console.warn('Please enter your first name!');
+      setFormValidationErrors('Please enter your first name!');
     } else if (!lastName) {
-      console.warn('Please enter your last name!');
+      setFormValidationErrors('Please enter your last name!');
     } else if (!email) {
-      console.warn('Please enter an email address!');
+      setFormValidationErrors('Please enter an email address!');
     } else if (!password) {
-      console.warn('AUTH_USER', 'Please enter a password!');
+      setFormValidationErrors('Please enter a password!');
+    } else if (!confirmPassword) {
+      setFormValidationErrors('Please confirm your password!');
+    } else if (confirmPassword !== password) {
+      setFormValidationErrors('Please make sure your passwords match!');
     } else {
       // Send only if all fields filled in
       props.signUpUser(email, password, firstName, lastName);
@@ -59,19 +71,43 @@ const SignUpPanel: React.FC<SignInPanelProps> = (props) => {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <div className="title-container">
-          <h1>Betmate</h1>
-          <img src={logo} alt="logo"/>
-        </div>
-        <form className="form-container" onSubmit={handleSubmit}>
-          <input type="text" placeholder="First Name" value={firstName} onChange={handleFirstNameUpdate} />
-          <input type="text" placeholder="Last Name" value={lastName} onChange={handleLastNameUpdate} />
-          <input type="text" placeholder="Email" value={email} onChange={handleEmailUpdate} />
-          <input type="password" placeholder="Password" value={password} onChange={handlePasswordUpdate} />
-          <input type="submit" value="Sign Up" />
-        </form>
-        <div className="auth-status-message-container">
-          {props.isLoading ? <div>Authenticating...</div> : <div>{props.errorMessages[0]}</div>}
+        <div className="auth-padding-container">
+          <div className="title-container">
+            <h1>Betmate</h1>
+            <img src={logo} alt="logo"/>
+          </div>
+          <form className="form-container" onSubmit={handleSubmit}>
+            <p>First Name</p>
+            <input type="text" value={firstName} onChange={handleFirstNameUpdate} />
+            <p>Last Name</p>
+            <input type="text" value={lastName} onChange={handleLastNameUpdate} />
+            <p>Email</p>
+            <input type="email" value={email} onChange={handleEmailUpdate} />
+            <p>Password</p>
+            <input type="password" value={password} onChange={handlePasswordUpdate} />
+            <p>Confirm Password</p>
+            <input type="password" value={confirmPassword} onChange={handleConfirmPasswordUpdate} />
+            <input type="submit" value="create account" />
+          </form>
+          <div className="auth-status-message-container">
+            {props.isLoading ? <div>Authenticating...</div> : <div>{props.errorMessages[0]}</div>}
+            {formValidationErrors && <div>{formValidationErrors}</div>}
+          </div>
+          <div className="auth-redirect-links">
+            <p
+              className="auth-redirect-link"
+              onClick={() => history.push('/')}
+            >
+              dashboard
+            </p>
+            <p className="auth-redirect-link"> | </p>
+            <p
+              className="auth-redirect-link"
+              onClick={() => history.push('/signin')}
+            >
+              sign in
+            </p>
+          </div>
         </div>
       </div>
     </div>

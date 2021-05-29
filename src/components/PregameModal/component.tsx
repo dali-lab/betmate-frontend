@@ -28,7 +28,6 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
               <WDLBar
                 odds={props.games[gameId]?.odds}
                 height={30}
-                width={250}
               />
             </div>
             <GameOutcomes odds={props.games[gameId]?.odds} wager={wager} setWager={setWager}/>
