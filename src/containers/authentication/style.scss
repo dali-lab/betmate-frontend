@@ -5,14 +5,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url('assets/auth/background.svg');
 }
 
 .auth-box {
-    background: #393939;
-    border: 5px solid #C4DAFF;
-    border-radius: 35px;
     width: 600px;
-    padding-bottom: 10px;
+    border: solid 8px transparent;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-radius: 35px;
+    background-image: radial-gradient(#1E1E22,#1E1E22), linear-gradient(156.39deg, #29ACCA 15.21%, #24996B 50.28%, #FF00C2 73.15%, #FFB800 96.38%);
+}
+
+.auth-padding-container {
+    padding-bottom: 50px;
 }
 
 .title-container {
@@ -20,9 +26,8 @@
     align-content: center;
     justify-content: center;
     h1 {
-        font-family: 'Roboto';
         font-weight: bold;
-        font-size: 80px;
+        font-size: 50px;
         color: #F8FAFF;
         margin-right: 30px;
     }
@@ -37,6 +42,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    p {
+        color: #F8FAFF;
+        margin: 0;
+        text-align: left;
+        width: 407px;
+        font-weight: 300;
+    }
     input {
         margin: 15px 0;
         width: 400px;
@@ -44,21 +56,38 @@
         border-radius: 7px;
         border: 0;
         padding-left: 8px;
+        margin: 5px 0 15px 0;
     }    
     input[type='submit'] {
-        background: #1354BD;
+        background: #93C2C9;
         border: 0;
-        width: 160px;
-        height: 35px;
-        border-radius: 8px;
-        color: #F8FAFF;
-        font-family: 'Roboto';
+        width: 147px;
+        height: 36px;
+        border-radius: 20px;
+        color: #1E1E22;
         font-weight: 300;
-        font-size: 18px;
+        font-size: 14px;
+        line-height: 100%;
         cursor: pointer;
     }
 }
 
 .auth-status-message-container {
     text-align: center;
+    color: #F8FAFF;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.auth-redirect-links {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    p {
+        color: #F8FAFF;
+        display: inline;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 300;
+    }
 }
