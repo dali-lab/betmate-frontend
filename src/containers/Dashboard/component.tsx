@@ -7,7 +7,7 @@ import './style.scss';
 
 export interface DashboardProps{
   fetchGamesByStatus: typeof fetchGamesByStatus
-  games: Record<string, Game>;
+  games: Game[];
 }
 
 interface OddsInterface {
@@ -44,8 +44,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         </div>
       </div>
       <h3 className='betting-header'>Popular Matches 🔥</h3>
-      {Object
-        .values(props.games)
+      {props.games
         .sort((gameA, gameB) => new Date(gameB.updated_at).getTime() - new Date(gameA.updated_at).getTime())
         .map((game) => {
           const id = game._id;
@@ -63,13 +62,12 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
             </div>
           );
         })}
-      <h3 className='betting-header'>Continue Watching 👀</h3>
-      {Object.keys(props.games).map((id) => {
-        const game = props.games[id];
+      {/* <h3 className='betting-header'>Continue Watching 👀</h3>
+      {props.games.map((game) => {
         return (
-          <div key={id} className='card-box'>
+          <div key={game._id} className='card-box'>
             <GameCard
-              gameID={id}
+              gameID={game._id}
               player1={'Black'}
               player2={'White'}
               player1Rating={game.player_black.elo}
@@ -79,7 +77,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
               earnings={10.9}/>
           </div>
         );
-      })}
+      })} */}
     </div>
   );
 };

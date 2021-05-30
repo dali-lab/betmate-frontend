@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, useHistory } from 'react-router';
 import { signInUser as signInUserType } from 'store/actionCreators/authActionCreators';
-import logo from '../../../assets/logo.png';
+import logo from '../../../assets/logo.svg';
 
 export interface SignInPanelProps extends RouteComponentProps {
   isAuthenticated: boolean,
@@ -13,10 +13,13 @@ export interface SignInPanelProps extends RouteComponentProps {
 const SignInPanel: React.FC<SignInPanelProps> = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [formValidationErrors, setFormValidationErrors] = useState('');
+
+  const history = useHistory();
 
   useEffect(() => {
     if (props.isAuthenticated) {
-      props.history.push('/');
+      history.push('/');
     }
   }, [props.isAuthenticated]);
 
@@ -31,11 +34,12 @@ const SignInPanel: React.FC<SignInPanelProps> = (props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
+    setFormValidationErrors('');
 
     if (!email) {
-      console.warn('Please enter an email address!');
+      setFormValidationErrors('Please enter an email address!');
     } else if (!password) {
-      console.warn('Please enter a password!');
+      setFormValidationErrors('Please enter a password!');
     } else {
       // Send only if all fields filled in
       props.signInUser(email, password);
@@ -45,17 +49,37 @@ const SignInPanel: React.FC<SignInPanelProps> = (props) => {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <div className="title-container">
-          <h1>Betmate</h1>
-          <img src={logo} alt="logo"/>
-        </div>
-        <form className="form-container" onSubmit={handleSubmit}>
-          <input type="email" placeholder="Email" value={email} onChange={handleEmailUpdate} />
-          <input type="password" placeholder="Password" value={password} onChange={handlePasswordUpdate} />
-          <input type="submit" value="Sign In" />
-        </form>
-        <div className="auth-status-message-container">
-          {props.isLoading ? <div>Authenticating...</div> : <div>{props.errorMessages[0]}</div>}
+        <div className="auth-padding-container">
+          <div className="title-container">
+            <h1>Betmate</h1>
+            <img src={logo} alt="logo"/>
+          </div>
+          <form className="form-container" onSubmit={handleSubmit}>
+            <p>Email</p>
+            <input type="email" value={email} onChange={handleEmailUpdate} />
+            <p>Password</p>
+            <input type="password" value={password} onChange={handlePasswordUpdate} />
+            <input type="submit" value="Sign In" />
+          </form>
+          <div className="auth-status-message-container">
+            {props.isLoading ? <div>Authenticating...</div> : <div>{props.errorMessages[0]}</div>}
+            {formValidationErrors && <div>{formValidationErrors}</div>}
+          </div>
+          <div className="auth-redirect-links">
+            <p
+              className="auth-redirect-link"
+              onClick={() => history.push('/')}
+            >
+              dashboard
+            </p>
+            <p className="auth-redirect-link"> | </p>
+            <p
+              className="auth-redirect-link"
+              onClick={() => history.push('/signup')}
+            >
+              create account
+            </p>
+          </div>
         </div>
       </div>
     </div>
