@@ -1,7 +1,7 @@
-import MoveOptions from 'components/wagerFormComponents/MoveOptions';
-import SubmitWager from 'components/wagerFormComponents/SubmitWager';
-import GameOutcomes from 'components/wagerFormComponents/GameOutcomes';
-import WagerAmounts from 'components/wagerFormComponents/WagerAmounts';
+import MoveOptions from './MoveOptions';
+import SubmitWager from './SubmitWager';
+import GameOutcomes from './GameOutcomes';
+import WagerAmounts from './WagerAmounts';
 
 export {
   MoveOptions,

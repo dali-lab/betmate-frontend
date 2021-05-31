@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { RootState } from 'types/state';
 
-import MoveOptions from 'components/wagerFormComponents/MoveOptions/component';
+import MoveOptions from './component';
 import '../style.scss';
 
 const mapStateToProps = (state: RootState) => ({

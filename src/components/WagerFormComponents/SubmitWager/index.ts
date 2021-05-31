@@ -4,7 +4,7 @@ import { createWager } from 'store/actionCreators/wagerActionCreators';
 import { jwtSignIn } from 'store/actionCreators/authActionCreators';
 import { errorSelector, loadingSelector } from 'store/actionCreators/requestActionCreators';
 
-import SubmitWager from 'components/wagerFormComponents/SubmitWager/component';
+import SubmitWager from './component';
 import '../style.scss';
 
 const loadActions: ActionTypes[] = ['CREATE_WAGER'];
