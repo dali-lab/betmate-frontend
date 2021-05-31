@@ -11,6 +11,9 @@
         color: #F2F2F2;
         font-size: 13px;
     }
+    input {
+        cursor: pointer;
+    }
 }
 
 .balance-text {
@@ -41,10 +44,6 @@
         height: 21px;
         margin-right: 8px;
     }
-}
-
-input {
-    cursor: pointer;
 }
 
 .vertical-bar-container {

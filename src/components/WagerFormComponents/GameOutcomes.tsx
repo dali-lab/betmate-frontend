@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import WhiteWin from 'assets/wager_panel/wdl/white_win.svg';
 import Draw from 'assets/wager_panel/wdl/draw.svg';
 import BlackWin from 'assets/wager_panel/wdl/black_win.svg';
+import { GameOdds } from 'types/resources/game';
 import './style.scss';
 
 const gameOutcomes = {
@@ -13,9 +14,34 @@ const gameOutcomes = {
 interface GameOutcomesProps {
   setWager: Dispatch<SetStateAction<string>>
   wager: string
+  odds: GameOdds
 }
 
 const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
+  const getMultiplier = (odd: number) => {
+    if (odd <= 0) return 0;
+    const multiplier = 1 / odd;
+    if (multiplier < 2) {
+      return multiplier.toFixed(2);
+    } else if (multiplier < 10) {
+      return multiplier.toFixed(1);
+    } else {
+      return Math.trunc(multiplier);
+    }
+  };
+
+  const getOdds = (odds: string) => {
+    switch (odds) {
+      case 'White':
+        return getMultiplier(props.odds.white_win);
+      case 'Black':
+        return getMultiplier(props.odds.black_win);
+      case 'Draw':
+        return getMultiplier(props.odds.draw);
+      default:
+        return 0;
+    }
+  };
   const renderGameOutcomes = () => (
     Object.keys(gameOutcomes).map((outcome, i) => {
       const [outcomeCode, image] = gameOutcomes[outcome];
@@ -25,6 +51,7 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
             <img src={image} />
             <p>{outcome}</p>
           </div>
+          <p>{getOdds(outcome)}x</p>
           <input
             id={`wdl-option-${i}`}
             name="wdl"

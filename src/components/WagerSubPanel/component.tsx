@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import GameOutcomes from 'components/wagerFormComponents/GameOutcomes';
-import MoveOptions from 'components/wagerFormComponents/MoveOptions';
-import WagerAmounts from 'components/wagerFormComponents/WagerAmounts';
-import SubmitWager from 'components/wagerFormComponents/SubmitWager';
-import { Game } from 'types/resources/game';
+import React, { useState, useEffect } from 'react';
+import GameOutcomes from 'components/WagerFormComponents/GameOutcomes';
+import MoveOptions from 'components/WagerFormComponents/MoveOptions';
+import WagerAmounts from 'components/WagerFormComponents/WagerAmounts';
+import SubmitWager from 'components/WagerFormComponents/SubmitWager';
 import { useParams } from 'react-router';
+import { Game } from 'types/resources/game';
 
 interface WagerSubPanelProps {
   betType: 'wdl' | 'move',
-  games: Record<string, Game>,
+  games: Record<string, Game>
 }
 
 const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
   const [wager, setWager] = useState('');
   const [wagerAmount, setWagerAmount] = useState(0);
-
   const { id: gameId } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -28,7 +27,7 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
       <form>
         {props.betType === 'move'
           ? <MoveOptions wager={wager} setWager={setWager}/>
-          : <GameOutcomes wager={wager} setWager={setWager}/>
+          : <GameOutcomes odds = {props.games[gameId]?.odds} wager={wager} setWager={setWager}/>
         }
         <WagerAmounts wagerAmount={wagerAmount} setWagerAmount={setWagerAmount} betType={props.betType}/>
         <SubmitWager
