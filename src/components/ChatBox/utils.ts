@@ -6,9 +6,19 @@ export const createFeedWager = (wager: Wager): FeedWager[] => ([
     ? [{ ...wager, time: wager.updated_at, odds: wager.wdl ? wager.odds : wager.winning_pool_share ?? 1 }]
     : []),
 ]);
-
+const getMultiplier = (odd: number) => {
+  if (odd <= 0) return 0;
+  const multiplier = odd;
+  if (multiplier < 2) {
+    return multiplier.toFixed(2);
+  } else if (multiplier < 10) {
+    return multiplier.toFixed(1);
+  } else {
+    return Math.trunc(multiplier);
+  }
+};
 const onWDLWagerCreate = (data: string, amount: number, odds: number): string => (
-  `You made a $${amount} bet with ${odds.toFixed(2)}x odds for ${data.replace('_', ' to ')}`
+  `You made a $${amount} bet with ${getMultiplier(odds)}x odds for ${data.replace('_', ' to ')}`
 );
 
 const onMoveWagerCreate = (data: string, amount: number): string => (
@@ -16,7 +26,7 @@ const onMoveWagerCreate = (data: string, amount: number): string => (
 );
 
 const onWagerWin = (data: string, wdl: boolean, amount: number, odds: number): string => (
-  `You won $${(amount * odds).toFixed(2)} from your $${amount}${!wdl ? ' pool' : ''} bet on ${data.replace('_', ' to ')}`
+  `You won $${getMultiplier(amount * odds)} from your $${amount}${!wdl ? ' pool' : ''} bet on ${data.replace('_', ' to ')}`
 );
 
 const onWagerLost = (data: string, wdl: boolean, amount: number): string => (
