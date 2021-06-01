@@ -13,15 +13,18 @@ const NavBar: React.FC<NavBarProps> = (props) => {
     <div className="nav-container">
       <div className="left-side">
         <NavLink to="/"><img src={logo} alt="logo" /></NavLink>
-        <h1>Welcome{props.isAuthenticated && props.firstName ? ` ${props.firstName}` : ''}!</h1>
+        <h1>BetMate</h1>
       </div>
       <div className="right-side">
+        <button>
+          <NavLink to="/">home</NavLink>
+        </button>
         {props.isAuthenticated
           ? (
             <>
-              <button>
+              {/* <button>
                 <NavLink to="/user">Account</NavLink>
-              </button>
+              </button> */}
               <button>
                 <SignOutPanel />
               </button>
@@ -29,10 +32,10 @@ const NavBar: React.FC<NavBarProps> = (props) => {
           ) : (
             <>
               <button>
-                <NavLink to="/signin">Sign In</NavLink>
+                <NavLink to="/signin">sign in</NavLink>
               </button>
               <button>
-                <NavLink to="/signup">Sign Up</NavLink>
+                <NavLink to="/signup">sign up</NavLink>
               </button>
             </>
           )}

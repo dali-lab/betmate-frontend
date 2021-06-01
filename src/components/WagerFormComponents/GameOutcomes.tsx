@@ -26,7 +26,7 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
     } else if (multiplier < 10) {
       return multiplier.toFixed(1);
     } else {
-      return Math.trunc(multiplier);
+      return Math.round(multiplier);
     }
   };
 
@@ -49,9 +49,11 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
         <label htmlFor={`wdl-option-${i}`} key={outcome}>
           <div className="wdl-option">
             <img src={image} />
-            <p>{outcome}</p>
+            <div>
+              <p>{outcome}</p>
+              <p className="odds-text">{getOdds(outcome)}x</p>
+            </div>
           </div>
-          <p>{getOdds(outcome)}x</p>
           <input
             id={`wdl-option-${i}`}
             name="wdl"
