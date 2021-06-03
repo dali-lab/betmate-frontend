@@ -1,4 +1,5 @@
 import { FeedWager, Wager, WagerStatus } from 'types/resources/wager';
+import { getMultiplier } from 'utils/chess';
 
 export const createFeedWager = (wager: Wager): FeedWager[] => ([
   { ...wager, time: wager.created_at, status: WagerStatus.PENDING },
@@ -6,17 +7,7 @@ export const createFeedWager = (wager: Wager): FeedWager[] => ([
     ? [{ ...wager, time: wager.updated_at, odds: wager.wdl ? wager.odds : wager.winning_pool_share ?? 1 }]
     : []),
 ]);
-const getMultiplier = (odd: number) => {
-  if (odd <= 0) return 0;
-  const multiplier = odd;
-  if (multiplier < 2) {
-    return multiplier.toFixed(2);
-  } else if (multiplier < 10) {
-    return multiplier.toFixed(1);
-  } else {
-    return Math.trunc(multiplier);
-  }
-};
+
 const onWDLWagerCreate = (data: string, amount: number, odds: number): string => (
   `You made a $${amount} bet with ${getMultiplier(odds)}x odds for ${data.replace('_', ' to ')}`
 );
