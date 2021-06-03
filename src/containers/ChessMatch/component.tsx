@@ -60,6 +60,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
             elo={props.games[gameId]?.player_black.elo}
             time={props.games[gameId]?.time_black}
             isBlack={true}
+            gameOver={gameOver(props.games[gameId].game_status)}
           />
           <div className='chessboard'>
             <Chessboard position={fen} width={450}/>
@@ -71,6 +72,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
             elo={props.games[gameId]?.player_white.elo}
             time={props.games[gameId]?.time_white}
             isBlack={false}
+            gameOver={gameOver(props.games[gameId].game_status)}
           />
         </div>
         <WagerPanel/>

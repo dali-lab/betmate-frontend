@@ -7,34 +7,41 @@ interface ChessMatchProps {
   name: string | undefined,
   elo: number | undefined,
   time: number | undefined,
-  isBlack: boolean
+  isBlack: boolean,
+  gameOver: boolean
 }
 
 const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
   const [playerTime, setTimer] = useState(props.time == null ? 0 : props.time);
   const blackTurn = props.fen?.split(' ')[1] === 'b';
+  const [blackTimer, setBlackTimer] = useState(0);
+  const [whiteTimer, setWhiteTimer] = useState(0);
 
   useEffect(() => {
     let decrease = 0;
-    if (playerTime > 0 && (props.isBlack === blackTurn)) {
+    if (playerTime >= 0 && (props.isBlack === blackTurn)) {
       decrease = 0.01;
-    } else {
-      decrease = 0;
     }
 
-    setInterval(() => setTimer((time) => time - decrease), 10);
+    if (blackTurn) setBlackTimer(setInterval(() => setTimer((time) => time - decrease), 10) as unknown as number);
+    else setWhiteTimer(setInterval(() => setTimer((time) => time - decrease), 10) as unknown as number);
+    if (!blackTurn) {
+      clearInterval(blackTimer);
+    } else {
+      clearInterval(whiteTimer);
+    }
   }, [blackTurn]);
 
-  useEffect(() => {
-  }, [playerTime]);
-
+  if (props.gameOver) {
+    clearInterval(blackTimer);
+    clearInterval(whiteTimer);
+  }
   const timeString = new Date((playerTime ?? 0) * 1000).toISOString();
 
   return (
     <div className='player-info'>
       <div className='player-title'>
         <img className='player-icon' src={props.icon}/>
-        {/* {console.log(props.fen)} */}
         <div>
           <h3 className='player-name'>{props.name} </h3>
           <p className='player-name'>({props.elo})</p>
