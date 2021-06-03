@@ -22,17 +22,16 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
     if (playerTime >= 0 && (props.isBlack === blackTurn)) {
       decrease = 0.01;
     }
-
-    if (blackTurn) setBlackTimer(setInterval(() => setTimer((time) => time - decrease), 10) as unknown as number);
-    else setWhiteTimer(setInterval(() => setTimer((time) => time - decrease), 10) as unknown as number);
     if (!blackTurn) {
+      setWhiteTimer(setInterval(() => setTimer((time) => time - decrease), 10) as unknown as number);
       clearInterval(blackTimer);
     } else {
+      setBlackTimer(setInterval(() => setTimer((time) => time - decrease), 10) as unknown as number);
       clearInterval(whiteTimer);
     }
   }, [blackTurn]);
 
-  if (props.gameOver) {
+  if (props.gameOver) { // Clear timer when game is over
     clearInterval(blackTimer);
     clearInterval(whiteTimer);
   }
