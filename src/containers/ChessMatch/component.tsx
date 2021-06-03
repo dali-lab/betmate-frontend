@@ -51,7 +51,6 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
       <NavBar />
       <div className='chess-match-container'>
         <ChatBox />
-        <p>{fen?.split(' ')[1]}</p>
         <div>
           <PlayerInfo
             icon={playerIconBlack}
