@@ -18,9 +18,20 @@ export const VerticalBar: React.FC<VerticalBarProps> = (props) => {
   );
 };
 
+const getProbability = (odd: number): string => {
+  return (`${Math.round(odd * 100)}%`);
+};
+export const WDLProbability: React.FC<WDLBarProps> = (props) => {
+  return (
+    <div>
+      <p>white {getProbability(props.odds?.white_win)} / draw {getProbability(props.odds?.draw)} / black {getProbability(props.odds?.black_win)}</p>
+    </div>
+  );
+};
+
 interface WDLBarProps {
   odds: GameOdds,
-  height: number,
+  height?: number,
   width?: number,
 }
 
