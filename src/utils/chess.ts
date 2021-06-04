@@ -8,13 +8,12 @@ export enum GameStatus {
 
 export const getMultiplier = (odd: number): number => {
   if (odd <= 0) return 0;
-  const multiplier = odd;
-  if (multiplier < 2) {
-    return parseFloat(multiplier.toFixed(2));
-  } else if (multiplier < 10) {
-    return parseFloat(multiplier.toFixed(1));
+  else if (odd < 2) {
+    return parseFloat(odd.toFixed(2));
+  } else if (odd < 10) {
+    return parseFloat(odd.toFixed(1));
   } else {
-    return Math.round(multiplier);
+    return Math.round(odd);
   }
 };
 
