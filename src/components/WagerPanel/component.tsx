@@ -1,6 +1,6 @@
 import React from 'react';
 import BalanceIcon from 'assets/wager_panel/balance-icon.svg';
-import { WDLBar } from 'components/WagerPanel/helper_components';
+import { WDLBar, WDLProbability } from 'components/WagerPanel/helper_components';
 import WagerSubPanel from 'components/WagerSubPanel';
 import { useParams } from 'react-router';
 import { Game } from 'types/resources/game';
@@ -24,7 +24,10 @@ const WagerPanel: React.FC<WagerPanelProps> = (props) => {
       )}
       <WagerSubPanel betType="move"/>
       <WagerSubPanel betType="wdl"/>
-      <WDLBar odds={props.games[gameId]?.odds} height={20}/>
+      <div>
+        <WDLProbability odds={props.games[gameId]?.odds} height={20}/>
+        <WDLBar odds={props.games[gameId]?.odds} height={20}/>
+      </div>
     </div>
   );
 };
