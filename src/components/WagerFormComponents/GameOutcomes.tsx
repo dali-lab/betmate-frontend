@@ -15,6 +15,7 @@ interface GameOutcomesProps {
   setWager: Dispatch<SetStateAction<string>>
   wager: string
   odds: GameOdds
+  wagersLoading: boolean
 }
 
 const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
@@ -68,8 +69,10 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
   );
 
   return (
-    <div className="options-container">
-      {renderGameOutcomes()}
+    <div className="options-container wdl-options">
+      {props.wagersLoading
+        ? <p>Loading...</p>
+        : renderGameOutcomes()}
     </div>
   );
 };
