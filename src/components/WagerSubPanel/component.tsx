@@ -21,13 +21,15 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
     setWagerAmount(0);
   }, [props.games[gameId]?.move_hist.length]);
 
+  const wagersLoading = props.games[gameId]?.pool_wagers?.move.options.length === 0;
+
   return (
     <div className="bet-subpanel">
       <h1>{props.betType === 'move' ? 'Move' : 'Game'} Betting</h1>
       <form>
         {props.betType === 'move'
-          ? <MoveOptions wager={wager} setWager={setWager}/>
-          : <GameOutcomes odds = {props.games[gameId]?.odds} wager={wager} setWager={setWager}/>
+          ? <MoveOptions wager={wager} setWager={setWager} wagersLoading={wagersLoading} />
+          : <GameOutcomes odds = {props.games[gameId]?.odds} wager={wager} setWager={setWager} wagersLoading={wagersLoading} />
         }
         <WagerAmounts wagerAmount={wagerAmount} setWagerAmount={setWagerAmount} betType={props.betType}/>
         <SubmitWager
