@@ -17,8 +17,7 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
 
   const { id: gameId } = useParams<{ id: string }>();
 
-  const { options: moveOptions, wagers } = props.games[gameId]?.pool_wagers?.move;
-  const wagersLoading = moveOptions?.length === 0 || !wagers;
+  const wagersLoading = props.games[gameId]?.pool_wagers?.move.options.length === 0;
 
   return (
     <div className="blur-background">

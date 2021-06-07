@@ -21,8 +21,7 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
     setWagerAmount(0);
   }, [props.games[gameId]?.move_hist.length]);
 
-  const { options: moveOptions, wagers } = props.games[gameId]?.pool_wagers?.move;
-  const wagersLoading = moveOptions?.length === 0 || !wagers;
+  const wagersLoading = props.games[gameId]?.pool_wagers?.move.options.length === 0;
 
   return (
     <div className="bet-subpanel">
