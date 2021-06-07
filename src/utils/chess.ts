@@ -18,3 +18,12 @@ export const getMultiplier = (odd: number): number => {
 };
 
 export const CHESS_START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+
+export const gameOver = (game_status: GameStatus): boolean => {
+  const gameOverStatuses = [GameStatus.WHITE_WIN, GameStatus.BLACK_WIN, GameStatus.DRAW];
+  return gameOverStatuses.includes(game_status);
+};
+
+export const gameInProgress = (game_status: GameStatus): boolean => {
+  return game_status === GameStatus.IN_PROGRESS;
+};
