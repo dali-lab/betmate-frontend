@@ -47,8 +47,8 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
           [game._id]: game,
         }), state.games),
         showModal: action.payload.reduce((accum, game) => ({
-          [game._id]: state.showModal[game._id] ?? true,
           ...accum,
+          [game._id]: state.showModal[game._id] ?? true,
         }), state.showModal),
       };
 
