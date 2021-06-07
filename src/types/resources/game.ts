@@ -67,6 +67,7 @@ export const UPDATE_GAME = 'UPDATE_GAME';
 export const DELETE_GAME = 'DELETE_GAME';
 export const FETCH_GAMES = 'FETCH_GAMES';
 export const UPDATE_SHOW_MODAL = 'UPDATE_SHOW_MODAL';
+export const CLEAR_GAMES = 'CLEAR_GAMES';
 
 export type JoinGameData = { gameId: string }; // ws
 export type LeaveGameData = { gameId: string }; // ws
@@ -104,14 +105,15 @@ export type UpdateGameActions = AsyncAction<typeof UPDATE_GAME, FetchGameData, U
 export type DeleteGameActions = AsyncAction<typeof DELETE_GAME, DeleteGameData, DeleteGameRequestData>;
 export type FetchGamesActions = AsyncAction<typeof FETCH_GAMES, FetchGamesData, FetchGamesRequestData>;
 export type ShowModalActions = Action<typeof UPDATE_SHOW_MODAL, UpdateModalData>;
+export type ClearGamesActions = Action<typeof CLEAR_GAMES>;
 
 export type GameUpdateActions = StartGameActions | UpdateGameStateActions | UpdateGameOddsActions | UpdateGameEndActions;
 
 export type GameActions =
-  JoinGameActions | LeaveGameActions | MakeMoveActions | GameUpdateActions | ShowModalActions |
+  JoinGameActions | LeaveGameActions | MakeMoveActions | GameUpdateActions | ShowModalActions | ClearGamesActions |
   CreateGameActions | FetchGameActions | UpdateGameActions | DeleteGameActions | FetchGamesActions | BroadcastPoolWagerActions;
 
 export type GameActionTypes =
   typeof JOIN_GAME | typeof LEAVE_GAME | typeof MAKE_MOVE | typeof UPDATE_GAME_STATE | typeof UPDATE_GAME_ODDS | typeof UPDATE_GAME_END | typeof FETCH_GAME |
   typeof CREATE_GAME | typeof FETCH_GAME | typeof START_GAME | typeof UPDATE_GAME | typeof DELETE_GAME | typeof FETCH_GAMES | typeof BROADCAST_POOL_WAGER |
-  typeof UPDATE_SHOW_MODAL;
+  typeof UPDATE_SHOW_MODAL | typeof CLEAR_GAMES;

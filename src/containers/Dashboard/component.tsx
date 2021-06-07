@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import { fetchGamesByStatus } from 'store/actionCreators/gameActionCreators';
+import { fetchGamesByStatus, clearGames } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
-import magnifier from 'assets/dashboard/magnifier.svg';
 import GameCard from './GameCard/component';
+// import magnifier from 'assets/dashboard/magnifier.svg';
 import './style.scss';
 
 export interface DashboardProps{
   fetchGamesByStatus: typeof fetchGamesByStatus
+  clearGames: typeof clearGames
   games: Game[];
 }
 
@@ -28,12 +29,14 @@ function getFavoredPlayer(odds: OddsInterface) {
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
   useEffect(() => {
+    props.clearGames();
     props.fetchGamesByStatus(['not_started', 'in_progress']);
   }, []);
 
   return (
     <div className='main-page'>
-      <div className='main-dashboard'>
+      {/* Commented out for Technigala */}
+      {/* <div className='main-dashboard'>
         <img src={magnifier} />
         <input
           className='searchBar'
@@ -42,7 +45,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         <div >
           <button className='browse-button'>Browse</button>
         </div>
-      </div>
+      </div> */}
       <h3 className='betting-header'>Popular Matches 🔥</h3>
       {props.games
         .sort((gameA, gameB) => new Date(gameB.updated_at).getTime() - new Date(gameA.updated_at).getTime())

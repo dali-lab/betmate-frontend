@@ -1,5 +1,6 @@
 // https://stackoverflow.com/a/53037637
 .postgame-modal-container {
+    position: relative;
     border: solid 10px transparent;
     background-origin: border-box;
     background-clip: content-box, border-box;
@@ -111,4 +112,12 @@
 
 .red-text {
     color: #FFCDC6 !important;
+}
+
+.postgame-x-icon {
+    position: absolute;
+    color: #F2F2F2;
+    left: 15px;
+    top: 10px;
+    cursor: pointer;
 }

@@ -17,6 +17,8 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
 
   const { id: gameId } = useParams<{ id: string }>();
 
+  const wagersLoading = props.games[gameId]?.pool_wagers?.move.options.length === 0;
+
   return (
     <div className="blur-background">
       <div className="pregame-modal-container">
@@ -30,7 +32,7 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
                 height={30}
               />
             </div>
-            <GameOutcomes odds={props.games[gameId]?.odds} wager={wager} setWager={setWager}/>
+            <GameOutcomes odds={props.games[gameId]?.odds} wager={wager} setWager={setWager} wagersLoading={wagersLoading} />
             <WagerAmounts wagerAmount={wagerAmount} setWagerAmount={setWagerAmount} betType="wdl"/>
             <SubmitWager
               wager={wager}

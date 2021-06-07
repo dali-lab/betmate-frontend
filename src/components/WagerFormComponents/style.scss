@@ -48,6 +48,10 @@
     height: 75px;
 }
 
+.wdl-options {
+    height: 55px;
+}
+
 input[type="submit"] {
     margin: 15px auto;
     display: block;
@@ -64,4 +68,9 @@ input[type="submit"] {
 .status-text {
     text-align: center;
     color: #F2F2F2;
+}
+
+.odds-text {
+    text-align: center;
+    font-size: 10px !important;
 }
