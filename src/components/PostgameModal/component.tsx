@@ -1,9 +1,11 @@
 import { ChatWager } from 'components/ChatBox/helper_components';
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { Game } from 'types/resources/game';
 import { Wager, WagerStatus } from 'types/resources/wager';
 import { GameStatus } from 'utils/chess';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StatLine } from './helperComponents';
 import './style.scss';
 
@@ -13,6 +15,8 @@ interface PostgameModalProps {
 }
 
 const PostgameModal: React.FC<PostgameModalProps> = (props) => {
+  const [hide, setHide] = useState(false);
+
   const { id: gameId } = useParams<{ id: string }>();
   const history = useHistory();
 
@@ -60,50 +64,57 @@ const PostgameModal: React.FC<PostgameModalProps> = (props) => {
 
   const profit = Number(winnings) - Number(losses);
 
-  if (!props.games[gameId]) return <div />;
   return (
-    <div className="blur-background">
-      <div className="postgame-modal-container">
-        <div className="postgame-padding-container">
-          <h1>White ({props.games[gameId].player_white.elo}) vs. Black ({props.games[gameId].player_black.elo})</h1>
-          <h4>{getGameResult()} Here’s a summary of your bets.</h4>
-          <div className="postgame-box-container">
-            <div className="postgame-box blue-border">
-              <div className="postgame-box-padding-container">
-                <h4>Your bets</h4>
-                {resolvedWagers.length
-                  ? resolvedWagers
-                  : <p className="no-bets-text">Looks like you didn&apos;t place any bets 😢 Theres always next game!</p>
-                }
+    (!props.games[gameId] || hide)
+      ? null
+      : <div className="blur-background">
+        <div className="postgame-modal-container">
+          <FontAwesomeIcon
+            className="postgame-x-icon"
+            icon={faTimes}
+            size="2x"
+            onClick={() => setHide(true)}
+          />
+          <div className="postgame-padding-container">
+            <h1>White ({props.games[gameId].player_white.elo}) vs. Black ({props.games[gameId].player_black.elo})</h1>
+            <h4>{getGameResult()} Here’s a summary of your bets.</h4>
+            <div className="postgame-box-container">
+              <div className="postgame-box blue-border">
+                <div className="postgame-box-padding-container">
+                  <h4>Your bets</h4>
+                  {resolvedWagers.length
+                    ? resolvedWagers
+                    : <p className="no-bets-text">Looks like you didn&apos;t place any bets 😢 Theres always next game!</p>
+                  }
+                </div>
               </div>
-            </div>
-            <div className="postgame-box orange-border">
-              <div className="postgame-box-padding-container">
-                <h4>Stats</h4>
-                <div className="postgame-stats-container">
-                  <StatLine winnings={winnings} losses={losses} betType='win' resolvedWagers={props.resolvedWagers} />
-                  <StatLine winnings={winnings} losses={losses} betType='loss' resolvedWagers={props.resolvedWagers} />
-                  <hr />
-                  <div className="stat-line">
-                    <p className="stat-line-left">Total</p>
-                    <div className="stat-line-right">
-                      <div />
-                      <p className={profit >= 0 ? 'green-text' : 'red-text'}>{profit >= 0 ? '+' : '-'}${Math.abs(profit).toFixed(2)}</p>
+              <div className="postgame-box orange-border">
+                <div className="postgame-box-padding-container">
+                  <h4>Stats</h4>
+                  <div className="postgame-stats-container">
+                    <StatLine winnings={winnings} losses={losses} betType='win' resolvedWagers={props.resolvedWagers} />
+                    <StatLine winnings={winnings} losses={losses} betType='loss' resolvedWagers={props.resolvedWagers} />
+                    <hr />
+                    <div className="stat-line">
+                      <p className="stat-line-left">Total</p>
+                      <div className="stat-line-right">
+                        <div />
+                        <p className={profit >= 0 ? 'green-text' : 'red-text'}>{profit >= 0 ? '+' : '-'}${Math.abs(profit).toFixed(2)}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <button
+              type="button"
+              onClick={() => history.push('/')}
+            >
+              back to dashboard
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={() => history.push('/')}
-          >
-            back to dashboard
-          </button>
         </div>
       </div>
-    </div>
   );
 };
 

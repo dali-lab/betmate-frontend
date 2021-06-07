@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { errorSelector, loadingSelector } from 'store/actionCreators/requestActionCreators';
-import { fetchGamesByStatus } from 'store/actionCreators/gameActionCreators';
+import { fetchGamesByStatus, clearGames } from 'store/actionCreators/gameActionCreators';
 
 import { ActionTypes, RootState } from 'types/state';
 import Dashboard from './component';
@@ -15,4 +15,4 @@ const mapStateToProps = (state: RootState) => ({
   errorMessage: errorSelector(loadActions, state),
 });
 
-export default connect(mapStateToProps, { fetchGamesByStatus })(Dashboard);
+export default connect(mapStateToProps, { fetchGamesByStatus, clearGames })(Dashboard);

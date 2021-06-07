@@ -3,6 +3,7 @@ import WhiteWin from 'assets/wager_panel/wdl/white_win.svg';
 import Draw from 'assets/wager_panel/wdl/draw.svg';
 import BlackWin from 'assets/wager_panel/wdl/black_win.svg';
 import { GameOdds } from 'types/resources/game';
+import { getMultiplier } from 'utils/chess';
 import './style.scss';
 
 const gameOutcomes = {
@@ -15,29 +16,18 @@ interface GameOutcomesProps {
   setWager: Dispatch<SetStateAction<string>>
   wager: string
   odds: GameOdds
+  wagersLoading: boolean
 }
 
 const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
-  const getMultiplier = (odd: number) => {
-    if (odd <= 0) return 0;
-    const multiplier = 1 / odd;
-    if (multiplier < 2) {
-      return multiplier.toFixed(2);
-    } else if (multiplier < 10) {
-      return multiplier.toFixed(1);
-    } else {
-      return Math.trunc(multiplier);
-    }
-  };
-
   const getOdds = (odds: string) => {
     switch (odds) {
       case 'White':
-        return getMultiplier(props.odds.white_win);
+        return getMultiplier(1 / props.odds.white_win);
       case 'Black':
-        return getMultiplier(props.odds.black_win);
+        return getMultiplier(1 / props.odds.black_win);
       case 'Draw':
-        return getMultiplier(props.odds.draw);
+        return getMultiplier(1 / props.odds.draw);
       default:
         return 0;
     }
@@ -49,9 +39,11 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
         <label htmlFor={`wdl-option-${i}`} key={outcome}>
           <div className="wdl-option">
             <img src={image} />
-            <p>{outcome}</p>
+            <div>
+              <p>{outcome}</p>
+              <p className="odds-text">{getOdds(outcome)}x</p>
+            </div>
           </div>
-          <p>{getOdds(outcome)}x</p>
           <input
             id={`wdl-option-${i}`}
             name="wdl"
@@ -66,8 +58,10 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
   );
 
   return (
-    <div className="options-container">
-      {renderGameOutcomes()}
+    <div className="options-container wdl-options">
+      {props.wagersLoading
+        ? <p>Loading...</p>
+        : renderGameOutcomes()}
     </div>
   );
 };

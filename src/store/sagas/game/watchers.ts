@@ -1,7 +1,7 @@
 /* eslint-disable no-continue */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {
-  call, take, put, takeEvery,
+  call, take, put,
 } from 'redux-saga/effects';
 
 import * as gameRequests from 'store/requests/gameRequests';
@@ -17,7 +17,6 @@ import {
   UpdateGameActions,
   DeleteGameActions,
   FetchGamesActions,
-  ShowModalActions,
 } from 'types/resources/game';
 
 export function* watchCreateGame() {
@@ -88,12 +87,4 @@ export function* watchDeleteGameById() {
       yield put<Actions>({ type: 'DELETE_GAME', payload: getErrorPayload(error), status: 'FAILURE' });
     }
   }
-}
-
-export function* updateShowModal() {
-  const showModalPattern = (a: Actions) => (a.type === 'UPDATE_SHOW_MODAL' && a.status === 'REQUEST');
-  function* callShowModalAction(action: ShowModalActions) {
-    yield put<Actions>({ type: 'UPDATE_SHOW_MODAL', payload: action.payload, status: 'SUCCESS' });
-  }
-  yield takeEvery(showModalPattern, callShowModalAction);
 }
