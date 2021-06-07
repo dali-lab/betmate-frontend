@@ -33,6 +33,12 @@ export const deleteGameById = (id: string): Actions => ({
 
 export const updateShowModal = (gameId: string, modalState: boolean): Actions => ({
   type: 'UPDATE_SHOW_MODAL',
-  status: 'REQUEST',
+  status: 'SUCCESS',
   payload: { gameId, modalState },
+});
+
+export const clearGames = (): Actions => ({
+  type: 'CLEAR_GAMES',
+  status: 'SUCCESS',
+  payload: {},
 });
