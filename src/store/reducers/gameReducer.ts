@@ -45,17 +45,23 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
         games: action.payload.reduce((accum, game) => ({
           ...accum,
           [game._id]: game,
-        }), {}),
+        }), state.games),
         showModal: action.payload.reduce((accum, game) => ({
-          [game._id]: true,
+          [game._id]: state.showModal[game._id] ?? true,
           ...accum,
-        }), {}),
+        }), state.showModal),
       };
 
     case 'DELETE_GAME':
       return {
         ...state,
         games: omit(state.games, action.payload.id),
+      };
+
+    case 'CLEAR_GAMES':
+      return {
+        ...state,
+        games: {},
       };
 
     case 'START_GAME':

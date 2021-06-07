@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { fetchGamesByStatus } from 'store/actionCreators/gameActionCreators';
+import { fetchGamesByStatus, clearGames } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
 import magnifier from 'assets/dashboard/magnifier.svg';
 import GameCard from './GameCard/component';
@@ -7,6 +7,7 @@ import './style.scss';
 
 export interface DashboardProps{
   fetchGamesByStatus: typeof fetchGamesByStatus
+  clearGames: typeof clearGames
   games: Game[];
 }
 
@@ -28,6 +29,7 @@ function getFavoredPlayer(odds: OddsInterface) {
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
   useEffect(() => {
+    props.clearGames();
     props.fetchGamesByStatus(['not_started', 'in_progress']);
   }, []);
 
