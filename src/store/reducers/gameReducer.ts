@@ -45,11 +45,11 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
         games: action.payload.reduce((accum, game) => ({
           ...accum,
           [game._id]: game,
-        }), state.games),
+        }), {}),
         showModal: action.payload.reduce((accum, game) => ({
           [game._id]: true,
           ...accum,
-        }), state.showModal),
+        }), {}),
       };
 
     case 'DELETE_GAME':
