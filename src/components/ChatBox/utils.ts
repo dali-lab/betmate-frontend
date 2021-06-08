@@ -17,7 +17,7 @@ const onMoveWagerCreate = (data: string, amount: number): string => (
 );
 
 const onWagerWin = (data: string, wdl: boolean, amount: number, odds: number): string => (
-  `You won $${getMultiplier(amount * odds)} from your $${amount}${!wdl ? ' pool' : ''} bet on ${data.replace('_', ' to ')}`
+  `You won $${(amount * odds).toFixed(2)} from your $${amount}${!wdl ? ' pool' : ''} bet on ${data.replace('_', ' to ')}`
 );
 
 const onWagerLost = (data: string, wdl: boolean, amount: number): string => (
@@ -25,7 +25,7 @@ const onWagerLost = (data: string, wdl: boolean, amount: number): string => (
 );
 
 const onWagerCancelled = (data: string, wdl: boolean, amount: number): string => (
-  `Your $${amount}${!wdl ? ' pool' : ''} bet on ${data.replace('_', ' to ')} was cancelled as no one was correct`
+  `Your $${amount}${!wdl ? ' pool' : ''} bet on ${data} was cancelled as no one was correct`
 );
 
 export const getFeedMessage = (status: WagerStatus, data: string, wdl: boolean, amount: number, odds: number): string => {

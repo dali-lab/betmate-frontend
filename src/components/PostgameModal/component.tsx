@@ -39,14 +39,16 @@ const PostgameModal: React.FC<PostgameModalProps> = (props) => {
 
   const winnings = props.resolvedWagers
     .filter((wager) => wager.game_id === gameId && wager.status === WagerStatus.WON)
-    .reduce((currWinnings, wager) => {
-      return currWinnings
-    + (
-      wager.wdl
-        ? wager.amount * wager.odds
-        : wager.amount * wager.winning_pool_share
-    );
-    }, 0)
+    .reduce((currWinnings, wager) => (
+      currWinnings
+        + (wager.amount
+          * (
+            (wager.wdl
+              ? wager.odds
+              : wager.winning_pool_share)
+            - 1
+          ))
+    ), 0)
     .toFixed(2);
 
   const losses = props.resolvedWagers
