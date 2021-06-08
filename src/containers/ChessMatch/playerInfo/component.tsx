@@ -19,7 +19,7 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
   const blackTurn = props.fen?.split(' ')[1] === 'b';
   const isGameOver = gameOver(props.gameStatus);
   const isGameInProgress = gameInProgress(props.gameStatus);
-  const [timer, setTimer] = useState(setInterval(() => {}, 0));
+  const [timer, setTimer] = useState(setInterval(() => {}, 1000000));
 
   useEffect(() => { // Update timers
     const doDecrease = playerTime >= 0 && props.isBlack === blackTurn && isGameInProgress;
