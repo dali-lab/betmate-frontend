@@ -34,7 +34,7 @@ export const StatLine: React.FC<StatLineProps> = (props) => {
                         /
           {totalBets}
         </p>
-        <p className={isWin ? 'green-text' : 'red-text'}>+${isWin ? props.winnings : props.losses}</p>
+        <p className={isWin ? 'green-text' : 'red-text'}>{isWin ? '+' : '-'}${isWin ? props.winnings : props.losses}</p>
       </div>
     </div>
   );
