@@ -43,7 +43,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     return gameOverStatuses.includes(game_status);
   };
 
-  if (!props.games[gameId]) return <p>Loading</p>;
+  if (!props.games[gameId]) return <p className="loading-text">Loading</p>;
   return (
     <>
       {props.games[gameId].game_status === GameStatus.NOT_STARTED && props.showModal[gameId] && <PregameModal/>}
