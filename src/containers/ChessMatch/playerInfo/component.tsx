@@ -43,7 +43,7 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
 
   useEffect(() => { // Update time after every move
     if (props.fen) {
-      const adjustment = playerTime === 0 && (props.isBlack === blackTurn) && gameInProgress
+      const adjustment = playerTime === 0 && (props.isBlack === blackTurn) && isGameInProgress
         ? (new Date().getTime() - new Date(props.updatedAt ?? '').getTime()) / 1000
         : 0;
 
