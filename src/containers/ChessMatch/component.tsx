@@ -38,47 +38,42 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     if (game) updateFen(game.state);
   }, [props.games[gameId]?.state]);
 
-  const gameOver = (game_status) => {
-    const gameOverStatuses = [GameStatus.WHITE_WIN, GameStatus.BLACK_WIN, GameStatus.DRAW];
-    return gameOverStatuses.includes(game_status);
-  };
-
-  if (!props.games[gameId]) return <p className="loading-text">Loading</p>;
-
-  return (
-    <>
-      {props.games[gameId].game_status === GameStatus.NOT_STARTED && props.showModal[gameId] && <PregameModal/>}
-      {gameOver(props.games[gameId].game_status as GameStatus) && <PostgameModal/>}
-      <NavBar />
-      <div className='chess-match-container'>
-        <ChatBox />
-        <div>
-          <PlayerInfo
-            icon={playerIconBlack}
-            fen = {fen}
-            name={'Black'}
-            elo={props.games[gameId]?.player_black.elo}
-            time={props.games[gameId]?.time_black}
-            isBlack={true}
-            gameStatus={props.games[gameId].game_status as GameStatus}
-          />
-          <div className='chessboard'>
-            <Chessboard position={fen} width={450}/>
+  return !props.games[gameId]
+    ? <p className="loading-text">Loading</p>
+    : (
+      <>
+        {props.games[gameId].game_status === GameStatus.NOT_STARTED && props.showModal[gameId] && <PregameModal/>}
+        {gameOver(props.games[gameId].game_status as GameStatus) && <PostgameModal/>}
+        <NavBar />
+        <div className='chess-match-container'>
+          <ChatBox />
+          <div>
+            <PlayerInfo
+              icon={playerIconBlack}
+              fen = {fen}
+              name={'Black'}
+              elo={props.games[gameId]?.player_black.elo}
+              time={props.games[gameId]?.time_black}
+              isBlack={true}
+              gameStatus={props.games[gameId].game_status as GameStatus}
+            />
+            <div className='chessboard'>
+              <Chessboard position={fen} width={450}/>
+            </div>
+            <PlayerInfo
+              icon={playerIconWhite}
+              fen = {fen}
+              name={'White'}
+              elo={props.games[gameId]?.player_white.elo}
+              time={props.games[gameId]?.time_white}
+              isBlack={false}
+              gameStatus={props.games[gameId].game_status as GameStatus}
+            />
           </div>
-          <PlayerInfo
-            icon={playerIconWhite}
-            fen = {fen}
-            name={'White'}
-            elo={props.games[gameId]?.player_white.elo}
-            time={props.games[gameId]?.time_white}
-            isBlack={false}
-            gameStatus={props.games[gameId].game_status as GameStatus}
-          />
+          <WagerPanel/>
         </div>
-        <WagerPanel/>
-      </div>
-    </>
-  );
+      </>
+    );
 };
 
 export default ChessMatch;
