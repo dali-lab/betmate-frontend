@@ -10,16 +10,16 @@ interface ChessMatchProps {
   elo: number | undefined,
   time: number | undefined,
   isBlack: boolean,
-  gameStatus: GameStatus
+  gameStatus: GameStatus,
+  updatedAt: string | undefined
 }
 
 const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
-  const [playerTime, setTimer] = useState(props.time ?? 0);
+  const [playerTime, setTime] = useState(0);
   const blackTurn = props.fen?.split(' ')[1] === 'b';
   const isGameOver = gameOver(props.gameStatus);
   const isGameInProgress = gameInProgress(props.gameStatus);
-  const [blackTimer, setBlackTimer] = useState(setInterval(() => {}, 0));
-  const [whiteTimer, setWhiteTimer] = useState(setInterval(() => {}, 0));
+  const [timer, setTimer] = useState(setInterval(() => {}, 0));
 
   useEffect(() => { // Update timers
     const doDecrease = playerTime >= 0 && props.isBlack === blackTurn && isGameInProgress;
@@ -29,36 +29,31 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
           : [0.1, 100]
     );
 
-    if (!blackTurn) { // Countdown white
-      setWhiteTimer(setInterval(() => setTimer((time) => time - decrease), interval));
-      clearInterval(blackTimer);
-    } else { // Countdown black
-      setBlackTimer(setInterval(() => setTimer((time) => time - decrease), interval));
-      clearInterval(whiteTimer);
-    }
+    clearInterval(timer);
+    setTimer(setInterval(() => setTime((t) => t - decrease), interval));
   }, [blackTurn]);
 
   useEffect(() => {
-    if (playerTime === 60) {
+    if (Math.round(playerTime) === 60) {
       const [decrease, interval] = [0.1, 100];
-      if (!blackTurn) { // Countdown white
-        clearInterval(whiteTimer);
-        setWhiteTimer(setInterval(() => setTimer((time) => time - decrease), interval));
-      } else { // Countdown black
-        clearInterval(blackTimer);
-        setBlackTimer(setInterval(() => setTimer((time) => time - decrease), interval));
-      }
+      clearInterval(timer);
+      setTimer(setInterval(() => setTime((t) => t - decrease), interval));
     }
   }, [playerTime]);
 
   useEffect(() => { // Update time after every move
-    setTimer((time) => Math.round(((props.time ?? 0) + (time % 1)) * 10) / 10);
+    const adjustment = playerTime === 0 && props.isBlack === blackTurn
+      ? (new Date().getTime() - new Date(props.updatedAt ?? '').getTime()) / 1000
+      : 0;
+
+    setTime((time) => Math.round(((props.time ?? 0) + (time % 1) - adjustment) * 10) / 10);
   }, [props.time]);
 
-  if (isGameOver) { // Clear timer when game is over
-    clearInterval(blackTimer);
-    clearInterval(whiteTimer);
-  }
+  useEffect(() => {
+    if (isGameOver) { // Clear timer when game is over
+      clearInterval(timer);
+    }
+  }, [gameOver]);
 
   // Get timer format
   const getTimeString = (time: number): string => {

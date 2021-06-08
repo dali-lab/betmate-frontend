@@ -55,7 +55,8 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
               elo={props.games[gameId]?.player_black.elo}
               time={props.games[gameId]?.time_black}
               isBlack={true}
-              gameStatus={props.games[gameId].game_status as GameStatus}
+              gameStatus={props.games[gameId]?.game_status as GameStatus}
+              updatedAt={props.games[gameId]?.updated_at}
             />
             <div className='chessboard'>
               <Chessboard position={fen} width={450}/>
@@ -67,7 +68,8 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
               elo={props.games[gameId]?.player_white.elo}
               time={props.games[gameId]?.time_white}
               isBlack={false}
-              gameStatus={props.games[gameId].game_status as GameStatus}
+              gameStatus={props.games[gameId]?.game_status as GameStatus}
+              updatedAt={props.games[gameId]?.updated_at}
             />
           </div>
           <WagerPanel/>
