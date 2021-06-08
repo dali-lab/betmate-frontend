@@ -42,12 +42,14 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
   }, [playerTime]);
 
   useEffect(() => { // Update time after every move
-    const adjustment = playerTime === 0 && props.isBlack === blackTurn
-      ? (new Date().getTime() - new Date(props.updatedAt ?? '').getTime()) / 1000
-      : 0;
+    if (props.fen) {
+      const adjustment = playerTime === 0 && (props.isBlack === blackTurn) && isGameInProgress
+        ? (new Date().getTime() - new Date(props.updatedAt ?? '').getTime()) / 1000
+        : 0;
 
-    setTime((time) => Math.round(((props.time ?? 0) + (time % 1) - adjustment) * 10) / 10);
-  }, [props.time]);
+      setTime((time) => Math.round(((props.time ?? 0) + (time % 1) - adjustment) * 10) / 10);
+    }
+  }, [props.time, props.fen]);
 
   useEffect(() => {
     if (isGameOver) { // Clear timer when game is over
