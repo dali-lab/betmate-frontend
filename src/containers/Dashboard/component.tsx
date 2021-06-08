@@ -48,7 +48,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
       </div> */}
       <h3 className='betting-header'>Popular Matches 🔥</h3>
       {props.games
-        .sort((gameA, gameB) => new Date(gameB.updated_at).getTime() - new Date(gameA.updated_at).getTime())
+        .sort((gameA, gameB) => new Date(gameB.created_at).getTime() - new Date(gameA.created_at).getTime())
         .map((game) => {
           const id = game._id;
           return (
