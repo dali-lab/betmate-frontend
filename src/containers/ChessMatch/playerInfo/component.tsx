@@ -38,6 +38,19 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
     }
   }, [blackTurn]);
 
+  useEffect(() => {
+    if (playerTime === 60) {
+      const [decrease, interval] = [0.1, 100];
+      if (!blackTurn) { // Countdown white
+        clearInterval(whiteTimer);
+        setWhiteTimer(setInterval(() => setTimer((time) => time - decrease), interval));
+      } else { // Countdown black
+        clearInterval(blackTimer);
+        setBlackTimer(setInterval(() => setTimer((time) => time - decrease), interval));
+      }
+    }
+  }, [playerTime]);
+
   useEffect(() => { // Update time after every move
     setTimer((time) => Math.round(((props.time ?? 0) + (time % 1)) * 10) / 10);
   }, [props.time]);
