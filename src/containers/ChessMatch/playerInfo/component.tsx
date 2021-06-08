@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import { GameStatus, gameOver, gameInProgress } from 'utils/chess';
 import './style.scss';
@@ -13,7 +14,7 @@ interface ChessMatchProps {
 }
 
 const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
-  const [playerTime, setTimer] = useState(props.time == null ? 0 : props.time);
+  const [playerTime, setTimer] = useState(props.time ?? 0);
   const blackTurn = props.fen?.split(' ')[1] === 'b';
   const isGameOver = gameOver(props.gameStatus);
   const isGameInProgress = gameInProgress(props.gameStatus);
@@ -22,19 +23,23 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
 
   useEffect(() => { // Update timers
     const doDecrease = playerTime >= 0 && props.isBlack === blackTurn && isGameInProgress;
-    const decrease = doDecrease ? 0.01 : 0;
+    const [decrease, interval] = (
+      !doDecrease ? [0, 1000000]
+        : playerTime >= 60 ? [1, 1000]
+          : [0.1, 100]
+    );
 
     if (!blackTurn) { // Countdown white
-      setWhiteTimer(setInterval(() => setTimer((time) => time - decrease), 10));
+      setWhiteTimer(setInterval(() => setTimer((time) => time - decrease), interval));
       clearInterval(blackTimer);
     } else { // Countdown black
-      setBlackTimer(setInterval(() => setTimer((time) => time - decrease), 10));
+      setBlackTimer(setInterval(() => setTimer((time) => time - decrease), interval));
       clearInterval(whiteTimer);
     }
   }, [blackTurn]);
 
   useEffect(() => { // Update time after every move
-    setTimer((time) => Math.round(((props.time ?? 0) + (time % 1)) * 100) / 100);
+    setTimer((time) => Math.round(((props.time ?? 0) + (time % 1)) * 10) / 10);
   }, [props.time]);
 
   if (isGameOver) { // Clear timer when game is over
@@ -51,7 +56,7 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
     } else if (time > 60) { // Over a minute
       return timeString.substr(14, 5);
     } else { // Less than a minute
-      return timeString.substr(17, 5);
+      return timeString.substr(17, 4);
     }
   };
 
