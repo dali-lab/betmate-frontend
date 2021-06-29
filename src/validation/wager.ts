@@ -27,3 +27,15 @@ export const WagerSchema = joi.object({
 });
 
 export const WagerArraySchema = joi.array().items(WagerSchema);
+
+export const WagerResultSchema = joi.object({
+  gameId: joi.string().required(),
+  wagers: WagerArraySchema.required(),
+});
+
+export const BroadcastPoolWagerSchema = joi.object({
+  gameId: joi.string().required(),
+  type: joi.string().required(),
+  data: joi.string().required(),
+  amount: joi.number().required(),
+});

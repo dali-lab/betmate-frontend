@@ -42,6 +42,13 @@ export const AnonMoveWagerSchema = joi.object({
   amount: joi.number().min(0).required(),
 });
 
+const PoolWagerSchema = joi.object({
+  move: joi.object({
+    options: joi.array().items(joi.string()).required(),
+    wagers: joi.array().items(AnonMoveWagerSchema).required(),
+  }),
+});
+
 export const GameSchema = joi.object({
   _id: joi.string().required(),
   complete: joi.boolean().required(),
@@ -54,14 +61,35 @@ export const GameSchema = joi.object({
   time_black: joi.number().min(0).required(),
   time_white: joi.number().min(0).required(),
   odds: GameOddsSchema.required(),
-  pool_wagers: joi.object({
-    move: joi.object({
-      options: joi.array().items(joi.string()).required(),
-      wagers: joi.array().items(AnonMoveWagerSchema).required(),
-    }),
-  }),
+  pool_wagers: PoolWagerSchema.required(),
   created_at: joi.string().required(), // verify is date
   updated_at: joi.string().required(), // verify is date
 });
 
 export const GameArraySchema = joi.array().items(GameSchema);
+
+export const StartGameSchema = joi.object({
+  gameId: joi.string().required(),
+  game_status: joi.string().custom(gameStatusValidator).required(),
+});
+
+export const UpdateGameStateSchema = joi.object({
+  gameId: joi.string().required(),
+  state: joi.string().custom(chessValidator).required(),
+  move_hist: joi.array().items(MoveSchema).required(),
+  time_black: joi.number().min(0).required(),
+  time_white: joi.number().min(0).required(),
+  pool_wagers: PoolWagerSchema.required(),
+});
+
+export const UpdateGameOddsSchema = joi.object({
+  gameId: joi.string().required(),
+  odds: GameOddsSchema.required(),
+  pool_wagers: PoolWagerSchema.required(),
+});
+
+export const UpdateGameEndSchema = joi.object({
+  gameId: joi.string().required(),
+  complete: joi.boolean().required(),
+  game_status: joi.string().custom(gameStatusValidator).required(),
+});
