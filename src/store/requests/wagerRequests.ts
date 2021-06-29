@@ -5,6 +5,8 @@ import {
   FetchWagerData, DeleteWagerData, Wager, FetchWagersData,
 } from 'types/resources/wager';
 import { RequestReturnType } from 'types/state';
+import { validateSchema } from 'validation';
+import { WagerArraySchema, WagerSchema } from 'validation/wager';
 
 export const createWager = async (
   gameId: string,
@@ -28,7 +30,7 @@ export const createWager = async (
     timeout: 5000, // default is 1000ms, but this endpoint has an intentional 1000ms delay + is making an API request
   });
 
-  return result;
+  return validateSchema(WagerSchema, result, (d) => d.data);
 };
 
 export const fetchWagerById = async (id: string): Promise<RequestReturnType<FetchWagerData>> => {
@@ -63,7 +65,7 @@ export const fetchWagers = async (): Promise<RequestReturnType<FetchWagersData>>
     headers: getBearerTokenHeader(),
   });
 
-  return result;
+  return validateSchema(WagerArraySchema, result, (d) => d.data);
 };
 
 export const updateWagerById = async (id: string, fields: Partial<Wager>): Promise<RequestReturnType<FetchWagerData>> => {

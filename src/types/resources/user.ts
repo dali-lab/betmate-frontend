@@ -5,12 +5,11 @@ import { AsyncAction } from 'types/state';
 
 export interface User {
   email: string,
-  password?: string,
-  first_name?: string,
-  last_name?: string,
-  full_name?: string,
+  password: string,
+  first_name: string,
+  last_name: string,
+  full_name: string,
   account: number,
-  wager_hist: string[],
   _id: string
 }
 

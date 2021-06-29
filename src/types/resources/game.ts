@@ -27,13 +27,13 @@ export interface PoolWagerState {
 export interface Game {
   complete: boolean
   game_status: string
+  time_format: string
   move_hist: string[]
   player_black: Player
   player_white: Player
   state: string
   time_black: number
   time_white: number
-  wagers: string[]
   odds: GameOdds
   pool_wagers: {
     move: PoolWagerState
