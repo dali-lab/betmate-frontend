@@ -1,6 +1,7 @@
 import joi from 'joi';
+import { User } from 'types/resources/user';
 
-export const UserSchema = joi.object({
+export const UserSchema = joi.object<User>({
   _id: joi.string().required(),
   id: joi.string().required(),
   email: joi.string().required(), // include email

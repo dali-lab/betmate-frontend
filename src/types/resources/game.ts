@@ -24,11 +24,17 @@ export interface PoolWagerState {
   wagers: AnonMoveWager[]
 }
 
+export interface Move {
+  san: string
+  time: number
+  is_white: boolean
+}
+
 export interface Game {
   complete: boolean
   game_status: string
   time_format: string
-  move_hist: string[]
+  move_hist: Move[]
   player_black: Player
   player_white: Player
   state: string
@@ -75,7 +81,7 @@ export type MakeMoveData = { gameId: string, boardState: string }; // ws
 export type StartGameData = { gameId: string, game_status: GameStatus }; // ws
 export type UpdateGameStateData = { gameId: string, state: string, move_hist: string[], time_white: number, time_black: number, pool_wagers: { move: PoolWagerState } }; // ws
 export type UpdateGameOddsData = { gameId: string, odds: GameOdds, pool_wagers: { move: PoolWagerState } }; // ws
-export type UpdateGameEndData = { gameId: string, completed: boolean, game_status: string }; // ws
+export type UpdateGameEndData = { gameId: string, complete: boolean, game_status: string }; // ws
 export type BroadcastPoolWager = { gameId: string, type: 'move', data: string, amount: number }; // ws
 
 export type CreateGameRequestData = { state: string };

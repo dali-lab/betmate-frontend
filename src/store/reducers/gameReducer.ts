@@ -74,7 +74,7 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
           ...state.games,
           [action.payload.gameId]: {
             ...state.games[action.payload.gameId],
-            ...action.payload,
+            ...omit(action.payload, 'gameId'),
           },
         },
       };

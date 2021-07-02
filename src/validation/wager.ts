@@ -1,5 +1,6 @@
 import joi from 'joi';
-import { WagerStatus } from 'types/resources/wager';
+import { BroadcastPoolWager } from 'types/resources/game';
+import { Wager, WagerResultData, WagerStatus } from 'types/resources/wager';
 
 export const isWagerStatus = (v: string): boolean => Object.values(WagerStatus).includes(v as WagerStatus);
 
@@ -10,7 +11,7 @@ const wagerStatusValidator = (value: any, helpers: joi.CustomHelpers) => {
     : helpers.message({ custom: `The values '${sanitizedValue.filter((v) => !isWagerStatus(v))}' are not wager statuses` });
 };
 
-export const WagerSchema = joi.object({
+export const WagerSchema = joi.object<Wager>({
   _id: joi.string().required(),
   game_id: joi.string().required(),
   better_id: joi.string().required(),
@@ -28,12 +29,12 @@ export const WagerSchema = joi.object({
 
 export const WagerArraySchema = joi.array().items(WagerSchema);
 
-export const WagerResultSchema = joi.object({
+export const WagerResultSchema = joi.object<WagerResultData>({
   gameId: joi.string().required(),
   wagers: WagerArraySchema.required(),
 });
 
-export const BroadcastPoolWagerSchema = joi.object({
+export const BroadcastPoolWagerSchema = joi.object<BroadcastPoolWager>({
   gameId: joi.string().required(),
   type: joi.string().required(),
   data: joi.string().required(),
