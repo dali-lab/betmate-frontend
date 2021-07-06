@@ -4,6 +4,8 @@ import {
   DeleteGameData, FetchGameData, FetchGamesData, Game,
 } from 'types/resources/game';
 import { RequestReturnType } from 'types/state';
+import { validateSchema } from 'validation';
+import { GameSchema, GameArraySchema } from 'validation/game';
 
 export const createGame = async (state: string): Promise<RequestReturnType<FetchGameData>> => {
   // const result = await createBackendAxiosRequest({
@@ -27,7 +29,7 @@ export const fetchGameById = async (id: string): Promise<RequestReturnType<Fetch
   });
 
   // Validation here
-  return result;
+  return validateSchema(GameSchema, result, (d) => d.data);
 };
 
 export const fetchGamesByStatus = async (game_status: string[]): Promise<RequestReturnType<FetchGamesData>> => {
@@ -37,7 +39,7 @@ export const fetchGamesByStatus = async (game_status: string[]): Promise<Request
     params: { game_status },
   });
   // Validation here
-  return result;
+  return validateSchema(GameArraySchema, result, (d) => d.data);
 };
 
 export const updateGameById = async (id: string, fields: Partial<Game>): Promise<RequestReturnType<FetchGameData>> => {

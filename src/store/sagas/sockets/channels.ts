@@ -11,6 +11,11 @@ import { FetchWagersActions, WagerResultData } from 'types/resources/wager';
 import {
   ChannelCreator, SocketErrorData, Events, SocketErrorAction, SocketGameErrorAction, SocketGameErrorData,
 } from 'types/socket';
+import { validateSchema } from 'validation';
+import {
+  StartGameSchema, UpdateGameEndSchema, UpdateGameOddsSchema, UpdateGameStateSchema,
+} from 'validation/game';
+import { BroadcastPoolWagerSchema, WagerResultSchema } from 'validation/wager';
 
 /**
  * A function to create an event channel that listens for game related events on the passed socket and pushes them to the created channel
@@ -20,19 +25,35 @@ import {
 export const createUpdateGameStateChannel: ChannelCreator<GameUpdateActions> = (socket) => eventChannel(
   (pushToChannel) => {
     const gameStartHandler = (payload: StartGameData) => {
-      pushToChannel({ type: 'START_GAME', status: 'SUCCESS', payload });
+      pushToChannel({
+        type: 'START_GAME',
+        status: 'SUCCESS',
+        payload: validateSchema(StartGameSchema, payload),
+      });
     };
 
     const newMoveHandler = (payload: UpdateGameStateData) => {
-      pushToChannel({ type: 'UPDATE_GAME_STATE', status: 'SUCCESS', payload });
+      pushToChannel({
+        type: 'UPDATE_GAME_STATE',
+        status: 'SUCCESS',
+        payload: validateSchema(UpdateGameStateSchema, payload),
+      });
     };
 
     const newOddsHandler = (payload: UpdateGameOddsData) => {
-      pushToChannel({ type: 'UPDATE_GAME_ODDS', status: 'SUCCESS', payload });
+      pushToChannel({
+        type: 'UPDATE_GAME_ODDS',
+        status: 'SUCCESS',
+        payload: validateSchema(UpdateGameOddsSchema, payload),
+      });
     };
 
     const gameOverHandler = (payload: UpdateGameEndData) => {
-      pushToChannel({ type: 'UPDATE_GAME_END', status: 'SUCCESS', payload });
+      pushToChannel({
+        type: 'UPDATE_GAME_END',
+        status: 'SUCCESS',
+        payload: validateSchema(UpdateGameEndSchema, payload),
+      });
     };
 
     socket.on<Events>('start_game', gameStartHandler);
@@ -41,8 +62,9 @@ export const createUpdateGameStateChannel: ChannelCreator<GameUpdateActions> = (
     socket.on<Events>('game_over', gameOverHandler);
 
     return () => {
+      socket.off('start_game', gameStartHandler);
       socket.off('new_move', newMoveHandler);
-      socket.off('wagers', newOddsHandler);
+      socket.off('new_odds', newOddsHandler);
       socket.off('game_over', gameOverHandler);
     };
   },
@@ -56,11 +78,15 @@ export const createUpdateGameStateChannel: ChannelCreator<GameUpdateActions> = (
 export const createUpdateWagerStateChannel: ChannelCreator<FetchWagersActions | BroadcastPoolWagerActions> = (socket) => eventChannel(
   (pushToChannel) => {
     const wagerResultHandler = (payload: WagerResultData) => {
-      const { wagers } = payload;
+      const { wagers } = validateSchema(WagerResultSchema, payload);
       pushToChannel({ type: 'FETCH_WAGERS', status: 'SUCCESS', payload: wagers });
     };
     const poolWagerHandler = (payload: BroadcastPoolWager) => {
-      pushToChannel({ type: 'BROADCAST_POOL_WAGER', status: 'SUCCESS', payload });
+      pushToChannel({
+        type: 'BROADCAST_POOL_WAGER',
+        status: 'SUCCESS',
+        payload: validateSchema(BroadcastPoolWagerSchema, payload),
+      });
     };
 
     socket.on<Events>('wager_result', wagerResultHandler);
@@ -90,6 +116,9 @@ export const createErrorChannel: ChannelCreator<SocketErrorAction | SocketGameEr
 
     socket.on<Events>('socket_error', socketErrorHandler);
     socket.on<Events>('game_error', gameErrorHandler);
-    return () => { };
+    return () => {
+      socket.off('socket_error', socketErrorHandler);
+      socket.off('game_error', gameErrorHandler);
+    };
   },
 );

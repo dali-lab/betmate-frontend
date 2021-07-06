@@ -21,13 +21,13 @@ export type CreateUserRequestData = { email: string, password: string, firstName
 export type SignInRequestData = { email: string, password: string };
 export type JwtSignInRequestData = { token: string };
 export type AuthUserResponseData = { user: User, token: string };
-export type AuthUserPayload = { user: User };
+export type JwtSignInResponseData = { user: User };
 
 export type DeAuthUserData = Empty;
 
-export type CreateUserActions = AsyncAction<typeof CREATE_USER, AuthUserPayload, CreateUserRequestData>;
-export type SignInUserActions = AsyncAction<typeof SIGN_IN_USER, AuthUserPayload, SignInRequestData>;
-export type JwtSignInActions = AsyncAction<typeof JWT_SIGN_IN, AuthUserPayload, JwtSignInRequestData>;
+export type CreateUserActions = AsyncAction<typeof CREATE_USER, AuthUserResponseData, CreateUserRequestData>;
+export type SignInUserActions = AsyncAction<typeof SIGN_IN_USER, AuthUserResponseData, SignInRequestData>;
+export type JwtSignInActions = AsyncAction<typeof JWT_SIGN_IN, JwtSignInResponseData, JwtSignInRequestData>;
 export type DeAuthUserActions = Action<typeof DEAUTH_USER, DeAuthUserData>;
 
 export type AuthActions = CreateUserActions | SignInUserActions | DeAuthUserActions | JwtSignInActions;

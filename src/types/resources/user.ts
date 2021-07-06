@@ -4,14 +4,13 @@ import { AsyncAction } from 'types/state';
 /* -------- State -------- */
 
 export interface User {
-  email: string,
-  password?: string,
-  first_name?: string,
-  last_name?: string,
-  full_name?: string,
-  account: number,
-  wager_hist: string[],
+  email: string
+  first_name: string
+  last_name: string
+  full_name: string
+  account: number
   _id: string
+  id: string
 }
 
 export interface UserState {
