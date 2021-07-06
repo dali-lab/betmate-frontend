@@ -74,8 +74,8 @@ export const GameSchema = joi.object<Game>({
   time_white: joi.number().min(0).required(),
   odds: GameOddsSchema.required(),
   pool_wagers: PoolWagerSchema.required(),
-  created_at: joi.string().required(), // verify is date
-  updated_at: joi.string().required(), // verify is date
+  created_at: joi.string().isoDate().required(),
+  updated_at: joi.string().isoDate().required(),
 });
 
 export const GameArraySchema = joi.array().items(GameSchema);

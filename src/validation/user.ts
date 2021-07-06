@@ -3,8 +3,8 @@ import { User } from 'types/resources/user';
 
 export const UserSchema = joi.object<User>({
   _id: joi.string().required(),
-  id: joi.string().required(),
-  email: joi.string().required(), // include email
+  id: joi.string(),
+  email: joi.string().email({ tlds: { allow: false } }).required(),
   first_name: joi.string().required(),
   last_name: joi.string().required(),
   full_name: joi.string().required(),
