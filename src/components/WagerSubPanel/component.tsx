@@ -9,6 +9,8 @@ import { Game } from 'types/resources/game';
 interface WagerSubPanelProps {
   betType: 'wdl' | 'move',
   games: Record<string, Game>
+  onEnterMovePanel?: () => void
+  onLeaveMovePanel?: () => void
 }
 
 const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
@@ -24,7 +26,7 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
   const wagersLoading = props.games[gameId]?.pool_wagers?.move.options.length === 0;
 
   return (
-    <div className="bet-subpanel">
+    <div className="bet-subpanel" onMouseEnter={() => props.onEnterMovePanel?.()} onMouseLeave={() => props.onLeaveMovePanel?.()}>
       <h1>{props.betType === 'move' ? 'Move' : 'Game'} Betting</h1>
       <form>
         {props.betType === 'move'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router';
 import Chessground from '@react-chess/chessground';
 import { Config } from 'chessground/config';
@@ -59,6 +59,8 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
   const [fen, updateFen] = useState('');
   const [config, updateConfig] = useState(initialCgConfig);
+  const [shapesVisible, setShapesVisible] = useState(false);
+  const [autoShapes, setAutoShapes] = useState<DrawShape[]>([]);
 
   const game: Game | undefined = props.games[gameId];
 
@@ -92,30 +94,53 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
 
       chess.load(game.state);
       // const brushes = ['green', 'red', 'blue'];
-      const autoShapes = topMoves
+      const newAutoShapes = topMoves
         .map((move, i) => {
           const m = chess.move(move);
           chess.undo();
           return m ? { orig: m.from, dest: m.to, brush: String(i) } as DrawShape : null;
         })
         .filter((m): m is DrawShape => !!m);
+      setAutoShapes(newAutoShapes);
 
-      updateConfig((c) => ({
-        ...c,
-        drawable: {
-          ...c.drawable,
-          autoShapes,
-        },
-      }));
+      // console.log('autoshapes', config.drawable?.autoShapes);
+
+      if (shapesVisible) {
+        updateConfig((c) => ({
+          ...c,
+          drawable: {
+            ...c.drawable,
+            autoShapes: newAutoShapes,
+          },
+        }));
+      }
     }
   }, [game?.pool_wagers]);
 
-  return !props.games[gameId]
+  useEffect(() => {
+    updateConfig((c) => ({
+      ...c,
+      drawable: {
+        ...c.drawable,
+        autoShapes: shapesVisible ? autoShapes : [],
+      },
+    }));
+  }, [shapesVisible]);
+
+  const onEnterMovePanel = useCallback(() => {
+    setShapesVisible(true);
+  }, []);
+
+  const onLeaveMovePanel = useCallback(() => {
+    setShapesVisible(false);
+  }, []);
+
+  return !game
     ? <p className="loading-text">Loading</p>
     : (
       <>
-        {props.games[gameId].game_status === GameStatus.NOT_STARTED && props.showModal[gameId] && <PregameModal/>}
-        {gameOver(props.games[gameId].game_status as GameStatus) && <PostgameModal/>}
+        {game.game_status === GameStatus.NOT_STARTED && props.showModal[gameId] && <PregameModal/>}
+        {gameOver(game.game_status as GameStatus) && <PostgameModal/>}
         <NavBar />
         <div className='chess-match-container'>
           <ChatBox />
@@ -124,11 +149,11 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
               icon={playerIconBlack}
               fen = {fen}
               name={'Black'}
-              elo={props.games[gameId]?.player_black.elo}
-              time={props.games[gameId]?.time_black}
+              elo={game?.player_black.elo}
+              time={game?.time_black}
               isBlack={true}
-              gameStatus={props.games[gameId]?.game_status as GameStatus}
-              updatedAt={props.games[gameId]?.updated_at}
+              gameStatus={game?.game_status as GameStatus}
+              updatedAt={game?.updated_at}
             />
             <div className='chessboard'>
               {/* <Chessboard position={fen} width={450}/> */}
@@ -142,14 +167,14 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
               icon={playerIconWhite}
               fen = {fen}
               name={'White'}
-              elo={props.games[gameId]?.player_white.elo}
-              time={props.games[gameId]?.time_white}
+              elo={game?.player_white.elo}
+              time={game?.time_white}
               isBlack={false}
-              gameStatus={props.games[gameId]?.game_status as GameStatus}
-              updatedAt={props.games[gameId]?.updated_at}
+              gameStatus={game?.game_status as GameStatus}
+              updatedAt={game?.updated_at}
             />
           </div>
-          <WagerPanel/>
+          <WagerPanel onEnterMovePanel={onEnterMovePanel} onLeaveMovePanel={onLeaveMovePanel} />
         </div>
       </>
     );
