@@ -2,6 +2,7 @@ import { VerticalBar } from 'components/WagerPanel/helper_components';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useParams } from 'react-router';
 import { Game } from 'types/resources/game';
+import { moveOptionColors } from 'utils/config';
 
 interface MoveOptionsProps {
   setWager: Dispatch<SetStateAction<string>>
@@ -14,7 +15,6 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
 
   const renderMoveOptions = () => {
-    const colors = ['#8CCDBD', '#E527AF', '#FADF9B', '#C4C4C4'];
     const { options: moveOptions, wagers } = props.games[gameId]?.pool_wagers?.move;
 
     const totalPool = wagers.reduce((acc, w) => acc + w.amount, 0);
@@ -40,7 +40,7 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
       .map(([move, movePool], i) => (
         <label htmlFor={`move-option-${i}`} key={move}>
           <VerticalBar
-            color={colors[i]}
+            color={moveOptionColors[i]}
             maxPercentage={Number(maxPercentage)}
             percentage={movePool / totalPool}
           />

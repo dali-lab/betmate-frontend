@@ -16,6 +16,7 @@ import PostgameModal from 'components/PostgameModal';
 import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
 import { GameStatus, gameOver } from 'utils/chess';
+import { moveOptionColors } from 'utils/config';
 
 import { Game } from 'types/resources/game';
 import playerIconBlack from 'assets/player_icon_black.svg';
@@ -37,11 +38,20 @@ interface ChessMatchProps {
 const initialCgConfig: Config = {
   highlight: { lastMove: true, check: true },
   drawable: {
-    autoShapes: [{
-      brush: 'green',
-      dest: 'c5',
-      orig: 'e3',
-    }],
+    brushes: {
+      0: {
+        key: 'first', color: moveOptionColors[0], opacity: 1, lineWidth: 10,
+      },
+      1: {
+        key: 'second', color: moveOptionColors[1], opacity: 1, lineWidth: 10,
+      },
+      2: {
+        key: 'third', color: moveOptionColors[2], opacity: 1, lineWidth: 10,
+      },
+      3: {
+        key: 'other', color: moveOptionColors[3], opacity: 1, lineWidth: 10,
+      },
+    },
   },
 };
 
@@ -81,12 +91,12 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
       const topMoves = game.pool_wagers.move.options;
 
       chess.load(game.state);
-      const brushes = ['green', 'red', 'blue'];
+      // const brushes = ['green', 'red', 'blue'];
       const autoShapes = topMoves
         .map((move, i) => {
           const m = chess.move(move);
           chess.undo();
-          return m ? { orig: m.from, dest: m.to, brush: brushes[i] } as DrawShape : null;
+          return m ? { orig: m.from, dest: m.to, brush: String(i) } as DrawShape : null;
         })
         .filter((m): m is DrawShape => !!m);
 
