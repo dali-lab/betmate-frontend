@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Chessground from '@react-chess/chessground';
 import { Config } from 'chessground/config';
+import { Key } from 'chessground/types';
+import { DrawShape } from 'chessground/draw';
+import { ChessInstance } from 'chess.js';
 
 import PlayerInfo from 'containers/ChessMatch/playerInfo/component';
 import WagerPanel from 'components/WagerPanel';
@@ -20,6 +23,9 @@ import playerIconWhite from 'assets/player_icon_white.svg';
 
 import './style.scss';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const chess: ChessInstance = require('chess.js')();
+
 interface ChessMatchProps {
   joinGame: typeof joinGame
   leaveGame: typeof leaveGame
@@ -28,8 +34,15 @@ interface ChessMatchProps {
   showModal: Record<string, boolean>
 }
 
-const initialCgConfig: Partial<Config> = {
+const initialCgConfig: Config = {
   highlight: { lastMove: true, check: true },
+  drawable: {
+    autoShapes: [{
+      brush: 'green',
+      dest: 'c5',
+      orig: 'e3',
+    }],
+  },
 };
 
 const ChessMatch: React.FC<ChessMatchProps> = (props) => {
@@ -47,14 +60,45 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
 
   useEffect(() => {
     if (game) {
+      const lastMoveExists = game.move_hist.length > 0;
+      const [{ to, from }] = lastMoveExists
+        ? game.move_hist.slice(-1)
+        : [{ to: '', from: '' }];
+
       updateConfig((c) => ({
         ...c,
         fen: game.state,
+        lastMove: [from, to] as Key[],
+        highlight: { lastMove: lastMoveExists, check: true },
       }));
 
       updateFen(game.state);
     }
   }, [game?.state]);
+
+  useEffect(() => {
+    if (game) {
+      const topMoves = game.pool_wagers.move.options;
+
+      chess.load(game.state);
+      const brushes = ['green', 'red', 'blue'];
+      const autoShapes = topMoves
+        .map((move, i) => {
+          const m = chess.move(move);
+          chess.undo();
+          return m ? { orig: m.from, dest: m.to, brush: brushes[i] } as DrawShape : null;
+        })
+        .filter((m): m is DrawShape => !!m);
+
+      updateConfig((c) => ({
+        ...c,
+        drawable: {
+          ...c.drawable,
+          autoShapes,
+        },
+      }));
+    }
+  }, [game?.pool_wagers]);
 
   return !props.games[gameId]
     ? <p className="loading-text">Loading</p>
