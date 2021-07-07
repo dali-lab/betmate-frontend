@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import Chessboard from 'chessboardjsx';
+import { useParams } from 'react-router';
+import Chessground from '@react-chess/chessground';
+import { Config } from 'chessground/config';
+
+import PlayerInfo from 'containers/ChessMatch/playerInfo/component';
 import WagerPanel from 'components/WagerPanel';
 import NavBar from 'components/NavBar';
-import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
-import { useParams } from 'react-router';
-import { fetchGameById } from 'store/actionCreators/gameActionCreators';
-import { Game } from 'types/resources/game';
 import ChatBox from 'components/ChatBox';
 import PregameModal from 'components/PregameModal';
 import PostgameModal from 'components/PostgameModal';
+
+import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
+import { fetchGameById } from 'store/actionCreators/gameActionCreators';
+import { GameStatus, gameOver } from 'utils/chess';
+
+import { Game } from 'types/resources/game';
 import playerIconBlack from 'assets/player_icon_black.svg';
 import playerIconWhite from 'assets/player_icon_white.svg';
-import PlayerInfo from 'containers/ChessMatch/playerInfo/component';
-import { GameStatus, gameOver } from 'utils/chess';
+
 import './style.scss';
 
 interface ChessMatchProps {
@@ -23,9 +28,16 @@ interface ChessMatchProps {
   showModal: Record<string, boolean>
 }
 
+const initialCgConfig: Partial<Config> = {
+  highlight: { lastMove: true, check: true },
+};
+
 const ChessMatch: React.FC<ChessMatchProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
   const [fen, updateFen] = useState('');
+  const [config, updateConfig] = useState(initialCgConfig);
+
+  const game: Game | undefined = props.games[gameId];
 
   useEffect(() => {
     props.fetchGameById(gameId);
@@ -34,9 +46,15 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
   }, []);
 
   useEffect(() => {
-    const game = props.games[gameId];
-    if (game) updateFen(game.state);
-  }, [props.games[gameId]?.state]);
+    if (game) {
+      updateConfig((c) => ({
+        ...c,
+        fen: game.state,
+      }));
+
+      updateFen(game.state);
+    }
+  }, [game?.state]);
 
   return !props.games[gameId]
     ? <p className="loading-text">Loading</p>
@@ -59,7 +77,12 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
               updatedAt={props.games[gameId]?.updated_at}
             />
             <div className='chessboard'>
-              <Chessboard position={fen} width={450}/>
+              {/* <Chessboard position={fen} width={450}/> */}
+              <Chessground
+                width={450}
+                height={450}
+                config={config}
+              />
             </div>
             <PlayerInfo
               icon={playerIconWhite}

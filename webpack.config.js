@@ -32,6 +32,7 @@ module.exports = {
           { loader: 'eslint-loader' },
         ],
       },
+      { test: /\.m?js/, resolve: { fullySpecified: false } },
       {
         test: /\.s?css/,
         use: [
