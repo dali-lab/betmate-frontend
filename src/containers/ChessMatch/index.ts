@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 
 import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
-import { newMove, createNewArrows } from 'store/actionCreators/chessgroundActionCreators';
 import { RootState } from 'types/state';
 
 import ChessMatch from './component';
@@ -18,8 +17,6 @@ const mapDispatchToProps = {
   joinGame,
   leaveGame,
   fetchGameById,
-  newMove,
-  createNewArrows,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChessMatch);

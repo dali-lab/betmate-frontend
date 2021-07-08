@@ -2,23 +2,23 @@ import { KeyPair } from 'chessground/types';
 import { DrawShape } from 'chessground/draw';
 import { ChessInstance } from 'chess.js';
 
-import { Game } from 'types/resources/game';
+import { Move, PoolWagerState } from 'types/resources/game';
 import { Actions } from 'types/state';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const chess: ChessInstance = require('chess.js')();
 
-export const newMove = (game: Game): Actions => {
-  const hasLastMove = game.move_hist.length > 0;
+export const newMove = (state: string, moveHist: Move[]): Actions => {
+  const hasLastMove = moveHist.length > 0;
   const lm = hasLastMove
-    ? game.move_hist.slice(-1)[0]
+    ? moveHist[moveHist.length - 1]
     : undefined;
 
   return {
     type: 'CG_NEW_MOVE',
     status: 'SUCCESS',
     payload: {
-      newState: game.state,
+      newState: state,
       lastMove: lm && [lm.from, lm.to] as KeyPair,
     },
   };
@@ -36,9 +36,9 @@ export const onLeaveMovePanel = (): Actions => ({
   payload: {},
 });
 
-export const createNewArrows = (game: Game): Actions => {
-  chess.load(game.state);
-  const topMoves = game.pool_wagers.move.options;
+export const createNewArrows = (state: string, moves: PoolWagerState): Actions => {
+  chess.load(state);
+  const topMoves = moves.options;
   const newArrows = (
     topMoves
       .map((move, i) => {

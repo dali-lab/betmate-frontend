@@ -13,7 +13,6 @@ import PostgameModal from 'components/PostgameModal';
 
 import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
-import { newMove, createNewArrows } from 'store/actionCreators/chessgroundActionCreators';
 import { GameStatus, gameOver } from 'utils/chess';
 
 import { Game } from 'types/resources/game';
@@ -26,8 +25,6 @@ interface ChessMatchProps {
   joinGame: typeof joinGame
   leaveGame: typeof leaveGame
   fetchGameById: typeof fetchGameById
-  newMove: typeof newMove
-  createNewArrows: typeof createNewArrows
   games: Record<string, Game>
   showModal: Record<string, boolean>
   config: Config
@@ -43,18 +40,6 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     props.joinGame(gameId);
     return () => { props.leaveGame(gameId); };
   }, []);
-
-  useEffect(() => {
-    if (game) {
-      props.newMove(game);
-    }
-  }, [game?.state]);
-
-  useEffect(() => {
-    if (game) {
-      props.createNewArrows(game);
-    }
-  }, [game?.pool_wagers]);
 
   return !game
     ? <p className="loading-text">Loading</p>
