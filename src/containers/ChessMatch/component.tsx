@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Chessground from '@react-chess/chessground';
 import { Config } from 'chessground/config';
+import { Key } from 'chessground/types';
 
 import PlayerInfo from 'containers/ChessMatch/playerInfo/component';
 import WagerPanel from 'components/WagerPanel';
@@ -47,9 +48,16 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
 
   useEffect(() => {
     if (game) {
+      const hasLastMove = game.move_hist.length > 0;
+      const [{ to, from }] = hasLastMove
+        ? game.move_hist.slice(-1)
+        : [{ to: '', from: '' }];
+
       updateConfig((c) => ({
         ...c,
         fen: game.state,
+        lastMove: [from, to] as Key[],
+        highlight: { lastMove: hasLastMove, check: true },
       }));
 
       updateFen(game.state);
@@ -77,7 +85,6 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
               updatedAt={props.games[gameId]?.updated_at}
             />
             <div className='chessboard'>
-              {/* <Chessboard position={fen} width={450}/> */}
               <Chessground
                 width={450}
                 height={450}
