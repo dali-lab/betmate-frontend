@@ -20,20 +20,18 @@ const PostgameModal: React.FC<PostgameModalProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
   const history = useHistory();
 
+  const game: Game | undefined = props.games[gameId];
+
   const getGameResult = () => {
-    switch (props.games[gameId].game_status) {
+    switch (game?.game_status) {
       case GameStatus.WHITE_WIN:
         return 'White wins!';
-        break;
       case GameStatus.BLACK_WIN:
         return 'Black wins!';
-        break;
       case GameStatus.DRAW:
         return 'It\'s a draw!';
-        break;
       default:
         return '';
-        break;
     }
   };
 
@@ -67,7 +65,7 @@ const PostgameModal: React.FC<PostgameModalProps> = (props) => {
   const profit = Number(winnings) - Number(losses);
 
   return (
-    (!props.games[gameId] || hide)
+    (!game || hide)
       ? null
       : <div className="blur-background">
         <div className="postgame-modal-container">
@@ -78,7 +76,7 @@ const PostgameModal: React.FC<PostgameModalProps> = (props) => {
             onClick={() => setHide(true)}
           />
           <div className="postgame-padding-container">
-            <h1>White ({props.games[gameId].player_white.elo}) vs. Black ({props.games[gameId].player_black.elo})</h1>
+            <h1>White ({game.player_white.elo}) vs. Black ({game.player_black.elo})</h1>
             <h4>{getGameResult()} Here’s a summary of your bets.</h4>
             <div className="postgame-box-container">
               <div className="postgame-box blue-border">

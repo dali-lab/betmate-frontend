@@ -64,12 +64,12 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     }
   }, [game?.state]);
 
-  return !props.games[gameId]
+  return !game
     ? <p className="loading-text">Loading</p>
     : (
       <>
-        {props.games[gameId].game_status === GameStatus.NOT_STARTED && props.showModal[gameId] && <PregameModal/>}
-        {gameOver(props.games[gameId].game_status as GameStatus) && <PostgameModal/>}
+        {game.game_status === GameStatus.NOT_STARTED && props.showModal[gameId] && <PregameModal/>}
+        {gameOver(game.game_status as GameStatus) && <PostgameModal/>}
         <NavBar />
         <div className='chess-match-container'>
           <ChatBox />
@@ -78,11 +78,11 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
               icon={playerIconBlack}
               fen = {fen}
               name={'Black'}
-              elo={props.games[gameId]?.player_black.elo}
-              time={props.games[gameId]?.time_black}
+              elo={game?.player_black.elo}
+              time={game?.time_black}
               isBlack={true}
-              gameStatus={props.games[gameId]?.game_status as GameStatus}
-              updatedAt={props.games[gameId]?.updated_at}
+              gameStatus={game?.game_status as GameStatus}
+              updatedAt={game?.updated_at}
             />
             <div className='chessboard'>
               <Chessground
@@ -95,11 +95,11 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
               icon={playerIconWhite}
               fen = {fen}
               name={'White'}
-              elo={props.games[gameId]?.player_white.elo}
-              time={props.games[gameId]?.time_white}
+              elo={game?.player_white.elo}
+              time={game?.time_white}
               isBlack={false}
-              gameStatus={props.games[gameId]?.game_status as GameStatus}
-              updatedAt={props.games[gameId]?.updated_at}
+              gameStatus={game?.game_status as GameStatus}
+              updatedAt={game?.updated_at}
             />
           </div>
           <WagerPanel/>
