@@ -72,8 +72,8 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
 
   useEffect(() => {
     if (game) {
-      const lastMoveExists = game.move_hist.length > 0;
-      const [{ to, from }] = lastMoveExists
+      const hasLastMove = game.move_hist.length > 0;
+      const [{ to, from }] = hasLastMove
         ? game.move_hist.slice(-1)
         : [{ to: '', from: '' }];
 
@@ -81,7 +81,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
         ...c,
         fen: game.state,
         lastMove: [from, to] as Key[],
-        highlight: { lastMove: lastMoveExists, check: true },
+        highlight: { lastMove: hasLastMove, check: true },
       }));
 
       updateFen(game.state);
@@ -156,7 +156,6 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
               updatedAt={game?.updated_at}
             />
             <div className='chessboard'>
-              {/* <Chessboard position={fen} width={450}/> */}
               <Chessground
                 width={450}
                 height={450}
