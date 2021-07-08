@@ -9,8 +9,6 @@ interface WagerPanelProps {
   isAuthenticated: boolean,
   balance: number | undefined,
   games: Record<string, Game>,
-  onEnterMovePanel: () => void,
-  onLeaveMovePanel: () => void,
 }
 
 const WagerPanel: React.FC<WagerPanelProps> = (props) => {
@@ -24,7 +22,7 @@ const WagerPanel: React.FC<WagerPanelProps> = (props) => {
           <img src={BalanceIcon} />
         </div>
       )}
-      <WagerSubPanel betType="move" onEnterMovePanel={props.onEnterMovePanel} onLeaveMovePanel={props.onLeaveMovePanel} />
+      <WagerSubPanel betType="move" />
       <WagerSubPanel betType="wdl"/>
       <div>
         <WDLProbability odds={props.games[gameId]?.odds} height={20}/>

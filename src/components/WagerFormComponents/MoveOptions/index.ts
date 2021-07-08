@@ -1,4 +1,6 @@
 import { connect } from 'react-redux';
+
+import { onMoveSelect, onMoveUnselect } from 'store/actionCreators/chessgroundActionCreators';
 import { RootState } from 'types/state';
 
 import MoveOptions from './component';
@@ -8,4 +10,9 @@ const mapStateToProps = (state: RootState) => ({
   games: state.game.games,
 });
 
-export default connect(mapStateToProps, { })(MoveOptions);
+const mapDispatchToProps = {
+  onMoveSelect,
+  onMoveUnselect,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoveOptions);

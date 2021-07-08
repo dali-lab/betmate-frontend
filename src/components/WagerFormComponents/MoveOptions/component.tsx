@@ -1,6 +1,7 @@
-import { VerticalBar } from 'components/WagerPanel/helper_components';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useParams } from 'react-router';
+import { VerticalBar } from 'components/WagerPanel/helper_components';
+import { onMoveSelect, onMoveUnselect } from 'store/actionCreators/chessgroundActionCreators';
 import { Game } from 'types/resources/game';
 import { moveOptionColors } from 'utils/config';
 
@@ -9,6 +10,8 @@ interface MoveOptionsProps {
   wager: string,
   games: Record<string, Game>,
   wagersLoading: boolean,
+  onMoveSelect: typeof onMoveSelect
+  onMoveUnselect: typeof onMoveUnselect
 }
 
 const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
@@ -36,6 +39,11 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
         .reduce((currMax, movePool) => Math.max(currMax, movePool / totalPool), 0)
     );
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      props.setWager(e.currentTarget.value);
+      props.onMoveSelect(props.games[gameId].state, e.currentTarget.value);
+    };
+
     return Object.entries(poolPerMove)
       .map(([move, movePool], i) => (
         <label htmlFor={`move-option-${i}`} key={move}>
@@ -51,7 +59,7 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
             type="radio"
             value={move}
             checked={props.wager === move}
-            onChange={(e) => { props.setWager(e.currentTarget.value); }}
+            onChange={handleChange}
           />
         </label>
       ));
