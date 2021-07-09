@@ -26,6 +26,8 @@ export interface PoolWagerState {
 
 export interface Move {
   san: string
+  to: string
+  from: string
   time: number
   is_white: boolean
 }
