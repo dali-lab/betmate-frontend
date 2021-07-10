@@ -1,7 +1,7 @@
 import { KeyPair } from 'chessground/types';
 import { DrawShape } from 'chessground/draw';
 
-import { Move, PoolWagerState } from 'types/resources/game';
+import { Move } from 'types/resources/game';
 import { Actions } from 'types/state';
 import { getBrush, getFromTo } from 'utils/chess';
 
@@ -33,9 +33,9 @@ export const onLeaveMovePanel = (): Actions => ({
   payload: {},
 });
 
-export const createNewArrows = (state: string, moves: PoolWagerState): Actions => {
+export const createNewArrows = (state: string, moveOptions: string[]): Actions => {
   const newArrows = (
-    moves.options
+    moveOptions
       .map(getBrush(state))
       .filter((m): m is DrawShape => !!m)
   );

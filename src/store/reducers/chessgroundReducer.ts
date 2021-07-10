@@ -1,7 +1,7 @@
-import { ChessgroundState, FromTo } from 'types/chessground';
-import { DrawShape } from 'chessground/draw';
+import { ChessgroundState } from 'types/chessground';
 import { Actions } from 'types/state';
 import { moveOptionColors } from 'utils/config';
+import { fromToEqual, selectDrawshape } from 'utils/chess';
 
 const initialState: ChessgroundState = {
   config: {
@@ -26,10 +26,6 @@ const initialState: ChessgroundState = {
   autoShapes: [],
   showAutoShapes: false,
 };
-
-const selectDrawshape = (move: FromTo, autoShapes: DrawShape[]) => (
-  autoShapes.filter((s) => s.orig === move.from && s.dest === move.to)
-);
 
 const chessgroundReducer = (state = initialState, action: Actions): ChessgroundState => {
   if (action.status !== 'SUCCESS') return state;
@@ -71,7 +67,7 @@ const chessgroundReducer = (state = initialState, action: Actions): ChessgroundS
           drawable: {
             ...state.config.drawable,
             autoShapes: state.selected
-              ? selectDrawshape(state.selected, state.autoShapes)
+              ? selectDrawshape(state.autoShapes, state.selected)
               : state.autoShapes,
           },
         },
@@ -85,7 +81,7 @@ const chessgroundReducer = (state = initialState, action: Actions): ChessgroundS
           drawable: {
             ...state.config.drawable,
             autoShapes: state.selected
-              ? selectDrawshape(state.selected, state.autoShapes)
+              ? selectDrawshape(state.autoShapes, state.selected)
               : [],
           },
         },
@@ -98,7 +94,7 @@ const chessgroundReducer = (state = initialState, action: Actions): ChessgroundS
           ...state.config,
           drawable: {
             ...state.config.drawable,
-            autoShapes: selectDrawshape(action.payload, state.autoShapes),
+            autoShapes: selectDrawshape(state.autoShapes, action.payload),
           },
         },
         selected: action.payload,
@@ -122,9 +118,9 @@ const chessgroundReducer = (state = initialState, action: Actions): ChessgroundS
           ...state.config,
           drawable: {
             ...state.config.drawable,
-            autoShapes: state.selected
-              ? selectDrawshape(state.selected, state.autoShapes).concat(selectDrawshape(action.payload, state.autoShapes))
-              : selectDrawshape(action.payload, state.autoShapes),
+            autoShapes: state.selected && !fromToEqual(state.selected, action.payload)
+              ? [...selectDrawshape(state.autoShapes, state.selected), ...selectDrawshape(state.autoShapes, action.payload)]
+              : selectDrawshape(state.autoShapes, action.payload),
           },
         },
       };
@@ -136,7 +132,7 @@ const chessgroundReducer = (state = initialState, action: Actions): ChessgroundS
           drawable: {
             ...state.config.drawable,
             autoShapes: state.selected
-              ? selectDrawshape(state.selected, state.autoShapes)
+              ? selectDrawshape(state.autoShapes, state.selected)
               : state.autoShapes,
           },
         },

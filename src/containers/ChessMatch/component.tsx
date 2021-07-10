@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import Chessground from '@react-chess/chessground';
 import { Config } from 'chessground/config';
-// import { DrawShape } from 'chessground/draw';
 
 import PlayerInfo from 'containers/ChessMatch/playerInfo/component';
 import WagerPanel from 'components/WagerPanel';

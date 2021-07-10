@@ -40,3 +40,11 @@ export const getBrush = (state: string): ((move: string, i: number) => DrawShape
     return m && { orig: m.from, dest: m.to, brush: String(i) } as DrawShape;
   };
 };
+
+export const selectDrawshape = (autoShapes: DrawShape[], move: FromTo): DrawShape[] => (
+  autoShapes.filter((s) => s.orig === move.from && s.dest === move.to)
+);
+
+export const fromToEqual = (a: FromTo, b: FromTo): boolean => (
+  a.to === b.to && a.from === b.from
+);
