@@ -33,6 +33,7 @@ module.exports = {
         ],
       },
       { test: /\.m?js/, resolve: { fullySpecified: false } },
+      { test: /chess.js/, parser: { amd: false } },
       {
         test: /\.s?css/,
         use: [

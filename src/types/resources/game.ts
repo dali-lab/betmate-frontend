@@ -1,7 +1,14 @@
 /* eslint-disable import/no-cycle */
 import { Empty } from 'types';
 import { AsyncAction, Action } from 'types/state';
-import { GameStatus } from 'utils/chess';
+
+export enum GameStatus {
+  NOT_STARTED = 'not_started',
+  DRAW = 'draw',
+  BLACK_WIN = 'black_win',
+  WHITE_WIN = 'white_win',
+  IN_PROGRESS = 'in_progress',
+}
 
 export interface Player {
   name: string

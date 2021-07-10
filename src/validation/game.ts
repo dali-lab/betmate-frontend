@@ -1,5 +1,7 @@
 import joi from 'joi';
+import { Chess as chess } from 'chess.js';
 import {
+  GameStatus,
   AnonMoveWager,
   Game,
   GameOdds,
@@ -11,16 +13,13 @@ import {
   UpdateGameOddsData,
   UpdateGameStateData,
 } from 'types/resources/game';
-import { GameStatus } from 'utils/chess';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Chess = require('chess.js');
+const chessInstance = chess();
 
 export const isGameStatus = (v: string): boolean => Object.values(GameStatus).includes(v as GameStatus);
 
 const chessValidator = (value: any, helpers: joi.CustomHelpers) => {
-  // eslint-disable-next-line new-cap
-  const { valid, error } = Chess().validate_fen(value);
+  const { valid, error } = chessInstance.validate_fen(value);
   return valid
     ? value
     : helpers.message({ custom: error });

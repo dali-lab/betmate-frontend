@@ -1,12 +1,9 @@
 import { KeyPair } from 'chessground/types';
 import { DrawShape } from 'chessground/draw';
-import { ChessInstance } from 'chess.js';
 
 import { Move, PoolWagerState } from 'types/resources/game';
 import { Actions } from 'types/state';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const chess: ChessInstance = require('chess.js')();
+import { getBrush, getFromTo } from 'utils/chess';
 
 export const newMove = (state: string, moveHist: Move[]): Actions => {
   const hasLastMove = moveHist.length > 0;
@@ -37,15 +34,9 @@ export const onLeaveMovePanel = (): Actions => ({
 });
 
 export const createNewArrows = (state: string, moves: PoolWagerState): Actions => {
-  chess.load(state);
-  const topMoves = moves.options;
   const newArrows = (
-    topMoves
-      .map((move, i) => {
-        const m = chess.move(move);
-        chess.undo();
-        return m ? { orig: m.from, dest: m.to, brush: String(i) } as DrawShape : null;
-      })
+    moves.options
+      .map(getBrush(state))
       .filter((m): m is DrawShape => !!m)
   );
 
@@ -56,15 +47,11 @@ export const createNewArrows = (state: string, moves: PoolWagerState): Actions =
   };
 };
 
-export const onMoveSelect = (state: string, move: string): Actions => {
-  chess.load(state);
-  const m = chess.move(move);
-  return {
-    type: 'CG_MOVE_SELECT',
-    status: 'SUCCESS',
-    payload: { from: m?.from ?? '', to: m?.to ?? '' },
-  };
-};
+export const onMoveSelect = (state: string, move: string): Actions => ({
+  type: 'CG_MOVE_SELECT',
+  status: 'SUCCESS',
+  payload: getFromTo(state, move),
+});
 
 export const onMoveUnselect = (): Actions => ({
   type: 'CG_MOVE_UNSELECT',
@@ -72,15 +59,11 @@ export const onMoveUnselect = (): Actions => ({
   payload: {},
 });
 
-export const onMoveHover = (state: string, move: string): Actions => {
-  chess.load(state);
-  const m = chess.move(move);
-  return {
-    type: 'CG_MOVE_HOVER',
-    status: 'SUCCESS',
-    payload: { from: m?.from ?? '', to: m?.to ?? '' },
-  };
-};
+export const onMoveHover = (state: string, move: string): Actions => ({
+  type: 'CG_MOVE_HOVER',
+  status: 'SUCCESS',
+  payload: getFromTo(state, move),
+});
 
 export const onMoveUnhover = (): Actions => ({
   type: 'CG_MOVE_UNHOVER',

@@ -13,9 +13,9 @@ import PostgameModal from 'components/PostgameModal';
 
 import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
-import { GameStatus, gameOver } from 'utils/chess';
+import { gameOver } from 'utils/chess';
 
-import { Game } from 'types/resources/game';
+import { Game, GameStatus } from 'types/resources/game';
 import playerIconBlack from 'assets/player_icon_black.svg';
 import playerIconWhite from 'assets/player_icon_white.svg';
 
