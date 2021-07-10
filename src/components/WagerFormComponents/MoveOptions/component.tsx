@@ -1,7 +1,9 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { useParams } from 'react-router';
 import { VerticalBar } from 'components/WagerPanel/helper_components';
-import { onMoveSelect, onMoveUnselect } from 'store/actionCreators/chessgroundActionCreators';
+import {
+  onMoveSelect, onMoveUnselect, onMoveHover, onMoveUnhover,
+} from 'store/actionCreators/chessgroundActionCreators';
 import { Game } from 'types/resources/game';
 import { moveOptionColors } from 'utils/config';
 
@@ -12,6 +14,8 @@ interface MoveOptionsProps {
   wagersLoading: boolean,
   onMoveSelect: typeof onMoveSelect
   onMoveUnselect: typeof onMoveUnselect
+  onMoveHover: typeof onMoveHover
+  onMoveUnhover: typeof onMoveUnhover
 }
 
 const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
@@ -46,7 +50,12 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
 
     return Object.entries(poolPerMove)
       .map(([move, movePool], i) => (
-        <label htmlFor={`move-option-${i}`} key={move}>
+        <label
+          htmlFor={`move-option-${i}`}
+          key={move}
+          onMouseEnter={() => props.onMoveHover(props.games[gameId].state, move)}
+          onMouseLeave={props.onMoveUnhover}
+        >
           <VerticalBar
             color={moveOptionColors[i]}
             maxPercentage={Number(maxPercentage)}

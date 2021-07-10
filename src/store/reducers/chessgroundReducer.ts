@@ -28,7 +28,7 @@ const initialState: ChessgroundState = {
 };
 
 const selectDrawshape = (move: FromTo, autoShapes: DrawShape[]) => (
-  autoShapes?.filter((s) => s.orig === move.from && s.dest === move.to)
+  autoShapes.filter((s) => s.orig === move.from && s.dest === move.to)
 );
 
 const chessgroundReducer = (state = initialState, action: Actions): ChessgroundState => {
@@ -70,7 +70,9 @@ const chessgroundReducer = (state = initialState, action: Actions): ChessgroundS
           ...state.config,
           drawable: {
             ...state.config.drawable,
-            autoShapes: state.selected ? selectDrawshape(state.selected, state.autoShapes) : state.autoShapes,
+            autoShapes: state.selected
+              ? selectDrawshape(state.selected, state.autoShapes)
+              : state.autoShapes,
           },
         },
         showAutoShapes: true,
@@ -82,7 +84,9 @@ const chessgroundReducer = (state = initialState, action: Actions): ChessgroundS
           ...state.config,
           drawable: {
             ...state.config.drawable,
-            autoShapes: state.selected ? selectDrawshape(state.selected, state.autoShapes) : [],
+            autoShapes: state.selected
+              ? selectDrawshape(state.selected, state.autoShapes)
+              : [],
           },
         },
         showAutoShapes: false,
@@ -110,6 +114,32 @@ const chessgroundReducer = (state = initialState, action: Actions): ChessgroundS
           },
         },
         selected: undefined,
+      };
+    case 'CG_MOVE_HOVER':
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          drawable: {
+            ...state.config.drawable,
+            autoShapes: state.selected
+              ? selectDrawshape(state.selected, state.autoShapes).concat(selectDrawshape(action.payload, state.autoShapes))
+              : selectDrawshape(action.payload, state.autoShapes),
+          },
+        },
+      };
+    case 'CG_MOVE_UNHOVER':
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          drawable: {
+            ...state.config.drawable,
+            autoShapes: state.selected
+              ? selectDrawshape(state.selected, state.autoShapes)
+              : state.autoShapes,
+          },
+        },
       };
     default:
       return state;

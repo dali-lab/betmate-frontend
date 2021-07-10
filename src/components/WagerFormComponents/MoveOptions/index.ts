@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 
-import { onMoveSelect, onMoveUnselect } from 'store/actionCreators/chessgroundActionCreators';
+import {
+  onMoveSelect, onMoveUnselect, onMoveHover, onMoveUnhover,
+} from 'store/actionCreators/chessgroundActionCreators';
 import { RootState } from 'types/state';
 
 import MoveOptions from './component';
@@ -13,6 +15,8 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = {
   onMoveSelect,
   onMoveUnselect,
+  onMoveHover,
+  onMoveUnhover,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoveOptions);

@@ -71,3 +71,19 @@ export const onMoveUnselect = (): Actions => ({
   status: 'SUCCESS',
   payload: {},
 });
+
+export const onMoveHover = (state: string, move: string): Actions => {
+  chess.load(state);
+  const m = chess.move(move);
+  return {
+    type: 'CG_MOVE_HOVER',
+    status: 'SUCCESS',
+    payload: { from: m?.from ?? '', to: m?.to ?? '' },
+  };
+};
+
+export const onMoveUnhover = (): Actions => ({
+  type: 'CG_MOVE_UNHOVER',
+  status: 'SUCCESS',
+  payload: {},
+});
