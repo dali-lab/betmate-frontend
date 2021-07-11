@@ -11,11 +11,12 @@ import { AuthActions, AuthActionTypes, AuthState } from 'types/resources/auth';
 import { GameActions, GameActionTypes, GameState } from 'types/resources/game';
 import { UserActions, UserActionTypes } from 'types/resources/user';
 import { WagerActions, WagerActionTypes, WagerState } from 'types/resources/wager';
+import { CgActions, CgActionTypes, ChessgroundState } from './chessground';
 
 /* -------- Action Types -------- */
 
-export type Actions = AuthActions | GameActions | SocketActions | UserActions | WagerActions;
-export type ActionTypes = AuthActionTypes | GameActionTypes | SocketActionTypes | UserActionTypes | WagerActionTypes;
+export type Actions = AuthActions | GameActions | SocketActions | UserActions | WagerActions | CgActions;
+export type ActionTypes = AuthActionTypes | GameActionTypes | SocketActionTypes | UserActionTypes | WagerActionTypes | CgActionTypes;
 
 export const REQUEST = 'REQUEST';
 export const SUCCESS = 'SUCCESS';
@@ -48,6 +49,7 @@ export type RequestReturnType<D> = AxiosResponse<D>;
 
 export interface RootState {
   auth: AuthState,
+  chessground: ChessgroundState,
   game: GameState,
   requests: RequestState,
   wager: WagerState

@@ -1,10 +1,8 @@
-export enum GameStatus {
-  NOT_STARTED = 'not_started',
-  DRAW = 'draw',
-  BLACK_WIN = 'black_win',
-  WHITE_WIN = 'white_win',
-  IN_PROGRESS = 'in_progress',
-}
+import { GameStatus } from 'types/resources/game';
+
+import { Chess as chess } from 'chess.js';
+import { DrawShape } from 'chessground/draw';
+import { FromTo } from 'types/chessground';
 
 export const getMultiplier = (odd: number): number => {
   if (odd <= 0) return 0;
@@ -27,3 +25,26 @@ export const gameOver = (game_status: GameStatus): boolean => {
 export const gameInProgress = (game_status: GameStatus): boolean => {
   return game_status === GameStatus.IN_PROGRESS;
 };
+
+export const getFromTo = (state: string, move: string): FromTo => {
+  const game = chess(state);
+  const m = game.move(move);
+  return { from: m?.from ?? '', to: m?.to ?? '' };
+};
+
+export const getBrush = (state: string): ((move: string, i: number) => DrawShape | null) => {
+  const game = chess(state);
+  return (move, i) => {
+    const m = game.move(move);
+    game.undo();
+    return m && { orig: m.from, dest: m.to, brush: String(i) } as DrawShape;
+  };
+};
+
+export const selectDrawshape = (autoShapes: DrawShape[], move: FromTo): DrawShape[] => (
+  autoShapes.filter((s) => s.orig === move.from && s.dest === move.to)
+);
+
+export const fromToEqual = (a: FromTo, b: FromTo): boolean => (
+  a.to === b.to && a.from === b.from
+);

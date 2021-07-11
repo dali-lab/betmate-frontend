@@ -10,6 +10,13 @@ import './style.scss';
 const mapStateToProps = (state: RootState) => ({
   games: state.game.games,
   showModal: state.game.showModal,
+  config: state.chessground.config,
 });
 
-export default connect(mapStateToProps, { joinGame, leaveGame, fetchGameById })(ChessMatch);
+const mapDispatchToProps = {
+  joinGame,
+  leaveGame,
+  fetchGameById,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChessMatch);

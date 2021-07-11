@@ -1,7 +1,14 @@
 /* eslint-disable import/no-cycle */
 import { Empty } from 'types';
 import { AsyncAction, Action } from 'types/state';
-import { GameStatus } from 'utils/chess';
+
+export enum GameStatus {
+  NOT_STARTED = 'not_started',
+  DRAW = 'draw',
+  BLACK_WIN = 'black_win',
+  WHITE_WIN = 'white_win',
+  IN_PROGRESS = 'in_progress',
+}
 
 export interface Player {
   name: string
@@ -81,7 +88,7 @@ export type JoinGameData = { gameId: string }; // ws
 export type LeaveGameData = { gameId: string }; // ws
 export type MakeMoveData = { gameId: string, boardState: string }; // ws
 export type StartGameData = { gameId: string, game_status: GameStatus }; // ws
-export type UpdateGameStateData = { gameId: string, state: string, move_hist: string[], time_white: number, time_black: number, pool_wagers: { move: PoolWagerState } }; // ws
+export type UpdateGameStateData = { gameId: string, state: string, move_hist: Move[], time_white: number, time_black: number, pool_wagers: { move: PoolWagerState } }; // ws
 export type UpdateGameOddsData = { gameId: string, odds: GameOdds, pool_wagers: { move: PoolWagerState } }; // ws
 export type UpdateGameEndData = { gameId: string, complete: boolean, game_status: string }; // ws
 export type BroadcastPoolWager = { gameId: string, type: 'move', data: string, amount: number }; // ws

@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
-import { GameStatus, gameOver, gameInProgress } from 'utils/chess';
+import { gameOver, gameInProgress } from 'utils/chess';
+import { GameStatus } from 'types/resources/game';
 import './style.scss';
 
 interface ChessMatchProps {

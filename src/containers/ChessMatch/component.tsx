@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import Chessground from '@react-chess/chessground';
 import { Config } from 'chessground/config';
-import { Key } from 'chessground/types';
 
 import PlayerInfo from 'containers/ChessMatch/playerInfo/component';
 import WagerPanel from 'components/WagerPanel';
@@ -13,9 +12,9 @@ import PostgameModal from 'components/PostgameModal';
 
 import { joinGame, leaveGame } from 'store/actionCreators/websocketActionCreators';
 import { fetchGameById } from 'store/actionCreators/gameActionCreators';
-import { GameStatus, gameOver } from 'utils/chess';
+import { gameOver } from 'utils/chess';
 
-import { Game } from 'types/resources/game';
+import { Game, GameStatus } from 'types/resources/game';
 import playerIconBlack from 'assets/player_icon_black.svg';
 import playerIconWhite from 'assets/player_icon_white.svg';
 
@@ -27,16 +26,11 @@ interface ChessMatchProps {
   fetchGameById: typeof fetchGameById
   games: Record<string, Game>
   showModal: Record<string, boolean>
+  config: Config
 }
-
-const initialCgConfig: Partial<Config> = {
-  highlight: { lastMove: true, check: true },
-};
 
 const ChessMatch: React.FC<ChessMatchProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
-  const [fen, updateFen] = useState('');
-  const [config, updateConfig] = useState(initialCgConfig);
 
   const game: Game | undefined = props.games[gameId];
 
@@ -45,24 +39,6 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     props.joinGame(gameId);
     return () => { props.leaveGame(gameId); };
   }, []);
-
-  useEffect(() => {
-    if (game) {
-      const hasLastMove = game.move_hist.length > 0;
-      const [{ to, from }] = hasLastMove
-        ? game.move_hist.slice(-1)
-        : [{ to: '', from: '' }];
-
-      updateConfig((c) => ({
-        ...c,
-        fen: game.state,
-        lastMove: [from, to] as Key[],
-        highlight: { lastMove: hasLastMove, check: true },
-      }));
-
-      updateFen(game.state);
-    }
-  }, [game?.state]);
 
   return !game
     ? <p className="loading-text">Loading</p>
@@ -76,7 +52,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
           <div>
             <PlayerInfo
               icon={playerIconBlack}
-              fen = {fen}
+              fen = {game?.state ?? ''}
               name={'Black'}
               elo={game?.player_black.elo}
               time={game?.time_black}
@@ -88,12 +64,12 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
               <Chessground
                 width={450}
                 height={450}
-                config={config}
+                config={props.config}
               />
             </div>
             <PlayerInfo
               icon={playerIconWhite}
-              fen = {fen}
+              fen = {game?.state ?? ''}
               name={'White'}
               elo={game?.player_white.elo}
               time={game?.time_white}
@@ -102,7 +78,7 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
               updatedAt={game?.updated_at}
             />
           </div>
-          <WagerPanel/>
+          <WagerPanel />
         </div>
       </>
     );

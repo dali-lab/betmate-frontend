@@ -1,9 +1,8 @@
 import { ChatWager } from 'components/ChatBox/helper_components';
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
-import { Game } from 'types/resources/game';
+import { Game, GameStatus } from 'types/resources/game';
 import { Wager, WagerStatus } from 'types/resources/wager';
-import { GameStatus } from 'utils/chess';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StatLine } from './helperComponents';
