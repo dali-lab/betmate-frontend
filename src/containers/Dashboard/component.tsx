@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { fetchGamesByStatus, clearGames } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
 import GameCard from './GameCard/component';
+import Leaderboard from './Leaderboard';
 // import magnifier from 'assets/dashboard/magnifier.svg';
 import './style.scss';
 
@@ -46,6 +47,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           <button className='browse-button'>Browse</button>
         </div>
       </div> */}
+      <Leaderboard />
       <h3 className='betting-header'>Popular Matches 🔥</h3>
       {props.games
         .sort((gameA, gameB) => new Date(gameB.created_at).getTime() - new Date(gameA.created_at).getTime())

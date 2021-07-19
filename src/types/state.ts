@@ -24,6 +24,8 @@ export const FAILURE = 'FAILURE';
 
 export type RequestStatus = typeof REQUEST | typeof SUCCESS | typeof FAILURE;
 
+export type ActionWithStatus = `${ActionTypes}_${RequestStatus}`;
+
 export type Code = number | string | null;
 
 export interface FailurePayload {
