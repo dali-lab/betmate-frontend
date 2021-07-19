@@ -22,24 +22,32 @@ const Leaderboard: React.FC<LeaderboardProps> = (props) => {
   const [userRank, setUserRank] = useState<number | undefined>();
   const [atUser, setAtUser] = useState(false);
 
-  const getData = async () => {
+  const getFirstRank = (r: Rank[]) => r[0].rank;
+  const getLastRank = (r: Rank[]) => r[r.length - 1].rank;
+
+  const getRankingsHead = async () => {
+    const { data } = await getLeaderboardSection(0, 10);
+    setHasMore(data.rankings_size > getLastRank(data.rankings));
+    setRankings(data.rankings);
+  };
+
+  const extendRankingsBottom = async () => {
     if (!hasMore) return;
-    console.log('rankings', rankings);
     const nextRank = rankings.length > 0
       ? rankings[rankings.length - 1].rank
       : 0;
     const { data } = await getLeaderboardSection(nextRank, nextRank + 10);
-    setHasMore(data.rankings_size > data.rankings[data.rankings.length - 1].rank);
+    setHasMore(data.rankings_size > getLastRank(data.rankings));
     setRankings((r) => r.concat(data.rankings));
   };
 
-  const getDataTop = async () => {
+  const extendRankingsTop = async () => {
     if (!hasMoreUp) return;
-    if (rankings.length === 0) { getData(); return; }
+    if (rankings.length === 0) { getRankingsHead(); return; }
 
     const nextRank = rankings[0].rank - 1;
     const { data } = await getLeaderboardSection(Math.min(nextRank - 10, 0), nextRank);
-    setHasMoreUp(data.rankings[0].rank > 1);
+    setHasMoreUp(getFirstRank(data.rankings) > 1);
     setRankings((r) => data.rankings.concat(r));
 
     // Adjust scroll position for new data
@@ -67,11 +75,11 @@ const Leaderboard: React.FC<LeaderboardProps> = (props) => {
     setAtUser(false);
     setRankings([]);
     setHasMoreUp(false);
-    setTimeout(getData, 1000);
+    getRankingsHead();
   };
 
   useEffect(() => {
-    getData();
+    getRankingsHead();
     getUserRank();
   }, []);
 
@@ -88,8 +96,8 @@ const Leaderboard: React.FC<LeaderboardProps> = (props) => {
       </div>
       <div className="leaderboard-card" >
         <BidirectionalScroll
-          onReachBottom={getData}
-          onReachTop={getDataTop}
+          onReachBottom={extendRankingsBottom}
+          onReachTop={extendRankingsTop}
           ref={boardRef}
         >
           {rankings.map((rankData, i) => (
