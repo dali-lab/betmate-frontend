@@ -71,7 +71,7 @@ export function* handleGoToUserPosition(action: GoToUserPositionActions) {
   const { userRank, id } = leaderboard;
 
   if (!userRank) return;
-  const start = userRank - 5;
+  const start = Math.max(userRank - 5, 0);
   const end = userRank + 5;
 
   const response: RequestReturnType<LeaderboardSection> = yield call(getLeaderboardSection, start, end, id);

@@ -35,6 +35,11 @@ const wagerReducer = (state = initialState, action: Actions): WagerState => {
         wagers: omit(state.wagers, action.payload.id),
       };
 
+    case 'DEAUTH_USER':
+      return {
+        ...state,
+        wagers: {},
+      };
     default:
       return state;
   }

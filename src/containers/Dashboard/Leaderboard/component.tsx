@@ -53,7 +53,7 @@ const Leaderboard: React.FC<LeaderboardProps> = (props) => {
   return (
     <div className="leaderboard-container">
       <div className="leaderboard-header">
-        <h2>Monthly Leaderboard 🏅</h2>
+        <h2>Leaderboard 🏅</h2>
         <div
           className={`reset-button ${props.atUser ? 'active' : ''}`}
           onClick={handleReset}
