@@ -11,24 +11,25 @@ export interface Rank {
 }
 
 export interface LeaderboardSection {
-  _id: string
+  id: string
   rankings: Rank[]
   rankings_size: number
 }
 
 export interface LeaderboardState {
   rankings: Rank[]
+  position: number
   hasMore: boolean
-  hasMoreUp: boolean
   atUser: boolean
   userRank?: number
   highestRank?: number
   lowestRank?: number
-  _id?: string
+  id?: string
 }
 
 /* -------- Action Types -------- */
 
+export const ON_LEADERBOARD_SCROLL = 'ON_LEADERBOARD_SCROLL';
 export const FETCH_LEADERBOARD_HEAD = 'FETCH_LEADERBOARD_HEAD';
 export const EXTEND_LEADERBOARD_TOP = 'EXTEND_LEADERBOARD_TOP';
 export const EXTEND_LEADERBOARD_BOTTOM = 'EXTEND_LEADERBOARD_BOTTOM';
@@ -40,18 +41,23 @@ export type FetchLeaderboardData = LeaderboardSection;
 export type FetchUserRankData = Rank;
 
 export type FetchLeaderboardRequest = { start: number, end: number, _id?: string };
+export type ScrollPositionData = { position:number };
+export type RowSizeData = { rowSize: number };
 
+export type OnLeaderboardScrollActions = Action<typeof ON_LEADERBOARD_SCROLL, ScrollPositionData>;
 export type FetchLeaderboardHeadActions = AsyncAction<typeof FETCH_LEADERBOARD_HEAD, FetchLeaderboardData>;
-export type ExtendLeaderboardTopActions = AsyncAction<typeof EXTEND_LEADERBOARD_TOP, FetchLeaderboardData>;
+export type ExtendLeaderboardTopActions = AsyncAction<typeof EXTEND_LEADERBOARD_TOP, FetchLeaderboardData & RowSizeData, RowSizeData>;
 export type ExtendLeaderboardBottomActions = AsyncAction<typeof EXTEND_LEADERBOARD_BOTTOM, FetchLeaderboardData>;
 export type FetchUserRankActions = AsyncAction<typeof FETCH_USER_RANK, FetchUserRankData>;
-export type GoToUserPositionActions = AsyncAction<typeof GOTO_USER_POSITION, FetchLeaderboardData>;
+export type GoToUserPositionActions = AsyncAction<typeof GOTO_USER_POSITION, FetchLeaderboardData & RowSizeData, RowSizeData>;
 export type LeaveUserPositionActions = Action<typeof LEAVE_USER_POSITION>;
 
 export type LeaderboardActions =
-    FetchLeaderboardHeadActions | ExtendLeaderboardTopActions | ExtendLeaderboardBottomActions |
-    FetchUserRankActions | GoToUserPositionActions | LeaveUserPositionActions;
+    OnLeaderboardScrollActions | FetchLeaderboardHeadActions | ExtendLeaderboardTopActions |
+    ExtendLeaderboardBottomActions | FetchUserRankActions | GoToUserPositionActions |
+    LeaveUserPositionActions;
 
 export type LeaderboardActionTypes =
-    typeof FETCH_LEADERBOARD_HEAD | typeof EXTEND_LEADERBOARD_TOP | typeof EXTEND_LEADERBOARD_BOTTOM |
-    typeof FETCH_USER_RANK | typeof GOTO_USER_POSITION | typeof LEAVE_USER_POSITION;
+    typeof ON_LEADERBOARD_SCROLL | typeof FETCH_LEADERBOARD_HEAD | typeof EXTEND_LEADERBOARD_TOP |
+    typeof EXTEND_LEADERBOARD_BOTTOM | typeof FETCH_USER_RANK | typeof GOTO_USER_POSITION |
+    typeof LEAVE_USER_POSITION;

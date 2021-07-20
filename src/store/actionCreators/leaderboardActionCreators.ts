@@ -1,15 +1,21 @@
 import { Actions } from 'types/state';
 
+export const onLeaderboardScroll = (position: number): Actions => ({
+  type: 'ON_LEADERBOARD_SCROLL',
+  status: 'SUCCESS',
+  payload: { position },
+});
+
 export const getLeaderboardHead = (): Actions => ({
   type: 'FETCH_LEADERBOARD_HEAD',
   status: 'REQUEST',
   payload: {},
 });
 
-export const extendLeaderboardTop = (): Actions => ({
+export const extendLeaderboardTop = (rowSize: number): Actions => ({
   type: 'EXTEND_LEADERBOARD_TOP',
   status: 'REQUEST',
-  payload: {},
+  payload: { rowSize },
 });
 
 export const extendLeaderboardBottom = (): Actions => ({
@@ -24,10 +30,10 @@ export const getUserRank = (): Actions => ({
   payload: {},
 });
 
-export const goToUserPosition = (): Actions => ({
+export const goToUserPosition = (rowSize: number): Actions => ({
   type: 'GOTO_USER_POSITION',
   status: 'REQUEST',
-  payload: {},
+  payload: { rowSize },
 });
 
 export const leaveUserPosition = (): Actions => ({

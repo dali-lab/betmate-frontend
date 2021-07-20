@@ -3,21 +3,21 @@ import BidirectionalScroll from 'react-bidirectional-infinite-scroll';
 import ordinal from 'ordinal';
 
 import {
-  getLeaderboardHead, extendLeaderboardTop, extendLeaderboardBottom, getUserRank, goToUserPosition, leaveUserPosition,
+  onLeaderboardScroll, getLeaderboardHead, extendLeaderboardTop, extendLeaderboardBottom, getUserRank, goToUserPosition, leaveUserPosition,
 } from 'store/actionCreators/leaderboardActionCreators';
 import { User } from 'types/resources/user';
+import { Rank } from 'types/leaderboard';
 import resetIcon from 'assets/dashboard/reset.svg';
 
 import './styles.scss';
-import { Rank } from 'types/leaderboard';
 
 interface LeaderboardProps {
   user: User | null
   rankings: Rank[]
+  position: number
   userRank: number
   atUser: boolean
-  goToUserLoading: boolean
-  extendTopLoading: boolean
+  onLeaderboardScroll: typeof onLeaderboardScroll
   getLeaderboardHead: typeof getLeaderboardHead
   extendLeaderboardTop: typeof extendLeaderboardTop
   extendLeaderboardBottom: typeof extendLeaderboardBottom
@@ -27,75 +27,15 @@ interface LeaderboardProps {
 }
 
 const Leaderboard: React.FC<LeaderboardProps> = (props) => {
-  // const [rankings, setRankings] = useState<Rank[]>([]);
-  // const [hasMore, setHasMore] = useState(true);
-  // const [hasMoreUp, setHasMoreUp] = useState(false);
-  const boardRef = useRef<BidirectionalScroll>(null);
   const rowRef = useRef<HTMLDivElement>(null);
-  // const scrollRef = useRef<number>(0);
 
-  // const [userRank, setUserRank] = useState<number | undefined>();
-  // const [atUser, setAtUser] = useState(false);
-
-  // const getData = async () => {
-  //   if (!hasMore) return;
-  //   console.log('rankings', rankings);
-  //   const nextRank = rankings.length > 0
-  //     ? rankings[rankings.length - 1].rank
-  //     : 0;
-  //   const { data } = await getLeaderboardSection(nextRank, nextRank + 10);
-  //   setHasMore(data.rankings_size > data.rankings[data.rankings.length - 1].rank);
-  //   setRankings((r) => r.concat(data.rankings));
-  // };
-
-  useEffect(() => {
-    if (props.goToUserLoading) {
-      console.log('user position loaded');
-      console.log(rowRef.current?.clientHeight);
-      boardRef.current.scroller.scrollTop = (58) * 2;
-      console.log(boardRef.current.scroller.scrollTop);
-      console.log(boardRef.current.scroller);
-    }
-  }, [props.goToUserLoading]);
-
-  useEffect(() => {
-    if (props.extendTopLoading) {
-      console.log('extend top loaded');
-      console.log(rowRef.current?.clientHeight);
-      boardRef.current.scroller.scrollTop = (58) * 10;
-    }
-  }, [props.extendTopLoading]);
-
-  const getDataTop = async () => {
-    // if (!hasMoreUp) return;
-    // if (rankings.length === 0) { getData(); return; }
-
-    // const nextRank = rankings[0].rank - 1;
-    // const { data } = await getLeaderboardSection(Math.min(nextRank - 10, 0), nextRank);
-    // setHasMoreUp(data.rankings[0].rank > 1);
-    // setRankings((r) => data.rankings.concat(r));
-    props.extendLeaderboardTop();
-
-    // Adjust scroll position for new data
-    // boardRef.current.scroller.scrollTop = (rowRef.current?.clientHeight ?? 0) * 10;
+  const handleReachTop = () => {
+    props.extendLeaderboardTop(rowRef.current?.clientHeight ?? 0);
   };
 
-  const handleRankClick = async () => {
-    // setAtUser(true);
-    // setRankings([]);
-    // setHasMoreUp(true);
-    // const { data } = await getLeaderboardSection((userRank ?? 0) - 5, (userRank ?? 0) + 5);
-    // setHasMore(data.rankings_size > data.rankings[data.rankings.length - 1].rank);
-    // setRankings((r) => r.concat(data.rankings));
-    props.goToUserPosition();
-    // Adjust scroll position for new data
-    // boardRef.current.scroller.scrollTop = (rowRef.current?.clientHeight ?? 0) * 2;
+  const handleRankClick = () => {
+    props.goToUserPosition(rowRef.current?.clientHeight ?? 0);
   };
-
-  // const getUserRank = async () => {
-  //   const { data } = await getLeaderboardRank();
-  //   setUserRank(data.rank);
-  // };
 
   const handleReset = () => {
     if (!props.atUser) return;
@@ -103,11 +43,12 @@ const Leaderboard: React.FC<LeaderboardProps> = (props) => {
   };
 
   useEffect(() => {
-    // getData();
     props.getLeaderboardHead();
-    // getUserRank();
-    props.getUserRank();
   }, []);
+
+  useEffect(() => {
+    if (props.user) props.getUserRank();
+  }, [props.user]);
 
   return (
     <div className="leaderboard-container">
@@ -123,8 +64,9 @@ const Leaderboard: React.FC<LeaderboardProps> = (props) => {
       <div className="leaderboard-card" >
         <BidirectionalScroll
           onReachBottom={props.extendLeaderboardBottom}
-          onReachTop={getDataTop}
-          ref={boardRef}
+          onReachTop={handleReachTop}
+          position={props.position}
+          onScroll={props.onLeaderboardScroll}
         >
           {props.rankings.map((rankData, i) => (
             <div key={i} className="leaderboard-row" ref={rowRef}>

@@ -27,32 +27,31 @@ export function* handleGetLeaderboardHead(action: FetchLeaderboardHeadActions) {
 export function* handleExtendLeaderboardTop(action: ExtendLeaderboardTopActions) {
   if (action.status !== 'REQUEST') return;
 
-  console.log('extending leaderboard');
+  const leaderboard: LeaderboardState = yield select((state: RootState) => state.leaderboard);
+  const { highestRank, id } = leaderboard;
 
-  const highestRank: number = yield select((state: RootState) => state.leaderboard.highestRank);
-
-  console.log(highestRank);
-
-  if (highestRank && highestRank <= 1) return;
+  if (!highestRank || highestRank <= 1) return;
   const start = Math.max(highestRank - 11, 0);
   const end = highestRank - 1;
 
-  const response: RequestReturnType<LeaderboardSection> = yield call(getLeaderboardSection, start, end);
+  const response: RequestReturnType<LeaderboardSection> = yield call(getLeaderboardSection, start, end, id);
 
-  yield put<Actions>({ type: action.type, status: 'SUCCESS', payload: response.data });
+  const payload = { ...response.data, ...action.payload };
+
+  yield put<Actions>({ type: action.type, status: 'SUCCESS', payload });
 }
 
 export function* handleExtendLeaderboardBottom(action: ExtendLeaderboardBottomActions) {
   if (action.status !== 'REQUEST') return;
 
   const leaderboard: LeaderboardState = yield select((state: RootState) => state.leaderboard);
-  const { lowestRank, hasMore } = leaderboard;
+  const { lowestRank, hasMore, id } = leaderboard;
 
   if (!hasMore || !lowestRank) return;
-  const start = lowestRank + 1;
-  const end = lowestRank + 11;
+  const start = lowestRank;
+  const end = lowestRank + 10;
 
-  const response: RequestReturnType<LeaderboardSection> = yield call(getLeaderboardSection, start, end);
+  const response: RequestReturnType<LeaderboardSection> = yield call(getLeaderboardSection, start, end, id);
 
   yield put<Actions>({ type: action.type, status: 'SUCCESS', payload: response.data });
 }
@@ -68,15 +67,18 @@ export function* handleGetUserRank(action: FetchUserRankActions) {
 export function* handleGoToUserPosition(action: GoToUserPositionActions) {
   if (action.status !== 'REQUEST') return;
 
-  const userRank = yield select((state: RootState) => state.leaderboard.userRank);
+  const leaderboard: LeaderboardState = yield select((state: RootState) => state.leaderboard);
+  const { userRank, id } = leaderboard;
 
   if (!userRank) return;
   const start = userRank - 5;
   const end = userRank + 5;
 
-  const response: RequestReturnType<LeaderboardSection> = yield call(getLeaderboardSection, start, end);
+  const response: RequestReturnType<LeaderboardSection> = yield call(getLeaderboardSection, start, end, id);
 
-  yield put<Actions>({ type: action.type, status: 'SUCCESS', payload: response.data });
+  const payload = { ...response.data, ...action.payload };
+
+  yield put<Actions>({ type: action.type, status: 'SUCCESS', payload });
 }
 
 export function* handleLeaveUserPosition(action: LeaveUserPositionActions) {
