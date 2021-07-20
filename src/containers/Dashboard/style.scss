@@ -5,19 +5,25 @@
 .top-section {
     display: flex;
     flex-direction: row;
+
     margin: 1em;
 
     .featured-section {
         flex-grow: 1;
+        max-width: 1000px;
         h2.featured-title {
             color:#F2F2F2;
             font-size: 32px;
             margin: 10px;
             margin-left: 1em;
-    
         }
     }
+}
 
+.match-container {
+    white-space: nowrap;
+    overflow-x: scroll;
+    margin-left: 15px;
 }
 
 .main-dashboard {
@@ -73,7 +79,7 @@
     font-size: 30px;
     font-weight: 100px;
     text-shadow: 0 0 5px #2AD9FF;
-    margin-left: 1em;
+    margin-left: 1.3em;
     color: white;
     margin-bottom: 0;
 }
