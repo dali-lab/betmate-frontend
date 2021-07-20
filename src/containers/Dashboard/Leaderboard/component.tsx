@@ -30,11 +30,13 @@ const Leaderboard: React.FC<LeaderboardProps> = (props) => {
   const rowRef = useRef<HTMLDivElement>(null);
 
   const handleReachTop = () => {
-    props.extendLeaderboardTop(rowRef.current?.clientHeight ?? 0);
+    const rowSize = rowRef.current?.clientHeight ?? 0;
+    props.extendLeaderboardTop(rowSize);
   };
 
   const handleRankClick = () => {
-    props.goToUserPosition(rowRef.current?.clientHeight ?? 0);
+    const rowSize = rowRef.current?.clientHeight ?? 0;
+    props.goToUserPosition(rowSize);
   };
 
   const handleReset = () => {
@@ -84,12 +86,14 @@ const Leaderboard: React.FC<LeaderboardProps> = (props) => {
             </div>
           ))}
         </BidirectionalScroll>
-        {(!props.atUser && props.userRank) && <div
-          className="user-rank"
-          onClick={handleRankClick}
-        >
+        {(!props.atUser && props.userRank) && (
+          <div
+            className="user-rank"
+            onClick={handleRankClick}
+          >
           Your ranking: {ordinal(props.userRank)}
-        </div>}
+          </div>
+        )}
       </div>
     </div>
   );

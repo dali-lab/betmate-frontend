@@ -2,6 +2,8 @@ import { getBearerTokenHeader } from 'store/actionCreators';
 import { createBackendAxiosRequest } from 'store/requests';
 import { LeaderboardSection, Rank } from 'types/leaderboard';
 import { RequestReturnType } from 'types/state';
+import { validateSchema } from 'validation';
+import { LeaderboardSchema, RankSchema } from 'validation/leaderboard';
 
 export const getLeaderboardSection = async (start: number, end: number, id?: string): Promise<RequestReturnType<LeaderboardSection>> => {
   const result = await createBackendAxiosRequest<LeaderboardSection>({
@@ -9,8 +11,8 @@ export const getLeaderboardSection = async (start: number, end: number, id?: str
     url: '/leaderboard',
     params: { start, end, id },
   });
-  // Validation here
-  return result;
+
+  return validateSchema(LeaderboardSchema, result, (d) => d.data);
 };
 
 export const getLeaderboardRank = async (): Promise<RequestReturnType<Rank>> => {
@@ -20,5 +22,5 @@ export const getLeaderboardRank = async (): Promise<RequestReturnType<Rank>> => 
     headers: getBearerTokenHeader(),
   });
 
-  return result;
+  return validateSchema(RankSchema, result, (d) => d.data);
 };
