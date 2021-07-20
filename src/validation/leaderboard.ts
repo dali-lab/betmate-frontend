@@ -9,7 +9,7 @@ export const RankSchema = joi.object<Rank>({
 });
 
 export const LeaderboardSchema = joi.object<LeaderboardSection>({
-  id: joi.string().required(),
+  _id: joi.string().required(),
   rankings: joi.array().items(RankSchema).required(),
   rankings_size: joi.number().min(0).required(),
 });

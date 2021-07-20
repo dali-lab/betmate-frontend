@@ -16,10 +16,12 @@ import {
 } from 'types/leaderboard';
 import { Actions, RequestReturnType, RootState } from 'types/state';
 
+const SECTION_SIZE = 8;
+
 export function* handleGetLeaderboardHead(action: FetchLeaderboardHeadActions) {
   if (action.status !== 'REQUEST') return;
 
-  const response: RequestReturnType<LeaderboardSection> = yield call(getLeaderboardSection, 0, 10);
+  const response: RequestReturnType<LeaderboardSection> = yield call(getLeaderboardSection, 0, SECTION_SIZE);
 
   yield put<Actions>({ type: action.type, status: 'SUCCESS', payload: response.data });
 }
@@ -31,7 +33,7 @@ export function* handleExtendLeaderboardTop(action: ExtendLeaderboardTopActions)
   const { highestRank, id } = leaderboard;
 
   if (!highestRank || highestRank <= 1) return;
-  const start = Math.max(highestRank - 11, 0);
+  const start = Math.max(highestRank - SECTION_SIZE - 1, 0);
   const end = highestRank - 1;
 
   const response: RequestReturnType<LeaderboardSection> = yield call(getLeaderboardSection, start, end, id);
@@ -49,7 +51,7 @@ export function* handleExtendLeaderboardBottom(action: ExtendLeaderboardBottomAc
 
   if (!hasMore || !lowestRank) return;
   const start = lowestRank;
-  const end = lowestRank + 10;
+  const end = lowestRank + SECTION_SIZE;
 
   const response: RequestReturnType<LeaderboardSection> = yield call(getLeaderboardSection, start, end, id);
 
@@ -71,8 +73,9 @@ export function* handleGoToUserPosition(action: GoToUserPositionActions) {
   const { userRank, id } = leaderboard;
 
   if (!userRank) return;
-  const start = Math.max(userRank - 5, 0);
-  const end = userRank + 5;
+  const halfSection = Math.round(SECTION_SIZE / 2);
+  const start = Math.max(userRank - halfSection, 0);
+  const end = userRank + halfSection;
 
   const response: RequestReturnType<LeaderboardSection> = yield call(getLeaderboardSection, start, end, id);
 

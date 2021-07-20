@@ -11,7 +11,7 @@ export interface Rank {
 }
 
 export interface LeaderboardSection {
-  id: string
+  _id: string
   rankings: Rank[]
   rankings_size: number
 }

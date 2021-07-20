@@ -38,7 +38,7 @@ const leaderboardReducer = (state = initialState, action: Actions): LeaderboardS
         hasMore: action.payload.rankings_size > action.payload.rankings.length,
         highestRank: 1,
         lowestRank: action.payload.rankings.length,
-        id: action.payload.id,
+        id: action.payload._id,
       };
     case 'EXTEND_LEADERBOARD_TOP':
       return {
