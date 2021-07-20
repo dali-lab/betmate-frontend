@@ -1,13 +1,14 @@
 .leaderboard-container {
-    margin: 1em;
-    width: 36em;
+    width: 24em;
     position: relative;
+    padding-right: 25px;
 
     .leaderboard-header {
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
+        margin-left: 5px;
         h2 {
             color:#F2F2F2;
             font-size: 32px;
@@ -22,32 +23,26 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-right: 15px;
         }
 
         .active {
             cursor: pointer;
             background-color: #64FF8F;
-
         }
     }
     
     .leaderboard-card {
         display: flex;
         flex-direction: column;
-        // height: 300px;
-        height: 30em;
-        width: 35em;
-        // width: 100%;
+        height: 23em;
+        width: 23em;
         overflow: scroll;
         background: #1E1E22;
-        // border-radius: 15px;
-        // width: 12%;
         border: 7px solid;
         border-radius: 10px;
-        border-color: #99F2FF;
-        // display: inline-block;
-        // height: 15em;
-
+        border-color: #64FF8F;
+    
         .user-rank {
             width: 60%;
             background-color: #64FF8F;
@@ -95,9 +90,9 @@
                     margin-left: 25px;
                     font-weight: bold;
                     font-size: 25px;
-                    width: 325px;
-                    white-space: nowrap;
+                    width: 160px;
                     overflow: hidden;
+                    white-space: nowrap;
                     text-overflow: ellipsis;
                 }
     

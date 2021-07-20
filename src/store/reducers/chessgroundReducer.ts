@@ -5,6 +5,7 @@ import { fromToEqual, selectDrawshape } from 'utils/chess';
 
 const initialState: ChessgroundState = {
   config: {
+    viewOnly: true,
     highlight: { lastMove: true, check: true },
     drawable: {
       brushes: {

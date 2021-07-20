@@ -12,19 +12,24 @@ import { GameActions, GameActionTypes, GameState } from 'types/resources/game';
 import { UserActions, UserActionTypes } from 'types/resources/user';
 import { WagerActions, WagerActionTypes, WagerState } from 'types/resources/wager';
 import { CgActions, CgActionTypes, ChessgroundState } from './chessground';
+import { LeaderboardActions, LeaderboardActionTypes, LeaderboardState } from './leaderboard';
 
 /* -------- Action Types -------- */
 
-export type Actions = AuthActions | GameActions | SocketActions | UserActions | WagerActions | CgActions;
-export type ActionTypes = AuthActionTypes | GameActionTypes | SocketActionTypes | UserActionTypes | WagerActionTypes | CgActionTypes;
+export type Actions =
+  AuthActions | GameActions | SocketActions |
+  UserActions | WagerActions | CgActions |
+  LeaderboardActions;
+export type ActionTypes =
+  AuthActionTypes | GameActionTypes | SocketActionTypes |
+  UserActionTypes | WagerActionTypes | CgActionTypes |
+  LeaderboardActionTypes;
 
 export const REQUEST = 'REQUEST';
 export const SUCCESS = 'SUCCESS';
 export const FAILURE = 'FAILURE';
 
 export type RequestStatus = typeof REQUEST | typeof SUCCESS | typeof FAILURE;
-
-export type ActionWithStatus = `${ActionTypes}_${RequestStatus}`;
 
 export type Code = number | string | null;
 
@@ -53,6 +58,7 @@ export interface RootState {
   auth: AuthState,
   chessground: ChessgroundState,
   game: GameState,
+  leaderboard: LeaderboardState,
   requests: RequestState,
   wager: WagerState
 }
