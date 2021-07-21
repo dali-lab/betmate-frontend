@@ -16,7 +16,7 @@ import {
 } from 'types/leaderboard';
 import { Actions, RequestReturnType, RootState } from 'types/state';
 
-const SECTION_SIZE = 8;
+const SECTION_SIZE = 12;
 
 export function* handleGetLeaderboardHead(action: FetchLeaderboardHeadActions) {
   if (action.status !== 'REQUEST') return;

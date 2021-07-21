@@ -31,10 +31,12 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     setTopGame(newTopGame);
   }, [props.games]);
 
-  return (
-    <div className='main-page'>
-      {/* Commented out for Technigala */}
-      {/* <div className='main-dashboard'>
+  return props.games.length === 0
+    ? <div>Loading...</div>
+    : (
+      <div className='main-page'>
+        {/* Commented out for Technigala */}
+        {/* <div className='main-dashboard'>
         <img src={magnifier} />
         <input
           className='searchBar'
@@ -44,30 +46,30 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           <button className='browse-button'>Browse</button>
         </div>
       </div> */}
-      <div className="top-section">
-        {topGame && (
-          <div className="featured-section">
-            <h2 className="featured-title">Featured Match 🔥</h2>
-            <div className="card-box top-game">
-              <GameCard game={topGame} topGame />
+        <div className="top-section">
+          {topGame && (
+            <div className="featured-section">
+              <h2 className="featured-title">Featured Match 🔥</h2>
+              <div className="card-box top-game">
+                <GameCard game={topGame} topGame />
+              </div>
             </div>
-          </div>
-        )}
-        <Leaderboard />
+          )}
+          <Leaderboard />
+        </div>
+        <h3 className='betting-header'>Current Matches 👀</h3>
+        <div className="match-container">
+          {props.games
+            .filter((g) => g !== topGame)
+            .sort((gameA, gameB) => new Date(gameB.created_at).getTime() - new Date(gameA.created_at).getTime())
+            .map((game, i) => (
+              <div key={game._id} className={`card-box ${i % 2 ? 'pink' : 'orange'}`}>
+                <GameCard game={game} />
+              </div>
+            ))}
+        </div>
       </div>
-      <h3 className='betting-header'>Current Matches 👀</h3>
-      <div className="match-container">
-        {props.games
-          .filter((g) => g !== topGame)
-          .sort((gameA, gameB) => new Date(gameB.created_at).getTime() - new Date(gameA.created_at).getTime())
-          .map((game, i) => (
-            <div key={game._id} className={`card-box ${i % 2 ? 'pink' : 'orange'}`}>
-              <GameCard game={game} />
-            </div>
-          ))}
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Dashboard;

@@ -3,7 +3,13 @@ import BidirectionalScroll from 'react-bidirectional-infinite-scroll';
 import ordinal from 'ordinal';
 
 import {
-  onLeaderboardScroll, getLeaderboardHead, extendLeaderboardTop, extendLeaderboardBottom, getUserRank, goToUserPosition, leaveUserPosition,
+  onLeaderboardScroll,
+  getLeaderboardHead,
+  extendLeaderboardTop,
+  extendLeaderboardBottom,
+  getUserRank,
+  goToUserPosition,
+  leaveUserPosition,
 } from 'store/actionCreators/leaderboardActionCreators';
 import { User } from 'types/resources/user';
 import { Rank } from 'types/leaderboard';
