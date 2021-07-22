@@ -1,9 +1,9 @@
-import { Actions, ActionTypes } from 'types/state';
+import { Actions, ActionTypes, RequestStatus } from 'types/state';
 
-export const takeRequest = (...ats: ActionTypes[]) => (a: Actions): boolean => (
-  ats.some((at) => a.type === at && a.status === 'REQUEST')
+const takeStatus = (s: RequestStatus) => (...ats: ActionTypes[]) => (a: Actions): boolean => (
+  ats.some((at) => a.type === at && a.status === s)
 );
 
-export const takeSuccess = (...ats: ActionTypes[]) => (a: Actions): boolean => (
-  ats.some((at) => a.type === at && a.status === 'SUCCESS')
-);
+export const takeRequest = takeStatus('REQUEST');
+
+export const takeSuccess = takeStatus('SUCCESS');
