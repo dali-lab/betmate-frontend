@@ -21,7 +21,6 @@ Front-end:
    To run locally:
 1. Clone front-end repo into a local directory
 2. Run `yarn install` to install all node dependencies
-  - Note: Due to the usage of the package `react-bidirectional-infinite-scroll`, which has a weird `node` requiremnt, first run `yarn config set ignore-engines true`
 3. Run `yarn dev` to start running the site locally at localhost:8080
 4. Go to the [backend repo](https://github.com/dali-lab/betmate-backend) and follow instructions on its README to get the server running locally at localhost:9090. Go to the [python microservice](https://github.com/dali-lab/betmate-model-microservice) repo and follow its README to get a local server running for our chess engine ML model at localhost:3000.
 
