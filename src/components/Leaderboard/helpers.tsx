@@ -9,12 +9,13 @@ interface RowProps {
 }
 
 const LeaderboardRow: React.FC<RowProps> = (props) => {
+  const [firstName, lastName] = props.data.user_name.split(' ').slice(0, 2);
   return (
     <div className="leaderboard-row" ref={props.rowRef}>
       <div className="row-start">
         <div className="rank">{props.data.rank}</div>
         <div className={`username ${props.data.user_id === props.user?._id ? 'current-user' : ''}`}>
-          {props.data.user_name}
+          {firstName} {lastName[0]}.
         </div>
       </div>
       <div className={`winnings ${props.data.winnings >= 0 ? 'green' : 'red'}`}>
