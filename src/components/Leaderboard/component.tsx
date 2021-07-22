@@ -14,6 +14,7 @@ import {
 import { User } from 'types/resources/user';
 import { Rank } from 'types/leaderboard';
 import resetIcon from 'assets/dashboard/reset.svg';
+import { LeaderboardRow } from './helpers';
 
 import './styles.scss';
 
@@ -37,11 +38,13 @@ const Leaderboard: React.FC<LeaderboardProps> = (props) => {
 
   const handleReachTop = () => {
     const rowSize = rowRef.current?.clientHeight ?? 0;
+    console.log('asdf', rowSize);
     props.extendLeaderboardTop(rowSize);
   };
 
   const handleRankClick = () => {
     const rowSize = rowRef.current?.clientHeight ?? 0;
+    console.log(rowSize);
     props.goToUserPosition(rowSize);
   };
 
@@ -76,20 +79,13 @@ const Leaderboard: React.FC<LeaderboardProps> = (props) => {
           position={props.position}
           onScroll={props.onLeaderboardScroll}
         >
-          {props.rankings.map((rankData, i) => (
-            <div key={i} className="leaderboard-row" ref={rowRef}>
-              <div className="row-start">
-                <div className="rank">{rankData.rank}</div>
-                <div
-                  className={`username ${rankData.user_id === props.user?._id ? 'current-user' : ''}`}
-                >
-                  {rankData.user_name}
-                </div>
-              </div>
-              <div className={`winnings ${rankData.winnings >= 0 ? 'green' : 'red'}`}>
-                {rankData.winnings >= 0 ? '+' : '-'} ${Math.abs(rankData.winnings).toFixed(2)}
-              </div>
-            </div>
+          {props.rankings.map((rankData) => (
+            <LeaderboardRow
+              key={rankData.user_id}
+              data={rankData}
+              user={props.user}
+              rowRef={rowRef}
+            />
           ))}
         </BidirectionalScroll>
         {(!props.atUser && props.userRank) && (

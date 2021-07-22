@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { fetchGamesByStatus, clearGames } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
-import GameCard from './GameCard/component';
-import Leaderboard from './Leaderboard';
+import Leaderboard from 'components/Leaderboard';
+import GameCard from 'components/GameCard/component';
 // import magnifier from 'assets/dashboard/magnifier.svg';
 import './style.scss';
 
@@ -15,12 +15,13 @@ export interface DashboardProps{
 const Dashboard: React.FC<DashboardProps> = (props) => {
   const [topGame, setTopGame] = useState<Game>();
 
+  const gameRating = (game: Game) => game.player_black.elo + game.player_white.elo;
+  const getTime = (game: Game) => new Date(game.created_at).getTime();
+
   useEffect(() => {
     props.clearGames();
     props.fetchGamesByStatus(['not_started', 'in_progress']);
   }, []);
-
-  const gameRating = (game: Game) => game.player_black.elo + game.player_white.elo;
 
   useEffect(() => {
     if (props.games.length === 0) return;
@@ -30,6 +31,10 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
 
     setTopGame(newTopGame);
   }, [props.games]);
+
+  const games = props.games
+    .filter((g) => g !== topGame)
+    .sort((gameA, gameB) => getTime(gameB) - getTime(gameA));
 
   return props.games.length === 0
     ? <div>Loading...</div>
@@ -59,14 +64,11 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         </div>
         <h3 className='betting-header'>Current Matches 👀</h3>
         <div className="match-container">
-          {props.games
-            .filter((g) => g !== topGame)
-            .sort((gameA, gameB) => new Date(gameB.created_at).getTime() - new Date(gameA.created_at).getTime())
-            .map((game, i) => (
-              <div key={game._id} className={`card-box ${i % 2 ? 'pink' : 'orange'}`}>
-                <GameCard game={game} />
-              </div>
-            ))}
+          {games.map((game, i) => (
+            <div key={game._id} className={`card-box ${i % 2 ? 'pink' : 'orange'}`}>
+              <GameCard game={game} />
+            </div>
+          ))}
         </div>
       </div>
     );
