@@ -15,7 +15,7 @@ const LeaderboardRow: React.FC<RowProps> = (props) => {
       <div className="row-start">
         <div className="rank">{props.data.rank}</div>
         <div className={`username ${props.data.user_id === props.user?._id ? 'current-user' : ''}`}>
-          {firstName} {lastName[0]}.
+          {firstName} {lastName ? `${lastName[0]}.` : ''}
         </div>
       </div>
       <div className={`winnings ${props.data.winnings >= 0 ? 'green' : 'red'}`}>
