@@ -13,9 +13,7 @@ const LeaderboardRow: React.FC<RowProps> = (props) => {
     <div className="leaderboard-row" ref={props.rowRef}>
       <div className="row-start">
         <div className="rank">{props.data.rank}</div>
-        <div
-          className={`username ${props.data.user_id === props.user?._id ? 'current-user' : ''}`}
-        >
+        <div className={`username ${props.data.user_id === props.user?._id ? 'current-user' : ''}`}>
           {props.data.user_name}
         </div>
       </div>
