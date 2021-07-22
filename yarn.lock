@@ -211,6 +211,11 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@jakeane/react-bidirectional-infinite-scroll@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@jakeane/react-bidirectional-infinite-scroll/-/react-bidirectional-infinite-scroll-2.0.3.tgz#b999721ba23d90a0e386078379de94070388a983"
+  integrity sha512-WJh7yAqOXfMNdrdY+HyJ2RxGC5z6HRguoClM4KTfz5bXo/xETNfZxaEMbuazSMkXbtA+JcxTiK8FWU1C9xjfhw==
+
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.4.tgz#d4b3549a5db5de2683e0c1071ab4f140904bbf69"
@@ -5257,11 +5262,6 @@ raw-body@2.4.0:
     http-errors "1.7.2"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
-
-react-bidirectional-infinite-scroll@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/react-bidirectional-infinite-scroll/-/react-bidirectional-infinite-scroll-2.0.1.tgz#abda647b692414c1d212070347c802817319852a"
-  integrity sha512-2ABmUQnHlNkrDWeWffaygiep/BOaWErOVbA4Ej1k/AlsTmVrDx/HeivTw3UXDQr+o9SHow0FrzDkEExm7kHJlg==
 
 react-dom@^16.8.6:
   version "16.14.0"

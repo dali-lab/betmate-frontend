@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import BidirectionalScroll from 'react-bidirectional-infinite-scroll';
+import BidirectionalScroll from '@jakeane/react-bidirectional-infinite-scroll';
 import ordinal from 'ordinal';
 
 import {
@@ -38,13 +38,11 @@ const Leaderboard: React.FC<LeaderboardProps> = (props) => {
 
   const handleReachTop = () => {
     const rowSize = rowRef.current?.clientHeight ?? 0;
-    console.log('asdf', rowSize);
     props.extendLeaderboardTop(rowSize);
   };
 
   const handleRankClick = () => {
     const rowSize = rowRef.current?.clientHeight ?? 0;
-    console.log(rowSize);
     props.goToUserPosition(rowSize);
   };
 
