@@ -2,6 +2,30 @@
     background-color: #1E1E22;
 }
 
+.top-section {
+    display: flex;
+    flex-direction: row;
+
+    margin: 1em;
+
+    .featured-section {
+        flex-grow: 1;
+        max-width: 1000px;
+        h2.featured-title {
+            color:#F2F2F2;
+            font-size: 32px;
+            margin: 10px;
+            margin-left: 1em;
+        }
+    }
+}
+
+.match-container {
+    white-space: nowrap;
+    overflow-x: scroll;
+    margin-left: 15px;
+}
+
 .main-dashboard {
     display: flex;
     flex-direction: row;
@@ -55,7 +79,7 @@
     font-size: 30px;
     font-weight: 100px;
     text-shadow: 0 0 5px #2AD9FF;
-    margin-left: 1em;
+    margin-left: 1.3em;
     color: white;
     margin-bottom: 0;
 }
@@ -63,7 +87,6 @@
 .card-box {
     background: #1E1E22;
     // border-radius: 15px;
-    width: 12%;
     border: 7px solid;
     border-radius: 10px;
     border-color: #99F2FF;
@@ -72,4 +95,21 @@
     height: 15em;
     margin: 1em;
     position: relative;
+    overflow: hidden;
+
+    &.top-game {
+        height: 23em;
+        // width: ; // 60em;
+        width: 90%;
+        margin-top: 0;
+        border-color: #00B6FF;
+    }
+
+    &.pink {
+        border-color: #FF00B7;
+    }
+
+    &.orange {
+        border-color: #FFC702;
+    }
 }

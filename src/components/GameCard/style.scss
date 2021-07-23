@@ -38,6 +38,8 @@
     margin-left: .8em;
     font-weight: bolder;
     font-size: 15px;
+
+    
 }
 .regular-text {
     color: white;
@@ -59,4 +61,24 @@
 
 .wdl-bar {
     margin-bottom: 1em;
+    width: 80%;
+}
+
+.top-game {
+    .player-title {
+        font-size: 32px;
+    }
+
+    .vs-text {
+        margin-right: 81px;
+        margin-left: 81px;
+        font-size: 30px;
+    }
+
+    .join-button {
+        min-width: 12em;
+        min-height: 4em;
+        font-size: 22px;
+        margin-top: 1em;
+    }
 }

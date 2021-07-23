@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchGamesByStatus, clearGames } from 'store/actionCreators/gameActionCreators';
 import { Game } from 'types/resources/game';
-import GameCard from './GameCard/component';
+import Leaderboard from 'components/Leaderboard';
+import GameCard from 'components/GameCard/component';
 // import magnifier from 'assets/dashboard/magnifier.svg';
 import './style.scss';
 
@@ -11,32 +12,36 @@ export interface DashboardProps{
   games: Game[];
 }
 
-interface OddsInterface {
-  black_win: number,
-  draw: number,
-  white_win: number
-}
-
-function getFavoredPlayer(odds: OddsInterface) {
-  if (odds.draw > odds.black_win && odds.draw > odds.white_win) {
-    return 'draw';
-  } else if (odds.black_win > odds.white_win) {
-    return 'black';
-  } else {
-    return 'white';
-  }
-}
-
 const Dashboard: React.FC<DashboardProps> = (props) => {
+  const [topGame, setTopGame] = useState<Game>();
+
+  const gameRating = (game: Game) => game.player_black.elo + game.player_white.elo;
+  const getTime = (game: Game) => new Date(game.created_at).getTime();
+
   useEffect(() => {
     props.clearGames();
     props.fetchGamesByStatus(['not_started', 'in_progress']);
   }, []);
 
-  return (
-    <div className='main-page'>
-      {/* Commented out for Technigala */}
-      {/* <div className='main-dashboard'>
+  useEffect(() => {
+    if (props.games.length === 0) return;
+    const newTopGame = props.games.reduce((top, game) => (
+      gameRating(top) > gameRating(game) ? top : game
+    ));
+
+    setTopGame(newTopGame);
+  }, [props.games]);
+
+  const games = props.games
+    .filter((g) => g !== topGame)
+    .sort((gameA, gameB) => getTime(gameB) - getTime(gameA));
+
+  return props.games.length === 0
+    ? <div>Loading...</div>
+    : (
+      <div className='main-page'>
+        {/* Commented out for Technigala */}
+        {/* <div className='main-dashboard'>
         <img src={magnifier} />
         <input
           className='searchBar'
@@ -46,43 +51,27 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           <button className='browse-button'>Browse</button>
         </div>
       </div> */}
-      <h3 className='betting-header'>Popular Matches 🔥</h3>
-      {props.games
-        .sort((gameA, gameB) => new Date(gameB.created_at).getTime() - new Date(gameA.created_at).getTime())
-        .map((game) => {
-          const id = game._id;
-          return (
-            <div key={id} className='card-box'>
-              <GameCard
-                gameID={id}
-                player1={'Black'}
-                player2={'White'}
-                player1Rating={game.player_black.elo}
-                player2Rating= {game.player_white.elo}
-                playerFavor={getFavoredPlayer(game.odds)}
-                gameOdds = {game.odds}
-                earnings={10.9}/>
+        <div className="top-section">
+          {topGame && (
+            <div className="featured-section">
+              <h2 className="featured-title">Featured Match 🔥</h2>
+              <div className="card-box top-game">
+                <GameCard game={topGame} topGame />
+              </div>
             </div>
-          );
-        })}
-      {/* <h3 className='betting-header'>Continue Watching 👀</h3>
-      {props.games.map((game) => {
-        return (
-          <div key={game._id} className='card-box'>
-            <GameCard
-              gameID={game._id}
-              player1={'Black'}
-              player2={'White'}
-              player1Rating={game.player_black.elo}
-              player2Rating= {game.player_white.elo}
-              playerFavor={getFavoredPlayer(game.odds)}
-              gameOdds = {game.odds}
-              earnings={10.9}/>
-          </div>
-        );
-      })} */}
-    </div>
-  );
+          )}
+          <Leaderboard />
+        </div>
+        <h3 className='betting-header'>Current Matches 👀</h3>
+        <div className="match-container">
+          {games.map((game, i) => (
+            <div key={game._id} className={`card-box ${i % 2 ? 'pink' : 'orange'}`}>
+              <GameCard game={game} />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
 };
 
 export default Dashboard;

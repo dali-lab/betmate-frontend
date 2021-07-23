@@ -10,7 +10,6 @@ export interface User {
   full_name: string
   account: number
   _id: string
-  id: string
 }
 
 export interface UserState {

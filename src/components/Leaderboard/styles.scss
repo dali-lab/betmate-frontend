@@ -1,0 +1,121 @@
+.leaderboard-container {
+    width: 24em;
+    position: relative;
+    padding-right: 25px;
+
+    .leaderboard-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 5px;
+        h2 {
+            color:#F2F2F2;
+            font-size: 32px;
+            margin: 10px;
+        }
+
+        .reset-button {
+            background-color: grey;
+            width: 31px;
+            height: 31px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .active {
+            cursor: pointer;
+            background-color: #64FF8F;
+        }
+    }
+    
+    .leaderboard-card {
+        display: flex;
+        flex-direction: column;
+        height: 23em;
+        width: 23em;
+        overflow: scroll;
+        background: #1E1E22;
+        border: 7px solid;
+        border-radius: 10px;
+        border-color: #64FF8F;
+    
+        .user-rank {
+            width: 60%;
+            background-color: #64FF8F;
+            text-align: center;
+            align-self: center;
+            margin: 12px;
+            padding: 6px;
+            border-radius: 10px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    
+        .leaderboard-row {
+            display: flex;
+            width: 100%;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            padding-top: 10px;
+            padding-bottom: 10px;
+    
+            .row-start {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+    
+                .rank {
+                    margin-left: 10px;
+                    font-weight: bold;
+                    font-size: 25px;
+                    background-color: #E5AF27;
+                    width: 38px;
+                    height: 38px;
+                    border-radius: 20px;
+                    color: #1E1E22;
+    
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+        
+                .username {
+                    margin-left: 15px;
+                    font-weight: bold;
+                    font-size: 25px;
+                    width: 160px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+    
+                .current-user {
+                    color: #64FF8F;
+                }
+            }
+    
+    
+            .winnings {
+                margin-right: 25px;
+                font-weight: bold;
+                font-size: 23px;
+                white-space: nowrap;
+    
+                &.red {
+                    color: #FFCDC6
+                }
+    
+                &.green {
+                    color: #CDFFBC;
+                }
+            }
+        }
+    }
+}
