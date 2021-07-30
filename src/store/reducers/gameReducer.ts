@@ -6,6 +6,7 @@ import { Actions } from 'types/state';
 const initialState: GameState = {
   games: {},
   showModal: {},
+  chats: [],
 };
 
 const gameReducer = (state = initialState, action: Actions): GameState => {
@@ -85,6 +86,18 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
             },
           },
         },
+      };
+
+    case 'GAME_CHAT':
+      return {
+        ...state,
+        chats: [...state.chats, action.payload],
+      };
+
+    case 'LEAVE_GAME':
+      return {
+        ...state,
+        chats: [],
       };
 
     default:
