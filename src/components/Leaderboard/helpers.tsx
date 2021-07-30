@@ -1,6 +1,6 @@
 import React from 'react';
 import { Rank } from 'types/leaderboard';
-import { User } from 'types/resources/user';
+import { User } from 'types/resources/auth';
 
 interface RowProps {
   data: Rank,

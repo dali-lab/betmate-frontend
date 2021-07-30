@@ -1,5 +1,5 @@
 import joi from 'joi';
-import { User } from 'types/resources/user';
+import { User } from 'types/resources/auth';
 
 export const UserSchema = joi.object<User>({
   _id: joi.string().required(),

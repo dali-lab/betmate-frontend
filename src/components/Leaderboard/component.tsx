@@ -11,7 +11,7 @@ import {
   goToUserPosition,
   leaveUserPosition,
 } from 'store/actionCreators/leaderboardActionCreators';
-import { User } from 'types/resources/user';
+import { User } from 'types/resources/auth';
 import { Rank } from 'types/leaderboard';
 import resetIcon from 'assets/dashboard/reset.svg';
 import { LeaderboardRow } from './helpers';

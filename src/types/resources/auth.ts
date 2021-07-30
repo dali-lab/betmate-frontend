@@ -1,9 +1,17 @@
 /* eslint-disable import/no-cycle */
 import { Empty } from 'types';
 import { Action, AsyncAction } from 'types/state';
-import { User } from 'types/resources/user';
 
 /* -------- State -------- */
+
+export interface User {
+  email: string
+  first_name: string
+  last_name: string
+  full_name: string
+  account: number
+  _id: string
+}
 
 export interface AuthState {
   isAuthenticated: boolean,
