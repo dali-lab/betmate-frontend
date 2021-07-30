@@ -91,7 +91,7 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
     case 'GAME_CHAT':
       return {
         ...state,
-        chats: [...state.chats, action.payload],
+        chats: [...state.chats, { ...action.payload, type: 'message' }],
       };
 
     case 'LEAVE_GAME':

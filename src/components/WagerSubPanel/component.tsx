@@ -30,7 +30,7 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
   const handleMouseLeave = () => props.betType === 'move' && props.onLeaveMovePanel();
 
   return (
-    <div className="bet-subpanel" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div className={`bet-subpanel ${props.betType}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <h1>{props.betType === 'move' ? 'Move' : 'Game'} Betting</h1>
       <form>
         {props.betType === 'move'

@@ -43,6 +43,11 @@ export interface GameChat {
   userId: string
   userName: string
   chat: string
+  time: string
+}
+
+export interface FeedChat extends GameChat {
+  type: 'message'
 }
 
 export interface Game {
@@ -69,7 +74,7 @@ export interface Game {
 export interface GameState {
   games: Record<string, Game>,
   showModal: Record<string, boolean>,
-  chats: GameChat[]
+  chats: FeedChat[]
 }
 
 /* -------- Action Types -------- */
