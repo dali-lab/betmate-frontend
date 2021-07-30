@@ -9,7 +9,10 @@ import { Actions, RequestReturnType } from 'types/state';
 
 import {
   FetchWagerData,
-  CreateWagerActions, FetchWagerActions, UpdateWagerActions, DeleteWagerActions, FetchWagersActions, FetchWagersData,
+  CreateWagerActions,
+  FetchWagerActions,
+  FetchWagersActions,
+  FetchWagersData,
 } from 'types/resources/wager';
 
 export function* watchCreateWager() {
@@ -58,34 +61,6 @@ export function* watchFetchWagers() {
       yield put<Actions>({ type: 'FETCH_WAGERS', payload: response.data, status: 'SUCCESS' });
     } catch (error) {
       yield put<Actions>({ type: 'FETCH_WAGERS', payload: getErrorPayload(error), status: 'FAILURE' });
-    }
-  }
-}
-
-export function* watchUpdateWagerById() {
-  while (true) {
-    try {
-      const action: UpdateWagerActions = yield take((a: Actions) => (a.type === 'UPDATE_WAGER' && a.status === 'REQUEST'));
-      if (action.status !== 'REQUEST') continue; // Type protection only
-
-      const response: RequestReturnType<FetchWagerData> = yield call(wagerRequests.updateWagerById, action.payload.id, action.payload.fields);
-      yield put<Actions>({ type: 'UPDATE_WAGER', payload: response.data, status: 'SUCCESS' });
-    } catch (error) {
-      yield put<Actions>({ type: 'UPDATE_WAGER', payload: getErrorPayload(error), status: 'FAILURE' });
-    }
-  }
-}
-
-export function* watchDeleteWagerById() {
-  while (true) {
-    try {
-      const action: DeleteWagerActions = yield take((a: Actions) => (a.type === 'DELETE_WAGER' && a.status === 'REQUEST'));
-      if (action.status !== 'REQUEST') continue; // Type protection only
-
-      yield call(wagerRequests.deleteWagerById, action.payload.id);
-      yield put<Actions>({ type: 'DELETE_WAGER', payload: { id: action.payload.id }, status: 'SUCCESS' });
-    } catch (error) {
-      yield put<Actions>({ type: 'DELETE_WAGER', payload: getErrorPayload(error), status: 'FAILURE' });
     }
   }
 }
