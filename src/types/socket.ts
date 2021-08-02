@@ -5,7 +5,7 @@ import { Socket } from 'socket.io-client';
 import { Empty } from 'types';
 import { Action, AsyncAction } from 'types/state';
 
-export type ClientEvents = 'join_game' | 'leave_game' | 'make_move' | 'join_auth' | 'leave_auth';
+export type ClientEvents = 'join_game' | 'leave_game' | 'join_auth' | 'leave_auth';
 export type ServerEvents = 'start_game' | 'new_odds' | 'new_move' | 'game_over' | 'wager_result' | 'pool_wager' | 'socket_error' | 'game_error';
 export type Events = ClientEvents | ServerEvents;
 

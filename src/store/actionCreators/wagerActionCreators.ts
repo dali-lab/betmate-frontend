@@ -1,5 +1,4 @@
 import { Actions } from 'types/state';
-import { Wager } from 'types/resources/wager';
 
 export const createWager = (
   gameId: string,
@@ -26,16 +25,4 @@ export const fetchWagers = (): Actions => ({
   type: 'FETCH_WAGERS',
   status: 'REQUEST',
   payload: {},
-});
-
-export const updateWagerById = (id: string, fields: Partial<Wager>): Actions => ({
-  type: 'UPDATE_WAGER',
-  status: 'REQUEST',
-  payload: { id, fields },
-});
-
-export const deleteWagerById = (id: string): Actions => ({
-  type: 'DELETE_WAGER',
-  status: 'REQUEST',
-  payload: { id },
 });

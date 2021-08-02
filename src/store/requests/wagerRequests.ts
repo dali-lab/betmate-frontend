@@ -1,9 +1,7 @@
 import { getBearerTokenHeader } from 'store/actionCreators';
 import { createBackendAxiosRequest } from 'store/requests';
 
-import {
-  FetchWagerData, DeleteWagerData, Wager, FetchWagersData,
-} from 'types/resources/wager';
+import { FetchWagerData, FetchWagersData } from 'types/resources/wager';
 import { RequestReturnType } from 'types/state';
 import { validateSchema } from 'validation';
 import { WagerArraySchema, WagerSchema } from 'validation/wager';
@@ -34,28 +32,13 @@ export const createWager = async (
 };
 
 export const fetchWagerById = async (id: string): Promise<RequestReturnType<FetchWagerData>> => {
-  // const result = await createBackendAxiosRequest({
-  //   method: 'POST',
-  //   url: '/',
-  // });
+  const result = await createBackendAxiosRequest<FetchWagerData>({
+    method: 'GET',
+    url: `/wager/${id}`,
+    headers: getBearerTokenHeader(),
+  });
 
-  // // Validation here
-
-  // return result;
-
-  return {
-    data: {
-      game_id: 'adsf88as9d7fasdf',
-      amount: 2834,
-      wdl: true,
-      odds: 69,
-      data: 'win',
-      resolved: true,
-      _id: id,
-      ...{} as Partial<Wager>,
-    },
-
-  } as RequestReturnType<FetchWagerData>;
+  return validateSchema(WagerSchema, result, (d) => d.data);
 };
 
 export const fetchWagers = async (): Promise<RequestReturnType<FetchWagersData>> => {
@@ -66,41 +49,4 @@ export const fetchWagers = async (): Promise<RequestReturnType<FetchWagersData>>
   });
 
   return validateSchema(WagerArraySchema, result, (d) => d.data);
-};
-
-export const updateWagerById = async (id: string, fields: Partial<Wager>): Promise<RequestReturnType<FetchWagerData>> => {
-  // const result = await createBackendAxiosRequest({
-  //   method: 'POST',
-  //   url: '/',
-  // });
-
-  // // Validation here
-
-  // return result;
-
-  return {
-    data: {
-      game_id: 'adsf88as9d7fasdf',
-      amount: 2834,
-      wdl: true,
-      odds: 69,
-      data: 'win',
-      resolved: true,
-      _id: id,
-      ...fields,
-    },
-  } as RequestReturnType<FetchWagerData>;
-};
-
-export const deleteWagerById = async (id: string): Promise<RequestReturnType<DeleteWagerData>> => {
-  // const result = await createBackendAxiosRequest({
-  //   method: 'POST',
-  //   url: '/',
-  // });
-
-  // // Validation here
-
-  // return result;
-
-  return { data: { id } } as RequestReturnType<DeleteWagerData>;
 };

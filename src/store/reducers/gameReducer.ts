@@ -12,23 +12,7 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
   if (action.status !== 'SUCCESS') return state;
 
   switch (action.type) {
-    case 'CREATE_GAME':
-      return {
-        ...state,
-        games: {
-          ...state.games,
-          [action.payload._id]: {
-            ...state.games[action.payload._id],
-            ...action.payload,
-          },
-        },
-        showModal: {
-          ...state.showModal,
-          [action.payload._id]: true,
-        },
-      };
     case 'FETCH_GAME':
-    case 'UPDATE_GAME':
       return {
         ...state,
         games: {
@@ -50,12 +34,6 @@ const gameReducer = (state = initialState, action: Actions): GameState => {
           ...accum,
           [game._id]: state.showModal[game._id] ?? true,
         }), state.showModal),
-      };
-
-    case 'DELETE_GAME':
-      return {
-        ...state,
-        games: omit(state.games, action.payload.id),
       };
 
     case 'CLEAR_GAMES':

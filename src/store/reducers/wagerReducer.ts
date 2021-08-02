@@ -1,5 +1,3 @@
-import omit from 'lodash.omit';
-
 import { WagerState } from 'types/resources/wager';
 import { Actions } from 'types/state';
 
@@ -11,7 +9,6 @@ const wagerReducer = (state = initialState, action: Actions): WagerState => {
   switch (action.type) {
     case 'CREATE_WAGER':
     case 'FETCH_WAGER':
-    case 'UPDATE_WAGER':
       return {
         ...state,
         wagers: {
@@ -27,12 +24,6 @@ const wagerReducer = (state = initialState, action: Actions): WagerState => {
           ...accum,
           [wager._id]: wager,
         }), state.wagers),
-      };
-
-    case 'DELETE_WAGER':
-      return {
-        ...state,
-        wagers: omit(state.wagers, action.payload.id),
       };
 
     case 'DEAUTH_USER':

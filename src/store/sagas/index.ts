@@ -4,7 +4,6 @@ import { spawn } from 'redux-saga/effects';
 import authSaga from 'store/sagas/auth';
 import chessgroundSaga from 'store/sagas/chessground';
 import gameSaga from 'store/sagas/game';
-import userSaga from 'store/sagas/user';
 import wagerSaga from 'store/sagas/wager';
 import leaderboardSaga from 'store/sagas/leaderboard';
 
@@ -15,7 +14,6 @@ function* rootSaga() {
   yield spawn(chessgroundSaga);
   yield spawn(gameSaga);
   yield spawn(leaderboardSaga);
-  yield spawn(userSaga);
   yield spawn(wagerSaga);
 
   yield spawn(watchSockets);

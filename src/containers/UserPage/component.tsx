@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { fetchWagers } from 'store/actionCreators/wagerActionCreators';
-import { User } from 'types/resources/user';
+import { User } from 'types/resources/auth';
 import { Wager } from 'types/resources/wager';
 
 import './style.scss';
