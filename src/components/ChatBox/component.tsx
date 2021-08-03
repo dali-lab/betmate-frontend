@@ -41,7 +41,8 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
-    props.sendGameChat(gameId, chat);
+    if (chat.trim() === '') return;
+    props.sendGameChat(gameId, chat.trim());
     setChat('');
   };
 
