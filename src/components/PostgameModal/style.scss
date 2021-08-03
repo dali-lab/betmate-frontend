@@ -1,0 +1,123 @@
+// https://stackoverflow.com/a/53037637
+.postgame-modal-container {
+    position: relative;
+    border: solid 10px transparent;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-radius: 9px;
+    background-image: radial-gradient(#1E1E22,#1E1E22), linear-gradient(109.85deg, #CD8CFF 18.57%, #FF00B7 182.53%);
+    h1 {
+        font-family: 'Roboto';
+        font-weight: bold;
+        font-size: 32px;
+        text-align: center;
+        color: #F2F2F2;
+        margin: 15px 0;
+    }
+    h4 {
+        font-family: 'Roboto';
+        text-align: center;
+        font-weight: 400;
+        font-size: 16px;
+        color: #F2F2F2;
+        margin: 0 0 15px 0;
+    }
+    button {
+        background: #E5AF27;
+        border-radius: 28px;
+        padding: 7px 11px;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        font-family: 'Roboto';
+        margin: 20px auto 0 auto;
+        display: block;
+    }
+}
+
+.postgame-padding-container {
+    padding: 30px;
+}
+
+.postgame-box-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.postgame-box {
+    border: solid 5px transparent;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-radius: 20px;
+    height: 250px;
+    width: 300px;
+    margin: 0 20px;
+    overflow-y: scroll;
+    h4 {
+        font-family: 'Roboto';
+        font-size: 16px;
+        color: #F2F2F2;
+    }
+}
+
+.postgame-box-padding-container {
+    padding: 10px 20px;
+}
+
+.no-bets-text {
+    color: #F2F2F2;
+    font-size: 14px;
+}
+
+.blue-border {
+    background-image: radial-gradient(#1E1E22,#1E1E22), linear-gradient(132.99deg, #00D1FF 5.49%, rgba(0, 79, 255, 0.83) 111.01%, #0034A8 111.01%);
+}
+
+.orange-border {
+    background-image: radial-gradient(#1E1E22,#1E1E22), linear-gradient(270deg, #E527AF -143.87%, #FEC83D 100%);
+}
+
+.postgame-stats-container {
+    display: flex;
+    flex-direction: column;
+    hr {
+        width: 100%;
+    }
+}
+
+.stat-line {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+    p {
+        margin: 0;
+        color: #F2F2F2;
+        font-size: 14px;
+    }
+}
+
+.stat-line-left {
+    flex: 1.4;
+}
+
+.stat-line-right {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.green-text {
+    color: #CDFFBC !important;
+}
+
+.red-text {
+    color: #FFCDC6 !important;
+}
+
+.postgame-x-icon {
+    position: absolute;
+    color: #F2F2F2;
+    left: 15px;
+    top: 10px;
+    cursor: pointer;
+}

@@ -1,0 +1,69 @@
+.wager-panel-container {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background: #050505;
+    min-height: calc(100vh - 80px);
+    p {
+        font-family: 'Roboto';
+        color: #F2F2F2;
+        font-size: 13px;
+    }
+    input {
+        cursor: pointer;
+    }
+}
+
+.balance-text {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    p {
+        font-weight: bold;
+        font-size: 18px !important;
+        color: #F2F2F2;
+        text-align: right;
+        width: 100%;
+        margin: 5px auto;
+    }
+    img {
+        width: 16px;
+        height: 16px;
+        margin: auto 12px auto 8px;
+    }
+}
+
+.wdl-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    img {
+        width: 21px;
+        height: 21px;
+        margin-right: 8px;
+    }
+}
+
+.vertical-bar-container {
+    height: 35px;
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin: 0 auto;
+    div {
+        transition: height 1s ease-in-out;
+    }
+}
+
+.wdl-bar-container {
+    width: 100%;
+    display: flex;
+    box-shadow: 0px 0px 20px 8px #00EFB2;
+    div {
+        height: 100%;
+        transition: width 1s ease-in-out;
+    }
+}

@@ -1,0 +1,115 @@
+.main-page {
+    background-color: #1E1E22;
+}
+
+.top-section {
+    display: flex;
+    flex-direction: row;
+
+    margin: 1em;
+
+    .featured-section {
+        flex-grow: 1;
+        max-width: 1000px;
+        h2.featured-title {
+            color:#F2F2F2;
+            font-size: 32px;
+            margin: 10px;
+            margin-left: 1em;
+        }
+    }
+}
+
+.match-container {
+    white-space: nowrap;
+    overflow-x: scroll;
+    margin-left: 15px;
+}
+
+.main-dashboard {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 8em;
+    width: 100%;
+}
+
+.welcome-message {
+    margin-left: 1em;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    color: white;
+    align-self: center;
+    flex: 1 9999 0%;
+}
+
+.searchBar {
+    background-color: #1E1E22;
+    min-width: 400px;
+    text-align: center;
+    font-family: Roboto;
+    color: white;
+    outline: none;
+    border-bottom: 2px solid white;
+    border-right: none;
+    cursor: auto;
+}
+.searchBar::placeholder {
+    color: white;
+    opacity: 70%;
+}
+
+.browse-button {
+    border:none;
+    background-color: #FFC430;
+    border-radius: 5px;
+    min-width: 50px;
+    min-height: 25px;
+    font-weight: bold;
+    margin-left: 1em;
+    cursor: pointer; 
+}
+
+
+.betting-header {
+    font-family: Roboto;
+    font-size: 30px;
+    font-weight: 100px;
+    text-shadow: 0 0 5px #2AD9FF;
+    margin-left: 1.3em;
+    color: white;
+    margin-bottom: 0;
+}
+
+.card-box {
+    background: #1E1E22;
+    // border-radius: 15px;
+    border: 7px solid;
+    border-radius: 10px;
+    border-color: #99F2FF;
+    display: inline-block;
+    width: 25em;
+    height: 15em;
+    margin: 1em;
+    position: relative;
+    overflow: hidden;
+
+    &.top-game {
+        height: 23em;
+        // width: ; // 60em;
+        width: 90%;
+        margin-top: 0;
+        border-color: #00B6FF;
+    }
+
+    &.pink {
+        border-color: #FF00B7;
+    }
+
+    &.orange {
+        border-color: #FFC702;
+    }
+}

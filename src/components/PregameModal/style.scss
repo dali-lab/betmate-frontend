@@ -1,0 +1,62 @@
+.blur-background {
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    backdrop-filter: blur(2px);
+    position: absolute;
+    z-index: 6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// https://stackoverflow.com/a/53037637
+.pregame-modal-container {
+    border: solid 10px transparent;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-radius: 9px;
+    background-image: radial-gradient(#1E1E22,#1E1E22), linear-gradient(109.85deg, #CD8CFF 18.57%, #FF00B7 182.53%);
+    h1 {
+        font-family: 'Roboto';
+        text-align: center;
+        font-weight: 600;
+        font-size: 32px;
+        color: #F2F2F2;
+        margin: 15px 0;
+    }
+    h3 {
+        font-family: 'Roboto';
+        text-align: center;
+        font-weight: 400;
+        font-size: 16px;
+        color: #F2F2F2;
+        margin: 0 0 15px 0;
+    }
+}
+
+.padding-container {
+    padding: 10px 30px;
+    position: relative;
+}
+
+.pregame-body-container {
+    padding: 0 50px;
+}
+
+.pregame-wdl-container {
+    margin: 30px 0px;
+}
+
+.skip-button {
+    position: absolute;
+    right: 25px;
+    bottom: 20px;
+    border: none;
+    background: none;
+    color: #F2F2F2;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 400;
+    font-family: 'Roboto';
+}
