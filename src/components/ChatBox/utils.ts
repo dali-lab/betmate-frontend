@@ -1,20 +1,20 @@
 import {
-  FeedWager, Wager, WagerLiteral, WagerStatus,
+  FeedWager, Wager, WagerStatus,
 } from 'types/resources/wager';
 import { getMultiplier } from 'utils/chess';
 
-export const createFeedWager = (wager: Wager): FeedWager[] => ([
+export const createResolvedFeedWager = (wager: Wager): FeedWager => ({
+  ...wager,
+  time: wager.updated_at,
+  odds: wager.wdl ? wager.odds : wager.winning_pool_share ?? 1,
+  type: 'wager',
+});
+
+export const createFeedWagers = (wager: Wager): FeedWager[] => ([
   {
     ...wager, time: wager.created_at, status: WagerStatus.PENDING, type: 'wager',
   },
-  ...(wager.resolved
-    ? [{
-      ...wager,
-      time: wager.updated_at,
-      odds: wager.wdl ? wager.odds : wager.winning_pool_share ?? 1,
-      type: 'wager' as WagerLiteral,
-    }]
-    : []),
+  ...(wager.resolved ? [createResolvedFeedWager(wager)] : []),
 ]);
 
 const onWDLWagerCreate = (data: string, amount: number, odds: number): string => (

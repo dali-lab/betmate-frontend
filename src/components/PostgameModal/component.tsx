@@ -2,9 +2,10 @@ import { ChatWager } from 'components/ChatBox/helper_components';
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { Game, GameStatus } from 'types/resources/game';
-import { Wager, WagerLiteral, WagerStatus } from 'types/resources/wager';
+import { Wager, WagerStatus } from 'types/resources/wager';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { createResolvedFeedWager } from 'components/ChatBox/utils';
 import { StatLine } from './helperComponents';
 import './style.scss';
 
@@ -55,14 +56,7 @@ const PostgameModal: React.FC<PostgameModalProps> = (props) => {
 
   const resolvedWagers = props.resolvedWagers
     .filter((w) => w.game_id === gameId && w.resolved)
-    .map((wager) => (
-      {
-        ...wager,
-        time: wager.updated_at,
-        odds: wager.wdl ? wager.odds : wager.winning_pool_share,
-        type: 'wager' as WagerLiteral,
-      }
-    ))
+    .map(createResolvedFeedWager)
     .sort((fwA, fwB) => new Date(fwA.time).getTime() - new Date(fwB.time).getTime())
     .map((fw) => <ChatWager wager={fw} key={`${fw._id}_${fw.time}`} />);
 

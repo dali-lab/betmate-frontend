@@ -26,11 +26,9 @@ export interface Wager {
   updated_at: string,
 }
 
-export type WagerLiteral = 'wager';
-
 export interface FeedWager extends Wager {
   time: string
-  type: WagerLiteral
+  type: 'wager'
 }
 
 /* -------- State -------- */

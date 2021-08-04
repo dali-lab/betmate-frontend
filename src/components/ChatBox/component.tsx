@@ -8,7 +8,7 @@ import './style.scss';
 import { FeedChat } from 'types/resources/game';
 import { sendGameChat } from 'store/actionCreators/gameActionCreators';
 import { ChatItem } from './helper_components';
-import { createFeedWager } from './utils';
+import { createFeedWagers } from './utils';
 
 interface ChatBoxProps {
   resolvedWagers: Wager[]
@@ -27,7 +27,7 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
 
   const wagerFeed: FeedWager[] = props.resolvedWagers
     .filter((w) => w.game_id === gameId)
-    .map(createFeedWager)
+    .map(createFeedWagers)
     .flat();
 
   const feed = (wagerFeed as (FeedWager | FeedChat)[])
