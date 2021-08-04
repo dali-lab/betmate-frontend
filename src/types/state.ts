@@ -16,11 +16,10 @@ import { LeaderboardActions, LeaderboardActionTypes, LeaderboardState } from './
 /* -------- Action Types -------- */
 
 export type Actions =
-  AuthActions | GameActions | SocketActions |
-  WagerActions | CgActions | LeaderboardActions;
+  AuthActions | GameActions | SocketActions | WagerActions | CgActions | LeaderboardActions;
 export type ActionTypes =
-  AuthActionTypes | GameActionTypes | SocketActionTypes |
-  WagerActionTypes | CgActionTypes | LeaderboardActionTypes;
+  AuthActionTypes | GameActionTypes | SocketActionTypes | WagerActionTypes | CgActionTypes |
+  LeaderboardActionTypes;
 
 export const REQUEST = 'REQUEST';
 export const SUCCESS = 'SUCCESS';

@@ -2,6 +2,8 @@ import { eventChannel } from 'redux-saga';
 import {
   BroadcastPoolWager,
   BroadcastPoolWagerActions,
+  GameChatActions,
+  GameChatMessage,
   GameUpdateActions,
   StartGameData,
   UpdateGameEndData,
@@ -15,6 +17,7 @@ import { validateSchema } from 'validation';
 import {
   StartGameSchema, UpdateGameEndSchema, UpdateGameOddsSchema, UpdateGameStateSchema,
 } from 'validation/game';
+import { GameChatSchema } from 'validation/socket';
 import { BroadcastPoolWagerSchema, WagerResultSchema } from 'validation/wager';
 
 /**
@@ -96,6 +99,22 @@ export const createUpdateWagerStateChannel: ChannelCreator<FetchWagersActions | 
       socket.off('wager_result', wagerResultHandler);
       socket.off('pool_wager', poolWagerHandler);
     };
+  },
+);
+
+export const createGameChatChannel: ChannelCreator<GameChatActions> = (socket) => eventChannel(
+  (pushToChannel) => {
+    const gameChatHandler = (payload: GameChatMessage) => {
+      pushToChannel({
+        type: 'GAME_CHAT',
+        status: 'SUCCESS',
+        payload: validateSchema(GameChatSchema, payload),
+      });
+    };
+
+    socket.on<Events>('game_chat', gameChatHandler);
+
+    return () => socket.off('game_chat', gameChatHandler);
   },
 );
 

@@ -2,22 +2,25 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { EventChannel } from 'redux-saga';
 import {
-  call, put, take, apply,
+  call, put, take, apply, select,
 } from 'redux-saga/effects';
 
 import { Socket } from 'socket.io-client';
 
 import {
-  BroadcastPoolWager, BroadcastPoolWagerActions, GameUpdateActions, JoinGameData, LeaveGameData,
+  BroadcastPoolWager, BroadcastPoolWagerActions, GameChatActions, GameUpdateActions, JoinGameData, LeaveGameData,
 } from 'types/resources/game';
-import { Actions } from 'types/state';
+import { Actions, RootState } from 'types/state';
 import {
   SocketErrorAction, SocketGameErrorAction,
 } from 'types/socket';
 
 import { CreateWagerActions, FetchWagersActions } from 'types/resources/wager';
 import { getBearerToken, removeBearerToken } from 'store/actionCreators';
-import { createErrorChannel, createUpdateGameStateChannel, createUpdateWagerStateChannel } from './channels';
+import { User } from 'types/resources/auth';
+import {
+  createErrorChannel, createGameChatChannel, createUpdateGameStateChannel, createUpdateWagerStateChannel,
+} from './channels';
 
 /**
  * Saga that emits 'join_game' events onto the passed socket and completes the following:
@@ -170,6 +173,35 @@ export function* leaveAuthHandler(socket: Socket) {
       yield put<Actions>({ type: 'LEAVE_AUTH', status: 'SUCCESS', payload: { token } });
     } catch (error) {
       yield put<Actions>({ type: 'LEAVE_AUTH', status: 'FAILURE', payload: { message: error.message, code: null } });
+    }
+  }
+}
+
+export function* sendGameMessageHandler(socket: Socket) {
+  while (true) {
+    try {
+      const action: GameChatActions = yield take((a: Actions) => a.type === 'GAME_CHAT' && a.status === 'REQUEST');
+      if (action.status !== 'REQUEST') return;
+      const user: User = yield select((state: RootState) => state.auth.user);
+      if (!user) throw new Error('User not authenticated');
+      const message = { ...action.payload, userId: user._id, userName: user.full_name };
+      yield apply(socket, socket.emit, ['game_chat', message]);
+      yield put<Actions>({ type: action.type, status: 'SUCCESS', payload: message });
+    } catch (error) {
+      yield put<Actions>({ type: 'GAME_CHAT', status: 'FAILURE', payload: { message: error.message, code: null } });
+    }
+  }
+}
+
+export function* receiveGameMessageHandler(socket: Socket) {
+  const socketChannel: EventChannel<GameChatActions> = yield call(createGameChatChannel, socket);
+
+  while (true) {
+    try {
+      const action: GameChatActions = yield take(socketChannel);
+      yield put<Actions>(action);
+    } catch (error) {
+      yield put<Actions>({ type: 'GAME_CHAT', status: 'FAILURE', payload: { message: error.message, code: null } });
     }
   }
 }
