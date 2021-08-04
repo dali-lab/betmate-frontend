@@ -8,13 +8,11 @@ import wagerSaga from 'store/sagas/wager';
 import leaderboardSaga from 'store/sagas/leaderboard';
 
 import watchSockets from 'store/sagas/sockets';
-import heapSaga from './heap';
 
 function* rootSaga() {
   yield spawn(authSaga);
   yield spawn(chessgroundSaga);
   yield spawn(gameSaga);
-  yield spawn(heapSaga);
   yield spawn(leaderboardSaga);
   yield spawn(wagerSaga);
   yield spawn(watchSockets);
