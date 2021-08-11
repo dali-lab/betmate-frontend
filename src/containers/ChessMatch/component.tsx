@@ -44,7 +44,8 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
     ? <p className="loading-text">Loading</p>
     : (
       <>
-        {game.game_status === GameStatus.NOT_STARTED && props.showModal[gameId] && <PregameModal/>}
+        {/* {game.game_status === GameStatus.NOT_STARTED && props.showModal[gameId] && <PregameModal/>} */}
+        {<PregameModal/>}
         {gameOver(game.game_status as GameStatus) && <PostgameModal/>}
         <NavBar />
         <div className='chess-match-container'>
