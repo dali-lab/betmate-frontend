@@ -39,9 +39,9 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
             <Slider
               max={10}
               min={1}
-              className="slider"
-              thumbClassName="thumb"
-              trackClassName="track"
+              className="slider-pregame"
+              thumbClassName="thumb-pregame"
+              trackClassName="track-pregame"
               renderThumb={(prps, state) => <div {...prps}>${state.valueNow}</div>}
               renderTrack={(prps) => <div {...prps} />}
               value={wagerAmount}

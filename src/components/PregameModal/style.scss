@@ -62,30 +62,33 @@
     font-family: 'Roboto';
 }
 
-.slider {
+.slider-pregame {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 60px;
 }
 
-.track {
+.track-pregame {
     height: 23px;
-    border-radius: 20px;
     margin: 6px;
 
-    &.track-0 {
+    &.track-pregame-0 {
         background-color: #99CCA7;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
     }
 
-    &.track-1 {
+    &.track-pregame-1 {
         background-color: #5F5F5F;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
     }
 }
 
 
 
-.thumb {
+.thumb-pregame {
     height: 35px;
     width: 35px;
     border-radius: 20px;
