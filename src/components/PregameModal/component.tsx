@@ -1,10 +1,13 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
-import './style.scss';
+import Slider from 'react-slider';
+import { useParams } from 'react-router';
 import { WDLBar } from 'components/WagerPanel/helper_components';
 import { Game } from 'types/resources/game';
-import { useParams } from 'react-router';
 import { updateShowModal } from 'store/actionCreators/gameActionCreators';
-import { GameOutcomes, WagerAmounts, SubmitWager } from '../WagerFormComponents';
+import { GameOutcomes, SubmitWager } from '../WagerFormComponents';
+
+import './style.scss';
 
 interface PregameModalProps {
   games: Record<string, Game>,
@@ -13,7 +16,7 @@ interface PregameModalProps {
 
 const PregameModal: React.FC<PregameModalProps> = (props) => {
   const [wager, setWager] = useState('');
-  const [wagerAmount, setWagerAmount] = useState(0);
+  const [wagerAmount, setWagerAmount] = useState(5);
 
   const { id: gameId } = useParams<{ id: string }>();
 
@@ -32,8 +35,19 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
                 height={30}
               />
             </div>
+
+            <Slider
+              max={10}
+              min={1}
+              className="slider-pregame"
+              thumbClassName="thumb-pregame"
+              trackClassName="track-pregame"
+              renderThumb={(prps, state) => <div {...prps}>${state.valueNow}</div>}
+              renderTrack={(prps) => <div {...prps} />}
+              value={wagerAmount}
+              onChange={(value) => setWagerAmount(value)}
+            />
             <GameOutcomes odds={props.games[gameId]?.odds} wager={wager} setWager={setWager} wagersLoading={wagersLoading} />
-            <WagerAmounts wagerAmount={wagerAmount} setWagerAmount={setWagerAmount} betType="wdl"/>
             <SubmitWager
               wager={wager}
               wagerAmount={wagerAmount}

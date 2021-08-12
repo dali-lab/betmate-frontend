@@ -3,7 +3,7 @@
 // eslint-disable-next-line no-nested-ternary
 export const ROOT_URL = process.env.TARGET_ENV === 'prod'
   ? 'https://betmate-backend-prod.herokuapp.com'
-  : process.env.TARGET_ENV === 'dev'
+  : process.env.TARGET_ENV === 'dev' || true
     ? 'https://betmate-backend-dev.herokuapp.com'
     : 'http://localhost:9090';
 
@@ -11,4 +11,4 @@ export const ROOT_URL = process.env.TARGET_ENV === 'prod'
 export const authTokenName = 'authToken';
 
 // Number of ms before an axios request times out
-export const requestTimeout = 1000;
+export const requestTimeout = 3000;
