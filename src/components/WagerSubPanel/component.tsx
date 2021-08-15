@@ -23,12 +23,19 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
 
   const wagersLoading = props.games[gameId]?.pool_wagers?.move.options.length === 0;
 
+  const wagerExplanation = props.betType === 'move'
+    ? 'Bet on which move will happen next. Win tokens from others in the pool.'
+    : 'Bet on the outcome of the game. Win tokens from the house.';
+
   const handleMouseEnter = () => props.betType === 'move' && props.onEnterMovePanel();
   const handleMouseLeave = () => props.betType === 'move' && props.onLeaveMovePanel();
 
   return (
     <div className={`bet-subpanel ${props.betType}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <h1>{props.betType === 'move' ? 'Move' : 'Game'} Betting</h1>
+      <div className='wager-header'>
+        <h1>{props.betType === 'move' ? 'Move' : 'Game'} Betting</h1>
+        <p>{wagerExplanation}</p>
+      </div>
       <form>
         <Slider
           max={10}
