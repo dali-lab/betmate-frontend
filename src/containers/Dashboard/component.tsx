@@ -3,7 +3,7 @@ import { fetchGamesByStatus, clearGames } from 'store/actionCreators/gameActionC
 import { Game, GameSource } from 'types/resources/game';
 import Leaderboard from 'components/Leaderboard';
 import GameCard from 'components/GameCard/component';
-// import magnifier from 'assets/dashboard/magnifier.svg';
+import LichessModal from 'components/LichessModal';
 import './style.scss';
 
 export interface DashboardProps{
@@ -14,7 +14,7 @@ export interface DashboardProps{
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
   const [topGame, setTopGame] = useState<Game>();
-  const [showLichessModal, setShowLichessModal] = useState(false);
+  const [showLichessModal, setShowLichessModal] = useState(true);
 
   const gameRating = (game: Game) => game.player_black.elo + game.player_white.elo;
   const getTime = (game: Game) => new Date(game.created_at).getTime();
@@ -45,7 +45,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     ? <div>Loading...</div>
     : (
       <div className='main-page'>
-        {/* {showLichessModal && <} */}
+        {showLichessModal && <LichessModal setShowLichessModal={setShowLichessModal} />}
         {/* Commented out for Technigala */}
         {/* <div className='main-dashboard'>
         <img src={magnifier} />
