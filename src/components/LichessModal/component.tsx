@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { createLichessGame } from 'store/requests/lichessRequests';
+import { getErrorPayload } from 'utils/error';
 
 import './style.scss';
 
@@ -23,7 +24,7 @@ const LichessModal: React.FC<LichessModalProps> = (props) => {
       const { data: { gameId } } = await createLichessGame(url);
       history.push(`/chess/${gameId}`);
     } catch (error) {
-      setErrorMessage(error.message);
+      setErrorMessage(getErrorPayload(error).message);
     }
     setIsLoading(false);
   };
