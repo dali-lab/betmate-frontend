@@ -9,8 +9,9 @@ import { createWager } from 'store/actionCreators/wagerActionCreators';
 interface MoveOptionsProps {
   setPanelLoading: Dispatch<SetStateAction<boolean>>
   wagerAmount: number
-  games: Record<string, Game>
   wagersLoading: boolean
+  games: Record<string, Game>
+  isAuthenticated: boolean
   onMoveHover: typeof onMoveHover
   onMoveUnhover: typeof onMoveUnhover
   createWager: typeof createWager
@@ -21,7 +22,7 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
 
   const handleSubmit = (wager: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
-    if (props.wagerAmount) {
+    if (props.wagerAmount && props.isAuthenticated) {
       props.createWager(
         gameId,
         wager,
@@ -60,8 +61,8 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
       .map(([move, movePool], i) => (
         <div
           key={move}
-          className='move-option'
-          style={{ borderColor: moveOptionColors[i] }}
+          className={`move-option ${props.isAuthenticated ? 'move-auth' : ''}`}
+          style={{ borderColor: props.isAuthenticated ? moveOptionColors[i] : 'grey' }}
           onMouseEnter={() => props.onMoveHover(props.games[gameId].state, move)}
           onMouseLeave={props.onMoveUnhover}
           onClick={handleSubmit(move)}

@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import { WDLBar } from 'components/WagerPanel/helper_components';
 import { Game } from 'types/resources/game';
 import { updateShowModal } from 'store/actionCreators/gameActionCreators';
-import { SubmitWager } from '../WagerFormComponents';
+import { WagerMessages } from '../WagerFormComponents';
 
 import './style.scss';
 
@@ -44,8 +44,13 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
               value={wagerAmount}
               onChange={(value) => setWagerAmount(value)}
             />
-            {/* <GameOutcomes odds={props.games[gameId]?.odds} wager={wager} setWager={setWager} wagersLoading={wagersLoading} /> */}
-            <SubmitWager
+            {/* <GameOutcomes
+              odds={props.games[gameId]?.odds}
+              wager={wager}
+              setWager={setWager}
+              wagersLoading={wagersLoading}
+            /> */}
+            <WagerMessages
               panelLoading={panelLoading}
               setPanelLoading={setPanelLoading}
             />

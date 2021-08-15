@@ -18,6 +18,7 @@ interface GameOutcomesProps {
   setPanelLoading: React.Dispatch<React.SetStateAction<boolean>>
   odds: GameOdds
   wagersLoading: boolean
+  isAuthenticated: boolean
   createWager: typeof createWager
   wagerAmount: number
   games: Record<string, Game>
@@ -28,7 +29,7 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
 
   const handleSubmit = (wager: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
-    if (props.wagerAmount) {
+    if (props.wagerAmount && props.isAuthenticated) {
       props.createWager(
         gameId,
         wager,
@@ -60,7 +61,7 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
       return (
         <div
           key={outcome}
-          className='wdl-option'
+          className={`wdl-option ${props.isAuthenticated ? 'wdl-auth' : ''}`}
           onClick={handleSubmit(outcomeCode)}
         >
           <img src={image} alt={outcome} />

@@ -3,17 +3,21 @@
     justify-content: space-around;
 
     .wdl-option {
-        border: 1px solid #2DFD83;
+        border: 1px solid grey;
         border-radius: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 0.5em;
-        cursor: pointer;
 
-        &:hover {
+        &.wdl-auth {
+            border-color: #2DFD83;
+        }
+        
+        &.wdl-auth:hover {
             border-width: 3px;
             margin: -2px;
+            cursor: pointer;
         }
 
         img {
@@ -39,18 +43,24 @@
         justify-content: flex-end;
         align-items: center;
         padding: 8px;
-        cursor: pointer;
-
-        &:hover {
+        
+        &.move-auth:hover {
             border-width: 3px;
             margin: -2px;
+            cursor: pointer;
         }
 
         p {
             margin: 0;
             margin-top: 0.5em;
         }
+
+        &.not-auth {
+            border-color: white !important;
+        }
     }
+
+
 }
 
 .move-options {

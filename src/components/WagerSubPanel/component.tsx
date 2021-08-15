@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import Slider from 'react-slider';
 
@@ -17,14 +17,9 @@ interface WagerSubPanelProps {
 }
 
 const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
-  const [wager, setWager] = useState('');
   const [wagerAmount, setWagerAmount] = useState(5);
   const [panelLoading, setPanelLoading] = useState(false);
   const { id: gameId } = useParams<{ id: string }>();
-
-  useEffect(() => {
-    setWager('');
-  }, [props.games[gameId]?.move_hist.length]);
 
   const wagersLoading = props.games[gameId]?.pool_wagers?.move.options.length === 0;
 
@@ -47,17 +42,20 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
           onChange={(value) => setWagerAmount(value)}
         />
         {props.betType === 'move'
-          ? <MoveOptions
-            wagerAmount={wagerAmount}
-            setPanelLoading={setPanelLoading}
-            wagersLoading={wagersLoading}
-          />
-          : <GameOutcomes
-            odds={props.games[gameId]?.odds}
-            wagersLoading={wagersLoading}
-            wagerAmount={wagerAmount}
-            setPanelLoading={setPanelLoading}
-          />
+          ? (
+            <MoveOptions
+              wagerAmount={wagerAmount}
+              setPanelLoading={setPanelLoading}
+              wagersLoading={wagersLoading}
+            />
+          ) : (
+            <GameOutcomes
+              odds={props.games[gameId]?.odds}
+              wagersLoading={wagersLoading}
+              wagerAmount={wagerAmount}
+              setPanelLoading={setPanelLoading}
+            />
+          )
         }
         <SubmitWager
           panelLoading={panelLoading}
