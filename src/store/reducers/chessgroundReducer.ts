@@ -88,30 +88,6 @@ const chessgroundReducer = (state = initialState, action: Actions): ChessgroundS
         },
         showAutoShapes: false,
       };
-    case 'CG_MOVE_SELECT':
-      return {
-        ...state,
-        config: {
-          ...state.config,
-          drawable: {
-            ...state.config.drawable,
-            autoShapes: selectDrawshape(state.autoShapes, action.payload),
-          },
-        },
-        selected: action.payload,
-      };
-    case 'CG_MOVE_UNSELECT':
-      return {
-        ...state,
-        config: {
-          ...state.config,
-          drawable: {
-            ...state.config.drawable,
-            autoShapes: state.autoShapes,
-          },
-        },
-        selected: undefined,
-      };
     case 'CG_MOVE_HOVER':
       return {
         ...state,

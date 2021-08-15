@@ -47,18 +47,6 @@ export const createNewArrows = (state: string, moveOptions: string[]): Actions =
   };
 };
 
-export const onMoveSelect = (state: string, move: string): Actions => ({
-  type: 'CG_MOVE_SELECT',
-  status: 'SUCCESS',
-  payload: getFromTo(state, move),
-});
-
-export const onMoveUnselect = (): Actions => ({
-  type: 'CG_MOVE_UNSELECT',
-  status: 'SUCCESS',
-  payload: {},
-});
-
 export const onMoveHover = (state: string, move: string): Actions => ({
   type: 'CG_MOVE_HOVER',
   status: 'SUCCESS',

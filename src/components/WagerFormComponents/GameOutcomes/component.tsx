@@ -27,7 +27,6 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
 
   const handleSubmit = (wager: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log(props.wagerAmount);
     e.preventDefault();
     if (props.wagerAmount) {
       props.createWager(
@@ -35,7 +34,7 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
         wager,
         props.wagerAmount,
         true,
-        1 / props.games[gameId].odds[wager], // TODO: don't hardcode move odds
+        1 / props.games[gameId].odds[wager],
         props.games[gameId].move_hist.length + 1,
       );
       props.setPanelLoading(true);
@@ -54,35 +53,9 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
         return 0;
     }
   };
-  // eslint-disable-next-line no-unused-vars
-  // const renderGameOutcomes = () => (
-  //   Object.keys(gameOutcomes).map((outcome, i) => {
-  //     const [outcomeCode, image] = gameOutcomes[outcome];
-  //     return (
-  //       <label htmlFor={`wdl-option-${i}`} key={outcome}>
-  //         <div className="wdl-option">
-  //           <img src={image} />
-  //           <div>
-  //             <p>{outcome}</p>
-  //             <p className="odds-text">{getOdds(outcome)}x</p>
-  //           </div>
-  //         </div>
-  //         <input
-  //           id={`wdl-option-${i}`}
-  //           name="wdl"
-  //           type="radio"
-  //           value={outcomeCode}
-  //           checked={props.wager === outcomeCode}
-  //           onChange={(e) => { props.setWager(e.currentTarget.value); }}
-  //         />
-  //       </label>
-  //     );
-  //   })
-  // );
 
   const renderGameButtons = () => (
     Object.keys(gameOutcomes).map((outcome) => {
-      // eslint-disable-next-line no-unused-vars
       const [outcomeCode, image] = gameOutcomes[outcome];
       return (
         <div

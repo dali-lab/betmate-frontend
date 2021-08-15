@@ -21,8 +21,6 @@ export const CG_NEW_MOVE = 'CG_NEW_MOVE';
 export const CG_ENTER_MOVE_PANEL = 'CG_ENTER_MOVE_PANEL';
 export const CG_LEAVE_MOVE_PANEL = 'CG_LEAVE_MOVE_PANEL';
 export const CG_NEW_ARROWS = 'CG_NEW_ARROWS';
-export const CG_MOVE_SELECT = 'CG_MOVE_SELECT';
-export const CG_MOVE_UNSELECT = 'CG_MOVE_UNSELECT';
 export const CG_MOVE_HOVER = 'CG_MOVE_HOVER';
 export const CG_MOVE_UNHOVER = 'CG_MOVE_UNHOVER';
 
@@ -35,17 +33,13 @@ export type CgNewMoveActions = Action<typeof CG_NEW_MOVE, CgNewMoveData>;
 export type CgEnterMovePanelActions = Action<typeof CG_ENTER_MOVE_PANEL>;
 export type CgLeaveMovePanelActions = Action<typeof CG_LEAVE_MOVE_PANEL>;
 export type CgNewArrowsActions = Action<typeof CG_NEW_ARROWS, CgNewArrowsData>;
-export type CgMoveSelectActions = Action<typeof CG_MOVE_SELECT, CgMoveSelectData>;
-export type CgMoveUnselectActions = Action<typeof CG_MOVE_UNSELECT>;
 export type CgMoveHoverActions = Action<typeof CG_MOVE_HOVER, CgMoveHoverData>;
 export type CgMoveUnhoverActions = Action<typeof CG_MOVE_UNHOVER>;
 
 export type CgActions =
     CgNewMoveActions | CgEnterMovePanelActions | CgLeaveMovePanelActions |
-    CgNewArrowsActions | CgMoveSelectActions | CgMoveUnselectActions |
-    CgMoveHoverActions | CgMoveUnhoverActions;
+    CgNewArrowsActions | CgMoveHoverActions | CgMoveUnhoverActions;
 
 export type CgActionTypes =
     typeof CG_NEW_MOVE | typeof CG_ENTER_MOVE_PANEL | typeof CG_LEAVE_MOVE_PANEL |
-    typeof CG_NEW_ARROWS | typeof CG_MOVE_SELECT | typeof CG_MOVE_UNSELECT |
-    typeof CG_MOVE_HOVER | typeof CG_MOVE_UNHOVER;
+    typeof CG_NEW_ARROWS | typeof CG_MOVE_HOVER | typeof CG_MOVE_UNHOVER;

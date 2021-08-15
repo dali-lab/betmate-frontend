@@ -1,25 +1,38 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { useParams } from 'react-router';
 import { VerticalBar } from 'components/WagerPanel/helper_components';
-import {
-  onMoveSelect, onMoveUnselect, onMoveHover, onMoveUnhover,
-} from 'store/actionCreators/chessgroundActionCreators';
+import { onMoveHover, onMoveUnhover } from 'store/actionCreators/chessgroundActionCreators';
 import { Game } from 'types/resources/game';
 import { moveOptionColors } from 'utils/config';
+import { createWager } from 'store/actionCreators/wagerActionCreators';
 
 interface MoveOptionsProps {
-  setWager: Dispatch<SetStateAction<string>>
-  wager: string,
-  games: Record<string, Game>,
-  wagersLoading: boolean,
-  onMoveSelect: typeof onMoveSelect
-  onMoveUnselect: typeof onMoveUnselect
+  setPanelLoading: Dispatch<SetStateAction<boolean>>
+  wagerAmount: number
+  games: Record<string, Game>
+  wagersLoading: boolean
   onMoveHover: typeof onMoveHover
   onMoveUnhover: typeof onMoveUnhover
+  createWager: typeof createWager
 }
 
 const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
+
+  const handleSubmit = (wager: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    if (props.wagerAmount) {
+      props.createWager(
+        gameId,
+        wager,
+        props.wagerAmount,
+        false,
+        1,
+        props.games[gameId].move_hist.length + 1,
+      );
+      props.setPanelLoading(true);
+    }
+  };
 
   const renderMoveOptions = () => {
     const { options: moveOptions, wagers } = props.games[gameId]?.pool_wagers?.move;
@@ -43,18 +56,15 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
         .reduce((currMax, movePool) => Math.max(currMax, movePool / totalPool), 0)
     );
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      props.setWager(e.currentTarget.value);
-      props.onMoveSelect(props.games[gameId].state, e.currentTarget.value);
-    };
-
     return Object.entries(poolPerMove)
       .map(([move, movePool], i) => (
-        <label
-          htmlFor={`move-option-${i}`}
+        <div
           key={move}
+          className='move-option'
+          style={{ borderColor: moveOptionColors[i] }}
           onMouseEnter={() => props.onMoveHover(props.games[gameId].state, move)}
           onMouseLeave={props.onMoveUnhover}
+          onClick={handleSubmit(move)}
         >
           <VerticalBar
             color={moveOptionColors[i]}
@@ -62,15 +72,7 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
             percentage={movePool / totalPool}
           />
           <p>{move}</p>
-          <input
-            id={`move-option-${i}`}
-            name="moves"
-            type="radio"
-            value={move}
-            checked={props.wager === move}
-            onChange={handleChange}
-          />
-        </label>
+        </div>
       ));
   };
 

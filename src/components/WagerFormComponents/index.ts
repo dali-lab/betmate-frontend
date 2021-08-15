@@ -1,5 +1,5 @@
 import MoveOptions from './MoveOptions';
-import SubmitWager from './SubmitWager';
+import SubmitWager from './WagerMessages';
 import GameOutcomes from './GameOutcomes';
 
 export {

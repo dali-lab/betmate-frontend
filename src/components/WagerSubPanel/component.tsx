@@ -5,7 +5,7 @@ import Slider from 'react-slider';
 
 import GameOutcomes from 'components/WagerFormComponents/GameOutcomes';
 import MoveOptions from 'components/WagerFormComponents/MoveOptions';
-import SubmitWager from 'components/WagerFormComponents/SubmitWager';
+import SubmitWager from 'components/WagerFormComponents/WagerMessages';
 import { onEnterMovePanel, onLeaveMovePanel } from 'store/actionCreators/chessgroundActionCreators';
 import { Game } from 'types/resources/game';
 
@@ -47,20 +47,19 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
           onChange={(value) => setWagerAmount(value)}
         />
         {props.betType === 'move'
-          ? <MoveOptions wager={wager} setWager={setWager} wagersLoading={wagersLoading} />
+          ? <MoveOptions
+            wagerAmount={wagerAmount}
+            setPanelLoading={setPanelLoading}
+            wagersLoading={wagersLoading}
+          />
           : <GameOutcomes
             odds={props.games[gameId]?.odds}
-            // wager={wager}
-            // setWager={setWager}
             wagersLoading={wagersLoading}
             wagerAmount={wagerAmount}
             setPanelLoading={setPanelLoading}
           />
         }
         <SubmitWager
-          betType={props.betType}
-          wager={wager}
-          wagerAmount={wagerAmount}
           panelLoading={panelLoading}
           setPanelLoading={setPanelLoading}
         />

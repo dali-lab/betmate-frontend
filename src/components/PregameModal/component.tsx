@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import Slider from 'react-slider';
@@ -6,7 +5,7 @@ import { useParams } from 'react-router';
 import { WDLBar } from 'components/WagerPanel/helper_components';
 import { Game } from 'types/resources/game';
 import { updateShowModal } from 'store/actionCreators/gameActionCreators';
-import { GameOutcomes, SubmitWager } from '../WagerFormComponents';
+import { SubmitWager } from '../WagerFormComponents';
 
 import './style.scss';
 
@@ -16,13 +15,10 @@ interface PregameModalProps {
 }
 
 const PregameModal: React.FC<PregameModalProps> = (props) => {
-  const [wager, setWager] = useState('');
   const [wagerAmount, setWagerAmount] = useState(5);
   const [panelLoading, setPanelLoading] = useState(false);
 
   const { id: gameId } = useParams<{ id: string }>();
-
-  const wagersLoading = props.games[gameId]?.pool_wagers?.move.options.length === 0;
 
   return (
     <div className="blur-background">
@@ -37,7 +33,6 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
                 height={30}
               />
             </div>
-
             <Slider
               max={10}
               min={1}
@@ -51,9 +46,6 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
             />
             {/* <GameOutcomes odds={props.games[gameId]?.odds} wager={wager} setWager={setWager} wagersLoading={wagersLoading} /> */}
             <SubmitWager
-              wager={wager}
-              wagerAmount={wagerAmount}
-              betType={'wdl'}
               panelLoading={panelLoading}
               setPanelLoading={setPanelLoading}
             />
