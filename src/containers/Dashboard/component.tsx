@@ -38,8 +38,12 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     .sort((gameA, gameB) => getTime(gameB) - getTime(gameA));
 
   const liveGames = props.games
-    .filter((g) => g.source === GameSource.LICHESS)
+    .filter((g) => g !== topGame && g.source === GameSource.LICHESS)
     .sort((gameA, gameB) => getTime(gameB) - getTime(gameA));
+
+  const numLichessGames = props.games
+    .filter((g) => g.source === GameSource.LICHESS)
+    .length;
 
   return props.games.length === 0
     ? <div>Loading...</div>
@@ -73,7 +77,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           <div className='card-box add-game'>
             <div className='add-card'>
               <p className='add-head'>+ add match from Lichess</p>
-              <p className='add-status'>{liveGames.length}/8 matches being used</p>
+              <p className='add-status'>{numLichessGames}/8 matches being used</p>
               <button className='add-button' onClick={() => setShowLichessModal(true)}>add match</button>
             </div>
           </div>
