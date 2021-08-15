@@ -1,39 +1,21 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import { VerticalBar } from 'components/WagerPanel/helper_components';
 import { onMoveHover, onMoveUnhover } from 'store/actionCreators/chessgroundActionCreators';
 import { Game } from 'types/resources/game';
 import { moveOptionColors } from 'utils/config';
-import { createWager } from 'store/actionCreators/wagerActionCreators';
 
 interface MoveOptionsProps {
-  setPanelLoading: Dispatch<SetStateAction<boolean>>
-  wagerAmount: number
   wagersLoading: boolean
+  handleSubmit: (wager: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   games: Record<string, Game>
   isAuthenticated: boolean
   onMoveHover: typeof onMoveHover
   onMoveUnhover: typeof onMoveUnhover
-  createWager: typeof createWager
 }
 
 const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
-
-  const handleSubmit = (wager: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.preventDefault();
-    if (props.wagerAmount && props.isAuthenticated) {
-      props.createWager(
-        gameId,
-        wager,
-        props.wagerAmount,
-        false,
-        1,
-        props.games[gameId].move_hist.length + 1,
-      );
-      props.setPanelLoading(true);
-    }
-  };
 
   const renderMoveOptions = () => {
     const { options: moveOptions, wagers } = props.games[gameId]?.pool_wagers?.move;
@@ -65,7 +47,7 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
           style={{ borderColor: props.isAuthenticated ? moveOptionColors[i] : 'grey' }}
           onMouseEnter={() => props.onMoveHover(props.games[gameId].state, move)}
           onMouseLeave={props.onMoveUnhover}
-          onClick={handleSubmit(move)}
+          onClick={props.handleSubmit(move)}
         >
           <VerticalBar
             color={moveOptionColors[i]}

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useParams } from 'react-router';
 import Slider from 'react-slider';
 
@@ -8,12 +8,15 @@ import MoveOptions from 'components/WagerFormComponents/MoveOptions';
 import SubmitWager from 'components/WagerFormComponents/WagerMessages';
 import { onEnterMovePanel, onLeaveMovePanel } from 'store/actionCreators/chessgroundActionCreators';
 import { Game } from 'types/resources/game';
+import { createWager } from 'store/actionCreators/wagerActionCreators';
 
 interface WagerSubPanelProps {
   onEnterMovePanel: typeof onEnterMovePanel
   onLeaveMovePanel: typeof onLeaveMovePanel
+  isAuthenticated: boolean
   betType: 'wdl' | 'move',
   games: Record<string, Game>
+  createWager: typeof createWager
 }
 
 const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
@@ -22,6 +25,21 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
 
   const wagersLoading = props.games[gameId]?.pool_wagers?.move.options.length === 0;
+
+  const handleSubmit = useCallback((wdl: boolean) => (wager: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    if (wagerAmount && props.isAuthenticated) {
+      props.createWager(
+        gameId,
+        wager,
+        wagerAmount,
+        wdl,
+        wdl ? 1 / props.games[gameId].odds[wager] : 1,
+        props.games[gameId].move_hist.length + 1,
+      );
+      setPanelLoading(true);
+    }
+  }, [wagerAmount, props.isAuthenticated, props.createWager, gameId, props.games[gameId], setPanelLoading]);
 
   const wagerExplanation = props.betType === 'move'
     ? 'Bet on which move will happen next. Win tokens from others in the pool.'
@@ -51,16 +69,14 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
         {props.betType === 'move'
           ? (
             <MoveOptions
-              wagerAmount={wagerAmount}
-              setPanelLoading={setPanelLoading}
               wagersLoading={wagersLoading}
+              handleSubmit={handleSubmit(false)}
             />
           ) : (
             <GameOutcomes
               odds={props.games[gameId]?.odds}
               wagersLoading={wagersLoading}
-              wagerAmount={wagerAmount}
-              setPanelLoading={setPanelLoading}
+              handleSubmit={handleSubmit(true)}
             />
           )
         }

@@ -4,8 +4,6 @@ import Draw from 'assets/wager_panel/wdl/draw.svg';
 import BlackWin from 'assets/wager_panel/wdl/black_win.svg';
 import { Game, GameOdds } from 'types/resources/game';
 import { getMultiplier } from 'utils/chess';
-import { createWager } from 'store/actionCreators/wagerActionCreators';
-import { useParams } from 'react-router';
 import '../style.scss';
 
 const gameOutcomes = {
@@ -15,33 +13,14 @@ const gameOutcomes = {
 };
 
 interface GameOutcomesProps {
-  setPanelLoading: React.Dispatch<React.SetStateAction<boolean>>
   odds: GameOdds
   wagersLoading: boolean
+  handleSubmit: (wager: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   isAuthenticated: boolean
-  createWager: typeof createWager
-  wagerAmount: number
   games: Record<string, Game>
 }
 
 const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
-  const { id: gameId } = useParams<{ id: string }>();
-
-  const handleSubmit = (wager: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.preventDefault();
-    if (props.wagerAmount && props.isAuthenticated) {
-      props.createWager(
-        gameId,
-        wager,
-        props.wagerAmount,
-        true,
-        1 / props.games[gameId].odds[wager],
-        props.games[gameId].move_hist.length + 1,
-      );
-      props.setPanelLoading(true);
-    }
-  };
-
   const getOdds = (odds: string) => {
     switch (odds) {
       case 'White':
@@ -55,30 +34,29 @@ const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {
     }
   };
 
-  const renderGameButtons = () => (
-    Object.keys(gameOutcomes).map((outcome) => {
-      const [outcomeCode, image] = gameOutcomes[outcome];
-      return (
-        <div
-          key={outcome}
-          className={`wdl-option ${props.isAuthenticated ? 'wdl-auth' : ''}`}
-          onClick={handleSubmit(outcomeCode)}
-        >
-          <img src={image} alt={outcome} />
-          <div>
-            <p>{outcome}</p>
-            <p className="odds-text">{getOdds(outcome)}x</p>
-          </div>
-        </div>
-      );
-    })
-  );
-
   return (
     <div className="options-container wdl-options">
       {props.wagersLoading
         ? <p>Loading...</p>
-        : renderGameButtons()}
+        : (
+          Object.keys(gameOutcomes).map((outcome) => {
+            const [outcomeCode, image] = gameOutcomes[outcome];
+            return (
+              <div
+                key={outcome}
+                className={`wdl-option ${props.isAuthenticated ? 'wdl-auth' : ''}`}
+                onClick={props.handleSubmit(outcomeCode)}
+              >
+                <img src={image} alt={outcome} />
+                <div>
+                  <p>{outcome}</p>
+                  <p className="odds-text">{getOdds(outcome)}x</p>
+                </div>
+              </div>
+            );
+          })
+        )
+      }
     </div>
   );
 };
