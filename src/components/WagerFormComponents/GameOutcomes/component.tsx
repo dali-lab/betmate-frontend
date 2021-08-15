@@ -2,7 +2,7 @@ import React from 'react';
 import WhiteWin from 'assets/wager_panel/wdl/white_win.svg';
 import Draw from 'assets/wager_panel/wdl/draw.svg';
 import BlackWin from 'assets/wager_panel/wdl/black_win.svg';
-import { Game, GameOdds } from 'types/resources/game';
+import { GameOdds } from 'types/resources/game';
 import { getMultiplier } from 'utils/chess';
 import '../style.scss';
 
@@ -17,7 +17,6 @@ interface GameOutcomesProps {
   wagersLoading: boolean
   handleSubmit: (wager: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   isAuthenticated: boolean
-  games: Record<string, Game>
 }
 
 const GameOutcomes: React.FC<GameOutcomesProps> = (props) => {

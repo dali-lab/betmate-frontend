@@ -39,7 +39,7 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
       );
       setPanelLoading(true);
     }
-  }, [wagerAmount, props.isAuthenticated, props.createWager, gameId, props.games[gameId], setPanelLoading]);
+  }, [wagerAmount, props.isAuthenticated, gameId, props.games[gameId]]);
 
   return (
     <div className="blur-background">

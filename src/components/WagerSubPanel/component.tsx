@@ -3,9 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { useParams } from 'react-router';
 import Slider from 'react-slider';
 
-import GameOutcomes from 'components/WagerFormComponents/GameOutcomes';
-import MoveOptions from 'components/WagerFormComponents/MoveOptions';
-import SubmitWager from 'components/WagerFormComponents/WagerMessages';
+import { GameOutcomes, MoveOptions, WagerMessages } from 'components/WagerFormComponents';
 import { onEnterMovePanel, onLeaveMovePanel } from 'store/actionCreators/chessgroundActionCreators';
 import { Game } from 'types/resources/game';
 import { createWager } from 'store/actionCreators/wagerActionCreators';
@@ -39,7 +37,7 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
       );
       setPanelLoading(true);
     }
-  }, [wagerAmount, props.isAuthenticated, props.createWager, gameId, props.games[gameId], setPanelLoading]);
+  }, [wagerAmount, props.isAuthenticated, gameId, props.games[gameId]]);
 
   const wagerExplanation = props.betType === 'move'
     ? 'Bet on which move will happen next. Win tokens from others in the pool.'
@@ -80,7 +78,7 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
             />
           )
         }
-        <SubmitWager
+        <WagerMessages
           panelLoading={panelLoading}
           setPanelLoading={setPanelLoading}
         />
