@@ -112,4 +112,45 @@
     &.orange {
         border-color: #FFC702;
     }
+
+    &.add-game {
+        border-color: #a6a6a6;
+
+        .add-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100%;
+
+            .add-head {
+                font-size: 32px;
+                font-weight: 300;
+                color: white;
+                margin: 0;
+            }
+
+            .add-status {
+                font-size: 22px;
+                font-weight: 300;
+                color: #a6a6a6;
+            }
+
+            .add-button {
+                background: #FADF9B;
+                border-radius: 10px;
+                min-width: 8em;
+                min-height: 3em;
+                cursor: pointer;
+                font-family: Roboto;
+                font-style: normal;
+                font-weight: bolder;
+                border:none;
+                font-size: 15px;
+            }
+        }
+    }
+
+    
 }
