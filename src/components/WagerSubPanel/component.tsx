@@ -19,6 +19,7 @@ interface WagerSubPanelProps {
 const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
   const [wager, setWager] = useState('');
   const [wagerAmount, setWagerAmount] = useState(5);
+  const [panelLoading, setPanelLoading] = useState(false);
   const { id: gameId } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -47,12 +48,21 @@ const WagerSubPanel: React.FC<WagerSubPanelProps> = (props) => {
         />
         {props.betType === 'move'
           ? <MoveOptions wager={wager} setWager={setWager} wagersLoading={wagersLoading} />
-          : <GameOutcomes odds = {props.games[gameId]?.odds} wager={wager} setWager={setWager} wagersLoading={wagersLoading} />
+          : <GameOutcomes
+            odds={props.games[gameId]?.odds}
+            // wager={wager}
+            // setWager={setWager}
+            wagersLoading={wagersLoading}
+            wagerAmount={wagerAmount}
+            setPanelLoading={setPanelLoading}
+          />
         }
         <SubmitWager
           betType={props.betType}
           wager={wager}
           wagerAmount={wagerAmount}
+          panelLoading={panelLoading}
+          setPanelLoading={setPanelLoading}
         />
       </form>
     </div>

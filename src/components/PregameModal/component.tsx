@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import Slider from 'react-slider';
@@ -17,6 +18,7 @@ interface PregameModalProps {
 const PregameModal: React.FC<PregameModalProps> = (props) => {
   const [wager, setWager] = useState('');
   const [wagerAmount, setWagerAmount] = useState(5);
+  const [panelLoading, setPanelLoading] = useState(false);
 
   const { id: gameId } = useParams<{ id: string }>();
 
@@ -47,11 +49,13 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
               value={wagerAmount}
               onChange={(value) => setWagerAmount(value)}
             />
-            <GameOutcomes odds={props.games[gameId]?.odds} wager={wager} setWager={setWager} wagersLoading={wagersLoading} />
+            {/* <GameOutcomes odds={props.games[gameId]?.odds} wager={wager} setWager={setWager} wagersLoading={wagersLoading} /> */}
             <SubmitWager
               wager={wager}
               wagerAmount={wagerAmount}
               betType={'wdl'}
+              panelLoading={panelLoading}
+              setPanelLoading={setPanelLoading}
             />
           </form>
           <button
