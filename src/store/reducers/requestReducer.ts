@@ -9,6 +9,9 @@ const reducer = (state = initialState, action: Actions): RequestState => {
    * Will assign true to the value of requestName within the loadingReducer if the request has not completed,
    * and false if the request completes. This allows you to check loading through the loadingReducer automatically   *
    */
+  if (action.status === 'FAILURE') {
+    console.log(action.payload);
+  }
   const updatedState: RequestState = {
     ...state,
     [action.type]: {

@@ -52,6 +52,8 @@
         justify-content: flex-end;
         align-items: center;
         padding: 8px;
+
+        white-space: nowrap;
         
         &.move-auth:hover {
             border-width: 3px;
