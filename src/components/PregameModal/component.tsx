@@ -2,9 +2,11 @@
 import React, { useState } from 'react';
 import Slider from 'react-slider';
 import { useParams } from 'react-router';
-import { WDLBar } from 'components/WagerPanel/helper_components';
-import { Game } from 'types/resources/game';
+
 import { updateShowModal } from 'store/actionCreators/gameActionCreators';
+import { WDLBar } from 'components/WagerPanel/helper_components';
+import GameOutcomes from 'components/WagerFormComponents/GameOutcomes';
+import { Game } from 'types/resources/game';
 import { WagerMessages } from '../WagerFormComponents';
 
 import './style.scss';
@@ -19,6 +21,7 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
   const [panelLoading, setPanelLoading] = useState(false);
 
   const { id: gameId } = useParams<{ id: string }>();
+  const wagersLoading = props.games[gameId]?.pool_wagers?.move.options.length === 0;
 
   return (
     <div className="blur-background">
@@ -44,12 +47,12 @@ const PregameModal: React.FC<PregameModalProps> = (props) => {
               value={wagerAmount}
               onChange={(value) => setWagerAmount(value)}
             />
-            {/* <GameOutcomes
+            <GameOutcomes
               odds={props.games[gameId]?.odds}
-              wager={wager}
-              setWager={setWager}
+              wagerAmount={wagerAmount}
               wagersLoading={wagersLoading}
-            /> */}
+              setPanelLoading={setPanelLoading}
+            />
             <WagerMessages
               panelLoading={panelLoading}
               setPanelLoading={setPanelLoading}
