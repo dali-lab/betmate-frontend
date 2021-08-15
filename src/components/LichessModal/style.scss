@@ -75,6 +75,14 @@
         line-height: 100%;
         cursor: pointer;
     }
+
+    .lichess-error-message {
+        color: white;
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        transform: translate(-50%, 0%);
+    }
 }
 
 .lichess-modal-padding {

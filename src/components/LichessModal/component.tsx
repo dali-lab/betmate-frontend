@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
+import { createLichessGame } from 'store/requests/lichessRequests';
 
 import './style.scss';
 
@@ -9,9 +11,21 @@ interface LichessModalProps {
 
 const LichessModal: React.FC<LichessModalProps> = (props) => {
   const [url, setUrl] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const history = useHistory();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isLoading) return;
+    setIsLoading(true);
+    try {
+      const { data: { gameId } } = await createLichessGame(url);
+      history.push(`/chess/${gameId}`);
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -34,7 +48,8 @@ const LichessModal: React.FC<LichessModalProps> = (props) => {
               onChange={(e) => setUrl(e.target.value)}
               placeholder='https://lichess.com/id'
             />
-            <input type='submit' value='Submit' />
+            <input type='submit' value={`${isLoading ? 'Loading...' : 'Submit'}`} />
+            <p className='lichess-error-message'>{errorMessage}</p>
           </form>
           <button
             className="exit-button"

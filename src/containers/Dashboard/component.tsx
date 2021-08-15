@@ -14,7 +14,7 @@ export interface DashboardProps{
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
   const [topGame, setTopGame] = useState<Game>();
-  const [showLichessModal, setShowLichessModal] = useState(true);
+  const [showLichessModal, setShowLichessModal] = useState(false);
 
   const gameRating = (game: Game) => game.player_black.elo + game.player_white.elo;
   const getTime = (game: Game) => new Date(game.created_at).getTime();
@@ -77,6 +77,11 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
               <button className='add-button' onClick={() => setShowLichessModal(true)}>add match</button>
             </div>
           </div>
+          {liveGames.map((game, i) => (
+            <div key={game._id} className={`card-box ${i % 2 ? 'pink' : 'orange'}`}>
+              <GameCard game={game} />
+            </div>
+          ))}
         </div>
         <h3 className='betting-header'>Current Matches 👀</h3>
         <div className="match-container">
