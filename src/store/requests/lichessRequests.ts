@@ -3,10 +3,10 @@ import { CreateLichessResponse } from 'types/lichess';
 
 import { RequestReturnType } from 'types/state';
 import { validateSchema } from 'validation';
-import { CreateLichessSchema } from 'validation/lichess';
+import { CreateLichessSchema, urlRegex } from 'validation/lichess';
 
 export const createLichessGame = async (url: string): Promise<RequestReturnType<CreateLichessResponse>> => {
-  const tryUrl = url.length > 12;
+  const tryUrl = urlRegex.test(url);
   const result = await createBackendAxiosRequest<CreateLichessResponse>({
     method: 'POST',
     url: `/lichess/${tryUrl ? 'url' : 'id'}`,
