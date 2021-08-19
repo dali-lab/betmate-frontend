@@ -67,6 +67,7 @@ export const GameSchema = joi.object<Game>({
   complete: joi.boolean().required(),
   game_status: joi.string().custom(gameStatusValidator).required(),
   time_format: joi.string().required(),
+  source: joi.string().required(),
   move_hist: joi.array().items(MoveSchema).required(),
   player_white: PlayerSchema.required(),
   player_black: PlayerSchema.required(),

@@ -9,6 +9,11 @@ export enum GameStatus {
   IN_PROGRESS = 'in_progress',
 }
 
+export enum GameSource {
+  STATIC = 'static',
+  LICHESS = 'lichess',
+}
+
 export interface Player {
   name: string
   elo: number
@@ -54,6 +59,7 @@ export interface Game {
   complete: boolean
   game_status: string
   time_format: string
+  source: GameSource
   move_hist: Move[]
   player_black: Player
   player_white: Player
