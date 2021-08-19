@@ -50,7 +50,7 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
     <div className="chat-container">
       <h1>Betting Chat 💬</h1>
       <ScrollToBottom className="chat-box" followButtonClassName="follow-button">
-        {feed.map((f) => <ChatItem item={f} key={`${f.time}`} />)}
+        {feed.map((f) => <ChatItem item={f} key={`${f.time}-${f.type === 'wager' ? f._id : f.userId}`} />)}
       </ScrollToBottom>
       <form className="chat-form" onSubmit={handleSubmit}>
         <input type="text" placeholder="send a message" value={chat} onChange={handleChatUpdate} />

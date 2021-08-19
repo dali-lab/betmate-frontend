@@ -1,9 +1,9 @@
 import MoveOptions from './MoveOptions';
-import SubmitWager from './SubmitWager';
+import WagerMessages from './WagerMessages';
 import GameOutcomes from './GameOutcomes';
 
 export {
   MoveOptions,
-  SubmitWager,
+  WagerMessages,
   GameOutcomes,
 };

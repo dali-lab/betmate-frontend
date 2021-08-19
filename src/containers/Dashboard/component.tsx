@@ -3,7 +3,6 @@ import { fetchGamesByStatus, clearGames } from 'store/actionCreators/gameActionC
 import { Game } from 'types/resources/game';
 import Leaderboard from 'components/Leaderboard';
 import GameCard from 'components/GameCard/component';
-// import magnifier from 'assets/dashboard/magnifier.svg';
 import './style.scss';
 
 export interface DashboardProps{
