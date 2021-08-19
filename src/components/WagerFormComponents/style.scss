@@ -1,66 +1,98 @@
-.wager-amounts-container {
-    display: flex;
-    justify-content: space-around;
-    padding: 0 40px;
-    margin-top: 20px;
-    label {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        img {
-            width: 26px;
-            height: 26px;
-        }
-        p {
-            margin: 5px auto;
-            font-family: 'Roboto';
-            color: #F2F2F2;
-            font-size: 13px;
-        }
-    }
-    input {
-        margin: 0 auto;
-        display: block;
-    }
-}
-
 .options-container {
     display: flex;
     justify-content: space-around;
-    p {
-        margin: 4px auto;
-        font-family: 'Roboto';
-        color: #F2F2F2;
-        font-size: 13px;
-    }
-    label {
+
+    .wdl-option {
+        width: 100%;
+        margin-left: 5px;
+        margin-right: 5px;
+        border: 1px solid grey;
+        border-radius: 10px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        align-items: center;
+        padding: 0.5em;
+
+        &.wdl-auth {
+            border-color: #2DFD83;
+        }
+        
+        &.wdl-auth:hover {
+            border-width: 3px;
+            margin: -2px;
+            margin-left: 3px;
+            margin-right: 3px;
+            cursor: pointer;
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            color: #F2F2F2;
+            margin: 0;
+        }
     }
-    input {
-        margin: 0 auto;
-        display: block;
+
+    .move-option {
+        width: 100%;
+        margin-left: 5px;
+        margin-right: 5px;
+        border: 1px solid;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 8px;
+
+        white-space: nowrap;
+        
+        &.move-auth:hover {
+            border-width: 3px;
+            margin: -2px;
+            margin-left: 3px;
+            margin-right: 3px;
+            cursor: pointer;
+        }
+
+        p {
+            margin: 0;
+            margin-top: 0.5em;
+        }
+
+        &.not-auth {
+            border-color: white !important;
+        }
     }
+
+
 }
 
 .move-options {
-    height: 75px;
+    height: 85px;
 }
 
 .wdl-options {
-    height: 55px;
+    height: 92px;
 }
 
 input[type="submit"] {
-    margin: 15px auto;
+    margin: 8px auto;
     display: block;
     background: #E5AF27;
     border: none;
     font-family: Roboto;
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     padding: 6px 20px;
     border-radius: 14px;
 }
