@@ -25,6 +25,7 @@ const LichessModal: React.FC<LichessModalProps> = (props) => {
       history.push(`/chess/${gameId}`);
     } catch (error) {
       setErrorMessage(getErrorPayload(error).message);
+      setTimeout(() => setErrorMessage(''), 5000);
     }
     setIsLoading(false);
   };

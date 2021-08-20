@@ -26,7 +26,11 @@ const GameCard: React.FC<GameCardProps> = (props) => {
           </div>
           <p className='vs-text'>vs</p>
           <div className='game-title-small'>
-            <p className='player-name-whole player-title'>{props.game.player_white.name}</p>
+            <p className='player-name-whole player-title'
+              // style={{
+              //   width: '80px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', display: 'block',
+              // }}
+            >{props.game.player_white.name}</p>
             <p className='player-title'>({props.game.player_white.elo})</p>
           </div>
         </div>
