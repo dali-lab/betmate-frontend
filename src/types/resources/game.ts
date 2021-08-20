@@ -7,6 +7,7 @@ export enum GameStatus {
   BLACK_WIN = 'black_win',
   WHITE_WIN = 'white_win',
   IN_PROGRESS = 'in_progress',
+  ABORTED = 'aborted',
 }
 
 export enum GameSource {

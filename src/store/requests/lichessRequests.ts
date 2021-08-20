@@ -1,3 +1,4 @@
+import { getBearerTokenHeader } from 'store/actionCreators';
 import { createBackendAxiosRequest } from 'store/requests';
 import { CreateLichessResponse } from 'types/lichess';
 
@@ -11,6 +12,7 @@ export const createLichessGame = async (url: string): Promise<RequestReturnType<
     method: 'POST',
     url: `/lichess/${tryUrl ? 'url' : 'id'}`,
     data: tryUrl ? { url } : { id: url },
+    headers: getBearerTokenHeader(),
     timeout: 5000,
   });
 

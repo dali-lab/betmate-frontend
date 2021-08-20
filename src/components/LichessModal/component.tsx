@@ -40,7 +40,7 @@ const LichessModal: React.FC<LichessModalProps> = (props) => {
             </button>
 
           </div>
-          <h1>2. Copy and past a URL link below</h1>
+          <h1>2. Copy and paste a URL link below</h1>
           <form className="pregame-body-container" onSubmit={handleSubmit}>
             <input
               type="text"
