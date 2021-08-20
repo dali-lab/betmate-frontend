@@ -11,7 +11,9 @@ export enum GameStatus {
 
 export enum GameSource {
   STATIC = 'static',
-  LICHESS = 'lichess',
+  LOOP = 'loop',
+  USER = 'user',
+  STREAMER = 'streamer',
 }
 
 export interface Player {
