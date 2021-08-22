@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchGamesByStatus, clearGames } from 'store/actionCreators/gameActionCreators';
-import { Game, GameSource } from 'types/resources/game';
+import { Game } from 'types/resources/game';
 import Leaderboard from 'components/Leaderboard';
 import GameCard from 'components/GameCard/component';
 import LichessModal from 'components/LichessModal';
@@ -34,16 +34,10 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   }, [props.games]);
 
   const games = props.games
-    .filter((g) => g !== topGame && g.source === GameSource.STATIC)
+    .filter((g) => g !== topGame)
     .sort((gameA, gameB) => getTime(gameB) - getTime(gameA));
 
-  const liveGames = props.games
-    .filter((g) => g !== topGame && g.source === GameSource.LICHESS)
-    .sort((gameA, gameB) => getTime(gameB) - getTime(gameA));
-
-  const numLichessGames = props.games
-    .filter((g) => g.source === GameSource.LICHESS)
-    .length;
+  const numLichessGames = props.games.length;
 
   return props.games.length === 0
     ? <div>Loading...</div>
@@ -81,14 +75,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
               <button className='add-button' onClick={() => setShowLichessModal(true)}>add match</button>
             </div>
           </div>
-          {liveGames.map((game, i) => (
-            <div key={game._id} className={`card-box ${i % 2 ? 'pink' : 'orange'}`}>
-              <GameCard game={game} />
-            </div>
-          ))}
-        </div>
-        <h3 className='betting-header'>Current Matches 👀</h3>
-        <div className="match-container">
           {games.map((game, i) => (
             <div key={game._id} className={`card-box ${i % 2 ? 'pink' : 'orange'}`}>
               <GameCard game={game} />

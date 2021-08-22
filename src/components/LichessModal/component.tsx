@@ -25,6 +25,7 @@ const LichessModal: React.FC<LichessModalProps> = (props) => {
       history.push(`/chess/${gameId}`);
     } catch (error) {
       setErrorMessage(getErrorPayload(error).message);
+      setTimeout(() => setErrorMessage(''), 5000);
     }
     setIsLoading(false);
   };
@@ -40,7 +41,7 @@ const LichessModal: React.FC<LichessModalProps> = (props) => {
             </button>
 
           </div>
-          <h1>2. Copy and past a URL link below</h1>
+          <h1>2. Copy and paste a URL link below</h1>
           <form className="pregame-body-container" onSubmit={handleSubmit}>
             <input
               type="text"

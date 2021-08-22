@@ -21,12 +21,16 @@ const GameCard: React.FC<GameCardProps> = (props) => {
         <img src={blackPawn} width={props.topGame ? 150 : 100} />
         <div className='game-title regular-text'>
           <div className='game-title-small'>
-            <p className='player-name-whole player-title'>{'Black'}</p>
+            <p className='player-name-whole player-title'>{props.game.player_black.name}</p>
             <p className='player-title'>({props.game.player_black.elo})</p>
           </div>
           <p className='vs-text'>vs</p>
           <div className='game-title-small'>
-            <p className='player-name-whole player-title'>{'White'}</p>
+            <p className='player-name-whole player-title'
+              // style={{
+              //   width: '80px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', display: 'block',
+              // }}
+            >{props.game.player_white.name}</p>
             <p className='player-title'>({props.game.player_white.elo})</p>
           </div>
         </div>

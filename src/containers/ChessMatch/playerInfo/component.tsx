@@ -75,7 +75,7 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
     <div className='player-info'>
       <div className='player-title'>
         <img className='player-icon' src={props.icon}/>
-        <div>
+        <div className='player-name-container'>
           <h3 className='player-name'>{props.name} </h3>
           <p className='player-name'>({props.elo})</p>
         </div>
