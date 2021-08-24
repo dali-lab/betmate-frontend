@@ -53,11 +53,11 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
             <PlayerInfo
               icon={playerIconBlack}
               fen = {game?.state ?? ''}
-              name={game?.player_black.name}
-              elo={game?.player_black.elo}
+              name={game?.player_black?.name}
+              elo={game?.player_black?.elo}
               time={game?.time_black}
               isBlack={true}
-              gameStatus={game?.game_status as GameStatus}
+              gameStatus={(game?.game_status ?? GameStatus.IN_PROGRESS) as GameStatus}
               updatedAt={game?.updated_at}
             />
             <div className='chessboard'>
@@ -70,11 +70,11 @@ const ChessMatch: React.FC<ChessMatchProps> = (props) => {
             <PlayerInfo
               icon={playerIconWhite}
               fen = {game?.state ?? ''}
-              name={game?.player_white.name}
-              elo={game?.player_white.elo}
+              name={game?.player_white?.name}
+              elo={game?.player_white?.elo}
               time={game?.time_white}
               isBlack={false}
-              gameStatus={game?.game_status as GameStatus}
+              gameStatus={(game?.game_status ?? GameStatus.IN_PROGRESS) as GameStatus}
               updatedAt={game?.updated_at}
             />
           </div>
