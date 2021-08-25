@@ -16,7 +16,7 @@ interface ChessMatchProps {
 }
 
 const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
-  const [playerTime, setTime] = useState(0);
+  const [playerTime, setTime] = useState(props.time ?? 0);
   const blackTurn = props.fen?.split(' ')[1] === 'b';
   const isGameOver = gameOver(props.gameStatus);
   const isGameInProgress = gameInProgress(props.gameStatus);
@@ -31,7 +31,7 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
     );
 
     clearInterval(timer);
-    setTimer(setInterval(() => setTime((t) => t - decrease), interval));
+    setTimer(setInterval(() => setTime((t) => Math.max(t - decrease, 0)), interval));
   }, [blackTurn]);
 
   useEffect(() => {
@@ -56,18 +56,23 @@ const PlayerInfo: React.FC<ChessMatchProps> = (props) => {
     if (isGameOver) { // Clear timer when game is over
       clearInterval(timer);
     }
-  }, [gameOver]);
+  }, [isGameOver]);
 
   // Get timer format
   const getTimeString = (time: number): string => {
-    const timeString = new Date((time ?? 0) * 1000).toISOString();
+    try {
+      const timeString = new Date((time ?? 0) * 1000).toISOString();
 
-    if (time > 3600) { // Over an hour
-      return timeString.substr(11, 8);
-    } else if (time > 60) { // Over a minute
-      return timeString.substr(14, 5);
-    } else { // Less than a minute
-      return timeString.substr(17, 4);
+      if (time > 3600) { // Over an hour
+        return timeString.substr(11, 8);
+      } else if (time > 60) { // Over a minute
+        return timeString.substr(14, 5);
+      } else { // Less than a minute
+        return timeString.substr(17, 4);
+      }
+    } catch (error) {
+      setTime(props.time ?? 0);
+      return '00.0';
     }
   };
 

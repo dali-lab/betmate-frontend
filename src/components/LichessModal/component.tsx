@@ -26,8 +26,8 @@ const LichessModal: React.FC<LichessModalProps> = (props) => {
     } catch (error) {
       setErrorMessage(getErrorPayload(error).message);
       setTimeout(() => setErrorMessage(''), 5000);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (

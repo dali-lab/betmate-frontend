@@ -18,18 +18,20 @@ const MoveOptions: React.FC<MoveOptionsProps> = (props) => {
   const { id: gameId } = useParams<{ id: string }>();
 
   const renderMoveOptions = () => {
-    const { options: moveOptions, wagers } = props.games[gameId]?.pool_wagers?.move;
+    const { options, wagers } = props.games[gameId]?.pool_wagers?.move;
+
+    if (!options || !wagers) return <div />;
 
     const totalPool = wagers.reduce((acc, w) => acc + w.amount, 0);
 
     const poolPerMove: Record<string, number> = wagers.reduce((currObj, { amount, data }) => {
-      const field = moveOptions.includes(data) ? data : 'Other';
+      const field = options.includes(data) ? data : 'Other';
       return {
         ...currObj,
         [field]: currObj[field] + amount,
       };
     }, {
-      ...moveOptions.reduce((obj, move) => ({ ...obj, [move]: 0 }), {}),
+      ...options.reduce((obj, move) => ({ ...obj, [move]: 0 }), {}),
       Other: 0,
     });
 
