@@ -18,14 +18,18 @@
     margin-bottom: 0;
     margin-top: 0;
     align-self: center;
-
-    font-family: Roboto;
 }
 
 .player-name-whole{
     color: #2AD9FF;
     font-size: auto;
     font-weight: bolder;
+
+    width: 80px;
+    display: block !important;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .game-title-small {
@@ -80,5 +84,9 @@
         min-height: 4em;
         font-size: 22px;
         margin-top: 1em;
+    }
+
+    .player-name-whole {
+        width: 120px;
     }
 }

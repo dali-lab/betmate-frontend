@@ -1,9 +1,10 @@
 .blur-background {
     width: 100vw;
     height: 100vh;
-    background: transparent;
-    backdrop-filter: blur(2px);
-    position: absolute;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
     z-index: 6;
     display: flex;
     justify-content: center;
@@ -38,6 +39,7 @@
 .padding-container {
     padding: 10px 30px;
     position: relative;
+    height: 410px;
 }
 
 .pregame-body-container {
@@ -60,3 +62,45 @@
     font-weight: 400;
     font-family: 'Roboto';
 }
+
+.slider-pregame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+}
+
+.track-pregame {
+    height: 23px;
+    margin: 6px;
+
+    &.track-pregame-0 {
+        background-color: #99CCA7;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+
+    &.track-pregame-1 {
+        background-color: #5F5F5F;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+}
+
+
+
+.thumb-pregame {
+    height: 35px;
+    width: 35px;
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 19px;
+    font-weight: 300;
+    background-color: #64FF8F;
+}
+

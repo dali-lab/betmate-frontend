@@ -1,14 +1,93 @@
 .bet-subpanel {
     background: #1E1E22;
     border: 4px solid #2AD9FF;
-    border-radius: 20px;
+    border-radius: 10px;
     width: calc(100% - 10px);
-    h1 {
-        text-align: center;
-        font-family: "Roboto";
-        font-weight: 500;
-        font-size: 20px;
-        color: #F2F2F2;
-        margin: 10px 0;
+
+    .wager-header {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        h1 {
+            text-align: center;
+            font-family: "Roboto";
+            font-weight: 500;
+            font-size: 20px;
+            color: #F2F2F2;
+            margin: 0;
+        }
+
+        p {
+            color: #c4c4c4;
+            margin: 0;
+
+        }
+    }
+
+    &.move {
+        border-color: #00B6FF;
+        height: 265px;
+    }
+
+    &.wdl {
+        border-color: #2DFD83;
+        height: 270px;
+    }
+
+    
+}
+
+.slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+}
+
+.track {
+    height: 23px;
+    border-radius: 20px;
+    margin: 6px;
+
+    &.track-move-0 {
+        background-color: #70B2CC;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+
+    &.track-wdl-0 {
+        background-color: #99CCA7;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+
+    &.track-move-1, &.track-wdl-1 {
+        background-color: #5F5F5F;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+}
+
+.thumb {
+    height: 35px;
+    width: 35px;
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 19px;
+    font-weight: 300;
+
+    &.thumb-move {
+        background-color: #00B6FF;
+    }
+
+    &.thumb-wdl {
+        background-color: #64FF8F;
     }
 }

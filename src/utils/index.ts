@@ -11,4 +11,4 @@ export const ROOT_URL = process.env.TARGET_ENV === 'prod'
 export const authTokenName = 'authToken';
 
 // Number of ms before an axios request times out
-export const requestTimeout = 1000;
+export const requestTimeout = 3000;

@@ -1,5 +1,13 @@
 import joi from 'joi';
-import { User } from 'types/resources/auth';
+import { User, UserRole } from 'types/resources/auth';
+
+export const isUserRole = (v: string): boolean => Object.values(UserRole).includes(v as UserRole);
+
+const userRoleValidator = (value: any, helpers: joi.CustomHelpers) => (
+  isUserRole(value)
+    ? value
+    : helpers.message({ custom: `Value '${value}' is not a user role` })
+);
 
 export const UserSchema = joi.object<User>({
   _id: joi.string().required(),
@@ -8,4 +16,5 @@ export const UserSchema = joi.object<User>({
   last_name: joi.string().required(),
   full_name: joi.string().required(),
   account: joi.number().required(),
+  role: joi.string().custom(userRoleValidator),
 });

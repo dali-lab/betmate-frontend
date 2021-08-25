@@ -26,25 +26,11 @@ const SignUpPanel: React.FC<SignUpPanelProps> = (props) => {
     }
   }, [props.isAuthenticated]);
 
-  const handleFirstNameUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.target.value);
-  };
-
-  const handleLastNameUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(e.target.value);
-  };
-
-  const handleEmailUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleConfirmPasswordUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
-  };
+  const handleInputUpdate = (setValue: React.Dispatch<React.SetStateAction<string>>) => (
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value);
+    }
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -78,15 +64,15 @@ const SignUpPanel: React.FC<SignUpPanelProps> = (props) => {
           </div>
           <form className="form-container" onSubmit={handleSubmit}>
             <p>First Name</p>
-            <input type="text" value={firstName} onChange={handleFirstNameUpdate} />
+            <input type="text" value={firstName} onChange={handleInputUpdate(setFirstName)} />
             <p>Last Name</p>
-            <input type="text" value={lastName} onChange={handleLastNameUpdate} />
+            <input type="text" value={lastName} onChange={handleInputUpdate(setLastName)} />
             <p>Email</p>
-            <input type="email" value={email} onChange={handleEmailUpdate} />
+            <input type="email" value={email} onChange={handleInputUpdate(setEmail)} />
             <p>Password</p>
-            <input type="password" value={password} onChange={handlePasswordUpdate} />
+            <input type="password" value={password} onChange={handleInputUpdate(setPassword)} />
             <p>Confirm Password</p>
-            <input type="password" value={confirmPassword} onChange={handleConfirmPasswordUpdate} />
+            <input type="password" value={confirmPassword} onChange={handleInputUpdate(setConfirmPassword)} />
             <input type="submit" value="create account" />
           </form>
           <div className="auth-status-message-container">

@@ -23,3 +23,9 @@ export const clearGames = (): Actions => ({
   status: 'SUCCESS',
   payload: {},
 });
+
+export const sendGameChat = (gameId: string, chat: string): Actions => ({
+  type: 'GAME_CHAT',
+  status: 'REQUEST',
+  payload: { gameId, chat, time: new Date().toISOString() },
+});

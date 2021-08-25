@@ -6,9 +6,9 @@ import chessgroundSaga from 'store/sagas/chessground';
 import gameSaga from 'store/sagas/game';
 import wagerSaga from 'store/sagas/wager';
 import leaderboardSaga from 'store/sagas/leaderboard';
+import heapSaga from 'store/sagas/heap';
 
 import watchSockets from 'store/sagas/sockets';
-import heapSaga from './heap';
 
 function* rootSaga() {
   yield spawn(authSaga);

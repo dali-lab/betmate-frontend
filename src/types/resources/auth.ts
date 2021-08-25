@@ -4,12 +4,19 @@ import { Action, AsyncAction } from 'types/state';
 
 /* -------- State -------- */
 
+export enum UserRole {
+  USER = 'user',
+  STREAMER = 'streamer',
+  ADMIN = 'admin',
+}
+
 export interface User {
   email: string
   first_name: string
   last_name: string
   full_name: string
   account: number
+  role?: UserRole
   _id: string
 }
 
